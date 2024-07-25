@@ -1,0 +1,19 @@
+const typography = {
+  fontFamily: {
+    sans: ['Pretendard Variable', 'Pretendard', 'sans-serif'],
+  },
+  fontSize: {
+    s: '12px',
+    m: '14px',
+    base: '16px',
+    ml: '18px',
+    l: '20px',
+    xl: '24px',
+    '2xl': '28px',
+    '3xl': '32px',
+    '4xl': '36px',
+    '6xl': '68px',
+  },
+};
+
+export default typography;
