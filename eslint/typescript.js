@@ -60,7 +60,7 @@ module.exports = {
         // type이 잘못 추론됐을 때 쉽게 개발할 수 있도록 no-null-assertion(!)을 허용합니다.
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/camelcase': 'off',
-        camelcase: 'off',
+        'camelcase': 'off',
 
         // void를 반환하는 함수로 예상되는 JSX 속성으로 전달된 비동기 함수 검사를 비활성화
         '@typescript-eslint/no-misused-promises': [
@@ -88,21 +88,17 @@ module.exports = {
             format: ['PascalCase'],
           },
         ],
-
-        // // any 타입의 사용을 허용함으로써 유연성을 유지합니다.
-        // '@typescript-eslint/no-unsafe-return': 'off',
-
-        // // any 타입의 인자를 허용함으로써 더 유연한 함수 정의를 가능하게 합니다.
-        // '@typescript-eslint/no-unsafe-argument': 'off',
-
-        // // 명시적으로 any 타입을 사용할 수 있도록 허용합니다.
-        // '@typescript-eslint/no-explicit-any': 'off',
-
-        // // any 타입의 멤버에 접근하는 것을 허용합니다.
-        // '@typescript-eslint/no-unsafe-member-access': 'off',
-
         // 사용하지 않는 변수를 경고로 표시합니다.
         '@typescript-eslint/no-unused-vars': 'warn',
+
+        // 'as'를 사용한 타입 단언이 발생할 때마다 경고를 발생시키며, 객체 리터럴에 대해서는 타입 단언을 허용하지 않습니다.
+        '@typescript-eslint/consistent-type-assertions': [
+          'warn',
+          {
+            assertionStyle: 'as',
+            objectLiteralTypeAssertions: 'never',
+          },
+        ],
       },
     },
   ],
