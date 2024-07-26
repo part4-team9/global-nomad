@@ -6,10 +6,10 @@ import logoWithTitle from 'public/assets/icons/logo-with-title.svg';
 
 export default async function Header() {
   return (
-    <header className="fixed left-0 right-0 top-0 z-30 bg-white shadow-sm w-full">
-      <section className="flex justify-between h-[70px] px-6 pb-[10px] pt-[15px] lg:max-w-[1200px] mx-auto content-center">
+    <header className="fixed left-0 right-0 top-0 z-30 w-full bg-white shadow-sm">
+      <section className="mx-auto flex h-[70px] content-center justify-between px-6 py-5 lg:max-w-[1200px]">
         <Link href="#" className="relative h-[28px] w-auto">
-          <Image src={logoWithTitle} alt="Logo"/>
+          <Image src={logoWithTitle} alt="Logo" />
         </Link>
         <nav className="">
           {true ? <HeaderNotLogin /> : <HeaderLogin />}
