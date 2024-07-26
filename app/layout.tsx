@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import Header from './_components/header';
 
 import Providers from './providers';
 
@@ -9,7 +10,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body>
+      <body className="relative">
+        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>

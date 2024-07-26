@@ -7,7 +7,7 @@ import logoWithTitle from 'public/assets/icons/logo-with-title.svg';
 export default async function Header() {
   return (
     <header className="fixed left-0 right-0 top-0 z-30 bg-white shadow-sm w-full">
-      <section className="flex justify-between h-[70px] px-6 pb-[10px] pt-[15px] lg:max-w-[1200px] ml-auto mr-auto">
+      <section className="flex justify-between h-[70px] px-6 pb-[10px] pt-[15px] lg:max-w-[1200px] mx-auto content-center">
         <Link href="#" className="relative h-[28px] w-auto">
           <Image src={logoWithTitle} alt="Logo"/>
         </Link>
