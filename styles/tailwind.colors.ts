@@ -4,9 +4,11 @@ const colors = {
   'gray': {
     50: '#FAFAFA',
     100: '#EEEEEE',
+    150: '#E8E8E8',
     200: '#DDDDDD',
     300: '#CBC9CF',
     400: '#ADAEBB',
+    450: '#969696',
     500: '#A4A1AA',
     600: '#79747E',
     700: '#4B4B4B',
