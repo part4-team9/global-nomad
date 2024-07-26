@@ -7,7 +7,7 @@ import SelectUl from '../select-box-list';
 
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
 
-interface SelectBoxProps {
+interface SelectBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   legend?: string;
   placeholder?: string;

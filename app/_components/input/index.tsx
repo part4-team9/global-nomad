@@ -14,7 +14,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * Input 공통 컴포넌트
  * @error 로그인, 회원가입에서 유효성 검사 실패했을 때 true 전달 아니라면 false (기본값 false 설정 필요)
  */
-function Input({ id, type = 'text', value, placeholder, error }: InputProps) {
+function Input({ type, error, ...rest }: InputProps) {
   const [passwordToggle, setPasswordToggle] = useState(false);
   const isPassword = type === 'password';
   const newType = passwordToggle && isPassword ? 'text' : type;
@@ -30,11 +30,9 @@ function Input({ id, type = 'text', value, placeholder, error }: InputProps) {
   return (
     <div className="relative">
       <input
-        id={id}
         type={newType}
-        value={value}
-        placeholder={placeholder}
         className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+        {...rest}
       />
       {type === 'password' && (
         <button

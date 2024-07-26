@@ -1,3 +1,5 @@
+'use client';
+
 import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
@@ -5,11 +7,15 @@ import Textarea from '@/_components/textarea';
 function TestPage() {
   const values = ['문화 예술', '식음료', '스포츠'];
 
+  const handleChange = () => {
+    console.log('test');
+  };
+
   return (
     <form className="mb-20 grid gap-5 px-5 py-5">
       <div className="grid gap-4">
         <label htmlFor="email">이메일</label>
-        <Input id="email" type="email" placeholder="이메일을 입력해 주세요" />
+        <Input id="email" type="email" onChange={handleChange} placeholder="이메일을 입력해 주세요" />
       </div>
       <div className="grid gap-4">
         <label htmlFor="text">텍스트</label>
