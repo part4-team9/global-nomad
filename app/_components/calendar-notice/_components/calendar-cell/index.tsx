@@ -3,6 +3,8 @@ import cx from 'clsx';
 import type { ReservationDataProps } from '@/_types';
 import { ReservationStatus } from '@/_types';
 
+import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChipData } from '@/_utils/reservation';
+
 import StatusChip from '../status-chips';
 
 interface CalendarCellProps {
@@ -14,6 +16,11 @@ interface CalendarCellProps {
 }
 
 export default function CalendarCell({ day, monthType, keyDate, reservations, today }: CalendarCellProps) {
+  const dayReservation = filterReservationsByDate(reservations, keyDate);
+  const maxStatus = getMaxStatus(dayReservation);
+  const statusChipData = dayReservation ? getStatusChipData(dayReservation) : [];
+  const maxStatusStyle = getMaxStatusStyle(maxStatus);
+
   return (
     <td className="flex cursor-pointer flex-col justify-between border border-zinc-200 text-base/[21px] transition-colors duration-200 hover:bg-gray-50 active:bg-gray-100">
       <p
@@ -23,16 +30,15 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
         })}
       >
         {day}
+        {maxStatus && maxStatusStyle && <span className={`ml-2 rounded px-1 text-m font-medium ${maxStatusStyle.textColor}`}>{maxStatusStyle.label}</span>}
       </p>
-      {reservations
-        .filter((reservation) => reservation.date === keyDate)
-        .map((reservation, idx) => (
-          <div key={idx} className="flex flex-wrap">
-            <StatusChip count={reservation.reservation.seat} status={ReservationStatus.RESERVATION} />
-            <StatusChip count={reservation.reservation.confirmed} status={ReservationStatus.CONFIRMED} />
-            <StatusChip count={reservation.reservation.complete} status={ReservationStatus.COMPLETE} />
-          </div>
-        ))}
+      {statusChipData.length > 0 && (
+        <div className="flex flex-wrap">
+          {statusChipData.map((chip, idx) => (
+            <StatusChip key={idx} count={chip.count} bgColor={chip.bgColor} textColor={chip.textColor} label={chip.label} />
+          ))}
+        </div>
+      )}
     </td>
   );
 }
