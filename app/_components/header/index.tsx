@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { HeaderNotLogin } from './_component/header-not-login';
-import HeaderLogin from './_component/header-login';
+import GuestHeader from './_component/guest-header';
+import UserHeader from './_component/user-header';
 import logoWithTitle from 'public/assets/icons/logo-with-title.svg';
 
 export default function Header() {
@@ -12,7 +12,7 @@ export default function Header() {
           <Image src={logoWithTitle} alt="Logo" />
         </Link>
         <nav className="">
-          {true ? <HeaderNotLogin /> : <HeaderLogin />}
+          {true ? <GuestHeader /> : <UserHeader />}
           {/* 이후 로그인 작업시 상태에 따라 비로그인/로그인 구분 */}
         </nav>
       </section>

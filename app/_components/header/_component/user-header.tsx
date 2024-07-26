@@ -2,7 +2,7 @@ import Image from 'next/image';
 import alarm from 'public/assets/icons/alarm.svg';
 import gnbProfileImg from 'public/assets/images/gnb-profile.png';
 
-export default async function HeaderLogin() {
+export default function UserHeader() {
   return (
     <>
       <div className="text-m flex">

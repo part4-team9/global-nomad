@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-export function HeaderNotLogin() {
+export default function GuestHeader() {
   return (
     <>
       <div className='text-m flex gap-[25px] pt-1'>
