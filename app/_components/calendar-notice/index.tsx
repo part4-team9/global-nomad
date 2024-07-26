@@ -35,7 +35,7 @@ function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
         goToPreviousYear={goToPreviousYear}
         goToday={goToday}
       />
-      <table className="border-grey-150 text-gray-450 w-full table-fixed border-collapse overflow-hidden rounded-lg border bg-white font-Inter">
+      <table className="border-grey-150 w-full table-fixed border-collapse overflow-hidden rounded-lg border bg-white font-Inter text-gray-450">
         <MemoizedWeekdays weekStartDay={weekStartDay} />
         <tbody>
           {days.map((week, weekIndex) => (
