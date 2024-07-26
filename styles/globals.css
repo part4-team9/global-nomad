@@ -1,8 +1,16 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans+KR:wght@100;200;300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'SpoqaHanSansNeo-Regular';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/SpoqaHanSansNeo-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 @layer base {
   * {
@@ -21,11 +29,10 @@
       'Apple Color Emoji',
       'Segoe UI Emoji',
       'Segoe UI Symbol',
+      'SpoqaHanSansNeo-Regular',
+      'Inter',
       sans-serif;
   }
-}
-
-@layer components {
   h1 {
     @apply text-4xl font-bold;
   }

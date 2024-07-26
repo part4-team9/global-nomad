@@ -1,7 +1,7 @@
 const colors = {
-  black: '#1B1B1B',
-  'nomad-black': '#393236',
-  gray: {
+  'black': '#1B1B1B',
+  'nomad-black': '#112211',
+  'gray': {
     50: '#FAFAFA',
     100: '#EEEEEE',
     200: '#DDDDDD',
@@ -11,23 +11,23 @@ const colors = {
     600: '#79747E',
     700: '#4B4B4B',
   },
-  green: {
+  'green': {
     100: '#CED8D5',
     200: '#0B3B2D',
     300: '#00AC07',
   },
-  red: {
+  'red': {
     200: '#FFE4E0',
     500: '#FF472E',
   },
-  orange: {
+  'orange': {
     200: '#FFF4E8',
     500: '#FF7C1D',
   },
-  yellow: {
+  'yellow': {
     500: '#FFC23D',
   },
-  blue: {
+  'blue': {
     100: '#E5F3FF',
     200: '#2EB4FF',
     500: '#0085FF',
