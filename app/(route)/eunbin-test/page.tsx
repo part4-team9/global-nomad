@@ -1,9 +1,12 @@
 import Input from '@/_components/input';
+import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
 function TestPage() {
+  const values = ['문화 예술', '식음료', '스포츠'];
+
   return (
-    <form className="grid gap-5 px-5 py-5">
+    <form className="mb-20 grid gap-5 px-5 py-5">
       <div className="grid gap-4">
         <label htmlFor="email">이메일</label>
         <Input id="email" type="email" placeholder="이메일을 입력해 주세요" />
@@ -35,6 +38,16 @@ function TestPage() {
       <div className="grid gap-4">
         <label htmlFor="small">textarea small</label>
         <Textarea id="small" placeholder="이름을 입력해 주세요" size="small" />
+      </div>
+      <div className="grid gap-4">
+        <label htmlFor="select">select box</label>
+        <SelectBox id="select" placeholder="카테고리" values={values} />
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias mollitia molestiae incidunt repellendus veniam, atque reiciendis perferendis eos
+        numquam laboriosam aliquid voluptatum officiis officia praesentium nulla cum! Sed provident reiciendis nemo modi nesciunt? Dolores rerum sequi quibusdam
+        aliquam. Quibusdam tempora hic quos aspernatur debitis, quo, dolorem cumque expedita sed enim libero odit corrupti laboriosam? Minus nisi a sequi velit
+        ipsam aspernatur ad quia et. Voluptates perspiciatis temporibus dolorum, quam sint, tenetur labore porro quia sed vel rerum voluptate atque odio?
       </div>
     </form>
   );

@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 
 import colors from './styles/tailwind.colors';
 import screens from './styles/tailwind.screens';
+import boxShadow from './styles/tailwind.shadow';
 import typography from './styles/tailwind.typography';
 
 const config: Config = {
@@ -10,6 +11,7 @@ const config: Config = {
     extend: {
       colors,
       screens,
+      boxShadow,
       ...typography,
     },
   },

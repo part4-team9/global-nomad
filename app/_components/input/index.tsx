@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import eyeOffIcon from 'public/assets/icons/eye-off.svg';
-import eyeOnIcon from 'public/assets/icons/eye-on.svg';
+import EyeOffIcon from 'public/assets/icons/eye-off.svg';
+import EyeOnIcon from 'public/assets/icons/eye-on.svg';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
@@ -34,7 +34,7 @@ function Input({ id, type = 'text', value, placeholder, error }: InputProps) {
         type={newType}
         value={value}
         placeholder={placeholder}
-        className={`leading-1.6 w-full rounded-[4px] border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+        className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
       />
       {type === 'password' && (
         <button
@@ -43,7 +43,7 @@ function Input({ id, type = 'text', value, placeholder, error }: InputProps) {
           onClick={handlePasswordToggle}
           aria-label={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'}
         >
-          <Image src={passwordToggle ? eyeOnIcon : eyeOffIcon} alt={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'} />
+          <Image src={passwordToggle ? EyeOnIcon : EyeOffIcon} alt={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'} />
         </button>
       )}
     </div>
