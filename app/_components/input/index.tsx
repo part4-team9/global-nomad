@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 
 import eyeOffIcon from 'public/assets/icons/eye-off.svg';
@@ -13,44 +13,37 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 /**
  * Input 공통 컴포넌트
  * @error 로그인, 회원가입에서 유효성 검사 실패했을 때 true 전달 아니라면 false (기본값 false 설정 필요)
- * @returns
  */
-function Input({ id, type, placeholder, error }: InputProps) {
+function Input({ id, type = 'text', value, placeholder, error }: InputProps) {
   const [passwordToggle, setPasswordToggle] = useState(false);
-  const [newType, setNewType] = useState(type);
-  let inputStatusClass;
-
-  // 유효성 체크 여부에 따른 border style 변경
-  if (error) {
-    inputStatusClass = `border-red-500 focus:border-red-500`;
-  } else {
-    inputStatusClass = `border-gray-500 focus:border-green-200`;
-  }
+  const isPassword = type === 'password';
+  const newType = passwordToggle && isPassword ? 'text' : type;
 
   // 비밀번호 가시성 아이콘 토글
   const handlePasswordToggle = () => {
     setPasswordToggle(!passwordToggle);
   };
 
-  useEffect(() => {
-    if (passwordToggle) {
-      setNewType('text');
-    } else {
-      setNewType('password');
-    }
-  }, [passwordToggle]);
+  // 유효성 체크 여부에 따른 border style 변경
+  const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-500 focus:border-green-200';
 
   return (
     <div className="relative">
       <input
         id={id}
         type={newType}
+        value={value}
         placeholder={placeholder}
-        className={`leading-1.6 w-full rounded-md border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+        className={`leading-1.6 w-full rounded-[4px] border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
       />
       {type === 'password' && (
-        <button type="button" className="absolute right-5 top-1/2 -translate-y-1/2" onClick={handlePasswordToggle}>
-          {passwordToggle ? <Image src={eyeOnIcon} alt="비밀번호 보기" /> : <Image src={eyeOffIcon} alt="비밀번호 보기" />}
+        <button
+          type="button"
+          className="absolute right-5 top-1/2 -translate-y-1/2"
+          onClick={handlePasswordToggle}
+          aria-label={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'}
+        >
+          <Image src={passwordToggle ? eyeOnIcon : eyeOffIcon} alt={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'} />
         </button>
       )}
     </div>
