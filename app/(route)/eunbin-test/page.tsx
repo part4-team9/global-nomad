@@ -43,6 +43,10 @@ function TestPage() {
         <label htmlFor="select">select box</label>
         <SelectBox id="select" placeholder="카테고리" values={values} />
       </div>
+      <div className="grid gap-4">
+        <label htmlFor="select2">select box</label>
+        <SelectBox id="select2" legend="체험명" placeholder="카테고리" values={values} />
+      </div>
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias mollitia molestiae incidunt repellendus veniam, atque reiciendis perferendis eos
         numquam laboriosam aliquid voluptatum officiis officia praesentium nulla cum! Sed provident reiciendis nemo modi nesciunt? Dolores rerum sequi quibusdam
