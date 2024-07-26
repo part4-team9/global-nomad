@@ -10,7 +10,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className="relative">
+      <body>
         <Header />
         <Providers>{children}</Providers>
       </body>
