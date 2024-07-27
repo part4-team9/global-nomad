@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Image from 'next/image';
 
 import EyeOffIcon from 'public/assets/icons/eye-off.svg';
@@ -31,10 +33,10 @@ function Input({ type, error, ...rest }: InputProps) {
     <div className="relative">
       <input
         type={newType}
-        className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${type === 'password' ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+        className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${isPassword ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
         {...rest}
       />
-      {type === 'password' && (
+      {isPassword && (
         <button
           type="button"
           className="absolute right-5 top-1/2 -translate-y-1/2"

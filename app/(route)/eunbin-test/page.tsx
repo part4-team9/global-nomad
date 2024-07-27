@@ -51,7 +51,7 @@ function TestPage() {
       </div>
       <div className="grid gap-4">
         <label htmlFor="select2">select box</label>
-        <SelectBox id="select2" legend="체험명" placeholder="카테고리" values={values} />
+        <SelectBox id="select2" head="체험명" placeholder="카테고리" values={values} />
       </div>
       <div>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias mollitia molestiae incidunt repellendus veniam, atque reiciendis perferendis eos
