@@ -10,6 +10,7 @@ import useCalendar from '@/_hooks/useCalendar';
 import CalendarCell from './_components/calendar-cell';
 import Header from './_components/calendar-header';
 import Weekdays from './_components/calendar-weekdays';
+import StatusChip from './_components/status-chips';
 
 const MemoizedCalendarCell = React.memo(CalendarCell);
 const MemoizedWeekdays = React.memo(Weekdays);
@@ -41,7 +42,15 @@ function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
           {days.map((week, weekIndex) => (
             <tr key={weekIndex} className="grid h-[154px] grid-cols-7">
               {week.map(({ key, day, monthType }) => (
-                <MemoizedCalendarCell key={key} day={day} monthType={monthType} keyDate={key} reservations={reservations} today={today} />
+                <MemoizedCalendarCell key={key} day={day} monthType={monthType} keyDate={key} reservations={reservations} today={today}>
+                  {(chipData) => (
+                    <div className="flex flex-wrap gap-1">
+                      {chipData.map(({ bgColor, count, label, textColor }) => (
+                        <StatusChip key={label} bgColor={bgColor} count={count} label={label} textColor={textColor} />
+                      ))}
+                    </div>
+                  )}
+                </MemoizedCalendarCell>
               ))}
             </tr>
           ))}

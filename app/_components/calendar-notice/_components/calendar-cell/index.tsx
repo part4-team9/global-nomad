@@ -1,13 +1,11 @@
 import cx from 'clsx';
 
 import type { ReservationDataProps } from '@/_types';
-import { ReservationStatus } from '@/_types';
 
 import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChipData } from '@/_utils/reservation';
 
-import StatusChip from '../status-chips';
-
 interface CalendarCellProps {
+  children: (chipData: { bgColor: string; count: number; label: string; textColor: string }[]) => JSX.Element;
   day: number;
   keyDate: string;
   monthType: string;
@@ -15,7 +13,7 @@ interface CalendarCellProps {
   today: string;
 }
 
-export default function CalendarCell({ day, monthType, keyDate, reservations, today }: CalendarCellProps) {
+export default function CalendarCell({ day, monthType, keyDate, reservations, today, children }: CalendarCellProps) {
   const dayReservation = filterReservationsByDate(reservations, keyDate);
   const maxStatus = getMaxStatus(dayReservation);
   const statusChipData = dayReservation ? getStatusChipData(dayReservation) : [];
@@ -32,13 +30,7 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
         {day}
         {maxStatus && maxStatusStyle && <span className={`ml-2 rounded px-1 text-m font-medium ${maxStatusStyle.textColor}`}>{maxStatusStyle.label}</span>}
       </p>
-      {statusChipData.length > 0 && (
-        <div className="flex flex-wrap">
-          {statusChipData.map((chip, idx) => (
-            <StatusChip key={idx} count={chip.count} bgColor={chip.bgColor} textColor={chip.textColor} label={chip.label} />
-          ))}
-        </div>
-      )}
+      {children(statusChipData)}
     </td>
   );
 }
