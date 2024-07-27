@@ -1,6 +1,6 @@
 import '../styles/globals.css';
-import Header from './_components/header';
 
+import Header from './_components/header';
 import Providers from './providers';
 
 export default function RootLayout({
@@ -12,7 +12,9 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <Header />
-        <Providers>{children}</Providers>
+        <Providers>
+          <main className="mt-[70px]">{children}</main>
+        </Providers>
       </body>
     </html>
   );
