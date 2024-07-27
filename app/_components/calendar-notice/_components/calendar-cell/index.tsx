@@ -4,6 +4,15 @@ import type { ReservationDataProps } from '@/_types';
 
 import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChipData } from '@/_utils/reservation';
 
+/**
+ * 캘린더 셀을 렌더링합니다.
+ * @param day 날짜
+ * @param monthType 현재 달인지 이전/다음 달인지 여부
+ * @param keyDate 날짜 키
+ * @param reservations 예약 현황 데이터
+ * @param today 오늘 날짜
+ * @param children 셀 내부에 렌더링할 컴포넌트 (chips)
+ */
 interface CalendarCellProps {
   children: (chipData: { bgColor: string; count: number; label: string; textColor: string }[]) => JSX.Element;
   day: number;

@@ -6,7 +6,11 @@ interface StatusChipProps {
 }
 
 /**
- * 예약 상태에 따라 스타일이 다른 칩을 렌더링합니다.
+ * 예약 상태에 따라 스타일이 다른 chip을 렌더링합니다.
+ * @param count chip에 표시할 숫자
+ * @param bgColor chip의 배경색
+ * @param textColor chip의 텍스트 색상
+ * @param label chip의 레이블
  */
 export default function StatusChip({ count, bgColor, textColor, label }: StatusChipProps) {
   return (

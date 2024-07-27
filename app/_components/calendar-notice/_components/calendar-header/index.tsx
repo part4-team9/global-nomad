@@ -10,8 +10,16 @@ interface HeaderProps {
 }
 
 /**
- * Renders the header (controller and display of year and month) of the calendar.
+ * 캘린더의 헤더를 렌더링합니다.
+ * 캘린더 내 날짜 이동 버튼을 제공합니다.
+ * @param currentDate 현재 날짜
+ * @param goToNextMonth 다음 달로 이동하는 함수
+ * @param goToNextYear 다음 해로 이동하는 함수
+ * @param goToPreviousMonth 이전 달로 이동하는 함수
+ * @param goToPreviousYear 이전 해로 이동하는 함수
+ * @param goToday 오늘로 이동하는 함수
  */
+
 export default function Header({ currentDate, goToNextMonth, goToNextYear, goToPreviousMonth, goToPreviousYear, goToday }: HeaderProps) {
   return (
     <div className="relative flex w-full items-center justify-between pb-[24px]">

@@ -1,5 +1,7 @@
+// TODO 주 시작 요일에 따른 요일, 날짜 재랜더링
+
 interface WeekDaysProps {
-  weekStartDay: number;
+  weekStartDay?: number;
 }
 
 /**

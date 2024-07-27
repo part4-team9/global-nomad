@@ -17,6 +17,7 @@ const MemoizedWeekdays = React.memo(Weekdays);
 
 /**
  * 예약 현황 데이터를 받아서 달력 형태로 렌더링합니다.
+ * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
 function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
