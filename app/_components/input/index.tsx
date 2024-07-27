@@ -22,9 +22,9 @@ function Input({ type, error, ...rest }: InputProps) {
   const newType = passwordToggle && isPassword ? 'text' : type;
 
   // 비밀번호 가시성 아이콘 토글
-  const handlePasswordToggle = () => {
-    setPasswordToggle(!passwordToggle);
-  };
+  const handlePasswordToggle = useCallback(() => {
+    setPasswordToggle((prev) => !prev);
+  }, []);
 
   // 유효성 체크 여부에 따른 border style 변경
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-500 focus:border-green-200';
