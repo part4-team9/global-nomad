@@ -1,7 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 import GuestHeader from './_component/guest-header';
 import UserHeader from './_component/user-header';
+
 import logoWithTitle from 'public/assets/icons/logo-with-title.svg';
 
 export default function Header() {
