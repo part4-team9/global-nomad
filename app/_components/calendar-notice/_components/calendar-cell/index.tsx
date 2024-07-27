@@ -32,12 +32,12 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
     <td className="flex cursor-pointer flex-col justify-between border border-zinc-200 text-base/[21px] transition-colors duration-200 hover:bg-gray-50 active:bg-gray-100">
       <p
         className={cx('m-3 w-fit', {
-          'text-gray-200': monthType !== 'current',
+          'flex text-gray-200': monthType !== 'current',
           'rounded bg-emerald-800 text-white': keyDate === today,
         })}
       >
         {day}
-        {maxStatus && maxStatusStyle && <span className={`ml-2 rounded px-1 text-m font-medium ${maxStatusStyle.textColor}`}>{maxStatusStyle.label}</span>}
+        {maxStatus && maxStatusStyle && <span className={`px-1 text-[7px] font-medium ${maxStatusStyle.textColor}`}>●</span>}
       </p>
       {children(statusChipData)}
     </td>
