@@ -1,11 +1,14 @@
 'use client';
 
 interface ButtonProps {
+  borderRadius?: string;
   children: React.ReactNode;
   className?: string;
   disabled?: boolean;
   fontSize?: 'm' | 'base';
+  isSelected?: boolean;
   onClick?: () => void;
+  variant: 'select' | 'action';
 }
 
 const fontSizeClass = {
@@ -13,18 +16,32 @@ const fontSizeClass = {
   base: 'text-base',
 };
 
-export default function Button({ children, onClick, disabled = false, className = '', fontSize = 'base' }: ButtonProps) {
+export default function Button({
+  children,
+  onClick,
+  disabled = false,
+  className = '',
+  fontSize = 'base',
+  borderRadius = '4px',
+  variant,
+  isSelected = false,
+}: ButtonProps) {
   const baseStyle = `
     font-bold rounded-md transition-colors duration-200
     ${fontSizeClass[fontSize]}
   `;
 
-  const stateStyles = disabled ? `bg-gray-500 text-white ` : `bg-nomad-black text-white hover:bg-white hover:text-nomad-black border border-nomad-black`;
+  let stateStyles = '';
+  if (variant === 'select') {
+    stateStyles = isSelected ? `bg-nomad-black text-white` : `bg-white text-nomad-black hover:bg-gray-100`;
+  } else if (variant === 'action') {
+    stateStyles = disabled ? `bg-gray-500 text-white` : `bg-nomad-black text-white hover:bg-white hover:text-nomad-black`;
+  }
 
-  const buttonStyle = `${baseStyle} ${stateStyles} ${className} `;
+  const buttonStyle = `${baseStyle} ${stateStyles} ${className} border border-nomad-black`;
 
   return (
-    <button className={buttonStyle} onClick={onClick} disabled={disabled} type="button">
+    <button className={buttonStyle} onClick={onClick} disabled={disabled} type="button" style={{ borderRadius }}>
       {children}
     </button>
   );
