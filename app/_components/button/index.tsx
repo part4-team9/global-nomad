@@ -38,7 +38,8 @@ export default function Button({
     stateStyles = disabled ? `bg-gray-500 text-white` : `bg-nomad-black text-white hover:bg-white hover:text-nomad-black`;
   }
 
-  const buttonStyle = `${baseStyle} ${stateStyles} ${className} border border-nomad-black`;
+  const borderStyle = disabled ? '' : 'border border-nomad-black';
+  const buttonStyle = `${baseStyle} ${stateStyles} ${className} ${borderStyle}`;
 
   return (
     <button className={buttonStyle} onClick={onClick} disabled={disabled} type="button" style={{ borderRadius }}>
