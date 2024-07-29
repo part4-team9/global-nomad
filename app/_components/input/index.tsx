@@ -9,14 +9,13 @@ import EyeOffIcon from 'public/assets/icons/eye-off.svg';
 import EyeOnIcon from 'public/assets/icons/eye-on.svg';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** 값이 true일 경우 error 스타일 활성화 아니라면 false (기본값 false 설정 필요) */
   error?: boolean;
+  /** input 밑에 보여줄 에러 메세지 */
+  errorMessage?: string;
 }
 
-/**
- * Input 공통 컴포넌트
- * @error 로그인, 회원가입에서 유효성 검사 실패했을 때 true 전달 아니라면 false (기본값 false 설정 필요)
- */
-export default forwardRef(function Input({ type, error, ...rest }: InputProps, ref: React.LegacyRef<HTMLInputElement>) {
+export default forwardRef(function Input({ type, error, errorMessage, ...rest }: InputProps, ref: React.LegacyRef<HTMLInputElement>) {
   const [passwordToggle, setPasswordToggle] = useState(false);
   const isPassword = type === 'password';
   const newType = passwordToggle && isPassword ? 'text' : type;
@@ -37,6 +36,7 @@ export default forwardRef(function Input({ type, error, ...rest }: InputProps, r
         ref={ref}
         {...rest}
       />
+      {error && errorMessage && <span className="mt-2 pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
       {isPassword && (
         <button
           type="button"

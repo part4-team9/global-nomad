@@ -39,8 +39,12 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
       </div>
       <div className="grid gap-6">
         <div>
-          <Input placeholder="제목" error={Boolean(errors?.title)} {...register('title', { required: true })} />
-          {errors.title && <span className="mt-2 pl-2 text-xs leading-[1.3] text-red-500">제목을 입력해주세요.</span>}
+          <Input
+            placeholder="제목"
+            error={Boolean(errors?.title)}
+            errorMessage={errors?.title?.message}
+            {...register('title', { required: '제목을 입력해주세요' })}
+          />
         </div>
         {/* <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
         <Textarea size="big" placeholder="설명" />
