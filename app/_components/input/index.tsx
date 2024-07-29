@@ -2,21 +2,20 @@
 
 'use client';
 
-import { useCallback, useState } from 'react';
+import { forwardRef, useCallback, useState } from 'react';
 import Image from 'next/image';
 
 import EyeOffIcon from 'public/assets/icons/eye-off.svg';
 import EyeOnIcon from 'public/assets/icons/eye-on.svg';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** 값이 true일 경우 error 스타일 활성화 아니라면 false (기본값 false 설정 필요) */
   error?: boolean;
+  /** input 밑에 보여줄 에러 메세지 */
+  errorMessage?: string;
 }
 
-/**
- * Input 공통 컴포넌트
- * @error 로그인, 회원가입에서 유효성 검사 실패했을 때 true 전달 아니라면 false (기본값 false 설정 필요)
- */
-function Input({ type, error, ...rest }: InputProps) {
+export default forwardRef(function Input({ type, error, errorMessage, ...rest }: InputProps, ref: React.LegacyRef<HTMLInputElement>) {
   const [passwordToggle, setPasswordToggle] = useState(false);
   const isPassword = type === 'password';
   const newType = passwordToggle && isPassword ? 'text' : type;
@@ -27,15 +26,17 @@ function Input({ type, error, ...rest }: InputProps) {
   }, []);
 
   // 유효성 체크 여부에 따른 border style 변경
-  const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-500 focus:border-green-200';
+  const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200';
 
   return (
     <div className="relative">
       <input
         type={newType}
         className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${isPassword ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+        ref={ref}
         {...rest}
       />
+      {error && errorMessage && <span className="mt-2 pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
       {isPassword && (
         <button
           type="button"
@@ -48,6 +49,4 @@ function Input({ type, error, ...rest }: InputProps) {
       )}
     </div>
   );
-}
-
-export default Input;
+});
