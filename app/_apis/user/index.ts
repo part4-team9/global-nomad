@@ -18,6 +18,10 @@ interface Response {
   updatedAt: 'string';
 }
 
+interface ErrorResponse {
+  message: string;
+}
+
 type PostSignup = (params: FormValues) => Promise<boolean>;
 
 export const postSignup: PostSignup = async ({ email, nickname, password }) => {
@@ -37,9 +41,10 @@ export const postSignup: PostSignup = async ({ email, nickname, password }) => {
     return response.status === 201;
   } catch (error) {
     if (isAxiosError(error)) {
+      const errorData = error.response?.data as ErrorResponse;
+      const errorMessage = errorData?.message;
       if (error.response?.status === 409) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        throw new Error(error.response.data.message);
+        throw new Error(errorMessage);
       }
     }
     console.log(error);

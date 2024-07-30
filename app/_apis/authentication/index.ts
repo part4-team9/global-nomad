@@ -21,20 +21,21 @@ interface Response {
   };
 }
 
+interface ErrorResponse {
+  message: string;
+}
+
 type PostLogin = (params: FormValues) => Promise<Response>;
 
 export const postLogin: PostLogin = async ({ email, password }) => {
   try {
     const { data } = await axiosInstance.post<Response>(
       '/auth/login',
-
-      // '/auth/login',
       {
         email,
         password,
       },
       {
-        // withCredentials: true,
         authorization: false,
       },
     );
@@ -44,13 +45,13 @@ export const postLogin: PostLogin = async ({ email, password }) => {
     return data;
   } catch (error) {
     if (isAxiosError(error)) {
-      if (error.response?.status === 404) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        throw new Error(error.response.data.message);
+      const errorData = error.response?.data as ErrorResponse;
+      const errorMessage = errorData?.message;
+      if (error.response?.status === 404 && typeof errorMessage === 'string') {
+        throw new Error(errorMessage);
       }
     }
     console.log(error);
-    throw new Error('API_ERROR');
-    // console.error('서버와 통신 중 오류 발생:', error);
+    throw new Error('API_ERROR 로그인 PostLogin');
   }
 };

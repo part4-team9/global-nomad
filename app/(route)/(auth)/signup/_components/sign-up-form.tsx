@@ -1,6 +1,5 @@
 'use client';
 
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postSignup } from '@/_apis/user';
@@ -23,30 +22,7 @@ function SignUpForm() {
     formState: { isSubmitting, errors },
   } = useForm<FormValues>({ mode: 'onSubmit' });
 
-  const password = watch('password', ''); // 기본값을 빈 문자열로 설정
-
-  // const onSubmit: SubmitHandler<FormValues> = async (data) => {
-  //   console.log(data);
-  //   try {
-  //     const response = await fetch('/api/register', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(data),
-  //     });
-
-  //     if (response.ok) {
-  //       // 회원가입 성공 시 리디렉션
-  //       router.push('/login');
-  //     } else {
-  //       // 에러 처리
-  //       console.error('회원가입 실패');
-  //     }
-  //   } catch (error) {
-  //     console.error('서버와 통신 중 오류 발생:', error);
-  //   }
-  // };
+  const password = watch('password', '');
 
   const handleForm = handleSubmit(async (data: FormValues) => {
     console.log(data);
@@ -130,9 +106,10 @@ function SignUpForm() {
         />
       </div>
 
-      <button type="submit" className="border bg-gray-100 py-[14px]">
+      <button type="submit" disabled={isSubmitting} className="border bg-gray-100 py-[14px]">
         회원가입
       </button>
+      {/* 버튼 컴포넌트로 변경 */}
     </form>
   );
 }
