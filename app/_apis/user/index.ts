@@ -42,12 +42,12 @@ export const postSignup: PostSignup = async ({ email, nickname, password }) => {
   } catch (error) {
     if (isAxiosError(error)) {
       const errorData = error.response?.data as ErrorResponse;
-      const errorMessage = errorData?.message;
+      const errorMessage = errorData?.message || '회원가입 중 오류가 발생했습니다.';
       if (error.response?.status === 409) {
         throw new Error(errorMessage);
       }
     }
     console.log(error);
-    throw new Error('API_ERROR 회원가입 PostSignup');
+    throw new Error('NOT 409 ERROR');
   }
 };
