@@ -46,12 +46,12 @@ export const postLogin: PostLogin = async ({ email, password }) => {
   } catch (error) {
     if (isAxiosError(error)) {
       const errorData = error.response?.data as ErrorResponse;
-      const errorMessage = errorData?.message;
-      if (error.response?.status === 404 && typeof errorMessage === 'string') {
+      const errorMessage = errorData?.message || '로그인 중 오류가 발생했습니다.';
+      if (error.response?.status === 404 || error.response?.status === 401) {
         throw new Error(errorMessage);
       }
     }
     console.log(error);
-    throw new Error('API_ERROR 로그인 PostLogin');
+    throw new Error('비밀번호가 일치하지 않습니다.');
   }
 };
