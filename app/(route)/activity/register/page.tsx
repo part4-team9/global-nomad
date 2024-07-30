@@ -1,5 +1,6 @@
 // 체험 등록 페이지
 import CommonLayout from '@/_components/common-layout';
+import StickyLayout from '@/_components/side-sticky-layout';
 
 import ActivityForm from './_components/form';
 
@@ -23,9 +24,9 @@ export interface Activity {
 function ActivityRegister() {
   return (
     <CommonLayout>
-      <section>
+      <StickyLayout>
         <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
-      </section>
+      </StickyLayout>
     </CommonLayout>
   );
 }

@@ -46,7 +46,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             {...register('title', { required: '제목을 입력해주세요' })}
           />
         </div>
-        {/* <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
+        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
         <Textarea size="big" placeholder="설명" />
         <div className="grid gap-4">
           <label htmlFor="price" className="text-xl font-bold">
@@ -78,7 +78,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             </div>
             <div className="aspect-square w-1/2 rounded-xl bg-slate-400 tablet:w-1/4" />
           </div>
-        </div> */}
+        </div>
       </div>
     </form>
   );
