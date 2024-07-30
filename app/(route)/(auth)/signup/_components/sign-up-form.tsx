@@ -27,6 +27,7 @@ function SignUpForm() {
   } = useForm<FormValues>({ mode: 'onSubmit' });
 
   const { isOpen, openModal, closeModal } = useModal();
+  const [redirectToLogin, setRedirectToLogin] = useState<boolean>(false);
   const [modalMessage, setModalMessage] = useState<string>('');
 
   const password = watch('password', '');
@@ -36,8 +37,8 @@ function SignUpForm() {
     try {
       const result = await postSignup(data);
       if (result) {
-        router.replace('/login');
         setModalMessage('가입이 완료되었습니다!');
+        setRedirectToLogin(true);
         openModal();
       }
     } catch (error) {
@@ -51,6 +52,13 @@ function SignUpForm() {
       openModal();
     }
   });
+
+  const handleModalClose = () => {
+    if (redirectToLogin) {
+      router.replace('/login');
+    }
+    closeModal();
+  };
 
   return (
     <>
@@ -128,11 +136,11 @@ function SignUpForm() {
         </button>
         {/* 버튼 컴포넌트로 변경 */}
       </form>
-      <Modal isOpen={isOpen} onClose={closeModal}>
+      <Modal isOpen={isOpen} onClose={handleModalClose}>
         <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-[18px] md:w-[540px] md:px-[33px]">
           <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
           <span className="flex justify-center md:justify-end">
-            <button type="button" onClick={closeModal} className="h-[42px] w-[138px] rounded-[8px] bg-black text-white">
+            <button type="button" onClick={handleModalClose} className="h-[42px] w-[138px] rounded-[8px] bg-black text-white">
               확인
             </button>
             {/* 버튼 컴포넌트로 변경 */}
