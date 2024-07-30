@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postLogin } from '@/_apis/authentication';
 
+import useCheckLoginStatus from '@/_hooks/use-is-login';
+
 import Input from '@/_components/input';
 
 type FormValues = {
@@ -32,6 +34,8 @@ function LoginForm() {
       console.log(error);
     }
   });
+
+  const { isLoggedIn, setIsLoggedIn } = useCheckLoginStatus();
 
   return (
     <form noValidate onSubmit={handleForm} className="grid w-full gap-7">
