@@ -1,11 +1,13 @@
 'use client';
 
+import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import Image from 'next/image';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
+import AddressModal from '@/_components/address-modal';
 import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
@@ -20,16 +22,25 @@ interface ActivityFormProps {
 }
 
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
+  const [modalState, setModalState] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<Activity>({ mode: 'onSubmit' });
+
+  const handleModalState = () => {
+    setModalState((prev) => !prev);
+  };
+
+  const handleComplete = (address: string) => {
+    setValue('address', address, { shouldValidate: true });
+  };
+
   const onSubmit: SubmitHandler<Activity> = (data) => {
     console.log(data, 'data');
   };
-
-  console.log(errors.title);
 
   return (
     <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
@@ -38,29 +49,49 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
         <button type="submit">{buttonTitle}</button>
       </div>
       <div className="grid gap-6">
-        <div>
-          <Input
-            placeholder="제목"
-            error={Boolean(errors?.title)}
-            errorMessage={errors?.title?.message}
-            {...register('title', { required: '제목을 입력해주세요' })}
-          />
-        </div>
-        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
-        <Textarea size="big" placeholder="설명" />
+        <Input
+          placeholder="제목"
+          error={Boolean(errors?.title)}
+          errorMessage={errors?.title?.message}
+          {...register('title', { required: '제목을 입력해주세요' })}
+        />
+        {/* <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" /> */}
+        <Textarea
+          size="big"
+          placeholder="설명"
+          error={Boolean(errors?.description)}
+          errorMessage={errors?.description?.message}
+          {...register('description', { required: '설명을 입력해주세요' })}
+        />
         <div className="grid gap-4">
           <label htmlFor="price" className="text-xl font-bold">
             가격
           </label>
-          <Input id="price" type="number" placeholder="가격" />
+          <Input
+            id="price"
+            type="number"
+            placeholder="가격"
+            error={Boolean(errors?.price)}
+            errorMessage={errors?.price?.message}
+            {...register('price', { required: '가격을 입력해주세요' })}
+          />
         </div>
         <div className="grid gap-4">
           <label htmlFor="address" className="text-xl font-bold">
             주소
           </label>
-          <Input id="address" placeholder="주소를 입력해주세요" />
+          <Input
+            readOnly
+            id="address"
+            placeholder="주소를 입력해주세요"
+            error={Boolean(errors?.address)}
+            errorMessage={errors?.address?.message}
+            onClick={handleModalState}
+            {...register('address', { required: '주소를 입력해주세요' })}
+          />
+          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleComplete} />
         </div>
-        <div className="grid gap-4">
+        {/* <div className="grid gap-4">
           <label htmlFor="date" className="text-xl font-bold">
             예약 가능한 시간대
           </label>
@@ -78,7 +109,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             </div>
             <div className="aspect-square w-1/2 rounded-xl bg-slate-400 tablet:w-1/4" />
           </div>
-        </div>
+        </div> */}
       </div>
     </form>
   );

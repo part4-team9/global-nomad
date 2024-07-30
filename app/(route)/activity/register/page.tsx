@@ -11,11 +11,11 @@ interface Schedule {
 }
 
 export interface Activity {
-  // address: string;
+  address: string;
   // bannerImageUrl: string;
-  category: string;
-  // description: string;
-  // price: number;
+  // category: string;
+  description: string;
+  price: number;
   // schedules: Schedule[];
   // subImageUrls?: string[];
   title: string;
