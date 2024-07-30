@@ -3,6 +3,7 @@
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { postSignup } from '@/_apis/user';
 
 import Input from '@/_components/input';
 
@@ -15,41 +16,52 @@ type FormValues = {
 
 function SignUpForm() {
   const router = useRouter();
-
   const {
     register,
     watch,
     handleSubmit,
-    formState: { errors },
+    formState: { isSubmitting, errors },
   } = useForm<FormValues>({ mode: 'onSubmit' });
 
   const password = watch('password', ''); // 기본값을 빈 문자열로 설정
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  // const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  //   console.log(data);
+  //   try {
+  //     const response = await fetch('/api/register', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(data),
+  //     });
+
+  //     if (response.ok) {
+  //       // 회원가입 성공 시 리디렉션
+  //       router.push('/login');
+  //     } else {
+  //       // 에러 처리
+  //       console.error('회원가입 실패');
+  //     }
+  //   } catch (error) {
+  //     console.error('서버와 통신 중 오류 발생:', error);
+  //   }
+  // };
+
+  const handleForm = handleSubmit(async (data: FormValues) => {
     console.log(data);
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        // 회원가입 성공 시 리디렉션
-        router.push('/login');
-      } else {
-        // 에러 처리
-        console.error('회원가입 실패');
+      const result = await postSignup(data);
+      if (result) {
+        router.replace('/login');
       }
     } catch (error) {
-      console.error('서버와 통신 중 오류 발생:', error);
+      console.log(error);
     }
-  };
+  });
 
   return (
-    <form noValidate className="grid w-full gap-7" onSubmit={handleSubmit(onSubmit)}>
+    <form noValidate className="grid w-full gap-7" onSubmit={handleForm}>
       <div className="grid w-full gap-2">
         <label htmlFor="email">이메일</label>
         <Input
