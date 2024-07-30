@@ -34,7 +34,7 @@ function LoginForm() {
   });
 
   return (
-    <form noValidate onSubmit={handleForm} className="grid w-full gap-7">
+    <form noValidate onSubmit={handleForm} className="grid w-full px-3 md:px-0 gap-7">
       <div className="grid w-full gap-2">
         <label htmlFor="email">이메일</label>
         <Input
