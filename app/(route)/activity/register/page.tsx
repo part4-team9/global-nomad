@@ -13,7 +13,7 @@ interface Schedule {
 export interface Activity {
   address: string;
   // bannerImageUrl: string;
-  // category: string;
+  category: string;
   description: string;
   price: number;
   // schedules: Schedule[];

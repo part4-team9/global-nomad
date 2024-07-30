@@ -38,6 +38,10 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     setValue('address', address, { shouldValidate: true });
   };
 
+  const setCategory = (value: string) => {
+    setValue('category', value, { shouldValidate: true });
+  };
+
   const onSubmit: SubmitHandler<Activity> = (data) => {
     console.log(data, 'data');
   };
@@ -55,7 +59,14 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           errorMessage={errors?.title?.message}
           {...register('title', { required: '제목을 입력해주세요' })}
         />
-        {/* <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" /> */}
+        <SelectBox
+          values={ACTIVITY_CATEGORY}
+          placeholder="카테고리"
+          error={Boolean(errors?.category)}
+          errorMessage={errors?.category?.message}
+          onSelect={setCategory}
+          {...register('category', { required: '카테고리를 선택해주세요' })}
+        />
         <Textarea
           size="big"
           placeholder="설명"
