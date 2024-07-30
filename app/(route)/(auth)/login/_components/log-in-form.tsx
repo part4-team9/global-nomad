@@ -1,8 +1,8 @@
 'use client';
 
-import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import { postLogin } from '@/_apis/authentication';
 
 import Input from '@/_components/input';
 
@@ -21,31 +21,20 @@ function LoginForm() {
     mode: 'onSubmit',
   });
 
-  const onSubmit: SubmitHandler<FormValues> = async (data) => {
+  const handleForm = handleSubmit(async (data: FormValues) => {
     console.log(data);
     try {
-      const response = await fetch('/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        // 회원가입 성공 시 리디렉션
-        router.push('/login');
-      } else {
-        // 에러 처리
-        console.error('회원가입 실패');
+      const result = await postLogin(data);
+      if (result) {
+        router.replace('/main');
       }
     } catch (error) {
-      console.error('서버와 통신 중 오류 발생:', error);
+      console.log(error);
     }
-  };
+  });
 
   return (
-    <form noValidate onSubmit={handleSubmit(onSubmit)} className="grid w-full gap-7">
+    <form noValidate onSubmit={handleForm} className="grid w-full gap-7">
       <div className="grid w-full gap-2">
         <label htmlFor="email">이메일</label>
         <Input
