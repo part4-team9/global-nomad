@@ -1,9 +1,14 @@
 import Image from 'next/image';
 import gnbProfileImg from 'public/assets/images/gnb-profile.png';
+import { logout } from '@/_actions/logout';
 
 import alarm from 'public/assets/icons/alarm.svg';
 
 export default function UserHeader() {
+  // function logout() {
+  //   throw new Error('Function not implemented.');
+  // }
+
   return (
     <div className="flex text-m">
       <div className="my-[7px] border-r-[1px] border-gray-200 pr-3 md:pr-[25px]">
@@ -15,9 +20,17 @@ export default function UserHeader() {
         </div>
         <div className="py-[5px]">
           정만철
-          {/* 추후 userName으로 변경 */}
+          {/* 로그인 상태에 따른 헤더 변경 기능 추가할 것 */}
         </div>
       </div>
+      <button
+        type='submit'
+        onClick={() => {
+          void logout();
+        }}
+      >
+        로그아웃
+      </button>
     </div>
   );
 }
