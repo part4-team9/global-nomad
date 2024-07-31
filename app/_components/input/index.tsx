@@ -29,26 +29,26 @@ export default forwardRef(function Input({ type, error, errorMessage, ...rest }:
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200';
 
   return (
-    <>
-    <div className="relative">
-      <input
-        type={newType}
-        className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${isPassword ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
-        ref={ref}
-        {...rest}
-      />
-      {isPassword && (
-        <button
-        type="button"
-        className="absolute right-5 top-1/2 -translate-y-1/2"
-        onClick={handlePasswordToggle}
-        aria-label={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'}
-        >
-          <Image src={passwordToggle ? EyeOnIcon : EyeOffIcon} alt={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'} />
-        </button>
-      )}
+    <div className="grid">
+      <div className="relative">
+        <input
+          type={newType}
+          className={`leading-1.6 w-full rounded border border-solid py-4 pl-5 ${isPassword ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass}`}
+          ref={ref}
+          {...rest}
+        />
+        {isPassword && (
+          <button
+            type="button"
+            className="absolute right-5 top-1/2 -translate-y-1/2"
+            onClick={handlePasswordToggle}
+            aria-label={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'}
+          >
+            <Image src={passwordToggle ? EyeOnIcon : EyeOffIcon} alt={passwordToggle ? '비밀번호 숨기기' : '비밀번호 보기'} />
+          </button>
+        )}
+      </div>
+      {error && errorMessage && <span className="mt-2 block pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
     </div>
-      {error && errorMessage && <span className="mb-[-40px] pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
-      </>
   );
 });
