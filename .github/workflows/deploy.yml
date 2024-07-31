@@ -1,40 +1,25 @@
 name: Deploy
 
-
-
 on:
-
   push:
-
     branches: ['main']
 
-
-
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     container: pandoc/latex
 
     steps:
-
       - uses: actions/checkout@v2
-
-
 
       - name: Install mustache (to update the date)
 
         run: apk add ruby && gem install mustache
 
-
-
       - name: creates output
 
         run: sh ./build.sh
-
-
 
       - name: Pushes to another repository
 
@@ -43,24 +28,20 @@ jobs:
         uses: cpina/github-action-push-to-another-repository@main
 
         env:
-
-          API_TOKEN_GITHUB: ${{ secrets.AUTO_ACTIONS }}
+          API_TOKEN_GITHUB: ${{ secrets.API_TOKEN_GITHUB }}
 
         with:
-
           source-directory: 'output'
 
-          destination-github-username: [내 깃허브 계정 이름]
+          destination-github-username: yubugi
 
-          destination-repository-name: [배포한 내 레포지토리 이름]
+          destination-repository-name: global-nomad
 
-          user-email: ${{ secrets.EMAIL }}
+          user-email: ${{ secrets.OFFICIAL_ACCOUNT_EMAIL }}
 
           commit-message: ${{ github.event.commits[0].message }}
 
           target-branch: main
-
-
 
       - name: Test get variable exported by push-to-another-repository
 
