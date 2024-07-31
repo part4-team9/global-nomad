@@ -7,6 +7,8 @@ import type { ReservationDataProps } from '@/_types';
 
 import useCalendar from '@/_hooks/useCalendar';
 
+import { calcLastColumCellStyles } from '@/_utils/calender';
+
 import CalendarCell from './_components/calendar-cell';
 import Header from './_components/calendar-header';
 import Weekdays from './_components/calendar-weekdays';
@@ -30,15 +32,23 @@ function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
   return (
     <div className="flex min-w-[345px] max-w-[800px] select-none flex-col">
       <Header currentDate={currentDate} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} goToday={goToday} />
-      <table className="border-grey-150 w-full table-fixed border-collapse rounded-lg border bg-white font-Inter text-gray-450">
+      <table className="border-grey-150 w-full table-fixed border-separate border-spacing-0 rounded-lg border bg-white font-Inter text-gray-450">
         <thead>
           <MemoizedWeekdays />
         </thead>
         <tbody>
           {days.map((week, weekIndex) => (
             <tr key={weekIndex} className="grid h-[154px] grid-cols-7">
-              {week.map(({ key, day, monthType }) => (
-                <MemoizedCalendarCell key={key} day={day} monthType={monthType} keyDate={key} reservations={reservations} today={today}>
+              {week.map(({ key, day, monthType }, columnIndex) => (
+                <MemoizedCalendarCell
+                  key={key}
+                  day={day}
+                  monthType={monthType}
+                  keyDate={key}
+                  reservations={reservations}
+                  today={today}
+                  className={calcLastColumCellStyles({ index: columnIndex, length: week.length })}
+                >
                   {(chipData) => (
                     <div className="flex flex-wrap gap-1">
                       {chipData.map(({ bgColor, count, label, textColor }) => (
