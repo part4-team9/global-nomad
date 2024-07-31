@@ -59,7 +59,6 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           errorMessage={errors?.title?.message}
           {...register('title', { required: '제목을 입력해주세요' })}
         />
-        <Input error errorMessage="비밀번호 입력해주삼" type="password" />
         <SelectBox
           values={ACTIVITY_CATEGORY}
           placeholder="카테고리"
