@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import type { SubmitHandler } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
@@ -22,58 +20,73 @@ interface ActivityFormProps {
 
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const [modalState, setModalState] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    setValue,
-    formState: { errors },
-  } = useForm<Activity>({ mode: 'onSubmit' });
+  const [buttonDisable, setButtonDisable] = useState(true);
+  const [bannerImage, setBannerImage] = useState<string[]>([]);
+  const [formData, setFormData] = useState<Activity>({
+    address: '',
+    bannerImageUrl: '',
+    category: '',
+    description: '',
+    price: undefined,
+    schedules: [],
+    subImageUrls: [],
+    title: '',
+  });
 
   const handleModalState = () => {
     setModalState((prev) => !prev);
   };
 
-  const handleComplete = (address: string) => {
-    setValue('address', address, { shouldValidate: true });
+  const clearBannerImage = () => {
+    setBannerImage([]);
   };
 
-  const setCategory = (value: string) => {
-    setValue('category', value, { shouldValidate: true });
+  const handleAddressComplete = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      address: value,
+    }));
   };
 
-  const onSubmit: SubmitHandler<Activity> = (data) => {
-    console.log(data, 'data');
+  const handleChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
+      setBannerImage([imageUrl]);
+    }
   };
+
+  useEffect(() => {
+    const { address, bannerImageUrl, category, description, price, schedules, title: formTitle } = formData;
+    const isDisabled =
+      address !== '' &&
+      bannerImageUrl !== '' &&
+      category !== '' &&
+      description !== '' &&
+      price !== undefined &&
+      price >= 0 &&
+      schedules.length > 0 &&
+      formTitle !== '';
+    setButtonDisable(isDisabled);
+  }, [formData]);
 
   return (
-    <form className="grid gap-6" onSubmit={handleSubmit(onSubmit)}>
+    <form className="grid gap-6">
       <div className="flex justify-between">
         <h2 className="leading-1.3 text-3xl font-bold">{title}</h2>
-        <button type="submit">{buttonTitle}</button>
+        <button type="submit" disabled={buttonDisable}>
+          {buttonTitle}
+        </button>
       </div>
       <div className="grid gap-6">
         <Input
           placeholder="제목"
-          error={Boolean(errors?.title)}
-          errorMessage={errors?.title?.message}
-          {...register('title', { required: '제목을 입력해주세요' })}
+          value={formData.title}
+          onChange={() => {
+            console.log('ls');
+          }}
         />
-        <SelectBox
-          values={ACTIVITY_CATEGORY}
-          placeholder="카테고리"
-          error={Boolean(errors?.category)}
-          errorMessage={errors?.category?.message}
-          onSelect={setCategory}
-          {...register('category', { required: '카테고리를 선택해주세요' })}
-        />
-        <Textarea
-          size="big"
-          placeholder="설명"
-          error={Boolean(errors?.description)}
-          errorMessage={errors?.description?.message}
-          {...register('description', { required: '설명을 입력해주세요' })}
-        />
+        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
+        <Textarea size="big" placeholder="설명" />
         <div className="grid gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold">
             가격
@@ -82,25 +95,18 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             id="price"
             type="number"
             placeholder="가격"
-            error={Boolean(errors?.price)}
-            errorMessage={errors?.price?.message}
-            {...register('price', { required: '가격을 입력해주세요' })}
+            value={formData.price}
+            onChange={() => {
+              console.log('ls');
+            }}
           />
         </div>
         <div className="grid gap-4">
           <label htmlFor="address" className="w-fit text-xl font-bold">
             주소
           </label>
-          <Input
-            readOnly
-            id="address"
-            placeholder="주소를 입력해주세요"
-            error={Boolean(errors?.address)}
-            errorMessage={errors?.address?.message}
-            onClick={handleModalState}
-            {...register('address', { required: '주소를 입력해주세요' })}
-          />
-          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleComplete} />
+          <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleModalState} value={formData.address} />
+          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleAddressComplete} />
         </div>
         {/* <div className="grid gap-4">
           <label htmlFor="date" className="text-xl font-bold">
@@ -112,12 +118,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           <label htmlFor="banner" className="w-fit text-xl font-bold">
             배너 이미지
           </label>
-          <FileInput
-            accept="image/*"
-            error={Boolean(errors?.bannerImageUrl)}
-            errorMessage={errors?.bannerImageUrl?.message}
-            {...register('bannerImageUrl', { required: '배너 이미지를 등록해주세요' })}
-          />
+          <FileInput images={bannerImage} onClear={clearBannerImage} onChange={handleChangeBanner} accept="image/*" />
         </div>
       </div>
     </form>

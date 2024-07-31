@@ -15,7 +15,6 @@ interface AddressModalProps {
 function AddressModal({ isOpen, onClose, onComplete }: AddressModalProps) {
   const onCompletePost = (data: Address) => {
     const { address } = data;
-    console.log(address, 'address');
     onComplete(address);
     onClose();
   };
