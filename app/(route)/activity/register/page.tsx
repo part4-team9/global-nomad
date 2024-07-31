@@ -12,7 +12,7 @@ interface Schedule {
 
 export interface Activity {
   address: string;
-  // bannerImageUrl: string;
+  bannerImageUrl: string;
   category: string;
   description: string;
   price: number;

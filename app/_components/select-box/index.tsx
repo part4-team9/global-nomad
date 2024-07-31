@@ -80,7 +80,7 @@ export default forwardRef(function SelectBox(
             <Image src={ArrowDown} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
           </div>
         </fieldset>
-        {error && errorMessage && <span className="mt-2 pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
+        {error && errorMessage && <span className="mt-2 block pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
         {showList && (
           <ul
             className={`absolute z-10 mt-2 grid w-full gap-[2px] rounded-md bg-white p-2 opacity-100 shadow-medium ${fade ? 'animate-fade-in' : 'animate-fade-out'}`}

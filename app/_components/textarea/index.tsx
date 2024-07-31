@@ -20,13 +20,13 @@ export default forwardRef(function Textarea({ size, error, errorMessage, ...rest
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200';
 
   return (
-    <div>
+    <div className="grid">
       <textarea
         className={`h-[346px] w-full resize-none rounded border border-solid ${inputStatusClass} px-4 py-2 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${isSmall}`}
         ref={ref}
         {...rest}
       />
-      {error && errorMessage && <span className="mt-2 pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
+      {error && errorMessage && <span className="mt-2 block pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
     </div>
   );
 });

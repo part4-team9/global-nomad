@@ -3,18 +3,17 @@
 import { useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import Image from 'next/image';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import AddressModal from '@/_components/address-modal';
+import CalendarWrapper from '@/_components/calendar-picker';
+import FileInput from '@/_components/file-input';
 import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
 import type { Activity } from '../../page';
-
-import PlusIcon from 'public/assets/icons/plus.svg';
 
 interface ActivityFormProps {
   buttonTitle: string;
@@ -26,6 +25,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const {
     register,
     handleSubmit,
+    getValues,
     setValue,
     formState: { errors },
   } = useForm<Activity>({ mode: 'onSubmit' });
@@ -59,6 +59,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           errorMessage={errors?.title?.message}
           {...register('title', { required: '제목을 입력해주세요' })}
         />
+        <Input error errorMessage="비밀번호 입력해주삼" type="password" />
         <SelectBox
           values={ACTIVITY_CATEGORY}
           placeholder="카테고리"
@@ -75,7 +76,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           {...register('description', { required: '설명을 입력해주세요' })}
         />
         <div className="grid gap-4">
-          <label htmlFor="price" className="text-xl font-bold">
+          <label htmlFor="price" className="w-fit text-xl font-bold">
             가격
           </label>
           <Input
@@ -88,7 +89,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           />
         </div>
         <div className="grid gap-4">
-          <label htmlFor="address" className="text-xl font-bold">
+          <label htmlFor="address" className="w-fit text-xl font-bold">
             주소
           </label>
           <Input
@@ -106,21 +107,19 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           <label htmlFor="date" className="text-xl font-bold">
             예약 가능한 시간대
           </label>
-          <Input id="date" type="date" placeholder="YY/MM/DD" />
-        </div>
+          <CalendarWrapper />
+        </div> */}
         <div className="grid gap-4">
-          <label htmlFor="banner" className="text-xl font-bold">
+          <label htmlFor="banner" className="w-fit text-xl font-bold">
             배너 이미지
           </label>
-          <div className="flex items-center gap-2 tablet:gap-6">
-            <div className="relative flex aspect-square w-1/2 flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 tablet:w-1/4">
-              <Image src={PlusIcon} alt="등록" />
-              <span>이미지 등록</span>
-              <input id="banner" type="file" className="absolute left-0 top-0 h-full w-full opacity-0" />
-            </div>
-            <div className="aspect-square w-1/2 rounded-xl bg-slate-400 tablet:w-1/4" />
-          </div>
-        </div> */}
+          <FileInput
+            accept="image/*"
+            error={Boolean(errors?.bannerImageUrl)}
+            errorMessage={errors?.bannerImageUrl?.message}
+            {...register('bannerImageUrl', { required: '배너 이미지를 등록해주세요' })}
+          />
+        </div>
       </div>
     </form>
   );
