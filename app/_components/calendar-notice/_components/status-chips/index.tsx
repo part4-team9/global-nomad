@@ -1,4 +1,4 @@
-interface StatusChipProps {
+export interface StatusChipProps {
   bgColor: string;
   count: number;
   label: string;

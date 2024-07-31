@@ -1,5 +1,7 @@
-import type { ReservationDataProps } from '@/_types';
+import type { DateReservations } from '@/_types';
 import { ReservationStatus } from '@/_types';
+
+import type { StatusChipProps } from '@/_components/calendar-notice/_components/status-chips';
 
 export const statusStyles = {
   [ReservationStatus.COMPLETE]: {
@@ -10,49 +12,40 @@ export const statusStyles = {
   [ReservationStatus.CONFIRMED]: {
     bgColor: 'bg-orange-200',
     textColor: 'text-orange-500',
-    label: '확정',
+    label: '승인',
   },
-  [ReservationStatus.RESERVATION]: {
-    bgColor: 'bg-white',
-    textColor: 'text-blue-500',
+  [ReservationStatus.PENDING]: {
+    bgColor: 'bg-blue-500',
+    textColor: 'text-white',
     label: '예약',
-  },
-  [ReservationStatus.SEAT]: {
-    bgColor: 'bg-white',
-    textColor: 'text-blue-500',
-    label: '잔여',
   },
 };
 
-export function getMaxStatus(reservation: ReservationDataProps | undefined): ReservationStatus | null {
-  if (!reservation) return null;
-
-  const res = reservation.reservation;
-  const counts: { [key in ReservationStatus]: number } = {
-    [ReservationStatus.SEAT]: res[ReservationStatus.SEAT],
-    [ReservationStatus.CONFIRMED]: res[ReservationStatus.CONFIRMED],
-    [ReservationStatus.COMPLETE]: res[ReservationStatus.COMPLETE],
-    [ReservationStatus.RESERVATION]: 0,
-  };
-
-  return (Object.keys(counts) as ReservationStatus[]).reduce((a, b) => (counts[a] > counts[b] ? a : b));
-}
-
-export function filterReservationsByDate(reservations: ReservationDataProps[], date: string): ReservationDataProps | undefined {
+/**
+ * 예약 현황 데이터에서 특정 날짜의 예약 현황을 가져옵니다.
+ * @param reservations
+ * @param date
+ * @returns
+ */
+export function filterReservationsByDate(reservations: DateReservations[], date: string): DateReservations | undefined {
   return reservations.find((reservation) => reservation.date === date);
 }
 
-export function getStatusChipData(reservation: ReservationDataProps): Array<{ bgColor: string; count: number; label: string; textColor: string }> {
+export function getStatusChipData(reservation: DateReservations): Array<StatusChipProps> {
   return Object.values(ReservationStatus)
-    .filter((status) => status !== ReservationStatus.RESERVATION)
+    .filter((status) => status !== ReservationStatus.DECLINED)
     .map((status) => ({
-      count: reservation.reservation[status],
+      count: reservation.reservations[status] || 0,
       ...statusStyles[status],
     }))
     .filter((chipData) => chipData.count > 0);
 }
 
-export function getMaxStatusStyle(maxStatus: ReservationStatus | null) {
-  if (!maxStatus) return null;
-  return statusStyles[maxStatus];
+export function extractReservationData(reservations: DateReservations[], keyDate: string) {
+  const dayReservation = filterReservationsByDate(reservations, keyDate);
+  const hasPending = dayReservation && dayReservation.reservations && dayReservation.reservations[ReservationStatus.PENDING] > 0;
+  const hasConfirmed = dayReservation && dayReservation.reservations && dayReservation.reservations[ReservationStatus.CONFIRMED] > 0;
+  const statusChipData = dayReservation ? getStatusChipData(dayReservation) : [];
+
+  return { hasPending, hasConfirmed, statusChipData };
 }

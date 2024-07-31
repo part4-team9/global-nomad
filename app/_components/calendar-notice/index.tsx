@@ -3,7 +3,7 @@
 import React from 'react';
 import { reservationsExample } from '@/_mocks/notice-calendar-example-reservations';
 
-import type { ReservationDataProps } from '@/_types';
+import type { DateReservations } from '@/_types/myActivities';
 
 import useCalendar from '@/_hooks/useCalendar';
 
@@ -22,7 +22,7 @@ const MemoizedWeekdays = React.memo(Weekdays);
  * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
-function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
+function NoticeCalender({ data }: { data?: DateReservations[] }) {
   const reservations = data || reservationsExample;
 
   const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();
@@ -50,7 +50,7 @@ function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
                   className={calcLastColumCellStyles({ index: columnIndex, length: week.length })}
                 >
                   {(chipData) => (
-                    <div className="flex flex-wrap gap-1">
+                    <div className="flex flex-wrap gap-0.5">
                       {chipData.map(({ bgColor, count, label, textColor }) => (
                         <StatusChip key={label} bgColor={bgColor} count={count} label={label} textColor={textColor} />
                       ))}

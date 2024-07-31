@@ -1,17 +1,19 @@
 import DotIcon from 'public/assets/icons/calender/DotIcon';
 
-import type { ReservationDataProps } from '@/_types';
+import { type DateReservations } from '@/_types';
 
 import { cn } from '@/_utils/classNames';
-import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChipData } from '@/_utils/reservation';
+import { extractReservationData } from '@/_utils/reservation';
+
+import type { StatusChipProps } from '../status-chips';
 
 interface CalendarCellProps {
-  children: (chipData: { bgColor: string; count: number; label: string; textColor: string }[]) => JSX.Element;
+  children: (chipData: StatusChipProps[]) => JSX.Element;
   className: string;
   day: number;
   keyDate: string;
   monthType: string;
-  reservations: ReservationDataProps[];
+  reservations: DateReservations[];
   today: string;
 }
 
@@ -26,10 +28,7 @@ interface CalendarCellProps {
  * @param children 셀 내부에 렌더링할 컴포넌트 (chips)
  */
 export default function CalendarCell({ day, monthType, keyDate, reservations, today, className, children }: CalendarCellProps) {
-  const dayReservation = filterReservationsByDate(reservations, keyDate);
-  const maxStatus = getMaxStatus(dayReservation);
-  const statusChipData = dayReservation ? getStatusChipData(dayReservation) : [];
-  const maxStatusStyle = getMaxStatusStyle(maxStatus);
+  const { hasPending, hasConfirmed, statusChipData } = extractReservationData(reservations, keyDate);
 
   return (
     <td
@@ -38,16 +37,29 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
         className,
       )}
     >
-      <p
-        className={cn('m-3 box-border flex w-fit gap-1', {
-          'text-gray-200': monthType !== 'current',
-          'rounded bg-emerald-800 px-0.5 text-white': keyDate === today,
-        })}
-      >
-        {day}
-        {maxStatus && maxStatusStyle && <DotIcon colorClass="fill-blue-500" />}
-      </p>
+      <div className="m-3 flex gap-1">
+        <DateDisplay day={day} monthType={monthType} keyDate={keyDate} today={today} />
+        {statusChipData.length > 0 && <Highlighter hasPending={hasPending} hasConfirmed={hasConfirmed} />}
+      </div>
       {children(statusChipData)}
     </td>
   );
+}
+
+function DateDisplay({ day, monthType, keyDate, today }: { day: number; keyDate: string; monthType: string; today: string }) {
+  return (
+    <p
+      className={cn('w-fit', {
+        'text-gray-200': monthType !== 'current',
+        'rounded bg-emerald-800 px-0.5 text-white': keyDate === today,
+      })}
+    >
+      {day}
+    </p>
+  );
+}
+
+function Highlighter({ hasPending, hasConfirmed }: { hasConfirmed?: boolean; hasPending?: boolean }) {
+  const colorClass = hasPending ? 'fill-blue-500' : hasConfirmed ? 'fill-blue-500' : 'fill-gray-400';
+  return <DotIcon colorClass={colorClass} />;
 }
