@@ -23,22 +23,17 @@ const MemoizedWeekdays = React.memo(Weekdays);
 function NoticeCalender({ data }: { data?: ReservationDataProps[] }) {
   const reservations = data || reservationsExample;
 
-  const { currentDate, days, weekStartDay, goToNextMonth, goToPreviousMonth, goToNextYear, goToPreviousYear, getToday, goToday } = useCalendar();
+  const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();
 
   const today = getToday();
 
   return (
     <div className="flex min-w-[345px] max-w-[800px] select-none flex-col">
-      <Header
-        currentDate={currentDate}
-        goToNextMonth={goToNextMonth}
-        goToNextYear={goToNextYear}
-        goToPreviousMonth={goToPreviousMonth}
-        goToPreviousYear={goToPreviousYear}
-        goToday={goToday}
-      />
-      <table className="border-grey-150 w-full table-fixed border-collapse overflow-hidden rounded-lg border bg-white font-Inter text-gray-450">
-        <MemoizedWeekdays weekStartDay={weekStartDay} />
+      <Header currentDate={currentDate} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} goToday={goToday} />
+      <table className="border-grey-150 w-full table-fixed border-collapse rounded-lg border bg-white font-Inter text-gray-450">
+        <thead>
+          <MemoizedWeekdays />
+        </thead>
         <tbody>
           {days.map((week, weekIndex) => (
             <tr key={weekIndex} className="grid h-[154px] grid-cols-7">

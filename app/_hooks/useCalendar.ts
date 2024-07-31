@@ -55,14 +55,6 @@ const useCalendar = (initialDate: Dayjs = dayjs(), initialWeekStartDay: number =
     setCurrentDate(currentDate.subtract(1, 'month'));
   };
 
-  const goToNextYear = () => {
-    setCurrentDate(currentDate.add(1, 'year'));
-  };
-
-  const goToPreviousYear = () => {
-    setCurrentDate(currentDate.subtract(1, 'year'));
-  };
-
   const changeWeekStartDay = (selectedWeekStartDay: number) => {
     setWeekStartDay(selectedWeekStartDay);
   };
@@ -80,8 +72,6 @@ const useCalendar = (initialDate: Dayjs = dayjs(), initialWeekStartDay: number =
     changeWeekStartDay,
     goToNextMonth,
     goToPreviousMonth,
-    goToNextYear,
-    goToPreviousYear,
     getToday,
     goToday,
   };

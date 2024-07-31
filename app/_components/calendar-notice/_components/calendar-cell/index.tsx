@@ -1,8 +1,18 @@
 import cx from 'clsx';
+import DotIcon from 'public/assets/icons/calender/DotIcon';
 
 import type { ReservationDataProps } from '@/_types';
 
 import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChipData } from '@/_utils/reservation';
+
+interface CalendarCellProps {
+  children: (chipData: { bgColor: string; count: number; label: string; textColor: string }[]) => JSX.Element;
+  day: number;
+  keyDate: string;
+  monthType: string;
+  reservations: ReservationDataProps[];
+  today: string;
+}
 
 /**
  * 캘린더 셀을 렌더링합니다.
@@ -13,15 +23,6 @@ import { filterReservationsByDate, getMaxStatus, getMaxStatusStyle, getStatusChi
  * @param today 오늘 날짜
  * @param children 셀 내부에 렌더링할 컴포넌트 (chips)
  */
-interface CalendarCellProps {
-  children: (chipData: { bgColor: string; count: number; label: string; textColor: string }[]) => JSX.Element;
-  day: number;
-  keyDate: string;
-  monthType: string;
-  reservations: ReservationDataProps[];
-  today: string;
-}
-
 export default function CalendarCell({ day, monthType, keyDate, reservations, today, children }: CalendarCellProps) {
   const dayReservation = filterReservationsByDate(reservations, keyDate);
   const maxStatus = getMaxStatus(dayReservation);
@@ -29,15 +30,15 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
   const maxStatusStyle = getMaxStatusStyle(maxStatus);
 
   return (
-    <td className="flex cursor-pointer flex-col justify-between border border-zinc-200 text-base/[21px] transition-colors duration-200 hover:bg-gray-50 active:bg-gray-100">
+    <td className="border-grey-150 flex cursor-pointer flex-col justify-between border text-base/[21px] transition-colors duration-200 hover:bg-gray-50 active:bg-gray-100">
       <p
-        className={cx('m-3 w-fit', {
-          'flex text-gray-200': monthType !== 'current',
-          'rounded bg-emerald-800 text-white': keyDate === today,
+        className={cx('m-3 box-border flex w-fit gap-1', {
+          'text-gray-200': monthType !== 'current',
+          'rounded bg-emerald-800 px-0.5 text-white': keyDate === today,
         })}
       >
         {day}
-        {maxStatus && maxStatusStyle && <span className={`px-1 text-[7px] font-medium ${maxStatusStyle.textColor}`}>●</span>}
+        {maxStatus && maxStatusStyle && <DotIcon colorClass="fill-blue-500" />}
       </p>
       {children(statusChipData)}
     </td>
