@@ -12,7 +12,7 @@ interface SelectBoxProps {
   errorMessage?: string;
   head?: string;
   id?: string;
-  onSelect?: (value: string) => void;
+  onSelect?: (key: string, value: string) => void;
   placeholder?: string;
   values: string[];
 }
@@ -53,7 +53,7 @@ export default forwardRef(function SelectBox(
   const handleClickListItem = (item: string) => {
     setInputValue(item);
     if (onSelect) {
-      onSelect(item);
+      onSelect('category', item);
     }
     closeSelectBox();
   };

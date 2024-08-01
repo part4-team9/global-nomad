@@ -9,13 +9,13 @@ import CloseBtn from 'public/assets/icons/close.svg';
 interface AddressModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onComplete: (address: string) => void;
+  onComplete: (key: string, address: string) => void;
 }
 
 function AddressModal({ isOpen, onClose, onComplete }: AddressModalProps) {
   const onCompletePost = (data: Address) => {
     const { address } = data;
-    onComplete(address);
+    onComplete('address', address);
     onClose();
   };
 

@@ -40,19 +40,12 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   };
 
   /**
-   * @TODO 이 두 함수 합칠 수 있을 듯!
+   * 카테고리, 주소 선택 다루는 함수
    */
-  const handleSelectCategory = (value: string) => {
+  const handleSelectChange = (key: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
-      category: value,
-    }));
-  };
-
-  const handleAddressComplete = (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      address: value,
+      [key]: value,
     }));
   };
 
@@ -127,7 +120,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
       </div>
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} />
-        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectCategory} />
+        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
         <Textarea id="description" size="big" placeholder="설명" onChange={handleChangeInput} />
         <div className="grid gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold">
@@ -140,14 +133,14 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             주소
           </label>
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleModalState} value={formData.address} />
-          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleAddressComplete} />
+          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleSelectChange} />
         </div>
-        {/* <div className="grid gap-4">
+        <div className="grid gap-4">
           <label htmlFor="date" className="text-xl font-bold">
             예약 가능한 시간대
           </label>
           <CalendarWrapper />
-        </div> */}
+        </div>
         <div className="grid gap-4">
           <label htmlFor="banner" className="w-fit text-xl font-bold">
             배너 이미지
