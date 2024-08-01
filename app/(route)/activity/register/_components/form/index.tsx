@@ -21,7 +21,9 @@ interface ActivityFormProps {
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const [modalState, setModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);
+  const [subImgDisable, setSubImgDisable] = useState(false);
   const [bannerImage, setBannerImage] = useState<string[]>([]);
+  const [subImages, setSubImages] = useState<string[]>([]);
   const [formData, setFormData] = useState<Activity>({
     address: '',
     bannerImageUrl: '',
@@ -37,17 +39,13 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     setModalState((prev) => !prev);
   };
 
+  /**
+   * @TODO 이 두 함수 합칠 수 있을 듯!
+   */
   const handleSelectCategory = (value: string) => {
     setFormData((prev) => ({
       ...prev,
       category: value,
-    }));
-  };
-
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.id]: e.target.value,
     }));
   };
 
@@ -58,8 +56,28 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     }));
   };
 
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
+  };
+
+  const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      /**
+       * @TODO api 체험 이미지 url 생성 필요
+       */
+      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
+      setSubImages((prev) => [...prev, imageUrl]);
+    }
+  };
+
   const handleChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      /**
+       * @TODO api 체험 이미지 url 생성 필요
+       */
       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
       setFormData((prev) => ({
         ...prev,
@@ -76,6 +94,19 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
       bannerImageUrl: '',
     }));
   };
+
+  const clearSubImage = (image: string) => {
+    setSubImages((prev) => prev.filter((img) => img !== image));
+  };
+
+  useEffect(() => {
+    setSubImgDisable(subImages.length >= 4);
+
+    setFormData((prev) => ({
+      ...prev,
+      subImageUrls: subImages,
+    }));
+  }, [subImages]);
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules, title: formTitle } = formData;
@@ -121,7 +152,14 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           <label htmlFor="banner" className="w-fit text-xl font-bold">
             배너 이미지
           </label>
-          <FileInput images={bannerImage} onClear={clearBannerImage} onChange={handleChangeBanner} accept="image/*" />
+          <FileInput id="banner" images={bannerImage} onClear={clearBannerImage} onChange={handleChangeBanner} accept="image/*" />
+        </div>
+        <div className="grid gap-4">
+          <label htmlFor="sub" className="w-fit text-xl font-bold">
+            소개 이미지
+          </label>
+          <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" />
+          <span className="text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
         </div>
       </div>
     </form>

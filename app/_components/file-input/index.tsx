@@ -11,7 +11,7 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   errorMessage?: string;
   images?: string[];
-  onClear?: () => void;
+  onClear?: ((image: string) => void) | (() => void);
 }
 
 /**
@@ -25,6 +25,16 @@ export default forwardRef(function FileInput({ images, error, errorMessage, onCl
   // 유효성 체크 여부에 따른 border style 변경
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-700';
 
+  const handleClear = (image: string) => {
+    if (onClear) {
+      if (onClear.length === 1) {
+        (onClear as (image: string) => void)(image);
+      } else {
+        (onClear as () => void)();
+      }
+    }
+  };
+
   return (
     <div className="grid">
       <div className="flex items-center gap-2 tablet:gap-6">
@@ -33,12 +43,12 @@ export default forwardRef(function FileInput({ images, error, errorMessage, onCl
         >
           <Image src={PlusIcon} alt="등록" />
           <span>이미지 등록</span>
-          <input id="banner" type="file" ref={ref} {...rest} className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0" />
+          <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0" />
         </div>
         {images?.map((image, idx) => (
           <div key={idx} className="relative aspect-square w-1/2 rounded-xl tablet:w-1/4">
             <Image fill src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button type="button" onClick={onClear} className="absolute -right-5 -top-5 h-10 w-10">
+            <button type="button" onClick={() => handleClear(image)} className="absolute -right-5 -top-5 h-10 w-10">
               <Image src={DeleteIcon} alt="삭제" />
             </button>
           </div>
