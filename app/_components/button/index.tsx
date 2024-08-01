@@ -1,15 +1,16 @@
 'use client';
 
 /**
- * @interface ButtonProps
- * @property borderRadius - borderRadius 기본값 '4px'
- * @property className - 추가적인 CSS 설정
- * @property disabled - 버튼 비활성화
- * @property fontSize - 텍스트의 폰트 크기를 설정
- * @property isSelected - 버튼이 선택 여부 결정 ture이면 색상변화
- * @property onClick - 버튼 클릭 이벤트 핸들러
- * @property type - 버튼의 동작
- * @property variant - 버튼의 색상
+ * Button 컴포넌트
+ *
+ * @param {string} [borderRadius='4px'] - borderRadius 기본값 '4px'
+ * @param {string} [className=''] - 추가적인 CSS 설정
+ * @param {boolean} [disabled=false] - 버튼 비활성화 여부
+ * @param {'m' | 'base'} [fontSize='base'] - 텍스트의 폰트 크기
+ * @param {boolean} [isSelected=false] - 버튼이 선택 여부 결정 true이면 색상변화
+ * @param {() => void} [onClick] - 버튼 클릭 이벤트 핸들러
+ * @param {'button' | 'submit' | 'reset'} [type='button'] - 버튼의 타입
+ * @param {'white' | 'black'} variant - 버튼의 색상 변형
  */
 
 interface ButtonProps {
