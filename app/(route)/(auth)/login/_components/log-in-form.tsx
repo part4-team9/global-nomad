@@ -8,6 +8,9 @@ import { postLogin } from '@/_apis/authentication';
 
 import { useModal } from '@/_hooks/useModal';
 
+import { getCookie } from '@/_utils/cookie';
+
+import Button from '@/_components/button';
 import Input from '@/_components/input';
 import Modal from '@/_components/modal';
 
@@ -58,28 +61,33 @@ function LoginForm() {
   const {
     handleSubmit,
     register,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
   } = useForm<FormValues>({
     mode: 'onSubmit',
   });
 
   const { isOpen, openModal, closeModal } = useModal();
   const [modalMessage, setModalMessage] = useState<string>('');
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  let messageInModal:string;
 
   const handleForm = handleSubmit(async (data: FormValues) => {
     try {
+      messageInModal = '로그인이 완료되었습니다.';
       const result = await postLogin(data);
       if (result) {
-        router.replace('/main');
+        setModalMessage(messageInModal);
+        const token = getCookie('accessToken');
+        setAccessToken(token);
       }
     } catch (error) {
-      let message = '로그인 중 오류가 발생했습니다.';
+      messageInModal = '로그인 중 오류가 발생했습니다.';
       if (error instanceof Error) {
-        message = error.message;
+        messageInModal = error.message;
       }
-      setModalMessage(message);
-      openModal();
+      setModalMessage(messageInModal);
     }
+    openModal();
   });
 
   const renderInput = (id: keyof FormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<FormValues>, error?: FieldError) => (
@@ -89,28 +97,29 @@ function LoginForm() {
     </div>
   );
 
+  const handleModalClose = () => {
+    if (accessToken) {
+      router.replace('/');
+    }
+    closeModal();
+  };
+
   return (
     <>
       <form noValidate onSubmit={handleForm} className="grid w-full gap-7 px-3 md:px-0">
         {inputFields.map((field) => renderInput(field.id, field.label, field.type, field.placeholder, field.validation, errors[field.id]))}
-        
-        {/* 버튼 컴포넌트로 변경 */}
-        <button type="submit" disabled={isSubmitting} className="border bg-gray-100 py-[14px]">
+        <Button className="py-[14px]" type="submit" disabled={isSubmitting || !isValid} variant="black">
           로그인
-        </button>
-        
+        </Button>
       </form>
 
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-lg md:w-[540px] md:px-[33px]">
           <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
           <span className="flex justify-center md:justify-end">
-            
-            {/* 버튼 컴포넌트로 변경 */}
-            <button type="button" onClick={closeModal} className="h-[42px] w-[138px] rounded-lg bg-black text-white">
+            <Button className="h-[42px] w-[138px]" type="button" variant="black" onClick={handleModalClose}>
               확인
-            </button>
-
+            </Button>
           </span>
         </div>
       </Modal>
