@@ -1,3 +1,4 @@
+/* eslint-disable typescript-sort-keys/interface */
 // 체험 등록 페이지
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
@@ -6,8 +7,8 @@ import ActivityForm from './_components/form';
 
 export interface Schedule {
   date: string;
-  endTime: string;
   startTime: string;
+  endTime: string;
 }
 
 export interface Activity {

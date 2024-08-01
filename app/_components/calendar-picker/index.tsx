@@ -10,9 +10,10 @@ import CalendarIcon from 'public/assets/icons/calendar.svg';
 
 interface DatePickerProps {
   onChange: (key: string, value: string | Date) => void;
+  value: string;
 }
 
-function CalendarWrapper({ onChange }: DatePickerProps) {
+function CalendarWrapper({ onChange, value }: DatePickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
 
   const handleDateChange = (date: Date | null) => {
@@ -24,9 +25,10 @@ function CalendarWrapper({ onChange }: DatePickerProps) {
 
   return (
     // <label htmlFor="date" className="flex items-center rounded border border-solid border-gray-600 py-3 pl-4 pr-6">
-    <div className="relative">
+    <div className="relative flex-1">
       <DatePicker
         id="date"
+        value={value}
         dateFormat="yy/MM/dd"
         shouldCloseOnSelect
         selected={startDate}
@@ -34,7 +36,7 @@ function CalendarWrapper({ onChange }: DatePickerProps) {
         onSelect={handleDateChange}
         minDate={new Date()}
         placeholderText="YY/MM/DD"
-        className="w-full rounded border border-solid border-gray-600 py-3 pl-4 pr-[68px] caret-transparent outline-none"
+        className="w-full rounded border border-solid border-gray-600 py-[15px] pl-4 pr-[68px] caret-transparent outline-none"
       />
       <label htmlFor="date" className="absolute right-6 top-1/2 -translate-y-1/2">
         <Image src={CalendarIcon} alt="달력" />
