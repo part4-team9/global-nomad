@@ -1,8 +1,8 @@
 'use client';
 
-import '../../../styles/datepicker.css';
+import '../../../../../../styles/datepicker.css';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import Image from 'next/image';
 
@@ -23,8 +23,13 @@ function CalendarWrapper({ onChange, value }: DatePickerProps) {
     }
   };
 
+  useEffect(() => {
+    if (value === '') {
+      setStartDate(null);
+    }
+  }, [value]);
+
   return (
-    // <label htmlFor="date" className="flex items-center rounded border border-solid border-gray-600 py-3 pl-4 pr-6">
     <div className="relative flex-1">
       <DatePicker
         id="date"
@@ -42,7 +47,6 @@ function CalendarWrapper({ onChange, value }: DatePickerProps) {
         <Image src={CalendarIcon} alt="달력" />
       </label>
     </div>
-    // </label>
   );
 }
 

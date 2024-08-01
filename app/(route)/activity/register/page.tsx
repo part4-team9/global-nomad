@@ -3,7 +3,7 @@
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
 
-import ActivityForm from './_components/form';
+import ActivityForm from './_components/activity-form';
 
 export interface Schedule {
   date: string;
@@ -24,11 +24,13 @@ export interface Activity {
 
 function ActivityRegister() {
   return (
-    <CommonLayout>
-      <StickyLayout>
-        <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
-      </StickyLayout>
-    </CommonLayout>
+    <div className="bg-gray-50">
+      <CommonLayout>
+        <StickyLayout>
+          <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
+        </StickyLayout>
+      </CommonLayout>
+    </div>
   );
 }
 

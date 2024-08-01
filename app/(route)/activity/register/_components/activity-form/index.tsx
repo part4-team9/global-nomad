@@ -1,25 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
 import Image from 'next/image';
+import AddressModal from '@/(route)/activity/register/_components/address-modal';
+import FileInput from '@/(route)/activity/register/_components/file-input';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
-import { generateTimeArray } from '@/_utils/generateTimeArray';
-
-import AddressModal from '@/_components/address-modal';
 import Button from '@/_components/button';
-import CalendarWrapper from '@/_components/calendar-picker';
-import FileInput from '@/_components/file-input';
 import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
 import type { Activity, Schedule } from '../../page';
+import SchedulePicker from '../schedule-picker';
 
 import DeleteIcon from 'public/assets/icons/btn-minus.svg';
-import AddIcon from 'public/assets/icons/btn-plus.svg';
 
 interface ActivityFormProps {
   buttonTitle: string;
@@ -27,18 +23,11 @@ interface ActivityFormProps {
 }
 
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
-  const timeArray = generateTimeArray();
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);
-  const [addButtonDisable, setAddButtonDisable] = useState(true);
   const [subImgDisable, setSubImgDisable] = useState(false);
   const [bannerImage, setBannerImage] = useState<string[]>([]);
   const [subImages, setSubImages] = useState<string[]>([]);
-  const [scheduleData, setScheduleData] = useState<Schedule>({
-    date: '',
-    startTime: '',
-    endTime: '',
-  });
   const [formData, setFormData] = useState<Activity>({
     address: '',
     bannerImageUrl: '',
@@ -50,7 +39,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     title: '',
   });
 
-  const handleModalState = () => {
+  const handleAddressModal = () => {
     setAddressModalState((prev) => !prev);
   };
 
@@ -64,28 +53,11 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     }));
   };
 
-  const handleScheduleChange = (key: string, value: string | Date) => {
-    let formattedValue = value;
-
-    if (key === 'date') {
-      formattedValue = dayjs(value).format('YYYY-MM-DD');
-    }
-    setScheduleData((prev) => ({
-      ...prev,
-      [key]: formattedValue,
-    }));
-  };
-
-  const addSchedule = () => {
+  const addSchedule = (scheduleData: Schedule) => {
     setFormData((prev) => ({
       ...prev,
       schedules: [...prev.schedules, scheduleData],
     }));
-    setScheduleData({
-      date: '',
-      startTime: '',
-      endTime: '',
-    });
   };
 
   const deleteSchedule = (schedule: Schedule) => {
@@ -96,19 +68,6 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
       schedules: updatedArray,
     }));
   };
-
-  useEffect(() => {
-    const { date, startTime, endTime } = scheduleData;
-    const isDisable = date === '' || startTime === '' || endTime === '';
-    const { schedules: scheduleArray } = formData;
-
-    const isSame = scheduleArray.some((arr) => JSON.stringify(arr) === JSON.stringify(scheduleData));
-
-    if (!isDisable) {
-      console.log(scheduleData);
-    }
-    setAddButtonDisable(isDisable || isSame);
-  }, [scheduleData]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -193,41 +152,18 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           <label htmlFor="address" className="w-fit text-xl font-bold">
             주소
           </label>
-          <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleModalState} value={formData.address} />
-          <AddressModal isOpen={addressModalState} onClose={handleModalState} onComplete={handleSelectChange} />
+          <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
+          <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
         <div className="grid gap-4">
           <label htmlFor="date" className="w-fit text-xl font-bold">
             예약 가능한 시간대
           </label>
-          <div className="flex items-center gap-5">
-            <CalendarWrapper onChange={handleScheduleChange} value={scheduleData.date} />
-            <div className="flex items-center gap-3">
-              <SelectBox
-                value={scheduleData.startTime}
-                keyName="startTime"
-                values={timeArray}
-                placeholder="HH:MM"
-                onSelect={handleScheduleChange}
-                className="max-w-[140px] py-[15px] pl-4 pr-3"
-              />
-              <span className="text-[20px] font-bold leading-[1.3]">~</span>
-              <SelectBox
-                value={scheduleData.endTime}
-                keyName="endTime"
-                values={timeArray}
-                placeholder="HH:MM"
-                onSelect={handleScheduleChange}
-                className="max-w-[140px] py-[15px] pl-4 pr-3"
-              />
-            </div>
-            <button type="button" disabled={addButtonDisable} onClick={addSchedule}>
-              <Image src={AddIcon} alt="추가" />
-            </button>
-          </div>
-          <div className="grid gap-5 border-t border-solid border-gray-200 pt-5">
-            {formData.schedules.length > 0 &&
-              formData.schedules.map((s, index) => (
+          <SchedulePicker addSchedule={addSchedule} scheduleArray={formData.schedules} />
+
+          {formData.schedules.length > 0 && (
+            <div className="grid gap-5 border-t border-solid border-gray-200 pt-5">
+              {formData.schedules.map((s, index) => (
                 <div key={index} className="flex items-center gap-5">
                   <input readOnly value={s.date} className="flex-1 rounded border border-solid border-gray-600 py-[15px] pl-4 pr-3 outline-none" />
                   <div className="flex items-center gap-3">
@@ -244,7 +180,8 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
                   </button>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
         </div>
         <div className="grid gap-4">
           <label htmlFor="banner" className="w-fit text-xl font-bold">
