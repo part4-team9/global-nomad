@@ -11,7 +11,8 @@ import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
 import type { Activity } from '../../page';
-import AddImageArea from '../add-image-area';
+import BannerImage from '../banner-image';
+import IntroduceImage from '../introduce-image';
 import ScheduleEditor from '../schedule-editor';
 import SchedulePicker from '../schedule-picker';
 
@@ -103,7 +104,8 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             </div>
           )}
         </div>
-        <AddImageArea setFormData={setFormData} />
+        <BannerImage setFormData={setFormData} />
+        <IntroduceImage setFormData={setFormData} />
       </div>
     </form>
   );
