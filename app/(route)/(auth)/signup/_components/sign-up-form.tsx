@@ -33,7 +33,6 @@ function SignUpForm() {
   const password = watch('password', '');
 
   const handleForm = handleSubmit(async (data: FormValues) => {
-    console.log(data);
     try {
       const result = await postSignup(data);
       if (result) {
@@ -42,7 +41,6 @@ function SignUpForm() {
         openModal();
       }
     } catch (error) {
-      console.log(error);
 
       let message = '회원가입 중 오류가 발생했습니다.';
       if (error instanceof Error) {

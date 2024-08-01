@@ -47,7 +47,6 @@ export const postSignup: PostSignup = async ({ email, nickname, password }) => {
         throw new Error(errorMessage);
       }
     }
-    console.log(error);
     throw new Error('NOT 409 ERROR');
   }
 };

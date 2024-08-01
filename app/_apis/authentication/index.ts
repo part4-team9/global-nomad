@@ -51,7 +51,6 @@ export const postLogin: PostLogin = async ({ email, password }) => {
         throw new Error(errorMessage);
       }
     }
-    console.log(error);
     throw new Error('비밀번호가 일치하지 않습니다.');
   }
 };

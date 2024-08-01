@@ -35,7 +35,6 @@ function LoginForm() {
         router.replace('/main');
       }
     } catch (error) {
-      console.log(error);
 
       let message = '로그인 중 오류가 발생했습니다.';
       if (error instanceof Error) {
