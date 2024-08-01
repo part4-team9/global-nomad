@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import Image from 'next/image';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
@@ -11,7 +13,9 @@ import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
-import type { Activity } from '../../page';
+import type { Activity, Schedule } from '../../page';
+
+import AddIcon from 'public/assets/icons/btn-plus.svg';
 
 interface ActivityFormProps {
   buttonTitle: string;
@@ -19,11 +23,17 @@ interface ActivityFormProps {
 }
 
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
-  const [modalState, setModalState] = useState(false);
+  const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);
   const [subImgDisable, setSubImgDisable] = useState(false);
   const [bannerImage, setBannerImage] = useState<string[]>([]);
   const [subImages, setSubImages] = useState<string[]>([]);
+  const [schedules, setSchedules] = useState<Schedule[]>([]);
+  const [scheduleData, setScheduleData] = useState<Schedule>({
+    date: '',
+    endTime: '',
+    startTime: '',
+  });
   const [formData, setFormData] = useState<Activity>({
     address: '',
     bannerImageUrl: '',
@@ -36,7 +46,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   });
 
   const handleModalState = () => {
-    setModalState((prev) => !prev);
+    setAddressModalState((prev) => !prev);
   };
 
   /**
@@ -48,6 +58,21 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
       [key]: value,
     }));
   };
+
+  const handleDateChange = (key: string, value: string | Date) => {
+    let formattedDate = '';
+    if (key === 'date') {
+      formattedDate = dayjs(value).format('YYYY-MM-DD');
+    }
+    setScheduleData((prev) => ({
+      ...prev,
+      [key]: formattedDate,
+    }));
+  };
+
+  useEffect(() => {
+    console.log(scheduleData);
+  }, [scheduleData]);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData((prev) => ({
@@ -102,10 +127,10 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   }, [subImages]);
 
   useEffect(() => {
-    const { address, bannerImageUrl, category, description, price, schedules, title: formTitle } = formData;
+    const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
     // 버튼 disable 조건
     const isDisabled =
-      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || schedules.length > 0 || formTitle === '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length > 0 || formTitle === '';
     setButtonDisable(isDisabled);
     console.log(formData, 'form');
   }, [formData]);
@@ -133,13 +158,18 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
             주소
           </label>
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleModalState} value={formData.address} />
-          <AddressModal isOpen={modalState} onClose={handleModalState} onComplete={handleSelectChange} />
+          <AddressModal isOpen={addressModalState} onClose={handleModalState} onComplete={handleSelectChange} />
         </div>
         <div className="grid gap-4">
-          <label htmlFor="date" className="text-xl font-bold">
+          <label htmlFor="date" className="w-fit text-xl font-bold">
             예약 가능한 시간대
           </label>
-          <CalendarWrapper />
+          <div className="flex items-center">
+            <CalendarWrapper onChange={handleDateChange} />
+            <button type="button">
+              <Image src={AddIcon} alt="추가" />
+            </button>
+          </div>
         </div>
         <div className="grid gap-4">
           <label htmlFor="banner" className="w-fit text-xl font-bold">

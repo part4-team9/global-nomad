@@ -600,7 +600,7 @@
 .react-datepicker__year-text--selected,
 .react-datepicker__year-text--in-selecting-range,
 .react-datepicker__year-text--in-range {
-  background-color: var(--color-primary);
+  background-color: #0b3b2d;
   color: #fff;
 }
 
@@ -614,7 +614,7 @@
 .react-datepicker__year-text--selected:hover,
 .react-datepicker__year-text--in-selecting-range:hover,
 .react-datepicker__year-text--in-range:hover {
-  background-color: var(--color-primary);
+  background-color: #0b3b2d;
   color: #fff;
 }
 

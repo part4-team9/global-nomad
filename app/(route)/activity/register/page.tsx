@@ -4,7 +4,7 @@ import StickyLayout from '@/_components/side-sticky-layout';
 
 import ActivityForm from './_components/form';
 
-interface Schedule {
+export interface Schedule {
   date: string;
   endTime: string;
   startTime: string;
