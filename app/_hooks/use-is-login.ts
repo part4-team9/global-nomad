@@ -10,9 +10,7 @@ const useCheckLoginStatus = () => {
   useEffect(() => {
     const checkLoginStatus = () => {
       const accessToken = getCookie('accessToken');
-      if (accessToken) {
-        setIsLoggedIn(true);
-      }
+      setIsLoggedIn(!!accessToken);
     };
 
     checkLoginStatus();
