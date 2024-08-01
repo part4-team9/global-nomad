@@ -8,6 +8,7 @@ import { postSignup } from '@/_apis/user';
 
 import { useModal } from '@/_hooks/useModal';
 
+import Button from '@/_components/button';
 import Input from '@/_components/input';
 import Modal from '@/_components/modal';
 
@@ -32,7 +33,7 @@ function SignUpForm() {
     register,
     watch,
     handleSubmit,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isValid },
   } = useForm<FormValues>({ mode: 'onSubmit' });
 
   const { isOpen, openModal, closeModal } = useModal();
@@ -99,7 +100,6 @@ function SignUpForm() {
       if (result) {
         setModalMessage('가입이 완료되었습니다!');
         setRedirectToLogin(true);
-        openModal();
       }
     } catch (error) {
       let message = '회원가입 중 오류가 발생했습니다.';
@@ -107,8 +107,8 @@ function SignUpForm() {
         message = error.message;
       }
       setModalMessage(message);
-      openModal();
     }
+    openModal();
   });
 
   const handleModalClose = () => {
@@ -129,23 +129,17 @@ function SignUpForm() {
     <>
       <form noValidate onSubmit={handleForm} className="grid w-full gap-7 px-3 md:px-0">
         {inputFields.map((field) => renderInput(field.id, field.label, field.type, field.placeholder, field.validation, errors[field.id]))}
-        
-        {/* 버튼 컴포넌트로 변경 */}
-        <button type="submit" disabled={isSubmitting} className="border bg-gray-100 py-[14px]">
+        <Button className="py-[14px]" type="submit" disabled={isSubmitting || !isValid} variant="black">
           회원가입
-        </button>
-
+        </Button>
       </form>
-      <Modal isOpen={isOpen} onClose={handleModalClose}>
+      <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-lg md:w-[540px] md:px-[33px]">
           <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
           <span className="flex justify-center md:justify-end">
-            
-            {/* 버튼 컴포넌트로 변경 */}
-            <button type="button" onClick={handleModalClose} className="h-[42px] w-[138px] rounded-[8px] bg-black text-white">
+            <Button className="h-[42px] w-[138px]" type="button" variant="black" onClick={handleModalClose}>
               확인
-            </button>
-
+            </Button>
           </span>
         </div>
       </Modal>
