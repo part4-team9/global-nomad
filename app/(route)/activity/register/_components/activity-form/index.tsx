@@ -62,7 +62,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     const isDisabled =
       address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled);
-    console.log(formData, 'form');
+    // console.log(formData, 'form');
   }, [formData]);
 
   return (

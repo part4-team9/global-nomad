@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable array-callback-return */
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef } from 'react';
 import Image from 'next/image';
 
 import DeleteIcon from 'public/assets/icons/delete.svg';
