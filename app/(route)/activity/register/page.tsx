@@ -15,7 +15,7 @@ export interface Activity {
   bannerImageUrl: string;
   category: string;
   description: string;
-  price?: number;
+  price: number | '';
   schedules: Schedule[];
   subImageUrls?: string[];
   title: string;

@@ -27,7 +27,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     bannerImageUrl: '',
     category: '',
     description: '',
-    price: undefined,
+    price: '',
     schedules: [],
     subImageUrls: [],
     title: '',
@@ -37,8 +37,18 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     setModalState((prev) => !prev);
   };
 
-  const clearBannerImage = () => {
-    setBannerImage([]);
+  const handleSelectCategory = (value: string) => {
+    setFormData((prev) => ({
+      ...prev,
+      category: value,
+    }));
+  };
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.id]: e.target.value,
+    }));
   };
 
   const handleAddressComplete = (value: string) => {
@@ -51,22 +61,29 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const handleChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
+      setFormData((prev) => ({
+        ...prev,
+        bannerImageUrl: imageUrl,
+      }));
       setBannerImage([imageUrl]);
     }
   };
 
+  const clearBannerImage = () => {
+    setBannerImage([]);
+    setFormData((prev) => ({
+      ...prev,
+      bannerImageUrl: '',
+    }));
+  };
+
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules, title: formTitle } = formData;
+    // 버튼 disable 조건
     const isDisabled =
-      address !== '' &&
-      bannerImageUrl !== '' &&
-      category !== '' &&
-      description !== '' &&
-      price !== undefined &&
-      price >= 0 &&
-      schedules.length > 0 &&
-      formTitle !== '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || schedules.length > 0 || formTitle === '';
     setButtonDisable(isDisabled);
+    console.log(formData, 'form');
   }, [formData]);
 
   return (
@@ -78,28 +95,14 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
         </button>
       </div>
       <div className="grid gap-6">
-        <Input
-          placeholder="제목"
-          value={formData.title}
-          onChange={() => {
-            console.log('ls');
-          }}
-        />
-        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" />
-        <Textarea size="big" placeholder="설명" />
+        <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} />
+        <SelectBox values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectCategory} />
+        <Textarea id="description" size="big" placeholder="설명" onChange={handleChangeInput} />
         <div className="grid gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold">
             가격
           </label>
-          <Input
-            id="price"
-            type="number"
-            placeholder="가격"
-            value={formData.price}
-            onChange={() => {
-              console.log('ls');
-            }}
-          />
+          <Input id="price" type="number" placeholder="가격" value={formData.price} onChange={handleChangeInput} />
         </div>
         <div className="grid gap-4">
           <label htmlFor="address" className="w-fit text-xl font-bold">
