@@ -9,6 +9,7 @@ import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 import { generateTimeArray } from '@/_utils/generateTimeArray';
 
 import AddressModal from '@/_components/address-modal';
+import Button from '@/_components/button';
 import CalendarWrapper from '@/_components/calendar-picker';
 import FileInput from '@/_components/file-input';
 import Input from '@/_components/input';
@@ -33,7 +34,6 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const [subImgDisable, setSubImgDisable] = useState(false);
   const [bannerImage, setBannerImage] = useState<string[]>([]);
   const [subImages, setSubImages] = useState<string[]>([]);
-  const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [scheduleData, setScheduleData] = useState<Schedule>({
     date: '',
     startTime: '',
@@ -166,7 +166,7 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
     // 버튼 disable 조건
     const isDisabled =
-      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length > 0 || formTitle === '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled);
     console.log(formData, 'form');
   }, [formData]);
@@ -175,13 +175,13 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     <form className="grid gap-6">
       <div className="flex justify-between">
         <h2 className="leading-1.3 text-3xl font-bold">{title}</h2>
-        <button type="submit" disabled={buttonDisable}>
+        <Button type="submit" variant="black" disabled={buttonDisable} className="w-[120px]">
           {buttonTitle}
-        </button>
+        </Button>
       </div>
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} />
-        <SelectBox keyName="category" values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
+        <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
         <Textarea id="description" size="big" placeholder="설명" onChange={handleChangeInput} />
         <div className="grid gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold">
