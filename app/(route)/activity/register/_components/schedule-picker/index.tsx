@@ -1,5 +1,6 @@
 'use client';
 
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
@@ -8,17 +9,17 @@ import { generateTimeArray } from '@/_utils/generateTimeArray';
 
 import SelectBox from '@/_components/select-box';
 
-import type { Schedule } from '../../page';
+import type { Activity, Schedule } from '../../page';
 import CalendarWrapper from '../calendar-picker';
 
 import AddIcon from 'public/assets/icons/btn-plus.svg';
 
 interface PickerProps {
-  addSchedule: (scheduleData: Schedule) => void;
   scheduleArray: Schedule[];
+  setFormData: Dispatch<SetStateAction<Activity>>;
 }
 
-function SchedulePicker({ addSchedule, scheduleArray }: PickerProps) {
+function SchedulePicker({ scheduleArray, setFormData }: PickerProps) {
   const timeArray = generateTimeArray();
   const [addButtonDisable, setAddButtonDisable] = useState(true);
   const [scheduleData, setScheduleData] = useState<Schedule>({
@@ -40,7 +41,10 @@ function SchedulePicker({ addSchedule, scheduleArray }: PickerProps) {
   };
 
   const handleAddSchedule = () => {
-    addSchedule(scheduleData);
+    setFormData((prev) => ({
+      ...prev,
+      schedules: [...prev.schedules, scheduleData],
+    }));
     setScheduleData({
       date: '',
       startTime: '',

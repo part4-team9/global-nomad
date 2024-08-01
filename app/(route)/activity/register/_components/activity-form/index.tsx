@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import AddressModal from '@/(route)/activity/register/_components/address-modal';
-import FileInput from '@/(route)/activity/register/_components/file-input';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
@@ -12,10 +10,10 @@ import Input from '@/_components/input';
 import SelectBox from '@/_components/select-box';
 import Textarea from '@/_components/textarea';
 
-import type { Activity, Schedule } from '../../page';
+import type { Activity } from '../../page';
+import AddImageArea from '../add-image-area';
+import ScheduleEditor from '../schedule-editor';
 import SchedulePicker from '../schedule-picker';
-
-import DeleteIcon from 'public/assets/icons/btn-minus.svg';
 
 interface ActivityFormProps {
   buttonTitle: string;
@@ -25,9 +23,6 @@ interface ActivityFormProps {
 function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);
-  const [subImgDisable, setSubImgDisable] = useState(false);
-  const [bannerImage, setBannerImage] = useState<string[]>([]);
-  const [subImages, setSubImages] = useState<string[]>([]);
   const [formData, setFormData] = useState<Activity>({
     address: '',
     bannerImageUrl: '',
@@ -53,73 +48,12 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     }));
   };
 
-  const addSchedule = (scheduleData: Schedule) => {
-    setFormData((prev) => ({
-      ...prev,
-      schedules: [...prev.schedules, scheduleData],
-    }));
-  };
-
-  const deleteSchedule = (schedule: Schedule) => {
-    const { schedules: scheduleArray } = formData;
-    const updatedArray = scheduleArray.filter((s) => JSON.stringify(s) !== JSON.stringify(schedule));
-    setFormData((prev) => ({
-      ...prev,
-      schedules: updatedArray,
-    }));
-  };
-
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.id]: e.target.value,
     }));
   };
-
-  const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      /**
-       * @TODO api 체험 이미지 url 생성 필요
-       */
-      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-      setSubImages((prev) => [...prev, imageUrl]);
-    }
-  };
-
-  const handleChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      /**
-       * @TODO api 체험 이미지 url 생성 필요
-       */
-      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-      setFormData((prev) => ({
-        ...prev,
-        bannerImageUrl: imageUrl,
-      }));
-      setBannerImage([imageUrl]);
-    }
-  };
-
-  const clearBannerImage = () => {
-    setBannerImage([]);
-    setFormData((prev) => ({
-      ...prev,
-      bannerImageUrl: '',
-    }));
-  };
-
-  const clearSubImage = (image: string) => {
-    setSubImages((prev) => prev.filter((img) => img !== image));
-  };
-
-  useEffect(() => {
-    setSubImgDisable(subImages.length >= 4);
-
-    setFormData((prev) => ({
-      ...prev,
-      subImageUrls: subImages,
-    }));
-  }, [subImages]);
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
@@ -159,43 +93,17 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
           <label htmlFor="date" className="w-fit text-xl font-bold">
             예약 가능한 시간대
           </label>
-          <SchedulePicker addSchedule={addSchedule} scheduleArray={formData.schedules} />
+          <SchedulePicker scheduleArray={formData.schedules} setFormData={setFormData} />
 
           {formData.schedules.length > 0 && (
             <div className="grid gap-5 border-t border-solid border-gray-200 pt-5">
               {formData.schedules.map((s, index) => (
-                <div key={index} className="flex items-center gap-5">
-                  <input readOnly value={s.date} className="flex-1 rounded border border-solid border-gray-600 py-[15px] pl-4 pr-3 outline-none" />
-                  <div className="flex items-center gap-3">
-                    <input
-                      readOnly
-                      value={s.startTime}
-                      className="max-w-[140px] rounded border border-solid border-gray-600 py-[15px] pl-4 pr-3 outline-none"
-                    />
-                    <span className="text-[20px] font-bold leading-[1.3]">~</span>
-                    <input readOnly value={s.endTime} className="max-w-[140px] rounded border border-solid border-gray-600 py-[15px] pl-4 pr-3 outline-none" />
-                  </div>
-                  <button type="button" onClick={() => deleteSchedule(s)}>
-                    <Image src={DeleteIcon} alt="삭제" />
-                  </button>
-                </div>
+                <ScheduleEditor key={index} schedule={s} scheduleArray={formData.schedules} setFormData={setFormData} />
               ))}
             </div>
           )}
         </div>
-        <div className="grid gap-4">
-          <label htmlFor="banner" className="w-fit text-xl font-bold">
-            배너 이미지
-          </label>
-          <FileInput id="banner" images={bannerImage} onClear={clearBannerImage} onChange={handleChangeBanner} accept="image/*" />
-        </div>
-        <div className="grid gap-4">
-          <label htmlFor="sub" className="w-fit text-xl font-bold">
-            소개 이미지
-          </label>
-          <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" />
-          <span className="text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
-        </div>
+        <AddImageArea setFormData={setFormData} />
       </div>
     </form>
   );
