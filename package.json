@@ -22,8 +22,8 @@
     "pretendard": "^1.3.9",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.4.0",
     "react-hook-form": "^7.52.1",
+    "tailwind-merge": "^2.4.0",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
