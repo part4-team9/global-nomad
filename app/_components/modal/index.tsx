@@ -5,10 +5,11 @@ import ReactDOM from 'react-dom';
 
 import { useModal } from '@/_hooks/useModal';
 
-type ModalProps = {
+export type ModalProps = {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  size?: string;
 };
 
 /**
@@ -34,10 +35,21 @@ type ModalProps = {
  * @property {boolean} isOpen - Modal Open 여부
  * @property {() => void} onClose - Modal Close 함수
  * @property {ReactNode} children - Modal 자식 요소들
+ * @property {string} size - Modal Size (default: 기본 modal, full: 풀 사이즈 modal(mobile))
  */
 
-export default function Modal({ isOpen, onClose, children }: ModalProps) {
+export default function Modal({ isOpen, onClose, size = 'default', children }: ModalProps) {
   const { isMounted } = useModal();
+  let modalClass = '';
+
+  switch (size) {
+    case 'full':
+      modalClass = '';
+      break;
+    default:
+      modalClass = 'px-6';
+      break;
+  }
 
   const handleBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
     // 배경 클릭 시 모달 닫기
@@ -55,7 +67,11 @@ export default function Modal({ isOpen, onClose, children }: ModalProps) {
   if (!isOpen || !isMounted) return null;
 
   return ReactDOM.createPortal(
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70" onClick={handleBackgroundClick} onKeyDown={handleKeyDown}>
+    <div
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 ${modalClass}`}
+      onClick={handleBackgroundClick}
+      onKeyDown={handleKeyDown}
+    >
       <div className="relative rounded-[12px] bg-white shadow-lg">{children}</div>
     </div>,
     document.getElementById('modal-root') as HTMLElement,

@@ -24,13 +24,11 @@ export interface Activity {
 
 function ActivityRegister() {
   return (
-    <div className="bg-gray-50">
-      <CommonLayout>
-        <StickyLayout>
-          <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
-        </StickyLayout>
-      </CommonLayout>
-    </div>
+    <CommonLayout>
+      <StickyLayout>
+        <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
+      </StickyLayout>
+    </CommonLayout>
   );
 }
 

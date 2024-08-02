@@ -70,7 +70,7 @@ export default forwardRef(function SelectBox(
 
   return (
     <>
-      {showList && <div onClick={showList ? closeSelectBox : openSelectBox} className="fixed left-0 top-0 z-0 h-full w-full" />}
+      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 h-full w-full" />}
       <div className="relative">
         <fieldset
           onClick={showList ? closeSelectBox : openSelectBox}

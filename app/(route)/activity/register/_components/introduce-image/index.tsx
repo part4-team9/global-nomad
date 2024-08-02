@@ -4,25 +4,44 @@
 
 import { useEffect, useState } from 'react';
 
+import Button from '@/_components/button';
+import Modal from '@/_components/modal';
+
 import type { AddImageProps } from '../banner-image';
+import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
 function IntroduceImage({ setFormData }: AddImageProps) {
   const [subImages, setSubImages] = useState<string[]>([]);
   const [subImgDisable, setSubImgDisable] = useState(false);
-
-  const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      /**
-       * @TODO api 체험 이미지 url 생성 필요
-       */
-      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-      setSubImages((prev) => [...prev, imageUrl]);
-    }
-  };
+  const [modalState, setModalState] = useState(false);
 
   const clearSubImage = (image: string) => {
     setSubImages((prev) => prev.filter((img) => img !== image));
+  };
+
+  const handleModalState = () => {
+    setModalState((prev) => !prev);
+  };
+
+  const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const imageLength = e.target.files.length + subImages.length;
+
+      if (imageLength > 4) {
+        handleModalState();
+      } else {
+        /**
+         * @TODO api 체험 이미지 url 생성 필요
+         */
+        const filesArray = Array.from(e.target.files);
+
+        filesArray.forEach((file) => {
+          const imageUrl = URL.createObjectURL(file);
+          setSubImages((prev) => [...prev, imageUrl]);
+        });
+      }
+    }
   };
 
   useEffect(() => {
@@ -39,8 +58,11 @@ function IntroduceImage({ setFormData }: AddImageProps) {
       <label htmlFor="sub" className="w-fit text-xl font-bold">
         소개 이미지
       </label>
-      <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" />
+      <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
       <span className="text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
+      <CommonModal isOpen={modalState} onClose={handleModalState}>
+        이미지는 최대 4개 첨부 가능합니다.
+      </CommonModal>
     </div>
   );
 }
