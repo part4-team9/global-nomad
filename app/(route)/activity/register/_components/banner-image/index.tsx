@@ -36,8 +36,8 @@ function BannerImage({ setFormData }: AddImageProps) {
   };
 
   return (
-    <div className="grid gap-4">
-      <label htmlFor="banner" className="w-fit text-xl font-bold">
+    <div className="grid gap-6">
+      <label htmlFor="banner" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
         배너 이미지
       </label>
       <FileInput id="banner" images={bannerImage} onClear={onClearBanner} onChange={onChangeBanner} accept="image/*" />

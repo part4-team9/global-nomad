@@ -20,19 +20,17 @@ function AddressModal({ isOpen, onClose, onComplete }: AddressModalProps) {
   };
 
   return (
-    <div>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <div className="grid gap-4 px-5 py-6">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[20px]">주소 검색</h3>
-            <button type="button" onClick={onClose}>
-              <Image src={CloseBtn} alt="닫기" />
-            </button>
-          </div>
-          <DaumPostcodeEmbed onComplete={onCompletePost} />
+    <Modal isOpen={isOpen} onClose={onClose} size="full">
+      <div className="grid gap-4 px-5 py-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-[20px]">주소 검색</h3>
+          <button type="button" onClick={onClose}>
+            <Image src={CloseBtn} alt="닫기" />
+          </button>
         </div>
-      </Modal>
-    </div>
+        <DaumPostcodeEmbed style={{ height: 'calc(100dvh - 94px)', maxHeight: '466px' }} onComplete={onCompletePost} />
+      </div>
+    </Modal>
   );
 }
 

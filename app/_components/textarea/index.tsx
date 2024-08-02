@@ -22,7 +22,7 @@ export default forwardRef(function Textarea({ size, error, errorMessage, ...rest
   return (
     <div className="grid">
       <textarea
-        className={`h-[346px] w-full resize-none rounded border border-solid ${inputStatusClass} px-4 py-2 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${isSmall}`}
+        className={`h-[346px] w-full resize-none rounded border border-solid ${inputStatusClass} px-4 py-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${isSmall}`}
         ref={ref}
         {...rest}
       />

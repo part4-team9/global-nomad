@@ -37,18 +37,18 @@ export default forwardRef(function FileInput({ images, error, errorMessage, onCl
 
   return (
     <div className="grid">
-      <div className="flex items-center gap-2 tablet:gap-6">
+      <div className="flex flex-wrap items-center gap-2 tablet:gap-4 lg:gap-6">
         <div
-          className={`relative flex aspect-square w-1/2 flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed tablet:w-1/4 ${inputStatusClass}`}
+          className={`relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)] ${inputStatusClass}`}
         >
           <Image src={PlusIcon} alt="등록" />
-          <span>이미지 등록</span>
+          <span className="text-xl leading-[1.1] text-gray-700">이미지 등록</span>
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0" />
         </div>
         {images?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square w-1/2 rounded-xl tablet:w-1/4">
+          <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
             <Image fill src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button type="button" onClick={() => handleClear(image)} className="absolute -right-5 -top-5 h-10 w-10">
+            <button type="button" onClick={() => handleClear(image)} className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10">
               <Image src={DeleteIcon} alt="삭제" />
             </button>
           </div>

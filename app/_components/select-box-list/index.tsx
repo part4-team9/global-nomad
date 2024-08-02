@@ -2,11 +2,14 @@
 
 import Image from 'next/image';
 
+import useWindowSize from '@/_hooks/useWindowSize';
+
 import CheckMark from 'public/assets/icons/check-mark.svg';
 
 interface SelectUlProps {
   inputValue?: string;
   onClick: (item: string) => void;
+  size?: 'default' | 'small';
   value?: string;
 }
 
@@ -16,7 +19,9 @@ interface SelectUlProps {
  * @onClick list item 클릭 이벤트, 클릭한 value를 select box 값으로 보여줌
  * @inputValue user가 선택한 리스트 값
  */
-function SelectUl({ value, onClick, inputValue }: SelectUlProps) {
+function SelectUl({ value, onClick, inputValue, size = 'default' }: SelectUlProps) {
+  const windowSize = useWindowSize();
+  const isPC = windowSize > 1023;
   const isSelect = value === inputValue;
   const onClickItem = () => {
     if (value) {
@@ -25,9 +30,12 @@ function SelectUl({ value, onClick, inputValue }: SelectUlProps) {
   };
 
   return (
-    <li onClick={() => onClickItem()} className={`flex cursor-pointer items-center gap-2 rounded-md p-2 ${isSelect ? 'bg-nomad-black' : 'hover:bg-green-100'}`}>
-      <div className="h-5 w-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>
-      <span className={`leading-[1.6] ${isSelect ? 'text-white' : 'text-black'}`}>{value}</span>
+    <li
+      onClick={() => onClickItem()}
+      className={`flex cursor-pointer items-center gap-2 rounded-md p-2 ${size === 'small' && 'justify-center'} ${isSelect ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
+    >
+      {isPC && size === 'default' && <div className="h-5 w-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>}
+      <span className={`leading-[1.6] ${size === 'small' && 'text-sm'} ${isSelect ? 'text-white' : 'text-black'}`}>{value}</span>
     </li>
   );
 }

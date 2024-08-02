@@ -4,9 +4,6 @@
 
 import { useEffect, useState } from 'react';
 
-import Button from '@/_components/button';
-import Modal from '@/_components/modal';
-
 import type { AddImageProps } from '../banner-image';
 import CommonModal from '../common-modal';
 import FileInput from '../file-input';
@@ -54,12 +51,12 @@ function IntroduceImage({ setFormData }: AddImageProps) {
   }, [subImages]);
 
   return (
-    <div className="grid gap-4">
-      <label htmlFor="sub" className="w-fit text-xl font-bold">
+    <div className="grid gap-6">
+      <label htmlFor="sub" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
         소개 이미지
       </label>
       <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
-      <span className="text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
+      <span className="break-keep pl-2 text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
       <CommonModal isOpen={modalState} onClose={handleModalState}>
         이미지는 최대 4개 첨부 가능합니다.
       </CommonModal>

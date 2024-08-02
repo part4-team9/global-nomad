@@ -40,14 +40,16 @@ export type ModalProps = {
 
 export default function Modal({ isOpen, onClose, size = 'default', children }: ModalProps) {
   const { isMounted } = useModal();
-  let modalClass = '';
+  let defaultClass = '';
+  let fullClass = '';
 
   switch (size) {
     case 'full':
-      modalClass = '';
+      defaultClass = '';
+      fullClass = 'w-full h-full rounded-none mobile:w-auto mobile:h-auto mobile:rounded-xl';
       break;
     default:
-      modalClass = 'px-6';
+      defaultClass = 'px-6';
       break;
   }
 
@@ -68,11 +70,11 @@ export default function Modal({ isOpen, onClose, size = 'default', children }: M
 
   return ReactDOM.createPortal(
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 ${modalClass}`}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-70 ${defaultClass}`}
       onClick={handleBackgroundClick}
       onKeyDown={handleKeyDown}
     >
-      <div className="relative rounded-[12px] bg-white shadow-lg">{children}</div>
+      <div className={`relative rounded-[12px] bg-white shadow-lg ${fullClass}`}>{children}</div>
     </div>,
     document.getElementById('modal-root') as HTMLElement,
   );

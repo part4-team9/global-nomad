@@ -16,6 +16,7 @@ interface SelectBoxProps {
   keyName: string;
   onSelect?: (key: string, value: string) => void;
   placeholder?: string;
+  size?: 'default' | 'small';
   value?: string;
   values: string[];
 }
@@ -31,9 +32,10 @@ interface SelectBoxProps {
  * @param errorMessage input 밑에 보여줄 에러 메세지
  * @param onSelect 셀렉트박스 선택시 data 업데이트 함수 (react hook form)
  * @param className fieldset에 덮어쓸 className
+ * @param size select box size (모바일에서 작아지면 small)
  */
 export default forwardRef(function SelectBox(
-  { value, keyName, id, placeholder, values, head, error, errorMessage, onSelect, className, ...rest }: SelectBoxProps,
+  { value, keyName, id, placeholder, values, head, error, errorMessage, onSelect, className, size = 'default', ...rest }: SelectBoxProps,
   ref: React.LegacyRef<HTMLInputElement>,
 ) {
   const [showList, setShowList] = useState(false);
@@ -74,7 +76,7 @@ export default forwardRef(function SelectBox(
       <div className="relative">
         <fieldset
           onClick={showList ? closeSelectBox : openSelectBox}
-          className={`cursor-pointer rounded border border-solid bg-white pb-[15px] ${head ? 'pt-[5px]' : 'pt-[15px]'} pl-4 pr-3 ${inputStatusClass} ${className}`}
+          className={`${size === 'small' ? 'py-2 pl-3 pr-[6px] tablet:py-[15px] tablet:pl-4 tablet:pr-3' : 'py-[15px] pl-4 pr-3'} cursor-pointer rounded border border-solid bg-white ${head && 'pt-[5px]'} pl-4 pr-3 ${inputStatusClass} ${className}`}
         >
           {head && <legend className="px-1 text-sm">{head}</legend>}
           <div className="flex items-center justify-between gap-[5px]">
@@ -85,9 +87,11 @@ export default forwardRef(function SelectBox(
               placeholder={placeholder}
               ref={ref}
               {...rest}
-              className="w-full flex-1 cursor-pointer leading-[1.6] text-black outline-none placeholder:text-gray-500"
+              className={`w-full flex-1 cursor-pointer text-black outline-none placeholder:text-gray-500 ${size === 'small' ? 'text-sm leading-[1.8] tablet:text-base tablet:leading-[1.6]' : 'leading-[1.6]'}`}
             />
-            <Image src={ArrowDown} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
+            <div className={`${size === 'small' ? 'w-[20.5px] tablet:w-6' : 'w-6'}`}>
+              <Image src={ArrowDown} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
+            </div>
           </div>
         </fieldset>
         {error && errorMessage && <span className="mt-2 block pl-2 text-xs leading-[1.3] text-red-500">{errorMessage}</span>}
@@ -95,7 +99,7 @@ export default forwardRef(function SelectBox(
           <ul
             className={`absolute z-10 mt-2 grid h-[300px] w-full gap-[2px] overflow-y-scroll rounded-md bg-white p-2 opacity-100 shadow-medium ${fade ? 'animate-fade-in' : 'animate-fade-out'}`}
           >
-            {values?.map((v, idx) => <SelectUl key={idx} value={v} inputValue={inputValue} onClick={handleClickListItem} />)}
+            {values?.map((v, idx) => <SelectUl key={idx} value={v} size={size} inputValue={inputValue} onClick={handleClickListItem} />)}
           </ul>
         )}
       </div>

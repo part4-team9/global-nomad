@@ -67,37 +67,37 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
 
   return (
     <form className="grid gap-6">
-      <div className="flex justify-between">
+      <div className="flex flex-wrap justify-between">
         <h2 className="leading-1.3 text-3xl font-bold">{title}</h2>
-        <Button type="submit" variant="black" disabled={buttonDisable} className="w-[120px]">
+        <Button type="submit" variant="black" disabled={buttonDisable} className="h-12 w-[120px]">
           {buttonTitle}
         </Button>
       </div>
       <div className="grid gap-6">
-        <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} />
+        <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="pl-4 pr-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
         <Textarea id="description" size="big" placeholder="설명" onChange={handleChangeInput} />
-        <div className="grid gap-4">
-          <label htmlFor="price" className="w-fit text-xl font-bold">
+        <div className="grid gap-3 tablet:gap-4">
+          <label htmlFor="price" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
             가격
           </label>
-          <Input id="price" type="number" placeholder="가격" value={formData.price} onChange={handleChangeInput} />
+          <Input id="price" type="number" placeholder="가격" value={formData.price} onChange={handleChangeInput} className="pl-4 pr-4" />
         </div>
-        <div className="grid gap-4">
-          <label htmlFor="address" className="w-fit text-xl font-bold">
+        <div className="grid gap-3 tablet:gap-4">
+          <label htmlFor="address" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
             주소
           </label>
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
           <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
-        <div className="grid gap-4">
-          <label htmlFor="date" className="w-fit text-xl font-bold">
+        <div className="grid gap-4 lg:gap-5">
+          <label htmlFor="date" className="w-fit text-[20px] font-bold leading-[1.3] tablet:mb-2 tablet:text-xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
           <SchedulePicker scheduleArray={formData.schedules} setFormData={setFormData} />
 
           {formData.schedules.length > 0 && (
-            <div className="grid gap-5 border-t border-solid border-gray-200 pt-5">
+            <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 lg:gap-5 lg:pt-5">
               {formData.schedules.map((s, index) => (
                 <ScheduleEditor key={index} schedule={s} scheduleArray={formData.schedules} setFormData={setFormData} />
               ))}
