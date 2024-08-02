@@ -1,0 +1,25 @@
+interface Props {
+  width?: number;
+  height?: number;
+  rotate?: boolean;
+  rest?: React.SVGProps<SVGSVGElement>;
+}
+
+const CalendarNextBtn = ({ width = 24, height = 24, rotate = false, rest }: Props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={width}
+    height={height}
+    viewBox={`0 0 ${width} ${height}`}
+    preserveAspectRatio="xMidYMid meet"
+    fill="none"
+    transform={rotate ? `rotate(180)` : undefined}
+    {...rest}
+  >
+    <g fill="#1B1B1B">
+      <path d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6-6-6Z" />
+      <path d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6-6-6Z" />
+    </g>
+  </svg>
+);
+export default CalendarNextBtn;
