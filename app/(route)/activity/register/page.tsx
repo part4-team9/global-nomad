@@ -3,7 +3,7 @@
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
 
-import ActivityForm from './_components/activity-form';
+import ActivityForm from './_components/activity-register-form';
 
 export interface Schedule {
   date: string;

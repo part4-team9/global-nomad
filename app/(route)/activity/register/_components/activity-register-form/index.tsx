@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import AddressModal from '@/(route)/activity/register/_components/address-modal';
+import { useMutation } from '@tanstack/react-query';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
+
+import { postActivity } from '@/_libs/activity';
 
 import Button from '@/_components/button';
 import Input from '@/_components/input';
@@ -35,9 +38,24 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     title: '',
   });
 
+  const activityMutation = useMutation({
+    mutationFn: postActivity,
+    onSuccess: (res) => {
+      console.log('성공', res);
+    },
+    onError: (error) => {
+      console.log('실패', error);
+    },
+  });
+
+  /**
+   * @TODO 버튼 disabled 처리하기
+   */
+  const { isPending } = activityMutation;
+
   const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    console.log(formData);
+    activityMutation.mutate(formData);
   };
 
   const handleAddressModal = () => {
