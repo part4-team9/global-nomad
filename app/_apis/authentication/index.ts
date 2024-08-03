@@ -3,29 +3,14 @@ import { isAxiosError } from 'axios';
 import axiosInstance from '@/_libs/axios';
 import { setCookie } from '@/_utils/cookie';
 
-type FormValues = {
-  email: string;
-  password: string;
-};
+import type { LoginFormValues, Response } from '../type';
 
-interface Response {
-  accessToken: 'string';
-  refreshToken: 'string';
-  user: {
-    createdAt: 'string';
-    email: 'string';
-    id: 'number';
-    nickname: 'string';
-    profileImageUrl: 'string';
-    updatedAt: 'string';
-  };
-}
 
 interface ErrorResponse {
   message: string;
 }
 
-type PostLogin = (params: FormValues) => Promise<Response>;
+type PostLogin = (params: LoginFormValues) => Promise<Response>;
 
 export const postLogin: PostLogin = async ({ email, password }) => {
   try {
