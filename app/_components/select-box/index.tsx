@@ -76,7 +76,7 @@ export default forwardRef(function SelectBox(
       <div className="relative">
         <fieldset
           onClick={showList ? closeSelectBox : openSelectBox}
-          className={`${size === 'small' ? 'py-2 pl-3 pr-[6px] tablet:py-[15px] tablet:pl-4 tablet:pr-3' : 'py-[15px] pl-4 pr-3'} cursor-pointer rounded border border-solid bg-white ${head && 'pt-[5px]'} pl-4 pr-3 ${inputStatusClass} ${className}`}
+          className={`${size === 'small' ? 'py-2 pl-3 pr-[6px] tablet:py-[15px] tablet:pl-4 tablet:pr-3' : 'py-[15px] pl-4 pr-3'} cursor-pointer rounded border border-solid bg-white ${head && 'pt-[5px]'} ${inputStatusClass} ${className}`}
         >
           {head && <legend className="px-1 text-sm">{head}</legend>}
           <div className="flex items-center justify-between gap-[5px]">

@@ -35,6 +35,11 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     title: '',
   });
 
+  const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   const handleAddressModal = () => {
     setAddressModalState((prev) => !prev);
   };
@@ -62,11 +67,10 @@ function ActivityForm({ title, buttonTitle }: ActivityFormProps) {
     const isDisabled =
       address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled);
-    // console.log(formData, 'form');
   }, [formData]);
 
   return (
-    <form className="grid gap-6">
+    <form className="grid gap-6" onSubmit={onSubmitForm}>
       <div className="flex flex-wrap justify-between">
         <h2 className="leading-1.3 text-3xl font-bold">{title}</h2>
         <Button type="submit" variant="black" disabled={buttonDisable} className="h-12 w-[120px]">

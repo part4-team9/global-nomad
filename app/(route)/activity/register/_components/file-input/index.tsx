@@ -39,7 +39,7 @@ export default forwardRef(function FileInput({ images, error, errorMessage, onCl
     <div className="grid">
       <div className="flex flex-wrap items-center gap-2 tablet:gap-4 lg:gap-6">
         <div
-          className={`relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)] ${inputStatusClass}`}
+          className={`relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed p-2 tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)] ${inputStatusClass}`}
         >
           <Image src={PlusIcon} alt="등록" />
           <span className="text-xl leading-[1.1] text-gray-700">이미지 등록</span>

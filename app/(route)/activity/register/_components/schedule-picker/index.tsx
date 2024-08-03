@@ -73,25 +73,9 @@ function SchedulePicker({ scheduleArray, setFormData }: PickerProps) {
       <div className="grid grid-cols-[1fr_163px_44px] items-center gap-[5px] tablet:grid-cols-[1fr_213px_56px] lg:grid-cols-[1fr_318px_56px] lg:gap-5">
         <CalendarWrapper onChange={handleScheduleChange} value={scheduleData.date} />
         <div className="grid grid-cols-2 items-center gap-[5px] lg:grid-cols-[1fr_14px_1fr] lg:gap-3">
-          <SelectBox
-            value={scheduleData.startTime}
-            keyName="startTime"
-            values={timeArray}
-            placeholder="HH:MM"
-            onSelect={handleScheduleChange}
-            className="max-w-[140px] py-[15px] pl-4 pr-3"
-            size="small"
-          />
+          <SelectBox value={scheduleData.startTime} keyName="startTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
           {isPC && <span className="text-[20px] font-bold leading-[1.3]">~</span>}
-          <SelectBox
-            value={scheduleData.endTime}
-            keyName="endTime"
-            values={timeArray}
-            placeholder="HH:MM"
-            onSelect={handleScheduleChange}
-            className="max-w-[140px] py-[15px] pl-4 pr-3"
-            size="small"
-          />
+          <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
         </div>
         <button type="button" disabled={addButtonDisable} onClick={handleAddSchedule}>
           <Image src={AddIcon} alt="추가" />
