@@ -5,6 +5,7 @@ import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postLogin } from '@/_apis/authentication';
+import useUserStore from '@/store/useUserStore';
 
 import { useModal } from '@/_hooks/useModal';
 
@@ -69,16 +70,18 @@ function LoginForm() {
   const { isOpen, openModal, closeModal } = useModal();
   const [modalMessage, setModalMessage] = useState<string>('');
   const [accessToken, setAccessToken] = useState<string | null>(null);
-  let messageInModal:string;
+  const setLoginStatus = useUserStore((state) => state.setLoginStatus);
+  let messageInModal: string;
 
   const handleForm = handleSubmit(async (data: FormValues) => {
     try {
       messageInModal = '로그인이 완료되었습니다.';
       const result = await postLogin(data);
       if (result) {
-        setModalMessage(messageInModal);
         const token = getCookie('accessToken');
         setAccessToken(token);
+        setLoginStatus(true);
+        setModalMessage(messageInModal);
       }
     } catch (error) {
       messageInModal = '로그인 중 오류가 발생했습니다.';
