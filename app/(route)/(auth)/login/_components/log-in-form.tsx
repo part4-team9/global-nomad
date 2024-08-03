@@ -5,6 +5,7 @@ import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postLogin } from '@/_apis/authentication';
+import type { LoginFormValues, Response } from '@/_apis/type';
 import useUserStore from '@/store/useUserStore';
 
 import { useModal } from '@/_hooks/useModal';
@@ -15,17 +16,12 @@ import Button from '@/_components/button';
 import Input from '@/_components/input';
 import Modal from '@/_components/modal';
 
-type FormValues = {
-  email: string;
-  password: string;
-};
-
 interface InputField {
-  id: keyof FormValues;
+  id: keyof LoginFormValues;
   label: string;
   placeholder: string;
   type: string;
-  validation: RegisterOptions<FormValues>;
+  validation: RegisterOptions<LoginFormValues>;
 }
 
 const inputFields: InputField[] = [
@@ -63,7 +59,7 @@ function LoginForm() {
     handleSubmit,
     register,
     formState: { isSubmitting, errors, isValid },
-  } = useForm<FormValues>({
+  } = useForm<LoginFormValues>({
     mode: 'onSubmit',
   });
 
@@ -73,14 +69,14 @@ function LoginForm() {
   const setLoginStatus = useUserStore((state) => state.setLoginStatus);
   let messageInModal: string;
 
-  const handleForm = handleSubmit(async (data: FormValues) => {
+  const handleForm = handleSubmit(async (data: LoginFormValues) => {
     try {
       messageInModal = '로그인이 완료되었습니다.';
       const result = await postLogin(data);
       if (result) {
         const token = getCookie('accessToken');
         setAccessToken(token);
-        setLoginStatus(true);
+        setLoginStatus(true, result);
         setModalMessage(messageInModal);
       }
     } catch (error) {
@@ -93,7 +89,14 @@ function LoginForm() {
     openModal();
   });
 
-  const renderInput = (id: keyof FormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<FormValues>, error?: FieldError) => (
+  const renderInput = (
+    id: keyof LoginFormValues,
+    label: string,
+    type: string,
+    placeholder: string,
+    validation: RegisterOptions<LoginFormValues>,
+    error?: FieldError,
+  ) => (
     <div className="grid gap-2" key={id}>
       <label htmlFor={id}>{label}</label>
       <Input id={id} type={type} placeholder={placeholder} error={Boolean(error)} errorMessage={error?.message} {...register(id, validation)} />

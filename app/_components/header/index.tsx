@@ -17,9 +17,7 @@ export default function Header() {
         <Link href="/main" className="relative h-[28px] w-auto">
           <Image src={logoWithTitle} alt="Logo" />
         </Link>
-        <nav className="">
-        {isLoggedIn ? <UserHeader /> : <GuestHeader />}
-        </nav>
+        <nav className="">{isLoggedIn ? <UserHeader /> : <GuestHeader />}</nav>
       </section>
     </header>
   );

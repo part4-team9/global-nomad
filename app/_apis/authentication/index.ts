@@ -25,7 +25,7 @@ export const postLogin: PostLogin = async ({ email, password }) => {
       },
     );
     setCookie('accessToken', data.refreshToken);
-    setCookie('userId', data.user.id);
+    setCookie('userId', data.user.id.toString());
     setCookie('profileImageUrl', data.user.profileImageUrl);
     return data;
   } catch (error) {
