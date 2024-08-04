@@ -10,8 +10,21 @@ interface UserState {
 
 const useUserStore = create<UserState>((set) => ({
   isLoggedIn: false,
-  logout: () => set({ isLoggedIn: false, user: null }),
-  setLoginStatus: (status, response) => set({ isLoggedIn: status, user: response || null }),
+  logout: () => {
+    set({ isLoggedIn: false, user: null });
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('isLoggedIn');
+  },
+  setLoginStatus: (status, response) => {
+    set({ isLoggedIn: status, user: response || null });
+    if (status && response) {
+      sessionStorage.setItem('user', JSON.stringify(response));
+      sessionStorage.setItem('isLoggedIn', 'true');
+    } else {
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('isLoggedIn');
+    }
+  },
   user: null,
 }));
 
