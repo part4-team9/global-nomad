@@ -15,7 +15,7 @@ export default function UserHeader() {
         </div>
         <div className="py-[5px]">
           정만철
-          {/* 추후 userName으로 변경 */}
+          {/* 로그인 상태에 따른 헤더 변경 기능 추가할 것 */}
         </div>
       </div>
     </div>
