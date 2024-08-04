@@ -25,8 +25,8 @@ export default function UserHeader() {
   });
 
   return (
-    <div className="flex text-m">
-      <div className="my-[7px] border-r-[1px] border-gray-200 pr-3 md:pr-[25px]">
+    <div className="flex items-center text-m">
+      <div className="border-r-[1px] border-gray-200 pr-3 md:pr-[25px]">
         <Image src={alarm} alt="alarm" />
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]">

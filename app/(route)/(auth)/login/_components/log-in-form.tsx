@@ -78,6 +78,9 @@ function LoginForm() {
         setAccessToken(token);
         setLoginStatus(true, result);
         setModalMessage(messageInModal);
+        setTimeout(() => {
+          router.push('/');
+        }, 1500);
       }
     } catch (error) {
       messageInModal = '로그인 중 오류가 발생했습니다.';
