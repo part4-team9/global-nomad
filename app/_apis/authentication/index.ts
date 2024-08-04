@@ -5,7 +5,6 @@ import { setCookie } from '@/_utils/cookie';
 
 import type { LoginFormValues, Response } from '../type';
 
-
 interface ErrorResponse {
   message: string;
 }
