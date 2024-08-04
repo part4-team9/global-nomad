@@ -10,7 +10,7 @@ export interface SignupFormValues {
 export interface LoginFormValues {
   email: string;
   password: string;
-};
+}
 
 // api 요청시 돌아오는 response 타입
 export interface Response {

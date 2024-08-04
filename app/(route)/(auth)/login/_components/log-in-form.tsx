@@ -5,7 +5,7 @@ import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { postLogin } from '@/_apis/authentication';
-import type { LoginFormValues, Response } from '@/_apis/type';
+import type { LoginFormValues } from '@/_apis/type';
 import useUserStore from '@/store/useUserStore';
 
 import { useModal } from '@/_hooks/useModal';
