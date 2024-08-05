@@ -2,16 +2,22 @@
 
 'use client';
 
+import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import postImage from '@/_apis/activities/postImage';
 import { useMutation } from '@tanstack/react-query';
 
-import type { AddImageProps } from '../banner-image';
+import type { Activity } from '../../page';
 import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
-function IntroduceImage({ setFormData }: AddImageProps) {
+interface IntroduceImage {
+  setFormData: Dispatch<SetStateAction<Activity>>;
+  value?: string[];
+}
+
+function IntroduceImage({ value, setFormData }: IntroduceImage) {
   const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);
   const [subImgDisable, setSubImgDisable] = useState(false);
@@ -87,11 +93,23 @@ function IntroduceImage({ setFormData }: AddImageProps) {
   useEffect(() => {
     setSubImgDisable(subImages.length >= 4);
 
-    setFormData((prev) => ({
-      ...prev,
-      subImageUrls: subImages,
-    }));
+    setFormData((prev) => {
+      if (JSON.stringify(prev.subImageUrls) !== JSON.stringify(subImages)) {
+        return {
+          ...prev,
+          subImageUrls: subImages,
+        };
+      }
+      return prev;
+    });
   }, [subImages]);
+
+  useEffect(() => {
+    if (value) {
+      console.log(value, 'sub');
+      setSubImages(value);
+    }
+  }, [value]);
 
   return (
     <div className="grid gap-6">

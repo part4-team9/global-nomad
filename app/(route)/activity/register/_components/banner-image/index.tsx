@@ -1,7 +1,7 @@
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import postImage from '@/_apis/activities/postImage';
 import { useMutation } from '@tanstack/react-query';
@@ -10,11 +10,12 @@ import type { Activity } from '../../page';
 import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
-export interface AddImageProps {
+export interface BannerImageProps {
   setFormData: Dispatch<SetStateAction<Activity>>;
+  value?: string;
 }
 
-function BannerImage({ setFormData }: AddImageProps) {
+function BannerImage({ value, setFormData }: BannerImageProps) {
   const router = useRouter();
   const [bannerImage, setBannerImage] = useState<string[]>([]);
   const [modalState, setModalState] = useState({
@@ -44,11 +45,11 @@ function BannerImage({ setFormData }: AddImageProps) {
             },
           });
         } else {
-          setModalState((prev) => ({
-            ...prev,
+          setModalState({
             isOpen: true,
             message: '죄송합니다. 이미지 등록에 실패했습니다.',
-          }));
+            onClose: () => {},
+          });
         }
       }
     },
@@ -76,6 +77,12 @@ function BannerImage({ setFormData }: AddImageProps) {
       }));
     }
   };
+
+  useEffect(() => {
+    if (value) {
+      setBannerImage([value]);
+    }
+  }, [value]);
 
   return (
     <>
