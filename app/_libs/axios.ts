@@ -10,17 +10,23 @@ const axiosConfig = {
   },
 };
 
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    authorization?: boolean;
+  }
+}
+
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
-  config => {
+  (config) => {
     const token = getCookie('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  error => Promise.reject(error),
+  (error) => Promise.reject(error),
 );
 
 export default axiosInstance;
