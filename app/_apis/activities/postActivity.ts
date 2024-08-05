@@ -2,9 +2,9 @@ import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { Activity } from '@/(route)/activity/register/page';
 
-import axiosInstance from './axios';
+import axiosInstance from '@/_libs/axios';
 
-export const postActivity = async (body: Activity) => {
+const postActivity = async (body: Activity) => {
   try {
     const result = await axiosInstance.post('/activities', body);
     return result;
@@ -17,3 +17,5 @@ export const postActivity = async (body: Activity) => {
     }
   }
 };
+
+export default postActivity;

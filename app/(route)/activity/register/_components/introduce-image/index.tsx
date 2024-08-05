@@ -3,22 +3,62 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import postImage from '@/_apis/activities/postImage';
+import { useMutation } from '@tanstack/react-query';
 
 import type { AddImageProps } from '../banner-image';
 import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
 function IntroduceImage({ setFormData }: AddImageProps) {
+  const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);
   const [subImgDisable, setSubImgDisable] = useState(false);
-  const [modalState, setModalState] = useState(false);
+  const [imageLimitModal, setImageLimitModal] = useState(false);
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    message: '',
+    onClose: () => {},
+  });
+
+  const closeModal = () => {
+    setModalState((prev) => ({
+      ...prev,
+      isOpen: false,
+    }));
+    modalState.onClose();
+  };
+
+  const activityMutation = useMutation({
+    mutationFn: postImage,
+    onError: (error) => {
+      if (typeof error === 'number') {
+        if (error === 401) {
+          setModalState({
+            isOpen: true,
+            message: '로그인이 필요한 서비스입니다.',
+            onClose: () => {
+              router.push('/login');
+            },
+          });
+        } else {
+          setModalState((prev) => ({
+            ...prev,
+            isOpen: true,
+            message: '죄송합니다. 이미지 등록에 실패했습니다.',
+          }));
+        }
+      }
+    },
+  });
 
   const clearSubImage = (image: string) => {
     setSubImages((prev) => prev.filter((img) => img !== image));
   };
 
   const handleModalState = () => {
-    setModalState((prev) => !prev);
+    setImageLimitModal((prev) => !prev);
   };
 
   const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,14 +68,17 @@ function IntroduceImage({ setFormData }: AddImageProps) {
       if (imageLength > 4) {
         handleModalState();
       } else {
-        /**
-         * @TODO api 체험 이미지 url 생성 필요
-         */
         const filesArray = Array.from(e.target.files);
 
-        filesArray.forEach((file) => {
-          const imageUrl = URL.createObjectURL(file);
-          setSubImages((prev) => [...prev, imageUrl]);
+        filesArray.forEach((file, idx) => {
+          if (e.target.files) {
+            /**
+             * @TODO api 체험 이미지 url로 변경 필요
+             */
+            activityMutation.mutate(e.target.files[idx]);
+            const imageUrl = URL.createObjectURL(file);
+            setSubImages((prev) => [...prev, imageUrl]);
+          }
         });
       }
     }
@@ -57,8 +100,11 @@ function IntroduceImage({ setFormData }: AddImageProps) {
       </label>
       <FileInput id="sub" disabled={subImgDisable} images={subImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
       <span className="break-keep pl-2 text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
-      <CommonModal isOpen={modalState} onClose={handleModalState}>
+      <CommonModal isOpen={imageLimitModal} onClose={handleModalState}>
         이미지는 최대 4개 첨부 가능합니다.
+      </CommonModal>
+      <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
+        {modalState.message}
       </CommonModal>
     </div>
   );
