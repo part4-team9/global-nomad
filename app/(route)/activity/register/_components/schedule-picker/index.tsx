@@ -1,10 +1,10 @@
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import type { ActivityEdit, EditDetail, EditSchedule } from '@/(route)/activity/edit/[id]/page';
+import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
@@ -18,7 +18,6 @@ import CalendarWrapper from '../calendar-picker';
 import AddIcon from 'public/assets/icons/btn-plus.svg';
 
 interface PickerProps {
-  edit?: boolean;
   setEditDetail?: Dispatch<SetStateAction<EditDetail>>;
   setEditFormData?: Dispatch<SetStateAction<ActivityEdit>>;
   setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
@@ -26,12 +25,11 @@ interface PickerProps {
 
 /**
  * 예약 가능한 시간대 선택, 추가 기능 컴포넌트
- * @param edit 수정 페이지 데이터 체크
  * @param setRegisterFormData 체험 등록 form 데이터 업데이트 함수
  * @param setEditFormData 체험 수정 form 데이터 업데이트 함수
  * @param setEditDetail 체험 수정 스케줄 렌더링 업데이트 함수
  */
-function SchedulePicker({ edit, setRegisterFormData, setEditFormData, setEditDetail }: PickerProps) {
+function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }: PickerProps) {
   const timeArray = generateTimeArray();
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
@@ -54,7 +52,7 @@ function SchedulePicker({ edit, setRegisterFormData, setEditFormData, setEditDet
   };
 
   const handleAddSchedule = () => {
-    if (edit && setEditFormData && setEditDetail) {
+    if (setEditFormData && setEditDetail) {
       setEditFormData((prev) => ({
         ...prev,
         schedulesToAdd: [...prev.schedulesToAdd, scheduleData],

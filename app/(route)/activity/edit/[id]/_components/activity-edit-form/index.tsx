@@ -119,13 +119,20 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
           <label htmlFor="date" className="w-fit text-[20px] font-bold leading-[1.3] tablet:mb-2 tablet:text-xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
-          <SchedulePicker edit setEditFormData={setFormData} setEditDetail={setDetailData} />
+          <SchedulePicker setEditFormData={setFormData} setEditDetail={setDetailData} />
 
           {detailData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 lg:gap-5 lg:pt-5">
-              {/* {detailData.schedules.map((s, index) => (
-                <ScheduleEditor key={index} schedule={s} scheduleArray={detailData.schedules} setFormData={setFormData} />
-              ))} */}
+              {detailData.schedules.map((s, index) => (
+                <ScheduleEditor
+                  key={index}
+                  schedule={s}
+                  scheduleArray={detailData.schedules}
+                  setEditFormData={setFormData}
+                  detailData={formData.schedulesToAdd}
+                  setEditDetailData={setDetailData}
+                />
+              ))}
             </div>
           )}
         </div>

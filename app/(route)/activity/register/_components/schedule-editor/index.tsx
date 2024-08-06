@@ -2,29 +2,53 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
+import type { ActivityEdit, EditDetail, EditSchedule } from '@/(route)/activity/edit/[id]/page';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
-import type { Activity, Schedule } from '../../page';
+import type { Activity } from '../../page';
 
 import DeleteIcon from 'public/assets/icons/btn-minus.svg';
 
 interface ScheduleEditorProps {
-  schedule: Schedule;
-  scheduleArray: Schedule[];
-  setFormData: Dispatch<SetStateAction<Activity>>;
+  detailData?: EditSchedule[];
+  schedule: EditSchedule;
+  scheduleArray: EditSchedule[];
+  setEditDetailData?: Dispatch<SetStateAction<EditDetail>>;
+  setEditFormData?: Dispatch<SetStateAction<ActivityEdit>>;
+  setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
 }
 
-function ScheduleEditor({ schedule, scheduleArray, setFormData }: ScheduleEditorProps) {
+function ScheduleEditor({ detailData, schedule, scheduleArray, setRegisterFormData, setEditFormData, setEditDetailData }: ScheduleEditorProps) {
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
 
   const deleteSchedule = () => {
     const updatedArray = scheduleArray.filter((s) => JSON.stringify(s) !== JSON.stringify(schedule));
-    setFormData((prev) => ({
-      ...prev,
-      schedules: updatedArray,
-    }));
+    if (setRegisterFormData) {
+      setRegisterFormData((prev) => ({
+        ...prev,
+        schedules: updatedArray,
+      }));
+    } else if (detailData && setEditFormData && setEditDetailData) {
+      setEditDetailData((prev) => ({
+        ...prev,
+        schedules: updatedArray,
+      }));
+      if (schedule.id) {
+        const { id } = schedule;
+        setEditFormData((prev) => ({
+          ...prev,
+          scheduleIdsToRemove: [...prev.scheduleIdsToRemove, id],
+        }));
+      } else {
+        const updatedData = detailData.filter((s) => JSON.stringify(s) !== JSON.stringify(schedule));
+        setEditFormData((prev) => ({
+          ...prev,
+          schedulesToAdd: updatedData,
+        }));
+      }
+    }
   };
 
   return (
