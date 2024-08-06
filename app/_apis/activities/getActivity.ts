@@ -3,6 +3,7 @@
  */
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
+import type { EditSchedule } from '@/(route)/activity/edit/[id]/page';
 import type { Activity } from '@/(route)/activity/register/page';
 
 import axiosInstance from '@/_libs/axios';
@@ -17,6 +18,7 @@ export interface ActivityDetail extends Activity {
   id: number;
   rating: number;
   reviewCount: number;
+  schedules: EditSchedule[];
   subImages: SubImage[];
   updatedAt: string;
   userId: number;
