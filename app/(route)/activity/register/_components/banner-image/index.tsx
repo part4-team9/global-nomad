@@ -4,18 +4,19 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import postImage from '@/_apis/activities/postImage';
+import type { ActivityEdit } from '@/(route)/activity/edit/[id]/page';
 import { useMutation } from '@tanstack/react-query';
 
 import type { Activity } from '../../page';
 import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
-export interface BannerImageProps {
-  setFormData: Dispatch<SetStateAction<Activity>>;
+export interface BannerImageProps<T> {
+  setFormData: Dispatch<SetStateAction<T>>;
   value?: string;
 }
 
-function BannerImage({ value, setFormData }: BannerImageProps) {
+function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: BannerImageProps<T>) {
   const router = useRouter();
   const [bannerImage, setBannerImage] = useState<string[]>([]);
   const [modalState, setModalState] = useState({
@@ -68,7 +69,7 @@ function BannerImage({ value, setFormData }: BannerImageProps) {
       /**
        * @TODO api 체험 이미지 url로 변경 필요
        */
-      activityMutation.mutate(e.target.files?.[0]);
+      // activityMutation.mutate(e.target.files?.[0]);
       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
       setBannerImage([imageUrl]);
       setFormData((prev) => ({

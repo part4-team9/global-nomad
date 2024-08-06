@@ -41,13 +41,7 @@ function RegisterLayout() {
     },
     onError: (error) => {
       if (typeof error === 'number') {
-        if (error === 400) {
-          setModalState((prev) => ({
-            ...prev,
-            isOpen: true,
-            message: '제목은 문자열로 입력해주세요',
-          }));
-        } else if (error === 401) {
+        if (error === 401) {
           setModalState({
             isOpen: true,
             message: '로그인이 필요한 서비스입니다',
@@ -55,17 +49,23 @@ function RegisterLayout() {
               router.push('/login');
             },
           });
-        } else if (error === 409) {
-          setModalState((prev) => ({
-            ...prev,
-            isOpen: true,
-            message: '겹치는 예약 가능 시간대가 존재합니다',
-          }));
         } else {
+          let message = '';
+          switch (error) {
+            case 400:
+              message = '제목은 문자열로 입력해주세요';
+              break;
+            case 409:
+              message = '겹치는 예약 가능 시간대가 존재합니다';
+              break;
+            default:
+              message = '죄송합니다. 체험 등록에 실패했습니다.';
+              break;
+          }
           setModalState((prev) => ({
             ...prev,
             isOpen: true,
-            message: '죄송합니다. 체험 등록에 실패했습니다.',
+            message,
           }));
         }
       }

@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import type { ActivityDetail } from '@/_apis/activities/getActivity';
 import AddressModal from '@/(route)/activity/register/_components/address-modal';
+import BannerImage from '@/(route)/activity/register/_components/banner-image';
+import IntroduceImage from '@/(route)/activity/register/_components/introduce-image';
 import ScheduleEditor from '@/(route)/activity/register/_components/schedule-editor';
 import SchedulePicker from '@/(route)/activity/register/_components/schedule-picker';
 
@@ -126,6 +128,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
               {detailData.schedules.map((s, index) => (
                 <ScheduleEditor
                   key={index}
+                  index={index}
                   schedule={s}
                   scheduleArray={detailData.schedules}
                   setEditFormData={setFormData}
@@ -136,8 +139,8 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
             </div>
           )}
         </div>
-        {/* <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
-        <IntroduceImage value={formData.subImageUrls} setFormData={setFormData} /> */}
+        <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
+        {/* <IntroduceImage value={detailData.subImages} setFormData={setFormData} /> */}
       </div>
     </form>
   );

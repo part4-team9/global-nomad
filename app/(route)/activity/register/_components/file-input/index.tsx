@@ -47,7 +47,7 @@ export default forwardRef(function FileInput({ images, error, errorMessage, onCl
         </div>
         {images?.map((image, idx) => (
           <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
-            <Image fill src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
+            <Image fill sizes="max-width:100%" src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
             <button type="button" onClick={() => handleClear(image)} className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10">
               <Image src={DeleteIcon} alt="삭제" />
             </button>

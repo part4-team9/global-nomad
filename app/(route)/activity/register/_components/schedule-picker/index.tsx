@@ -1,7 +1,7 @@
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
@@ -33,6 +33,7 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
   const timeArray = generateTimeArray();
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
+  const [buttonDisabled, setButtonDisabed] = useState(true);
   const [scheduleData, setScheduleData] = useState<Schedule>({
     date: '',
     startTime: '',
@@ -74,6 +75,12 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
     });
   };
 
+  useEffect(() => {
+    const { date, endTime, startTime } = scheduleData;
+    const isDisabled = date === '' || endTime === '' || startTime === '';
+    setButtonDisabed(isDisabled);
+  }, [scheduleData]);
+
   return (
     <div className="grid gap-2 tablet:gap-[10px]">
       <div className="grid grid-cols-[1fr_79px_128px] gap-[5px] tablet:grid-cols-[1fr_109px_165px] lg:grid-cols-[1fr_158px_216px] lg:gap-5">
@@ -88,7 +95,7 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
           {isPC && <span className="text-[20px] font-bold leading-[1.3]">~</span>}
           <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
         </div>
-        <button type="button" onClick={handleAddSchedule}>
+        <button type="button" disabled={buttonDisabled} onClick={handleAddSchedule}>
           <Image src={AddIcon} alt="추가" />
         </button>
       </div>

@@ -12,6 +12,7 @@ import DeleteIcon from 'public/assets/icons/btn-minus.svg';
 
 interface ScheduleEditorProps {
   detailData?: EditSchedule[];
+  index: number;
   schedule: EditSchedule;
   scheduleArray: EditSchedule[];
   setEditDetailData?: Dispatch<SetStateAction<EditDetail>>;
@@ -19,12 +20,15 @@ interface ScheduleEditorProps {
   setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
 }
 
-function ScheduleEditor({ detailData, schedule, scheduleArray, setRegisterFormData, setEditFormData, setEditDetailData }: ScheduleEditorProps) {
+function ScheduleEditor({ index, detailData, schedule, scheduleArray, setRegisterFormData, setEditFormData, setEditDetailData }: ScheduleEditorProps) {
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
 
   const deleteSchedule = () => {
-    const updatedArray = scheduleArray.filter((s) => JSON.stringify(s) !== JSON.stringify(schedule));
+    scheduleArray.forEach((s, idx) => {
+      console.log(s, schedule, index, idx);
+    });
+    const updatedArray = scheduleArray.filter((s, idx) => index !== idx || JSON.stringify(s) !== JSON.stringify(schedule));
     if (setRegisterFormData) {
       setRegisterFormData((prev) => ({
         ...prev,
