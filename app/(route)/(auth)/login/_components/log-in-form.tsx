@@ -4,12 +4,12 @@ import { useState } from 'react';
 import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { postLogin } from '@/_apis/authentication';
 import type { LoginFormValues } from '@/_apis/type';
 import useUserStore from '@/store/useUserStore';
 
 import { useModal } from '@/_hooks/useModal';
 
+import { postLogin } from '@/_libs/authService';
 import { getCookie } from '@/_utils/cookie';
 
 import Button from '@/_components/button';
