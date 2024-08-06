@@ -12,7 +12,7 @@ export interface SubImage {
   imageUrl: string;
 }
 
-interface ActivityDetail extends Activity {
+export interface ActivityDetail extends Activity {
   createdAt: string;
   id: number;
   rating: number;
