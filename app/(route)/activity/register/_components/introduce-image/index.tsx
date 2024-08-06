@@ -106,7 +106,6 @@ function IntroduceImage({ value, setFormData }: IntroduceImage) {
 
   useEffect(() => {
     if (value) {
-      console.log(value, 'sub');
       setSubImages(value);
     }
   }, [value]);

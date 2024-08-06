@@ -1,14 +1,13 @@
-/* eslint-disable typescript-sort-keys/interface */
 // 체험 등록 페이지
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
 
-import ActivityForm from './_components/activity-register-form';
+import RegisterLayout from './_components/register-layout';
 
 export interface Schedule {
   date: string;
-  startTime: string;
   endTime: string;
+  startTime: string;
 }
 
 export interface Activity {
@@ -26,7 +25,7 @@ function ActivityRegister() {
   return (
     <CommonLayout>
       <StickyLayout>
-        <ActivityForm title="내 체험 등록" buttonTitle="등록하기" />
+        <RegisterLayout />
       </StickyLayout>
     </CommonLayout>
   );
