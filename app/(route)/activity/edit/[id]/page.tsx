@@ -10,7 +10,7 @@ import type { Schedule } from '../../register/page';
 export interface EditSchedule {
   date: string;
   endTime: string;
-  id: number;
+  id?: number;
   startTime: string;
 }
 

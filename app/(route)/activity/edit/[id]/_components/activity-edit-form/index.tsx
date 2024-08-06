@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import type { ActivityDetail } from '@/_apis/activities/getActivity';
 import AddressModal from '@/(route)/activity/register/_components/address-modal';
+import ScheduleEditor from '@/(route)/activity/register/_components/schedule-editor';
+import SchedulePicker from '@/(route)/activity/register/_components/schedule-picker';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
@@ -113,22 +115,22 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
           <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
-        {/* <div className="grid gap-4 lg:gap-5">
+        <div className="grid gap-4 lg:gap-5">
           <label htmlFor="date" className="w-fit text-[20px] font-bold leading-[1.3] tablet:mb-2 tablet:text-xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
-          <SchedulePicker scheduleArray={formData.schedules} setFormData={setFormData} />
+          <SchedulePicker edit setEditFormData={setFormData} setEditDetail={setDetailData} />
 
-          {formData.schedules.length > 0 && (
+          {detailData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 lg:gap-5 lg:pt-5">
-              {formData.schedules.map((s, index) => (
-                <ScheduleEditor key={index} schedule={s} scheduleArray={formData.schedules} setFormData={setFormData} />
-              ))}
+              {/* {detailData.schedules.map((s, index) => (
+                <ScheduleEditor key={index} schedule={s} scheduleArray={detailData.schedules} setFormData={setFormData} />
+              ))} */}
             </div>
           )}
         </div>
-        <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} /> */}
-        {/* <IntroduceImage value={formData.subImageUrls} setFormData={setFormData} /> */}
+        {/* <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
+        <IntroduceImage value={formData.subImageUrls} setFormData={setFormData} /> */}
       </div>
     </form>
   );

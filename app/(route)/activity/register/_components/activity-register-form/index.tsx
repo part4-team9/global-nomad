@@ -64,6 +64,8 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     onSubmit(formData);
   };
 
+  console.log(formData, 'form');
+
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
     // 버튼 disable 조건
@@ -101,7 +103,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
           <label htmlFor="date" className="w-fit text-[20px] font-bold leading-[1.3] tablet:mb-2 tablet:text-xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
-          <SchedulePicker scheduleArray={formData.schedules} setFormData={setFormData} />
+          <SchedulePicker setRegisterFormData={setFormData} />
           {formData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 lg:gap-5 lg:pt-5">
               {formData.schedules.map((s, index) => (

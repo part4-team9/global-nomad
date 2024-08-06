@@ -4,6 +4,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
+import type { ActivityEdit, EditDetail, EditSchedule } from '@/(route)/activity/edit/[id]/page';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
@@ -17,15 +18,23 @@ import CalendarWrapper from '../calendar-picker';
 import AddIcon from 'public/assets/icons/btn-plus.svg';
 
 interface PickerProps {
-  scheduleArray: Schedule[];
-  setFormData: Dispatch<SetStateAction<Activity>>;
+  edit?: boolean;
+  setEditDetail?: Dispatch<SetStateAction<EditDetail>>;
+  setEditFormData?: Dispatch<SetStateAction<ActivityEdit>>;
+  setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
 }
 
-function SchedulePicker({ scheduleArray, setFormData }: PickerProps) {
+/**
+ * 예약 가능한 시간대 선택, 추가 기능 컴포넌트
+ * @param edit 수정 페이지 데이터 체크
+ * @param setRegisterFormData 체험 등록 form 데이터 업데이트 함수
+ * @param setEditFormData 체험 수정 form 데이터 업데이트 함수
+ * @param setEditDetail 체험 수정 스케줄 렌더링 업데이트 함수
+ */
+function SchedulePicker({ edit, setRegisterFormData, setEditFormData, setEditDetail }: PickerProps) {
   const timeArray = generateTimeArray();
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
-  const [addButtonDisable, setAddButtonDisable] = useState(true);
   const [scheduleData, setScheduleData] = useState<Schedule>({
     date: '',
     startTime: '',
@@ -45,23 +54,27 @@ function SchedulePicker({ scheduleArray, setFormData }: PickerProps) {
   };
 
   const handleAddSchedule = () => {
-    setFormData((prev) => ({
-      ...prev,
-      schedules: [...prev.schedules, scheduleData],
-    }));
+    if (edit && setEditFormData && setEditDetail) {
+      setEditFormData((prev) => ({
+        ...prev,
+        schedulesToAdd: [...prev.schedulesToAdd, scheduleData],
+      }));
+      setEditDetail((prev) => ({
+        ...prev,
+        schedules: [...prev.schedules, scheduleData],
+      }));
+    } else if (setRegisterFormData) {
+      setRegisterFormData((prev) => ({
+        ...prev,
+        schedules: [...prev.schedules, scheduleData],
+      }));
+    }
     setScheduleData({
       date: '',
       startTime: '',
       endTime: '',
     });
   };
-
-  useEffect(() => {
-    const { date, startTime, endTime } = scheduleData;
-    const isDisable = date === '' || startTime === '' || endTime === '';
-    const isSame = scheduleArray.some((arr) => JSON.stringify(arr) === JSON.stringify(scheduleData));
-    setAddButtonDisable(isDisable || isSame);
-  }, [scheduleData, scheduleArray]);
 
   return (
     <div className="grid gap-2 tablet:gap-[10px]">
@@ -77,7 +90,7 @@ function SchedulePicker({ scheduleArray, setFormData }: PickerProps) {
           {isPC && <span className="text-[20px] font-bold leading-[1.3]">~</span>}
           <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
         </div>
-        <button type="button" disabled={addButtonDisable} onClick={handleAddSchedule}>
+        <button type="button" onClick={handleAddSchedule}>
           <Image src={AddIcon} alt="추가" />
         </button>
       </div>
