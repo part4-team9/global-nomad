@@ -94,8 +94,6 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
     }));
   };
 
-  console.log(formData, 'form');
-
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, title: formTitle } = formData;
     const { schedules } = detailData;
@@ -116,7 +114,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="pl-4 pr-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} />
+        <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} autoComplete="off" />
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="price" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
             가격
