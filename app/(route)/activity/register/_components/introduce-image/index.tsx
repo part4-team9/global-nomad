@@ -6,9 +6,9 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { SubImage } from '@/_apis/activities/getActivity';
-import postImage from '@/_apis/activities/postImage';
 import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
-import { useMutation } from '@tanstack/react-query';
+
+import { usePostImage } from '@/_hooks/use-post-image';
 
 import type { Activity } from '../../page';
 import CommonModal from '../common-modal';
@@ -27,7 +27,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
   const [subImages, setSubImages] = useState<string[]>([]);
   const [imageStore, setImageStore] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>([]);
-  const [imageLimitModal, setImageLimitModal] = useState(false);
   const [modalState, setModalState] = useState({
     isOpen: false,
     message: '',
@@ -42,32 +41,10 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     modalState.onClose();
   };
 
-  const activityMutation = useMutation({
-    mutationFn: postImage,
-    onError: (error) => {
-      if (typeof error === 'number') {
-        if (error === 401) {
-          setModalState({
-            isOpen: true,
-            message: '로그인이 필요한 서비스입니다.',
-            onClose: () => {
-              router.push('/login');
-            },
-          });
-        } else {
-          setModalState((prev) => ({
-            ...prev,
-            isOpen: true,
-            message: '죄송합니다. 이미지 등록에 실패했습니다.',
-          }));
-        }
-      }
-    },
-  });
+  const activityMutation = usePostImage({ router, setModalState });
 
   const clearSubImage = (image: string, id?: number) => {
     if (edit) {
-      // id가 있는 경우
       if (id) {
         if (setEditFormData && setEditDetailData) {
           setEditFormData((prev) => ({
@@ -97,16 +74,16 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     }
   };
 
-  const handleModalState = () => {
-    setImageLimitModal((prev) => !prev);
-  };
-
   const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const imageLength = e.target.files.length + subImages.length + editImages.length;
 
       if (imageLength > 4) {
-        handleModalState();
+        setModalState((prev) => ({
+          ...prev,
+          isOpen: true,
+          message: '이미지는 최대 4개 첨부 가능합니다.',
+        }));
       } else {
         const filesArray = Array.from(e.target.files);
 
@@ -115,7 +92,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
             /**
              * @TODO api 체험 이미지 url로 변경 필요
              */
-            // activityMutation.mutate(e.target.files[idx]);
+            activityMutation.mutate(e.target.files[idx]);
             const imageUrl = URL.createObjectURL(file);
             if (editValue && setEditFormData && setEditDetailData) {
               setEditImages((prev) => [...prev, { imageUrl }]);
@@ -173,9 +150,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
       </label>
       <FileInput id="sub" images={subImages} editImages={editImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
       <span className="break-keep pl-2 text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
-      <CommonModal isOpen={imageLimitModal} onClose={handleModalState}>
-        이미지는 최대 4개 첨부 가능합니다.
-      </CommonModal>
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}
       </CommonModal>

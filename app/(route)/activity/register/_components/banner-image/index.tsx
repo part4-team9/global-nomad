@@ -3,9 +3,9 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import postImage from '@/_apis/activities/postImage';
 import type { ActivityEdit } from '@/(route)/activity/edit/[id]/page';
-import { useMutation } from '@tanstack/react-query';
+
+import { usePostImage } from '@/_hooks/use-post-image';
 
 import type { Activity } from '../../page';
 import CommonModal from '../common-modal';
@@ -33,28 +33,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
     modalState.onClose();
   };
 
-  const activityMutation = useMutation({
-    mutationFn: postImage,
-    onError: (error) => {
-      if (typeof error === 'number') {
-        if (error === 401) {
-          setModalState({
-            isOpen: true,
-            message: '로그인이 필요한 서비스입니다.',
-            onClose: () => {
-              router.push('/login');
-            },
-          });
-        } else {
-          setModalState({
-            isOpen: true,
-            message: '죄송합니다. 이미지 등록에 실패했습니다.',
-            onClose: () => {},
-          });
-        }
-      }
-    },
-  });
+  const activityMutation = usePostImage({ router, setModalState });
 
   const onClearBanner = () => {
     setBannerImage([]);
@@ -69,7 +48,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
       /**
        * @TODO api 체험 이미지 url로 변경 필요
        */
-      // activityMutation.mutate(e.target.files?.[0]);
+      activityMutation.mutate(e.target.files?.[0]);
       const imageUrl = URL.createObjectURL(e.target.files?.[0]);
       setBannerImage([imageUrl]);
       setFormData((prev) => ({
