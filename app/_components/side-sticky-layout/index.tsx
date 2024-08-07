@@ -32,7 +32,7 @@ function StickyLayout({ children }: PropsWithChildren) {
       ) : (
         isPC && <section className="sticky top-20 h-fit max-w-[384px] flex-1 rounded-xl bg-slate-300 p-6">사이드 스티키 메뉴</section>
       )}
-      <section className="min-w-[430px] flex-1">{children}</section>
+      <section className="flex-1 tablet:min-w-[430px]">{children}</section>
     </div>
   );
 }

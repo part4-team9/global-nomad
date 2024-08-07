@@ -43,6 +43,6 @@
     @apply text-l font-bold;
   }
   .commonLayoutWrap {
-    @apply pb-[136px] pt-6 mobile:pb-[312px] tablet:pb-[344px] tablet:pt-[72px];
+    @apply pb-[120px] pt-6 tablet:pt-[72px];
   }
 }
