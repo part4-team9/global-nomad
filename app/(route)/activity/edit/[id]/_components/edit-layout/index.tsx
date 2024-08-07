@@ -60,19 +60,10 @@ function EditLayout({ id }: EditLayoutProps) {
           },
         });
       } else {
-        let errorMessage;
-        switch (status) {
-          case 404:
-            errorMessage = '존재하지 않는 체험입니다.';
-            break;
-          default:
-            errorMessage = message;
-            break;
-        }
         setModalState((prev) => ({
           ...prev,
           isOpen: true,
-          message: errorMessage,
+          message,
         }));
       }
     },
