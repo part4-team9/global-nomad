@@ -91,6 +91,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
   };
 
   console.log(formData, 'form');
+  console.log(detailData, 'detail');
 
   return (
     <form className="grid gap-6" onSubmit={onSubmitForm}>
@@ -140,7 +141,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
           )}
         </div>
         <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
-        {/* <IntroduceImage value={detailData.subImages} setFormData={setFormData} /> */}
+        <IntroduceImage editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
       </div>
     </form>
   );

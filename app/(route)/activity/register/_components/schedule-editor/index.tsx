@@ -25,9 +25,6 @@ function ScheduleEditor({ index, detailData, schedule, scheduleArray, setRegiste
   const isPC = windowSize > 1023;
 
   const deleteSchedule = () => {
-    scheduleArray.forEach((s, idx) => {
-      console.log(s, schedule, index, idx);
-    });
     const updatedArray = scheduleArray.filter((s, idx) => index !== idx || JSON.stringify(s) !== JSON.stringify(schedule));
     if (setRegisterFormData) {
       setRegisterFormData((prev) => ({

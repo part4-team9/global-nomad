@@ -9,7 +9,7 @@ import type { Activity } from '@/(route)/activity/register/page';
 import axiosInstance from '@/_libs/axios';
 
 export interface SubImage {
-  id: number;
+  id?: number;
   imageUrl: string;
 }
 
