@@ -15,16 +15,17 @@ import CommonModal from '../common-modal';
 import FileInput from '../file-input';
 
 interface IntroduceImage {
+  edit?: boolean;
   editValue?: SubImage[];
   setEditDetailData?: Dispatch<SetStateAction<EditDetail>>;
   setEditFormData?: Dispatch<SetStateAction<ActivityEdit>>;
   setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
-  value?: string[];
 }
 
-function IntroduceImage({ value, editValue, setRegisterFormData, setEditFormData, setEditDetailData }: IntroduceImage) {
+function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData, setEditDetailData }: IntroduceImage) {
   const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);
+  const [imageStore, setImageStore] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>([]);
   const [imageLimitModal, setImageLimitModal] = useState(false);
   const [modalState, setModalState] = useState({
@@ -32,8 +33,6 @@ function IntroduceImage({ value, editValue, setRegisterFormData, setEditFormData
     message: '',
     onClose: () => {},
   });
-
-  console.log(value);
 
   const closeModal = () => {
     setModalState((prev) => ({
@@ -66,8 +65,36 @@ function IntroduceImage({ value, editValue, setRegisterFormData, setEditFormData
     },
   });
 
-  const clearSubImage = (image: string) => {
-    setSubImages((prev) => prev.filter((img) => img !== image));
+  const clearSubImage = (image: string, id?: number) => {
+    if (edit) {
+      // id가 있는 경우
+      if (id) {
+        if (setEditFormData && setEditDetailData) {
+          setEditFormData((prev) => ({
+            ...prev,
+            subImageIdsToRemove: [...prev.subImageIdsToRemove, id],
+          }));
+          const updatedImages = editImages.filter((data) => data.id !== id);
+          setEditImages(updatedImages);
+          setEditDetailData((prev) => ({
+            ...prev,
+            subImages: updatedImages,
+          }));
+        }
+      } else {
+        const filteredImages = editImages.filter((data) => data.imageUrl !== image);
+        if (setEditDetailData) {
+          setImageStore((prev) => prev.filter((img) => img !== image));
+          setEditImages(filteredImages);
+          setEditDetailData((prev) => ({
+            ...prev,
+            subImages: filteredImages,
+          }));
+        }
+      }
+    } else {
+      setSubImages((prev) => prev.filter((img) => img !== image));
+    }
   };
 
   const handleModalState = () => {
@@ -100,6 +127,7 @@ function IntroduceImage({ value, editValue, setRegisterFormData, setEditFormData
                 ...prev,
                 subImages: [...prev.subImages, { imageUrl }],
               }));
+              setImageStore((prev) => [...prev, imageUrl]);
             } else {
               setSubImages((prev) => [...prev, imageUrl]);
             }
@@ -108,6 +136,15 @@ function IntroduceImage({ value, editValue, setRegisterFormData, setEditFormData
       }
     }
   };
+
+  useEffect(() => {
+    if (setEditFormData) {
+      setEditFormData((prev) => ({
+        ...prev,
+        subImageUrlsToAdd: imageStore,
+      }));
+    }
+  }, [imageStore]);
 
   useEffect(() => {
     if (setRegisterFormData) {

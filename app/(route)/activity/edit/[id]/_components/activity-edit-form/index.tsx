@@ -141,7 +141,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
           )}
         </div>
         <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
-        <IntroduceImage editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
+        <IntroduceImage edit editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
       </div>
     </form>
   );

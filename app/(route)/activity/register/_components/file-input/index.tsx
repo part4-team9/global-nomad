@@ -13,7 +13,7 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
   errorMessage?: string;
   images?: string[];
-  onClear?: ((image: string) => void) | (() => void);
+  onClear: (image: string, id?: number) => void;
 }
 
 /**
@@ -30,15 +30,15 @@ export default forwardRef(function FileInput(
   // 유효성 체크 여부에 따른 border style 변경
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-700';
 
-  const handleClear = (image: string, id?: number) => {
-    if (onClear) {
-      if (onClear.length === 1) {
-        (onClear as (image: string) => void)(image);
-      } else {
-        (onClear as () => void)();
-      }
-    }
-  };
+  // const handleClear = (image: string, id?: number) => {
+  //   if (onClear) {
+  //     if (onClear.length === 1) {
+  //       (onClear as (image: string) => void)(image);
+  //     } else {
+  //       (onClear as () => void)();
+  //     }
+  //   }
+  // };
 
   return (
     <div className="grid">
@@ -53,7 +53,7 @@ export default forwardRef(function FileInput(
         {images?.map((image, idx) => (
           <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
             <Image fill sizes="max-width:100%" src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button type="button" onClick={() => handleClear(image)} className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10">
+            <button type="button" onClick={() => onClear(image)} className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10">
               <Image src={DeleteIcon} alt="삭제" />
             </button>
           </div>
@@ -63,7 +63,7 @@ export default forwardRef(function FileInput(
             <Image fill sizes="max-width:100%" src={image.imageUrl} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
             <button
               type="button"
-              onClick={() => handleClear(image.imageUrl, image.id)}
+              onClick={() => onClear(image.imageUrl, image?.id)}
               className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10"
             >
               <Image src={DeleteIcon} alt="삭제" />
