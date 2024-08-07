@@ -53,9 +53,10 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.id]: e.target.value,
+      [id]: id === 'price' ? Number(value) : value,
     }));
   };
 
@@ -63,8 +64,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     e.preventDefault();
     onSubmit(formData);
   };
-
-  console.log(formData, 'form');
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
@@ -85,7 +84,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="pl-4 pr-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <Textarea id="description" size="big" placeholder="설명" onChange={handleChangeInput} />
+        <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} />
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="price" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
             가격

@@ -20,13 +20,15 @@ import type { ActivityEdit, EditDetail } from '../../page';
 interface EditFormProps {
   buttonTitle: string;
   data?: ActivityDetail;
+  isPending: boolean;
   isSuccess: boolean;
+  onSubmit: (formData: ActivityEdit) => void;
   title: string;
 }
 
-function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps) {
+function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
   const [addressModalState, setAddressModalState] = useState(false);
-  const [buttonDisable, setButtonDisable] = useState(true);
+  const [buttonDisable, setButtonDisable] = useState(false);
   const [detailData, setDetailData] = useState<EditDetail>({
     schedules: [],
     subImages: [],
@@ -67,6 +69,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
 
   const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    onSubmit(formData);
   };
 
   const handleAddressModal = () => {
@@ -84,14 +87,23 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle }: EditFormProps
   };
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [e.target.id]: e.target.value,
+      [id]: id === 'price' ? Number(value) : value,
     }));
   };
 
   console.log(formData, 'form');
-  console.log(detailData, 'detail');
+
+  useEffect(() => {
+    const { address, bannerImageUrl, category, description, price, title: formTitle } = formData;
+    const { schedules } = detailData;
+    // 버튼 disable 조건
+    const isDisabled =
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || schedules.length === 0 || formTitle === '';
+    setButtonDisable(isDisabled || isPending);
+  }, [formData, detailData, isPending]);
 
   return (
     <form className="grid gap-6" onSubmit={onSubmitForm}>

@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
@@ -41,8 +39,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     modalState.onClose();
   };
 
-  const activityMutation = usePostImage({ router, setModalState });
-
   const clearSubImage = (image: string, id?: number) => {
     if (edit) {
       if (id) {
@@ -74,6 +70,25 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     }
   };
 
+  const getResponse = (res: string) => {
+    if (editValue && setEditFormData && setEditDetailData) {
+      setEditImages((prev) => [...prev, { imageUrl: res }]);
+      setEditFormData((prev) => ({
+        ...prev,
+        subImageUrlsToAdd: [...prev.subImageUrlsToAdd, res],
+      }));
+      setEditDetailData((prev) => ({
+        ...prev,
+        subImages: [...prev.subImages, { imageUrl: res }],
+      }));
+      setImageStore((prev) => [...prev, res]);
+    } else {
+      setSubImages((prev) => [...prev, res]);
+    }
+  };
+
+  const activityMutation = usePostImage({ router, setModalState, callback: getResponse });
+
   const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const imageLength = e.target.files.length + subImages.length + editImages.length;
@@ -89,25 +104,9 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
         filesArray.forEach((file, idx) => {
           if (e.target.files) {
-            /**
-             * @TODO api 체험 이미지 url로 변경 필요
-             */
-            activityMutation.mutate(e.target.files[idx]);
-            const imageUrl = URL.createObjectURL(file);
-            if (editValue && setEditFormData && setEditDetailData) {
-              setEditImages((prev) => [...prev, { imageUrl }]);
-              setEditFormData((prev) => ({
-                ...prev,
-                subImageUrlsToAdd: [...prev.subImageUrlsToAdd, imageUrl],
-              }));
-              setEditDetailData((prev) => ({
-                ...prev,
-                subImages: [...prev.subImages, { imageUrl }],
-              }));
-              setImageStore((prev) => [...prev, imageUrl]);
-            } else {
-              setSubImages((prev) => [...prev, imageUrl]);
-            }
+            const json = new FormData();
+            json.set('image', e.target.files[idx]);
+            activityMutation.mutate(json);
           }
         });
       }

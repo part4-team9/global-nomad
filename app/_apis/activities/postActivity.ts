@@ -1,4 +1,3 @@
-import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { Activity } from '@/(route)/activity/register/page';
 
@@ -10,8 +9,7 @@ const postActivity = async (body: Activity) => {
     return result;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const { status } = (error.response as AxiosResponse) ?? 500;
-      throw status;
+      throw error.response;
     } else {
       throw error;
     }

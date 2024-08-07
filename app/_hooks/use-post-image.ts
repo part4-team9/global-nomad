@@ -4,6 +4,7 @@ import postImage from '@/_apis/activities/postImage';
 import { useMutation } from '@tanstack/react-query';
 
 interface PostImageProps {
+  callback: (res: string) => void;
   router: AppRouterInstance;
   setModalState: Dispatch<
     SetStateAction<{
@@ -14,9 +15,12 @@ interface PostImageProps {
   >;
 }
 
-export const usePostImage = ({ router, setModalState }: PostImageProps) =>
+export const usePostImage = ({ router, setModalState, callback }: PostImageProps) =>
   useMutation({
     mutationFn: postImage,
+    onSuccess: (res) => {
+      callback(String(res.activityImageUrl));
+    },
     onError: (error) => {
       if (typeof error === 'number') {
         if (error === 401) {

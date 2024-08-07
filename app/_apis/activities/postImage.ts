@@ -3,17 +3,21 @@ import axios from 'axios';
 
 import axiosInstance from '@/_libs/axios';
 
-const postImage = async (body: File) => {
+interface PostImageResponse {
+  activityImageUrl: string;
+}
+
+const postImage = async (body: FormData): Promise<PostImageResponse> => {
   try {
-    const result = await axiosInstance.post('/activities/image', body, {
+    const response: AxiosResponse<PostImageResponse> = await axiosInstance.post('/activities/image', body, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return result;
+    return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const { status } = (error.response as AxiosResponse) ?? 500;
+      const { status } = (error.response as AxiosResponse) ?? { status: 500 };
       throw status;
     } else {
       throw error;

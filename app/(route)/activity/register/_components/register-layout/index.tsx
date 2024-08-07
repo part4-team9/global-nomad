@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import postActivity from '@/_apis/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
@@ -28,6 +29,7 @@ function RegisterLayout() {
   const activityMutation = useMutation({
     mutationFn: postActivity,
     onSuccess: (res) => {
+      const { id } = res.data;
       setModalState({
         isOpen: true,
         message: '체험 등록이 완료되었습니다',
@@ -35,39 +37,27 @@ function RegisterLayout() {
           /**
            * @TODO 체험 상세 url에 맞게 수정 필요
            */
-          // router.push(`/activity/${res.data.id}`);
+          router.push(`/activity/${id}`);
         },
       });
     },
-    onError: (error) => {
-      if (typeof error === 'number') {
-        if (error === 401) {
-          setModalState({
-            isOpen: true,
-            message: '로그인이 필요한 서비스입니다',
-            onClose: () => {
-              router.push('/login');
-            },
-          });
-        } else {
-          let message = '';
-          switch (error) {
-            case 400:
-              message = '제목은 문자열로 입력해주세요';
-              break;
-            case 409:
-              message = '겹치는 예약 가능 시간대가 존재합니다';
-              break;
-            default:
-              message = '죄송합니다. 체험 등록에 실패했습니다.';
-              break;
-          }
-          setModalState((prev) => ({
-            ...prev,
-            isOpen: true,
-            message,
-          }));
-        }
+    onError: (error: AxiosResponse) => {
+      const { status } = error;
+      const { message } = error.data;
+      if (status === 401) {
+        setModalState({
+          isOpen: true,
+          message,
+          onClose: () => {
+            router.push('/login');
+          },
+        });
+      } else {
+        setModalState((prev) => ({
+          ...prev,
+          isOpen: true,
+          message,
+        }));
       }
     },
   });

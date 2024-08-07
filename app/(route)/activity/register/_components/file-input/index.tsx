@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable array-callback-return */
 import { forwardRef } from 'react';
 import Image from 'next/image';
 import type { SubImage } from '@/_apis/activities/getActivity';
@@ -29,16 +28,6 @@ export default forwardRef(function FileInput(
 ) {
   // 유효성 체크 여부에 따른 border style 변경
   const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-700';
-
-  // const handleClear = (image: string, id?: number) => {
-  //   if (onClear) {
-  //     if (onClear.length === 1) {
-  //       (onClear as (image: string) => void)(image);
-  //     } else {
-  //       (onClear as () => void)();
-  //     }
-  //   }
-  // };
 
   return (
     <div className="grid">

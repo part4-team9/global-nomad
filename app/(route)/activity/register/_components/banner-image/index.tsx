@@ -33,7 +33,15 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
     modalState.onClose();
   };
 
-  const activityMutation = usePostImage({ router, setModalState });
+  const getResponse = (res: string) => {
+    setBannerImage([res]);
+    setFormData((prev) => ({
+      ...prev,
+      bannerImageUrl: res,
+    }));
+  };
+
+  const activityMutation = usePostImage({ router, setModalState, callback: getResponse });
 
   const onClearBanner = () => {
     setBannerImage([]);
@@ -45,16 +53,9 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
 
   const onChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      /**
-       * @TODO api 체험 이미지 url로 변경 필요
-       */
-      activityMutation.mutate(e.target.files?.[0]);
-      const imageUrl = URL.createObjectURL(e.target.files?.[0]);
-      setBannerImage([imageUrl]);
-      setFormData((prev) => ({
-        ...prev,
-        bannerImageUrl: imageUrl,
-      }));
+      const json = new FormData();
+      json.set('image', e.target.files?.[0]);
+      activityMutation.mutate(json);
     }
   };
 
