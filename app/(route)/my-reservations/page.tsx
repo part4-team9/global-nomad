@@ -1,13 +1,13 @@
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
 
-import ReservationsLayout from './_components/reservations-layout';
+import ReservationLayout from './_components/reservation-layout';
 
 function MyReservations() {
   return (
     <CommonLayout>
       <StickyLayout>
-        <ReservationsLayout />
+        <ReservationLayout />
       </StickyLayout>
     </CommonLayout>
   );
