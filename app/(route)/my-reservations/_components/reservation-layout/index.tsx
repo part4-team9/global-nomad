@@ -1,4 +1,8 @@
-// api 세팅
+/**
+ * @TODO SSR로 변경하기
+ */
+
+'use client';
 
 import ReservationContainer from '../reservation-container';
 
