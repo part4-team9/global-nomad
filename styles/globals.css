@@ -46,3 +46,23 @@
     @apply pb-[136px] pt-6 mobile:pb-[312px] tablet:pb-[344px] tablet:pt-[72px];
   }
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.category-button:last-child {
+  margin-right: 10px;
+}
+
+.category-button:hover,
+.category-button:focus {
+  background-color: #112211;
+  color: white;
+}
+

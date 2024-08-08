@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss';
 
 import animation from './styles/tailwind.animation';
+import backgroundImage from './styles/tailwind.backgroundImage';
 import colors from './styles/tailwind.colors';
 import keyframes from './styles/tailwind.keyframes';
 import screens from './styles/tailwind.screens';
@@ -16,6 +17,7 @@ const config: Config = {
       boxShadow,
       animation,
       keyframes,
+      backgroundImage,
       ...typography,
     },
   },
