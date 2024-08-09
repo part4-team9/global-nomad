@@ -1,5 +1,5 @@
 const screens = {
-  mobile: '424px',
-  tablet: '768px',
+  tablet: { max: '768px' },
+  mobile: { max: '424px' },
 };
 export default screens;
