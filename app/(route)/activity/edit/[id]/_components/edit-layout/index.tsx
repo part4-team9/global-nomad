@@ -15,6 +15,10 @@ interface EditLayoutProps {
   id: string;
 }
 
+/**
+ * 체험 수정 페이지 렌더링 및 modal 상태관리, data fetching하는 컴포넌트입니다.
+ * @param id 수정할 체험 id값
+ */
 function EditLayout({ id }: EditLayoutProps) {
   const router = useRouter();
   const { data, isSuccess } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });

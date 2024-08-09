@@ -23,6 +23,14 @@ interface ActivityFormProps {
   title: string;
 }
 
+/**
+ * 체험 등록 페이지 Form 데이터 다루는 컴포넌트 입니다.
+ * @param title 페이지 타이틀 제목
+ * @param buttonTitle submit 버튼 텍스트
+ * @param isPending api post pending 상태 여부
+ * @param onSubmit form 제출시 실행 함수
+ 
+ */
 function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormProps) {
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(true);

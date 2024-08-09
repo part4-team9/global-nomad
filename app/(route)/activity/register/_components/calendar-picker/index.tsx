@@ -13,6 +13,11 @@ interface DatePickerProps {
   value: string;
 }
 
+/**
+ * 날짜 선택하는 input입니다 (react-datepicker 사용)
+ * @param onChange 날짜 선택시 스케줄 state 업데이트하는 함수
+ * @param value 선택한 날짜 value state값 (스케줄 추가하면 초기화됨)
+ */
 function CalendarWrapper({ onChange, value }: DatePickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
 

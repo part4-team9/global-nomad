@@ -10,6 +10,9 @@ import type { Activity } from '../../page';
 import ActivityForm from '../activity-register-form';
 import CommonModal from '../common-modal';
 
+/**
+ * 체험 등록 페이지 렌더링 및 modal 상태관리, data post하는 컴포넌트입니다.
+ */
 function RegisterLayout() {
   const router = useRouter();
   const [modalState, setModalState] = useState({

@@ -16,6 +16,11 @@ export interface BannerImageProps<T> {
   value?: string;
 }
 
+/**
+ * 메인 배너 이미지 업로드 및 form 데이터 업데이트하는 컴포넌트입니다.
+ * @param value 체험 수정 페이지에서 이미 default 이미지값이 있는 경우 (이미지 주소)
+ * @setFormdata 업로드한 이미지로 formdata 업데이트 (setState 함수)
+ */
 function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: BannerImageProps<T>) {
   const router = useRouter();
   const [bannerImage, setBannerImage] = useState<string[]>([]);

@@ -1,4 +1,3 @@
-// 체험 수정 페이지
 import type { SubImage } from '@/_apis/activities/getActivity';
 
 import CommonLayout from '@/_components/common-layout';
@@ -32,6 +31,9 @@ export interface ActivityEdit {
   title: string;
 }
 
+/**
+ * 체험 수정 페이지
+ */
 function ActivityEdit({ params }: { params: { id: string } }) {
   const { id } = params;
   return (

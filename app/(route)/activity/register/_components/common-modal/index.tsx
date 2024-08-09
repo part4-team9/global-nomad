@@ -2,6 +2,9 @@ import Button from '@/_components/button';
 import type { ModalProps } from '@/_components/modal';
 import Modal from '@/_components/modal';
 
+/**
+ * 체험 등록, 수정 페이지에서 공통으로 사용하는 모달입니다.
+ */
 function CommonModal({ isOpen, onClose, children }: ModalProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

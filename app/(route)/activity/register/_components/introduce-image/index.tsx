@@ -20,6 +20,14 @@ interface IntroduceImage {
   setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
 }
 
+/**
+ * 소개 이미지 업로드 및 form 업데이트하는 컴포넌트입니다.
+ * @param edit 체험 수정 페이지 여부 boolean 값
+ * @param editValue 체험 수정 페이지의 경우 기존 default 값
+ * @param setRegisterFormData 체험 등록 페이지 form setState 함수
+ * @param setEditFormData 체험 수정 페이지 form setState 함수
+ * @param setEditDetailData 체험 수정 페이지 화면 렌더링위한 setState 함수
+ */
 function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData, setEditDetailData }: IntroduceImage) {
   const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);

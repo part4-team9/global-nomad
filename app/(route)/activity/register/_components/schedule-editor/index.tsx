@@ -20,6 +20,16 @@ interface ScheduleEditorProps {
   setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
 }
 
+/**
+ * 추가된 스케줄 렌더링하는 컴포넌트입니다.
+ * @param index 스케줄 배열내 index
+ * @param detailData 체험 수정의 경우 기존 데이터
+ * @param schedule 렌더링되는 스케줄
+ * @param scheduleArray 체험 수정 페이지 기존 데이터 외의 새로 추가할 스케줄
+ * @param setRegisterFormData 체험 등록 form setState 함수
+ * @param setEditFormData 체험 수정 form setState 함수
+ * @param setEditDetailData 체험 수정 화면 렌더링 setState 함수
+ */
 function ScheduleEditor({ index, detailData, schedule, scheduleArray, setRegisterFormData, setEditFormData, setEditDetailData }: ScheduleEditorProps) {
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;

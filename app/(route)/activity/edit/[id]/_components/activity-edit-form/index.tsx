@@ -26,6 +26,15 @@ interface EditFormProps {
   title: string;
 }
 
+/**
+ * 체험 수정 페이지 Form 데이터 다루는 컴포넌트 입니다.
+ * @param data 기존 체험 정보 default값
+ * @param isSuccess 데이터 patch 성공 결과
+ * @param isPending api patch pending 상태 여부
+ * @param onSubmit form 제출시 실행 함수
+ * @param title 페이지 타이틀 제목
+ * @param buttonTitle submit 버튼 텍스트
+ */
 function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(false);
