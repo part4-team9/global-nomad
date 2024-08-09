@@ -1,5 +1,3 @@
-'use client';
-
 import Lottie from 'react-lottie-player';
 import { motion } from 'framer-motion';
 
