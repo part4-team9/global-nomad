@@ -1,4 +1,6 @@
-interface Reservations {
+export type ReservationStatus = 'pending' | 'canceled' | 'confirmed' | 'declined' | 'completed';
+
+export interface Reservations {
   activity: {
     bannerImageUrl: string;
     id: number;
@@ -12,7 +14,7 @@ interface Reservations {
   reviewSubmitted: boolean;
   scheduleId: number;
   startTime: string;
-  status: 'pending' | 'canceled' | 'confirmed' | 'declined' | 'completed';
+  status: ReservationStatus;
   teamId: string;
   totalPrice: number;
   updatedAt: string;

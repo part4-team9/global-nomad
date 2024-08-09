@@ -2,7 +2,7 @@ import type { MyReservations } from '@/_types/myReservations';
 
 import NoReservation from '@/_components/no-reservation';
 
-import CancelModal from '../cancel-modal';
+import ReservationWrapper from '../reservation-wrapper';
 
 interface ReservationData {
   data: MyReservations;
@@ -11,12 +11,7 @@ interface ReservationData {
 function ReservationContainer({ data }: ReservationData) {
   const { totalCount, reservations, cursorId } = data;
 
-  return (
-    <>
-      {totalCount === 0 ? <NoReservation /> : <div>예약내역입니다</div>}
-      {/* <CancelModal /> */}
-    </>
-  );
+  return totalCount === 0 ? <NoReservation /> : <ReservationWrapper datas={reservations} />;
 }
 
 export default ReservationContainer;
