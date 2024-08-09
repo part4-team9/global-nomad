@@ -50,7 +50,7 @@ export default function Button({
   if (variant === 'white') {
     stateStyles = isSelected ? `bg-nomad-black text-white` : `bg-white text-nomad-black hover:bg-gray-100`;
   } else if (variant === 'black') {
-    stateStyles = disabled ? `bg-gray-500 text-white` : `bg-nomad-black text-white hover:bg-white hover:text-nomad-black`;
+    stateStyles = disabled ? `bg-gray-500 text-white` : `bg-nomad-black text-white hover:bg-green-950`;
   }
 
   const borderStyle = disabled ? '' : 'border border-nomad-black';
