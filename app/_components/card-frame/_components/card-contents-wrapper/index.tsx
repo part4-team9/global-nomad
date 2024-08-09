@@ -4,7 +4,7 @@ import type { ActivitiesContents, ContentsType, ReservationContents } from '@/_t
 import { ContentType, ReservationStatus } from '@/_types/card';
 
 import { cn } from '@/_utils/classNames';
-import { formatNumberWithCommas } from '@/_utils/formatNumberWithCommas';
+import { formatDate, formatNumberWithCommas, formatTimeRange } from '@/_utils/format';
 
 const contentsWrapperVariants = cva('w-full px-6 tablet:pl-3 tablet:pr-[18px] mobile:pl-2 mobile:pr-[14px]', {
   variants: {
@@ -14,6 +14,23 @@ const contentsWrapperVariants = cva('w-full px-6 tablet:pl-3 tablet:pr-[18px] mo
     },
   },
 });
+
+function toReservationStatus(status: string): ReservationStatus {
+  switch (status) {
+    case 'Approved':
+      return ReservationStatus.Approved;
+    case 'Canceled':
+      return ReservationStatus.Canceled;
+    case 'Completed':
+      return ReservationStatus.Completed;
+    case 'Confirmed':
+      return ReservationStatus.Confirmed;
+    case 'Refusal':
+      return ReservationStatus.Refusal;
+    default:
+      throw new Error(`Unknown status: ${status}`);
+  }
+}
 
 const statusVariants = cva('mb-2 text-base/6.5 font-bold tablet:mb-0 mobile:text-sm/6.5', {
   variants: {
@@ -32,23 +49,30 @@ const titleStyle =
 const btnAreaStyle = 'flex h-10 w-full items-center justify-between mobile:h-8';
 const priceStyle = 'text-2xl/[28.64px] font-medium tablet:text-xl/[23.87px] mobile:text-base/[19.09px]';
 
-function ReservationContent({ contents }: { contents: ReservationContents }) {
+/**
+ * 예약 리스트 아이템 컴포넌트
+ */
+function ReservationContent({ contents }: { contents: Omit<ReservationContents, 'status'> & { status: string } }) {
+  const status = toReservationStatus(contents.status);
+
   return (
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
-      <p className={cn(statusVariants({ status: contents.status }))}>{contents.status}</p>
+      <p className={cn(statusVariants({ status }))}>{status}</p>
       <p className={cn(titleStyle)}>{contents.title}</p>
       <div className="mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal tablet:mb-[10px] tablet:text-sm/6 mobile:mb-0 mobile:text-xs/6">
-        <p>{contents.period}</p> · <p>{contents.time}</p> · <p>{contents.headCount}명</p>
+        <p>{formatDate(contents.period)}</p> · <p>{formatTimeRange(contents.time1, contents.time2)}</p> · <p>{contents.headCount}명</p>
       </div>
       <div className={cn(btnAreaStyle)}>
         <p className={cn(priceStyle)}>￦{formatNumberWithCommas(contents.price)}</p>
-        {/* TODO button 공용 컴포넌트 적용 */}
         {contents.button}
       </div>
     </div>
   );
 }
 
+/**
+ * 내 체험 관리 리스트 아이템 컴포넌트
+ */
 function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
   return (
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
@@ -70,6 +94,11 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
   );
 }
 
+/**
+ * contents type에 맞는 컨텐츠 컴포넌트를 렌더링합니다.
+ * @param contents contents type (Reservation, Activities)
+ * @returns contents component
+ */
 export default function ContentWrapper({ contents }: { contents: ContentsType }) {
   switch (contents.type) {
     case ContentType.Reservation:

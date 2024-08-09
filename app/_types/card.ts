@@ -17,10 +17,13 @@ export interface ReservationContents {
   period: string;
   price: number;
   status: ReservationStatus;
-  time: string;
+  time1: string;
+  time2: string;
   title: string;
   type: ContentType.Reservation;
 }
+
+export type ReservationContentsWithStringStatus = Omit<ReservationContents, 'status'> & { status: string };
 
 export interface ActivitiesContents {
   button?: React.ReactNode;

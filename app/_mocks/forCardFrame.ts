@@ -1,35 +1,17 @@
-// mockContents.ts
-
-import type { ActivitiesContents, ReservationContents } from '@/_types/card';
+import type { ActivitiesContents, ReservationContentsWithStringStatus } from '@/_types/card';
 import { ContentType } from '@/_types/card';
-
-export const mockReservationContents: Omit<ReservationContents, 'status'> & { status: string } = {
-  period: '2024.08.09',
-  price: 300,
-  time: '14:00',
-  headCount: 2,
-  status: 'Confirmed',
-  title: 'Hotel Reservation',
-  type: ContentType.Reservation,
-};
-
-export const mockExperienceContents: ActivitiesContents = {
-  type: ContentType.Experience,
-  price: 150,
-  rating: 4.5,
-  title: 'City Tour',
-};
 
 export const mockContentsList = [
   {
     period: '2024.08.09',
     price: 300,
-    time: '14:00',
+    time1: '2024-08-09T14:17:18.923Z',
+    time2: '2024-08-09T20:17:18.923Z',
     headCount: 2,
     status: 'Confirmed',
     title: 'Hotel Reservation',
     type: ContentType.Reservation,
-  } satisfies ReservationContents,
+  } satisfies ReservationContentsWithStringStatus,
   {
     type: ContentType.Activities,
     price: 20000,
