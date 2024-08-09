@@ -1,17 +1,19 @@
 // mockContents.ts
 
-import type { ExperienceContents, ReservationContents } from '@/_types/card';
+import type { ActivitiesContents, ReservationContents } from '@/_types/card';
 import { ContentType } from '@/_types/card';
 
-export const mockReservationContents: ReservationContents = {
-  period: '2024-08-09 to 2024-08-12',
+export const mockReservationContents: Omit<ReservationContents, 'status'> & { status: string } = {
+  period: '2024.08.09',
   price: 300,
+  time: '14:00',
+  headCount: 2,
   status: 'Confirmed',
   title: 'Hotel Reservation',
   type: ContentType.Reservation,
 };
 
-export const mockExperienceContents: ExperienceContents = {
+export const mockExperienceContents: ActivitiesContents = {
   type: ContentType.Experience,
   price: 150,
   rating: 4.5,
@@ -20,16 +22,18 @@ export const mockExperienceContents: ExperienceContents = {
 
 export const mockContentsList = [
   {
+    period: '2024.08.09',
+    price: 300,
+    time: '14:00',
+    headCount: 2,
+    status: 'Confirmed',
+    title: 'Hotel Reservation',
     type: ContentType.Reservation,
-    period: '2024-09-01 to 2024-09-05',
-    price: 500,
-    status: 'Pending',
-    title: 'Flight Reservation',
   } satisfies ReservationContents,
   {
-    type: ContentType.Experience,
-    price: 200,
+    type: ContentType.Activities,
+    price: 20000,
     rating: 4.8,
     title: 'Mountain Hiking',
-  } satisfies ExperienceContents,
+  } satisfies ActivitiesContents,
 ];

@@ -16,6 +16,9 @@ const typography = {
     '4xl': '36px',
     '6xl': '68px',
   },
+  lineHeight: {
+    '6.5': '26px',
+  },
 };
 
 export default typography;
