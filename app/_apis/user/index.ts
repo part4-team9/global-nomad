@@ -2,27 +2,14 @@ import { isAxiosError } from 'axios';
 
 import axiosInstance from '@/_libs/axios';
 
+import type { Response, SignupFormValues } from '../type';
+
 // 회원가입
-type FormValues = {
-  email: string;
-  nickname: string;
-  password: string;
-};
-
-interface Response {
-  createdAt: 'string';
-  email: 'string';
-  id: 'number';
-  nickname: 'string';
-  profileImageUrl: 'string';
-  updatedAt: 'string';
-}
-
 interface ErrorResponse {
   message: string;
 }
 
-type PostSignup = (params: FormValues) => Promise<boolean>;
+type PostSignup = (params: SignupFormValues) => Promise<boolean>;
 
 export const postSignup: PostSignup = async ({ email, nickname, password }) => {
   try {

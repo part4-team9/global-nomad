@@ -4,6 +4,7 @@ import { useState } from 'react';
 import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
+import type { SignupFormValues } from '@/_apis/type';
 import { postSignup } from '@/_apis/user';
 
 import { useModal } from '@/_hooks/useModal';
@@ -12,19 +13,12 @@ import Button from '@/_components/button';
 import Input from '@/_components/input';
 import Modal from '@/_components/modal';
 
-type FormValues = {
-  confirmPassword: string;
-  email: string;
-  nickname: string;
-  password: string;
-};
-
 interface InputField {
-  id: keyof FormValues;
+  id: keyof SignupFormValues;
   label: string;
   placeholder: string;
   type: string;
-  validation: RegisterOptions<FormValues>;
+  validation: RegisterOptions<SignupFormValues>;
 }
 
 function SignUpForm() {
@@ -34,7 +28,7 @@ function SignUpForm() {
     watch,
     handleSubmit,
     formState: { isSubmitting, errors, isValid },
-  } = useForm<FormValues>({ mode: 'onSubmit' });
+  } = useForm<SignupFormValues>({ mode: 'onSubmit' });
 
   const { isOpen, openModal, closeModal } = useModal();
   const [redirectToLogin, setRedirectToLogin] = useState<boolean>(false);
@@ -94,7 +88,7 @@ function SignUpForm() {
     },
   ];
 
-  const handleForm = handleSubmit(async (data: FormValues) => {
+  const handleForm = handleSubmit(async (data: SignupFormValues) => {
     try {
       const result = await postSignup(data);
       if (result) {
@@ -118,7 +112,7 @@ function SignUpForm() {
     closeModal();
   };
 
-  const renderInput = (id: keyof FormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<FormValues>, error?: FieldError) => (
+  const renderInput = (id: keyof SignupFormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<SignupFormValues>, error?: FieldError) => (
     <div className="grid gap-2" key={id}>
       <label htmlFor={id}>{label}</label>
       <Input id={id} type={type} placeholder={placeholder} error={Boolean(error)} errorMessage={error?.message} {...register(id, validation)} />
