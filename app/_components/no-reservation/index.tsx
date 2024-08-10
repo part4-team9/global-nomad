@@ -13,7 +13,7 @@ function NoReservation() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ ease: [0.17, 0.67, 0.83, 0.67], duration: 1 }}
-        className="break-keep text-center text-sm font-medium leading-[1.2] text-gray-600 tablet:text-base"
+        className="break-keep text-center text-md font-medium leading-[1.2] text-gray-600 tablet:text-base"
       >
         아직 등록한 체험이 없어요
       </motion.p>
