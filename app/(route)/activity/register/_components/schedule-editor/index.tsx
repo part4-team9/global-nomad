@@ -67,19 +67,19 @@ function ScheduleEditor({ index, detailData, schedule, scheduleArray, setRegiste
       <input
         readOnly
         value={schedule.date}
-        className="min-w-[-webkit-fill-available] rounded border border-solid border-gray-600 px-[10px] py-2 text-sm leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
+        className="min-w-[-webkit-fill-available] rounded border border-solid border-gray-600 px-[10px] py-2 text-md leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
       />
       <div className="grid grid-cols-2 items-center gap-[5px] lg:grid-cols-[1fr_14px_1fr] lg:gap-3">
         <input
           readOnly
           value={schedule.startTime}
-          className="max-w-[140px] rounded border border-solid border-gray-600 px-[10px] py-2 text-sm leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
+          className="max-w-[140px] rounded border border-solid border-gray-600 px-[10px] py-2 text-md leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
         />
-        {isPC && <span className="text-[20px] font-bold leading-[1.3]">~</span>}
+        {isPC && <span className="text-xl font-bold leading-[1.3]">~</span>}
         <input
           readOnly
           value={schedule.endTime}
-          className="max-w-[140px] rounded border border-solid border-gray-600 px-[10px] py-2 text-sm leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
+          className="max-w-[140px] rounded border border-solid border-gray-600 px-[10px] py-2 text-md leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
         />
       </div>
       <button type="button" onClick={deleteSchedule}>

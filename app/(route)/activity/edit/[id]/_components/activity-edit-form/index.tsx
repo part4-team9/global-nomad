@@ -125,20 +125,20 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
         <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} autoComplete="off" />
         <div className="grid gap-3 tablet:gap-4">
-          <label htmlFor="price" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
+          <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             가격
           </label>
           <Input id="price" type="number" placeholder="가격" value={formData.price} onChange={handleChangeInput} className="pl-4 pr-4" />
         </div>
         <div className="grid gap-3 tablet:gap-4">
-          <label htmlFor="address" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
+          <label htmlFor="address" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             주소
           </label>
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
           <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
         <div className="grid gap-4 lg:gap-5">
-          <label htmlFor="date" className="w-fit text-[20px] font-bold leading-[1.3] tablet:mb-2 tablet:text-xl tablet:leading-[1.1] lg:mb-1">
+          <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
           <SchedulePicker setEditFormData={setFormData} setEditDetail={setDetailData} />

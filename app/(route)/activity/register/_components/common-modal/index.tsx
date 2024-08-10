@@ -10,7 +10,7 @@ function CommonModal({ isOpen, onClose, children }: ModalProps) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex h-[220px] w-[540px] max-w-[calc(100vw-48px)] items-end p-7 tablet:h-[250px]">
         <div className="grid w-full gap-12 tablet:gap-[45px]">
-          <span className="break-keep text-center text-lg font-medium text-[#333236]">{children}</span>
+          <span className="break-keep text-center text-2lg font-medium text-[#333236]">{children}</span>
           <Button
             borderRadius="8px"
             className="mx-auto h-[42px] w-[138px] font-medium tablet:ml-auto tablet:mr-0 tablet:h-[48px] tablet:w-[120px]"

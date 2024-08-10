@@ -78,7 +78,7 @@ export default forwardRef(function SelectBox(
           onClick={showList ? closeSelectBox : openSelectBox}
           className={`${size === 'small' ? 'py-2 pl-3 pr-[6px] tablet:py-[15px] tablet:pl-4 tablet:pr-3' : 'py-[15px] pl-4 pr-3'} cursor-pointer rounded border border-solid bg-white ${head && 'pt-[5px]'} ${inputStatusClass} ${className}`}
         >
-          {head && <legend className="px-1 text-sm">{head}</legend>}
+          {head && <legend className="px-1 text-md leading-none">{head}</legend>}
           <div className="flex items-center justify-between gap-[5px]">
             <input
               readOnly
@@ -87,7 +87,7 @@ export default forwardRef(function SelectBox(
               placeholder={placeholder}
               ref={ref}
               {...rest}
-              className={`w-full flex-1 cursor-pointer text-black outline-none placeholder:text-gray-500 ${size === 'small' ? 'text-sm leading-[1.8] tablet:text-base tablet:leading-[1.6]' : 'leading-[1.6]'}`}
+              className={`w-full flex-1 cursor-pointer text-black outline-none placeholder:text-gray-500 ${size === 'small' ? 'text-md leading-[1.8] tablet:text-base tablet:leading-[1.6]' : 'leading-[1.6]'}`}
             />
             <div className={`${size === 'small' ? 'w-[20.5px] tablet:w-6' : 'w-6'}`}>
               <Image src={ArrowDown} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />

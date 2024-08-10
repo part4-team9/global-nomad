@@ -152,11 +152,11 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
   return (
     <div className="grid gap-6">
-      <label htmlFor="sub" className="w-fit text-[20px] font-bold leading-[1.3] tablet:text-xl tablet:leading-[1.1]">
+      <label htmlFor="sub" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
         소개 이미지
       </label>
       <FileInput id="sub" images={subImages} editImages={editImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
-      <span className="break-keep pl-2 text-lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
+      <span className="break-keep pl-2 text-2lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}
       </CommonModal>
