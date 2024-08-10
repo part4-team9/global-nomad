@@ -4,6 +4,10 @@ interface StatusProps {
   status: ReservationStatus;
 }
 
+/**
+ * 현재 예약 상태 보여주는 컴포넌트입니다. (색상 및 텍스트 구분)
+ * @param status 현재 예약 상태 - 'pending'|'canceled'|'confirmed'|'declined'|'completed'
+ */
 function StatusBoard({ status }: StatusProps) {
   const statusManager = {
     pending: {

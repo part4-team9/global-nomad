@@ -9,7 +9,6 @@ interface ReservationsWrapper {
 }
 
 function ReservationWrapper({ datas }: ReservationsWrapper) {
-  console.log(datas);
   return (
     <div className="mt-3 grid gap-2 mobile:mt-6 mobile:gap-4 tablet:mt-4 tablet:gap-6">
       {datas.map((data) => (
