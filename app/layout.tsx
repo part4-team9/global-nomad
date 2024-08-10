@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 
+import Footer from './_components/footer';
 import Header from './_components/header';
 import Providers from './providers';
 
@@ -15,6 +16,7 @@ export default function RootLayout({
         <Providers>
           <main className="mt-[70px]">{children}</main>
         </Providers>
+        <Footer />
         <div id="modal-root" />
       </body>
     </html>
