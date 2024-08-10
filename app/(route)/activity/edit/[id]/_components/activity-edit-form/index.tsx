@@ -5,10 +5,13 @@ import type { ActivityDetail } from '@/_apis/activities/getActivity';
 import AddressModal from '@/(route)/activity/register/_components/address-modal';
 import BannerImage from '@/(route)/activity/register/_components/banner-image';
 import IntroduceImage from '@/(route)/activity/register/_components/introduce-image';
+import PriceButtons from '@/(route)/activity/register/_components/price-buttons';
 import ScheduleEditor from '@/(route)/activity/register/_components/schedule-editor';
 import SchedulePicker from '@/(route)/activity/register/_components/schedule-picker';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
+
+import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
 
 import Button from '@/_components/button';
 import Input from '@/_components/input';
@@ -36,6 +39,7 @@ interface EditFormProps {
  * @param buttonTitle submit 버튼 텍스트
  */
 function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
+  const [priceFormat, setPriceFormat] = useState('');
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(false);
   const [detailData, setDetailData] = useState<EditDetail>({
@@ -58,6 +62,9 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
   useEffect(() => {
     if (isSuccess && data) {
       const { address, bannerImageUrl, category, description, price, schedules, subImages, title: ActivityTitle } = data;
+
+      const formatPrice = addCommasToPrice(String(price));
+      setPriceFormat(formatPrice);
 
       setDetailData({
         schedules,
@@ -97,11 +104,22 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { id, value } = e.target;
+    if (id === 'price') {
+      setPriceFormat(addCommasToPrice(value));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [id]: value,
+      }));
+    }
+  };
+
+  useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      [id]: id === 'price' ? Number(value) : value,
+      price: removeCommas(priceFormat),
     }));
-  };
+  }, [priceFormat]);
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, title: formTitle } = formData;
@@ -128,7 +146,8 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
           <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             가격
           </label>
-          <Input id="price" type="number" placeholder="가격" value={formData.price} onChange={handleChangeInput} className="pl-4 pr-4" />
+          <Input id="price" placeholder="가격" value={priceFormat} onChange={handleChangeInput} className="pl-4 pr-4" />
+          <PriceButtons setPriceFormat={setPriceFormat} />
         </div>
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="address" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
