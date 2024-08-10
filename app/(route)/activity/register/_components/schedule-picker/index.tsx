@@ -16,6 +16,7 @@ import type { Activity, Schedule } from '../../page';
 import CalendarWrapper from '../calendar-picker';
 
 import AddIcon from 'public/assets/icons/btn-plus.svg';
+import AddDisabled from 'public/assets/icons/btn-plus-disabled.svg';
 
 interface PickerProps {
   setEditDetail?: Dispatch<SetStateAction<EditDetail>>;
@@ -96,7 +97,7 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
           <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
         </div>
         <button type="button" disabled={buttonDisabled} onClick={handleAddSchedule}>
-          <Image src={AddIcon} alt="추가" />
+          {buttonDisabled ? <Image src={AddDisabled} alt="추가 불가" /> : <Image src={AddIcon} alt="추가" />}
         </button>
       </div>
     </div>
