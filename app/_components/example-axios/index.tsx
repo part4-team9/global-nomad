@@ -3,12 +3,12 @@
 import type { AxiosError } from 'axios';
 import { useMutation } from '@tanstack/react-query';
 
-import { refreshToken } from '@/_libs/authService';
+import { tokenRefresh } from '@/_libs/authService';
 import { setCookie } from '@/_utils/cookie';
 
 export default function ExampleAxios() {
   const exampleSubmit = useMutation({
-    mutationFn: refreshToken,
+    mutationFn: tokenRefresh,
     onSuccess: response => {
       const accessToken = (response as { accessToken?: string })?.accessToken;
       if (accessToken) {

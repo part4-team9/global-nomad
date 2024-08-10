@@ -40,7 +40,7 @@
     @apply text-3xl font-bold;
   }
   h3 {
-    @apply text-l font-bold;
+    @apply text-xl font-bold;
   }
 
   ::-webkit-scrollbar {
