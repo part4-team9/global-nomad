@@ -1,20 +1,24 @@
 const typography = {
   fontFamily: {
-    Pretendard: ['Pretendard Variable', 'Pretendard', 'sans-serif'],
-    SpoqaHanSans: ['SpoqaHanSansNeo-Regular', 'sans-serif'],
-    Inter: ['Inter', 'sans-serif'],
+    pretendard: ['Pretendard Variable', 'Pretendard', 'sans-serif'],
+    spoqaHanSans: ['SpoqaHanSansNeo-Regular', 'sans-serif'],
+    inter: ['Inter', 'sans-serif'],
   },
   fontSize: {
-    's': '12px',
-    'm': '14px',
-    'base': '16px',
-    'ml': '18px',
-    'l': '20px',
-    'xl': '24px',
-    '2xl': '28px',
-    '3xl': '32px',
-    '4xl': '36px',
-    '6xl': '68px',
+    'xs': ['12px', { lineHeight: '18px' }],
+    'sm': ['13px', { lineHeight: '22px' }],
+    'md': ['14px', { lineHeight: '24px' }],
+    'lg': ['16px', { lineHeight: '26px' }],
+    '2lg': ['18px', { lineHeight: '26px' }],
+    'xl': ['20px', { lineHeight: '32px' }],
+    '2xl': ['24px', { lineHeight: '32px' }],
+    '3xl': ['32px', { lineHeight: '42px' }],
+  },
+  fontWeight: {
+    bold: 700,
+    semibold: 600,
+    medium: 500,
+    regular: 400,
   },
 };
 
