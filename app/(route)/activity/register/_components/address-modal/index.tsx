@@ -27,7 +27,7 @@ function AddressModal({ isOpen, onClose, onComplete }: AddressModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="full">
-      <div className="grid gap-4 px-5 py-6">
+      <div className="grid gap-4 px-5 py-6 mobile:w-[380px]">
         <div className="flex items-center justify-between">
           <h3 className="text-[20px]">주소 검색</h3>
           <button type="button" onClick={onClose}>
