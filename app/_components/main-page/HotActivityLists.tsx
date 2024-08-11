@@ -9,6 +9,8 @@ import type { Activity } from '@/_types/activities/types';
 import useInfiniteActivities from '@/_hooks/activities/useInfinitiActivities';
 import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObserver';
 
+import Rating from '../rating';
+
 import Spinner from 'public/assets/icons/spinner.svg';
 
 /**
@@ -60,7 +62,7 @@ export default function HotActivityLists() {
             />
             <div className="absolute bottom-[24px] left-[20px] right-0 flex flex-col gap-[6px] text-white mobile:gap-[20px]">
               <div className="text-m font-medium">
-                ⭐️ {activity.rating} <span className="text-gray-500">({activity.reviewCount})</span>
+                <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="hot" />
               </div>
               <div className="mr-[20px] text-ml mobile:mr-[113px] mobile:text-3xl">{activity.title}</div>
               <div className="text-base mobile:text-l">

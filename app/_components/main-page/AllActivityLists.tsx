@@ -9,6 +9,7 @@ import useResFetchCount from '@/_hooks/activities/useResFetchCount';
 
 import CategoryLists from './CategoryLists';
 import Pagination from './Pagination';
+import Rating from '../rating';
 
 import Spinner from 'public/assets/icons/spinner.svg';
 
@@ -72,7 +73,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
       ) : (
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
       )}
-      <div className="relative top-[20px] mx-auto mb-[30px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[40px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
+      <div className="mx-auto mb-[30px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[40px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
         {isLoading && (
           <div className="flex items-center justify-center">
             <Image src={Spinner} width={150} height={150} alt="loading icon" />
@@ -94,7 +95,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
               </div>
               <div className="text-balance">
                 <div className="text-m font-medium">
-                  ⭐️ {activity.rating} <span className="text-gray-500">({activity.reviewCount})</span>
+                  <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="all" />
                 </div>
                 <div className="mb-[15px] mt-[10px] text-ml font-semibold mobile:text-xl">{activity.title}</div>
                 <div className="text-l font-bold mobile:text-2xl">

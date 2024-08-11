@@ -23,7 +23,7 @@ export default function Rating({ rating, reviewCount, use = 'manage' }: RatingPr
 
   switch (use) {
     case 'hot':
-      ratingClass = 'text-m font-semibold leading-6 text-white bg-black';
+      ratingClass = 'text-m font-semibold leading-6 text-white';
       break;
     case 'all':
       ratingClass = 'flex items-center gap-0.5 text-base font-medium leading-6 text-black';
