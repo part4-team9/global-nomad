@@ -29,7 +29,7 @@ export default function Banner() {
       )}
       <div className="h-full w-full bg-bannerGradient" />
       <div className="relative top-[-170px] mx-auto max-w-[1200px] px-6 font-bold text-white mobile:top-[-390px]">
-        <h4 className="w-[184px] text-xl mobile:w-[440px] mobile:text-[54px] tablet:w-[502px] tablet:text-[68px]">
+        <h4 className="w-[184px] break-keep text-l mobile:w-[440px] mobile:text-[40px] tablet:w-[502px] tablet:text-[54px]">
           {isLoading ? '로딩 중입니다..' : data?.activities[0].title}
           {isError && (
             <div>

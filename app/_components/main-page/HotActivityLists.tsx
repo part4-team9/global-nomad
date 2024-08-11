@@ -61,11 +61,9 @@ export default function HotActivityLists() {
               className="rounded-[24px]"
             />
             <div className="absolute bottom-[24px] left-[20px] right-0 flex flex-col gap-[6px] text-white mobile:gap-[20px]">
-              <div className="text-m font-medium">
-                <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="hot" />
-              </div>
-              <div className="mr-[20px] text-ml mobile:mr-[113px] mobile:text-3xl">{activity.title}</div>
-              <div className="text-base mobile:text-l">
+              <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="hot" />
+              <div className="mr-[20px] break-keep text-base mobile:mr-[113px] mobile:text-2xl">{activity.title}</div>
+              <div className="text-m mobile:text-ml">
                 ₩ {activity.price.toLocaleString()}
                 <span className="text-m font-normal"> /인</span>
               </div>

@@ -62,7 +62,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
   }, [searchValue]);
 
   return (
-    <div>
+    <div className="bg-gray-50">
       {searchValue ? (
         <div className="flex flex-col gap-[12px] font-normal">
           <p className="text-xl mobile:text-3xl">
@@ -72,6 +72,9 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
         </div>
       ) : (
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
+      )}
+      {!isLoading && data?.activities && data.activities.length === 0 && (
+        <div className="flex h-[400px] w-full items-center justify-center text-l font-bold mobile:h-[600px] mobile:text-2xl">등록된 체험이 없습니다.</div>
       )}
       <div className="mx-auto mb-[30px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[40px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
         {isLoading && (
@@ -94,13 +97,11 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
                 />
               </div>
               <div className="text-balance">
-                <div className="text-m font-medium">
-                  <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="all" />
-                </div>
-                <div className="mb-[15px] mt-[10px] text-ml font-semibold mobile:text-xl">{activity.title}</div>
-                <div className="text-l font-bold mobile:text-2xl">
+                <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="all" />
+                <div className="my-[10px] text-base font-semibold mobile:text-l break-keep">{activity.title}</div>
+                <div className="text-ml font-bold mobile:text-l">
                   ₩ {activity.price.toLocaleString()}
-                  <span className="text-base font-normal text-gray-700 mobile:text-l"> /인</span>
+                  <span className="text-m font-normal text-gray-700 mobile:text-ml"> /인</span>
                 </div>
               </div>
             </div>

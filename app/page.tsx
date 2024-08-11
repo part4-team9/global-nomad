@@ -15,7 +15,7 @@ export default function Home() {
   };
 
   return (
-    <div className="box-border flex w-full flex-col content-center items-center">
+    <div className="box-border flex w-full min-w-full flex-col content-center items-center bg-gray-50">
       <Banner />
       <SearchBox onSearch={handleSearch} />
       <div className="relative top-[90px] mx-auto w-full px-[16px] mobile:top-[150px] mobile:px-[24px] lg:max-w-[1200px]">

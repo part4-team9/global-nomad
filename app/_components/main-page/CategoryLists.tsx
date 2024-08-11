@@ -63,8 +63,8 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
           <div className="pointer-events-none absolute h-[41px] w-full bg-btnGradientMobile mobile:h-[58px] mobile:bg-btnGradientTablet" />
         )}
       </div>
-      <div className="mt-[40px] text-ml font-bold mobile:mt-[60px] mobile:text-4xl">
-        {emojis[selectedCategory]} {selectedCategory}
+      <div className="mt-[40px] flex gap-2 text-ml font-bold mobile:mt-[60px] mobile:text-4xl">
+        {emojis[selectedCategory]} <span>{selectedCategory}</span>
       </div>
     </div>
   );

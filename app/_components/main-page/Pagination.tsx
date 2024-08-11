@@ -1,8 +1,13 @@
 'use client';
 
+import Image from 'next/image';
+
 import usePagination from '@/_hooks/activities/usePagination';
 
 import Button from './Button';
+
+import ArrowRight from 'public/assets/icons/arrow-right.svg';
+import ArrowRightDisabled from 'public/assets/icons/arrow-right-disabled.svg';
 
 interface PaginationProps {
   currentPage: number;
@@ -37,9 +42,13 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
         btnColor="white"
         textColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
         borderColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
-        className="h-[40px] w-[40px] rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
+        className="flex h-[40px] w-[40px] items-center justify-center rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
       >
-        {'<'}
+        {canGoToPreviousSet ? (
+          <Image src={ArrowRight} alt="페이지네이션 버튼" className="rotate-180" />
+        ) : (
+          <Image src={ArrowRightDisabled} alt="페이지네이션 버튼" />
+        )}
       </Button>
       {pageNumbers.map((pageNumber) => {
         const isActivePage = currentPage === pageNumber;
@@ -64,9 +73,13 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
         textColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
         border
         borderColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
-        className="h-[40px] w-[40px] rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
+        className="flex h-[40px] w-[40px] items-center justify-center rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
       >
-        {'>'}
+        {canGoToPreviousSet ? (
+          <Image src={ArrowRight} alt="페이지네이션 버튼" />
+        ) : (
+          <Image src={ArrowRightDisabled} alt="페이지네이션 버튼" className="rotate-180" />
+        )}
       </Button>
     </div>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import type { ChangeEvent, FormEvent, KeyboardEvent } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -22,13 +22,6 @@ export default function SearchBox({ onSearch }: HotActivitySearchProps) {
     setInputValue(e.target.value);
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      onSearch(inputValue);
-    }
-  };
-
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     onSearch(inputValue);
@@ -44,7 +37,6 @@ export default function SearchBox({ onSearch }: HotActivitySearchProps) {
             placeholder="내가 원하는 체험은"
             className="w-full rounded-[4px] border border-nomad-black py-[15px] pl-[48px] pr-[35px] text-m font-normal outline-none placeholder:text-gray-500 mobile:text-base"
             onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
           />
           <Image src={Bed} alt="bed" width={48} height={48} className="absolute" />
           <button type="submit" className="h-full w-[96px] rounded-[4px] bg-nomad-black text-white mobile:min-w-[136px]">

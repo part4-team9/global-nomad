@@ -48,9 +48,12 @@ export default function SortLists({ onSelect }: SortListsProps) {
   return (
     <div className="relative z-10">
       {showList && <div onClick={closeSelectBox} className="absolute left-0 top-0 h-full w-full" />}
-      <div className="relative min-w-[110px] whitespace-nowrap mobile:min-w-[150px] tablet:min-w-[150px]">
-        <fieldset onClick={showList ? closeSelectBox : openSelectBox} className="cursor-pointer rounded-[15px] border border-nomad-black">
-          <div className="flex h-[41px] items-center justify-between px-[18px] mobile:h-[58px]">
+      <div className="whitespace-nowrap">
+        <fieldset
+          onClick={showList ? closeSelectBox : openSelectBox}
+          className="max-w-[120px] cursor-pointer rounded-[15px] border border-nomad-black mobile:w-full"
+        >
+          <div className="flex h-[41px] items-center justify-center mobile:h-[58px] mx-[20px] mobile:mx-[30px]">
             <div className="text-m font-medium text-nomad-black mobile:text-ml">{inputLabel}</div>
             <Image src={CostBtn} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
           </div>
@@ -65,7 +68,7 @@ export default function SortLists({ onSelect }: SortListsProps) {
                 onClick={() => {
                   handleClickListItem(option.value, option.label);
                 }}
-                className={`flex h-[41px] cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md mobile:h-[58px] ${option.label === inputLabel ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
+                className={`flex h-[41px] cursor-pointer items-center justify-center gap-2 rounded-md mobile:h-[58px] ${option.label === inputLabel ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
               >
                 <span className={`text-m font-medium mobile:text-ml ${option.label === inputLabel ? 'text-white' : 'text-black'}`}>{option.label}</span>
               </li>
