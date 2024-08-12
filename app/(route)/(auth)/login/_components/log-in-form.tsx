@@ -13,7 +13,7 @@ import { postLogin } from '@/_libs/authService';
 import { getCookie } from '@/_utils/cookie';
 
 import Button from '@/_components/button';
-import Input from '@/_components/Input';
+import Input from '@/_components/InputTest';
 import Modal from '@/_components/modal';
 
 interface InputField {
