@@ -1,6 +1,6 @@
 import '../styles/globals.css';
 
-import Footer from './_components/FooterTest';
+import Footer from './_components/Footer';
 import Header from './_components/header';
 import Providers from './providers';
 
