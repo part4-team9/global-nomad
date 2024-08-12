@@ -42,7 +42,4 @@
   h3 {
     @apply text-xl font-bold;
   }
-  .commonLayoutWrap {
-    @apply pb-[136px] pt-6 tablet:pb-[344px] tablet:pt-[72px] mobile:pb-[312px];
-  }
 }
