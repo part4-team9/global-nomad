@@ -35,7 +35,7 @@ function SelectUl({ value, onClick, inputValue, size = 'default' }: SelectUlProp
       className={`flex cursor-pointer items-center gap-2 rounded-md p-2 ${size === 'small' && 'justify-center'} ${isSelect ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
     >
       {isPC && size === 'default' && <div className="h-5 w-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>}
-      <span className={`leading-[1.6] ${size === 'small' && 'text-sm'} ${isSelect ? 'text-white' : 'text-black'}`}>{value}</span>
+      <span className={`leading-[1.6] ${size === 'small' && 'text-sm tablet:text-base'} ${isSelect ? 'text-white' : 'text-black'}`}>{value}</span>
     </li>
   );
 }

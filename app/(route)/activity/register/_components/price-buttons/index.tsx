@@ -35,7 +35,7 @@ function PriceButtons({ setPriceFormat }: PriceButtonsProps) {
   };
 
   return (
-    <div className="ml-auto flex gap-2">
+    <div className="ml-auto flex flex-wrap justify-end gap-2">
       {priceList.map((data) => (
         <button type="button" key={data.price} onClick={() => handleClickPrice(data.price)} className="rounded px-2 py-[2px] text-sm font-medium shadow-md">
           {data.text}

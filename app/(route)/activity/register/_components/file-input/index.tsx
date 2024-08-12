@@ -36,7 +36,7 @@ export default forwardRef(function FileInput(
           className={`relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed p-2 tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)] ${inputStatusClass}`}
         >
           <Image src={PlusIcon} alt="등록" />
-          <span className="text-xl leading-[1.1] text-gray-700">이미지 등록</span>
+          <span className="text-center text-xl leading-[1.1] text-gray-700">이미지 등록</span>
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0" />
         </div>
         {images?.map((image, idx) => (

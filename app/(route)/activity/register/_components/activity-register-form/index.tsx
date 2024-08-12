@@ -88,8 +88,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     }));
   }, [priceFormat]);
 
-  console.log(formData);
-
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
     // 버튼 disable 조건
