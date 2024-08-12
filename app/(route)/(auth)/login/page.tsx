@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import LogInForm from './_components/log-in-form';
+import LogInForm from './_components/LogInForm';
 
 function LogIn() {
   return (
