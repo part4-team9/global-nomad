@@ -7,8 +7,8 @@ import postActivity from '@/_apis/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
 
 import type { Activity } from '../../page';
-import ActivityForm from '../activity-register-form';
-import CommonModal from '../common-modal';
+import ActivityForm from '../ActivityRegisterForm';
+import CommonModal from '../CommonModal';
 
 /**
  * 체험 등록 페이지 렌더링 및 modal 상태관리, data post하는 컴포넌트입니다.

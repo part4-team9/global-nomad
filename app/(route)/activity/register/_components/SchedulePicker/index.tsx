@@ -10,10 +10,10 @@ import useWindowSize from '@/_hooks/useWindowSize';
 
 import { generateTimeArray } from '@/_utils/generateTimeArray';
 
-import SelectBox from '@/_components/select-box';
+import SelectBox from '@/_components/SelectBox';
 
 import type { Activity, Schedule } from '../../page';
-import CalendarWrapper from '../calendar-picker';
+import CalendarWrapper from '../CalendarPicker';
 
 import AddIcon from 'public/assets/icons/btn-plus.svg';
 import AddDisabled from 'public/assets/icons/btn-plus-disabled.svg';

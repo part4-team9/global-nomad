@@ -9,8 +9,8 @@ import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page
 import { usePostImage } from '@/_hooks/use-post-image';
 
 import type { Activity } from '../../page';
-import CommonModal from '../common-modal';
-import FileInput from '../file-input';
+import CommonModal from '../CommonModal';
+import FileInput from '../FileInput';
 
 interface IntroduceImage {
   edit?: boolean;

@@ -1,9 +1,9 @@
 import type { SubImage } from '@/_apis/activities/getActivity';
 
-import CommonLayout from '@/_components/common-layout';
-import StickyLayout from '@/_components/side-sticky-layout';
+import CommonLayout from '@/_components/CommonLayout';
+import StickyLayout from '@/_components/SideStickyLayout';
 
-import EditLayout from './_components/edit-layout';
+import EditLayout from './_components/EditLayout';
 import type { Schedule } from '../../register/page';
 
 export interface EditSchedule {

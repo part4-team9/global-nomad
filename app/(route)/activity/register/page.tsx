@@ -1,8 +1,8 @@
 // 체험 등록 페이지
-import CommonLayout from '@/_components/common-layout';
-import StickyLayout from '@/_components/side-sticky-layout';
+import CommonLayout from '@/_components/CommonLayout';
+import StickyLayout from '@/_components/SideStickyLayout';
 
-import RegisterLayout from './_components/register-layout';
+import RegisterLayout from './_components/RegisterLayout';
 
 export interface Schedule {
   date: string;

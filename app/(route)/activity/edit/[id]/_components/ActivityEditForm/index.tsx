@@ -1,54 +1,92 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AddressModal from '@/(route)/activity/register/_components/address-modal';
+import type { ActivityDetail } from '@/_apis/activities/getActivity';
+import AddressModal from '@/(route)/activity/register/_components/AddressModal';
+import BannerImage from '@/(route)/activity/register/_components/BannerImage';
+import IntroduceImage from '@/(route)/activity/register/_components/IntroduceImage';
+import PriceButtons from '@/(route)/activity/register/_components/PriceButtons';
+import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEditor';
+import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
 
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
 
 import Button from '@/_components/button';
-import Input from '@/_components/input';
-import SelectBox from '@/_components/select-box';
-import Textarea from '@/_components/textarea';
+import Input from '@/_components/Input';
+import SelectBox from '@/_components/SelectBox';
+import Textarea from '@/_components/Textarea';
 
-import type { Activity } from '../../page';
-import BannerImage from '../banner-image';
-import IntroduceImage from '../introduce-image';
-import PriceButtons from '../price-buttons';
-import ScheduleEditor from '../schedule-editor';
-import SchedulePicker from '../schedule-picker';
+import type { ActivityEdit, EditDetail } from '../../page';
 
-interface ActivityFormProps {
+interface EditFormProps {
   buttonTitle: string;
+  data?: ActivityDetail;
   isPending: boolean;
-  onSubmit: (formData: Activity) => void;
+  isSuccess: boolean;
+  onSubmit: (formData: ActivityEdit) => void;
   title: string;
 }
 
 /**
- * 체험 등록 페이지 Form 데이터 다루는 컴포넌트 입니다.
+ * 체험 수정 페이지 Form 데이터 다루는 컴포넌트 입니다.
+ * @param data 기존 체험 정보 default값
+ * @param isSuccess 데이터 patch 성공 결과
+ * @param isPending api patch pending 상태 여부
+ * @param onSubmit form 제출시 실행 함수
  * @param title 페이지 타이틀 제목
  * @param buttonTitle submit 버튼 텍스트
- * @param isPending api post pending 상태 여부
- * @param onSubmit form 제출시 실행 함수
- 
  */
-function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormProps) {
+function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
   const [priceFormat, setPriceFormat] = useState('');
   const [addressModalState, setAddressModalState] = useState(false);
-  const [buttonDisable, setButtonDisable] = useState(true);
-
-  const [formData, setFormData] = useState<Activity>({
-    address: '',
-    bannerImageUrl: '',
+  const [buttonDisable, setButtonDisable] = useState(false);
+  const [detailData, setDetailData] = useState<EditDetail>({
+    schedules: [],
+    subImages: [],
+  });
+  const [formData, setFormData] = useState<ActivityEdit>({
+    title: '',
     category: '',
     description: '',
     price: '',
-    schedules: [],
-    subImageUrls: [],
-    title: '',
+    address: '',
+    bannerImageUrl: '',
+    subImageIdsToRemove: [],
+    subImageUrlsToAdd: [],
+    scheduleIdsToRemove: [],
+    schedulesToAdd: [],
   });
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      const { address, bannerImageUrl, category, description, price, schedules, subImages, title: ActivityTitle } = data;
+
+      const formatPrice = addCommasToPrice(String(price));
+      setPriceFormat(formatPrice);
+
+      setDetailData({
+        schedules,
+        subImages,
+      });
+
+      setFormData((prev) => ({
+        ...prev,
+        title: ActivityTitle,
+        category,
+        description,
+        price,
+        address,
+        bannerImageUrl,
+      }));
+    }
+  }, [isSuccess, data]);
+
+  const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
 
   const handleAddressModal = () => {
     setAddressModalState((prev) => !prev);
@@ -76,11 +114,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     }
   };
 
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-  };
-
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -89,15 +122,16 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
   }, [priceFormat]);
 
   useEffect(() => {
-    const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
+    const { address, bannerImageUrl, category, description, price, title: formTitle } = formData;
+    const { schedules } = detailData;
     // 버튼 disable 조건
     const isDisabled =
-      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length === 0 || formTitle === '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || schedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled || isPending);
-  }, [formData, isPending]);
+  }, [formData, detailData, isPending]);
 
   return (
-    <form className="grid gap-6" onSubmit={handleFormSubmit}>
+    <form className="grid gap-6" onSubmit={onSubmitForm}>
       <div className="flex flex-wrap justify-between">
         <h2 className="leading-1.3 text-3xl font-bold">{title}</h2>
         <Button type="submit" variant="black" disabled={buttonDisable} className="h-12 w-[120px]">
@@ -126,20 +160,29 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
           <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] lg:mb-1">
             예약 가능한 시간대
           </label>
-          <SchedulePicker setRegisterFormData={setFormData} />
-          {formData.schedules.length > 0 && (
+          <SchedulePicker setEditFormData={setFormData} setEditDetail={setDetailData} />
+
+          {detailData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 lg:gap-5 lg:pt-5">
-              {formData.schedules.map((s, index) => (
-                <ScheduleEditor key={index} index={index} schedule={s} scheduleArray={formData.schedules} setRegisterFormData={setFormData} />
+              {detailData.schedules.map((s, index) => (
+                <ScheduleEditor
+                  key={index}
+                  index={index}
+                  schedule={s}
+                  scheduleArray={detailData.schedules}
+                  setEditFormData={setFormData}
+                  detailData={formData.schedulesToAdd}
+                  setEditDetailData={setDetailData}
+                />
               ))}
             </div>
           )}
         </div>
-        <BannerImage setFormData={setFormData} />
-        <IntroduceImage setRegisterFormData={setFormData} />
+        <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
+        <IntroduceImage edit editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
       </div>
     </form>
   );
 }
 
-export default ActivityForm;
+export default ActivityEditForm;

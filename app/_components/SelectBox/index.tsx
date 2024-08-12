@@ -3,7 +3,7 @@
 import { forwardRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import SelectUl from '../select-box-list';
+import SelectUl from '../SelectBoxList';
 
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
 

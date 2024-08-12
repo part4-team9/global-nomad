@@ -5,11 +5,11 @@ import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import getActivity from '@/_apis/activities/getActivity';
 import patchActivity from '@/_apis/activities/patchActivity';
-import CommonModal from '@/(route)/activity/register/_components/common-modal';
+import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import type { ActivityEdit } from '../../page';
-import ActivityEditForm from '../activity-edit-form';
+import ActivityEditForm from '../ActivityEditForm';
 
 interface EditLayoutProps {
   id: string;
