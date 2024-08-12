@@ -1,5 +1,6 @@
 import { create } from 'zustand';
-import type { Response } from '@/_apis/type';
+
+import type { Response } from '@/_types/authentication';
 
 interface UserState {
   isLoggedIn: boolean;

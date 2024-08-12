@@ -4,8 +4,9 @@ import { useState } from 'react';
 import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import type { SignupFormValues } from '@/_apis/type';
 import { postSignup } from '@/_apis/user';
+
+import type { SignupFormValues } from '@/_types/authentication';
 
 import { useModal } from '@/_hooks/useModal';
 
@@ -112,7 +113,14 @@ function SignUpForm() {
     closeModal();
   };
 
-  const renderInput = (id: keyof SignupFormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<SignupFormValues>, error?: FieldError) => (
+  const renderInput = (
+    id: keyof SignupFormValues,
+    label: string,
+    type: string,
+    placeholder: string,
+    validation: RegisterOptions<SignupFormValues>,
+    error?: FieldError,
+  ) => (
     <div className="grid gap-2" key={id}>
       <label htmlFor={id}>{label}</label>
       <Input id={id} type={type} placeholder={placeholder} error={Boolean(error)} errorMessage={error?.message} {...register(id, validation)} />

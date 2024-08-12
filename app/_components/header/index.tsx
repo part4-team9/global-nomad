@@ -3,8 +3,9 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { Response } from '@/_apis/type';
 import useUserStore from '@/store/useUserStore';
+
+import type { Response } from '@/_types/authentication';
 
 import GuestHeader from './_component/guest-header';
 import UserHeader from './_component/user-header';

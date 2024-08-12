@@ -1,6 +1,7 @@
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import { isAxiosError } from 'axios';
-import type { LoginFormValues, Response } from '@/_apis/type';
+
+import type { LoginFormValues, Response } from '@/_types/authentication';
 
 import { setCookie } from '@/_utils/cookie';
 
