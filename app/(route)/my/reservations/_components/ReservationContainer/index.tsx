@@ -1,8 +1,8 @@
 import type { MyReservations } from '@/_types/myReservations';
 
-import NoReservation from '@/_components/no-reservation';
+import NoReservation from '@/_components/NoReservation';
 
-import ReservationWrapper from '../reservation-wrapper';
+import ReservationWrapper from '../ReservationWrapper';
 
 interface ReservationData {
   data: MyReservations;

@@ -13,7 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
 
-import ReservationContainer from './_components/reservation-container';
+import ReservationContainer from './_components/ReservationContainer';
 
 function MyReservations() {
   const router = useRouter();
