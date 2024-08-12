@@ -1,9 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
 'use client';
 
 import { forwardRef, useCallback, useState } from 'react';
 import Image from 'next/image';
+
+import { cn } from '@/_utils/classNames';
 
 import EyeOffIcon from 'public/assets/icons/eye-off.svg';
 import EyeOnIcon from 'public/assets/icons/eye-on.svg';
@@ -30,15 +30,16 @@ export default forwardRef(function Input({ type, error, errorMessage, className,
     setPasswordToggle((prev) => !prev);
   }, []);
 
-  // 유효성 체크 여부에 따른 border style 변경
-  const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200';
-
   return (
     <div className="grid">
       <div className="relative">
         <input
           type={newType}
-          className={`leading-1.6 w-full rounded border border-solid px-5 py-4 ${isPassword ? 'pr-[54px]' : 'pr-5'} text-black outline-none placeholder:text-gray-500 ${inputStatusClass} ${className}`}
+          className={cn([
+            `leading-1.6 w-full rounded border border-solid px-5 py-4 text-black outline-none placeholder:text-gray-500 ${className}`,
+            isPassword ? 'pr-[54px]' : 'pr-5',
+            error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200',
+          ])}
           ref={ref}
           {...rest}
         />

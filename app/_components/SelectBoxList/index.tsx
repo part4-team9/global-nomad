@@ -4,6 +4,8 @@ import Image from 'next/image';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
+import { cn } from '@/_utils/classNames';
+
 import CheckMark from 'public/assets/icons/check-mark.svg';
 
 interface SelectUlProps {
@@ -32,10 +34,14 @@ function SelectUl({ value, onClick, inputValue, size = 'default' }: SelectUlProp
   return (
     <li
       onClick={() => onClickItem()}
-      className={`flex cursor-pointer items-center gap-2 rounded-md p-2 ${size === 'small' && 'justify-center'} ${isSelect ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
+      className={cn([
+        'flex cursor-pointer items-center gap-2 rounded-md p-2',
+        size === 'small' && 'justify-center',
+        isSelect ? 'bg-nomad-black' : 'hover:bg-green-100',
+      ])}
     >
       {isPC && size === 'default' && <div className="h-5 w-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>}
-      <span className={`leading-[1.6] ${size === 'small' && 'text-sm tablet:text-base'} ${isSelect ? 'text-white' : 'text-black'}`}>{value}</span>
+      <span className={cn(['leading-[1.6]', size === 'small' && 'text-sm tablet:text-base', isSelect ? 'text-white' : 'text-black'])}>{value}</span>
     </li>
   );
 }

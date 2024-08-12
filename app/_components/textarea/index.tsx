@@ -2,6 +2,8 @@
 
 import { forwardRef } from 'react';
 
+import { cn } from '@/_utils/classNames';
+
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: boolean;
   errorMessage?: string;
@@ -15,14 +17,13 @@ interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement
  * @param errorMessage textarea 밑에 보여줄 에러 메세지
  */
 export default forwardRef(function Textarea({ size, error, errorMessage, ...rest }: TextareaProps, ref: React.LegacyRef<HTMLTextAreaElement>) {
-  const isSmall = size === 'small' ? 'mobile:h-[240px]' : '';
-  // 유효성 체크 여부에 따른 border style 변경
-  const inputStatusClass = error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200';
-
   return (
     <div className="grid">
       <textarea
-        className={`h-[346px] w-full resize-none rounded border border-solid ${inputStatusClass} px-4 py-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${isSmall}`}
+        className={cn([
+          'h-[346px] w-full resize-none rounded border border-solid border-gray-600 px-4 py-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 focus:border-green-200',
+          size === 'small' && 'mobile:h-[240px]',
+        ])}
         ref={ref}
         {...rest}
       />
