@@ -1,6 +1,7 @@
 import React from 'react';
 import { logout } from '@/_actions';
-import useUserStore from '@/store/useUserStore';
+
+import useUserStore from '@/_stores/useUserStore';
 
 function LogoutButton() {
   const setLoginStatus = useUserStore((state) => state.setLoginStatus);

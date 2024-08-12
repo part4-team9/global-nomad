@@ -3,9 +3,10 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import useUserStore from '@/store/useUserStore';
 
 import type { Response } from '@/_types/authentication';
+
+import useUserStore from '@/_stores/useUserStore';
 
 import GuestHeader from './_component/guest-header';
 import UserHeader from './_component/user-header';
