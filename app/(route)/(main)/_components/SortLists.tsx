@@ -53,8 +53,8 @@ export default function SortLists({ onSelect }: SortListsProps) {
           onClick={showList ? closeSelectBox : openSelectBox}
           className="max-w-[120px] cursor-pointer rounded-[15px] border border-nomad-black mobile:w-full"
         >
-          <div className="flex h-[41px] items-center justify-center mobile:h-[58px] mx-[20px] mobile:mx-[30px]">
-            <div className="text-m font-medium text-nomad-black mobile:text-ml">{inputLabel}</div>
+          <div className="mx-[20px] flex h-[41px] items-center justify-center mobile:mx-[30px] mobile:h-[58px]">
+            <div className="text-md mobile:text-2lg font-medium text-nomad-black">{inputLabel}</div>
             <Image src={CostBtn} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
           </div>
         </fieldset>
@@ -70,7 +70,7 @@ export default function SortLists({ onSelect }: SortListsProps) {
                 }}
                 className={`flex h-[41px] cursor-pointer items-center justify-center gap-2 rounded-md mobile:h-[58px] ${option.label === inputLabel ? 'bg-nomad-black' : 'hover:bg-green-100'}`}
               >
-                <span className={`text-m font-medium mobile:text-ml ${option.label === inputLabel ? 'text-white' : 'text-black'}`}>{option.label}</span>
+                <span className={`mobile:text-2lg text-lg font-medium ${option.label === inputLabel ? 'text-white' : 'text-black'}`}>{option.label}</span>
               </li>
             ))}
           </ul>

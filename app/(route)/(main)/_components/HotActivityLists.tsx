@@ -9,7 +9,7 @@ import type { Activity } from '@/_types/activities/types';
 import useInfiniteActivities from '@/_hooks/activities/useInfinitiActivities';
 import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObserver';
 
-import Rating from '../rating';
+import Rating from '@/_components/rating';
 
 import Spinner from 'public/assets/icons/spinner.svg';
 
@@ -43,7 +43,7 @@ export default function HotActivityLists() {
 
   return (
     <div className="flex flex-col font-bold">
-      <div className="text-ml mobile:text-[36px]">🔥 인기 체험</div>
+      <div className="text-2xl mobile:text-[36px] mobile:leading-[43px]">🔥 인기 체험</div>
       <div className="scrollbar-hide flex space-x-4 overflow-x-scroll pt-[20px]">
         {activityArray.map((activity, i) => (
           <div
@@ -60,12 +60,18 @@ export default function HotActivityLists() {
               sizes="h-[186px] w-[186px]"
               className="rounded-[24px]"
             />
+            <div
+              className="absolute bottom-0 left-0 right-0 h-3/5 rounded-[24px]"
+              style={{
+                background: 'linear-gradient(to top, #1B1B1B, transparent)',
+              }}
+            />
             <div className="absolute bottom-[24px] left-[20px] right-0 flex flex-col gap-[6px] text-white mobile:gap-[20px]">
               <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="hot" />
-              <div className="mr-[20px] break-keep text-base mobile:mr-[113px] mobile:text-2xl">{activity.title}</div>
-              <div className="text-m mobile:text-ml">
+              <div className="mr-[20px] break-keep text-lg mobile:mr-[113px] mobile:text-[28px] mobile:leading-[42px]">{activity.title}</div>
+              <div className="text-md mobile:text-2lg">
                 ₩ {activity.price.toLocaleString()}
-                <span className="text-m font-normal"> /인</span>
+                <span className="text-md font-regular"> /인</span>
               </div>
             </div>
           </div>
@@ -76,7 +82,7 @@ export default function HotActivityLists() {
           </div>
         )}
         {isError && (
-          <div className="flex min-h-[186px] w-full items-center justify-center text-l font-bold mobile:min-h-[384px]">
+          <div className="flex min-h-[186px] w-full items-center justify-center text-xl font-bold mobile:min-h-[384px]">
             데이터를 불러오는데 실패하였습니다.
             <br />
             다시 시도해주세요.

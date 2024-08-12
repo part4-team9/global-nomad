@@ -45,13 +45,13 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
       <div className="relative top-[25px] flex h-[41px] justify-between mobile:top-[30px] mobile:h-[58px]">
         <div
           ref={scrollRef}
-          className="scrollbar-hide flex gap-[8px] overflow-x-scroll text-base font-medium mobile:gap-[14px] mobile:text-ml tablet:gap-[24px]"
+          className="scrollbar-hide mobile:text-2lg flex gap-[8px] overflow-x-scroll text-lg font-medium mobile:gap-[14px] tablet:gap-[24px]"
         >
           {categories.map((category) => (
             <button
               key={category}
               type="button"
-              className={`category-button min-w-[80px] rounded-[15px] border border-nomad-black mobile:min-w-[120px] tablet:min-w-[127px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'text-green200 bg-white'}`}
+              className={`category-button min-w-[80px] rounded-[15px] border border-nomad-black mobile:min-w-[120px] tablet:min-w-[127px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
               onClick={() => onCategoryListClick(category)}
             >
               {category}
@@ -63,7 +63,7 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
           <div className="pointer-events-none absolute h-[41px] w-full bg-btnGradientMobile mobile:h-[58px] mobile:bg-btnGradientTablet" />
         )}
       </div>
-      <div className="mt-[40px] flex gap-2 text-ml font-bold mobile:mt-[60px] mobile:text-4xl">
+      <div className="mt-[40px] flex gap-2 text-2xl font-bold mobile:mt-[60px] mobile:text-[36px] mobile:leading-[43px]">
         {emojis[selectedCategory]} <span>{selectedCategory}</span>
       </div>
     </div>

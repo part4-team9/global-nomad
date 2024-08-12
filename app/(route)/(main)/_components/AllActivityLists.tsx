@@ -7,9 +7,10 @@ import { useRouter } from 'next/navigation';
 import useGetActivities from '@/_hooks/activities/useGetActivities';
 import useResFetchCount from '@/_hooks/activities/useResFetchCount';
 
+import Rating from '@/_components/rating';
+
 import CategoryLists from './CategoryLists';
 import Pagination from './Pagination';
-import Rating from '../rating';
 
 import Spinner from 'public/assets/icons/spinner.svg';
 
@@ -62,21 +63,21 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
   }, [searchValue]);
 
   return (
-    <div className="bg-gray-50">
+    <div>
       {searchValue ? (
-        <div className="flex flex-col gap-[12px] font-normal">
-          <p className="text-xl mobile:text-3xl">
+        <div className="font-regular flex flex-col gap-[12px]">
+          <p className="text-2xl mobile:text-3xl">
             <span className="font-bold">{searchValue}</span>으로 검색한 결과 입니다.
           </p>
-          <p className="text-base">총 {data?.totalCount}개의 결과</p>
+          <p className="text-lg">총 {data?.totalCount}개의 결과</p>
         </div>
       ) : (
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
       )}
       {!isLoading && data?.activities && data.activities.length === 0 && (
-        <div className="flex h-[400px] w-full items-center justify-center text-l font-bold mobile:h-[600px] mobile:text-2xl">등록된 체험이 없습니다.</div>
+        <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">등록된 체험이 없습니다.</div>
       )}
-      <div className="mx-auto mb-[30px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[40px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
+      <div className="mx-auto mb-[40px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[60px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
         {isLoading && (
           <div className="flex items-center justify-center">
             <Image src={Spinner} width={150} height={150} alt="loading icon" />
@@ -98,16 +99,16 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
               </div>
               <div className="text-balance">
                 <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="all" />
-                <div className="my-[10px] text-base font-semibold mobile:text-l break-keep">{activity.title}</div>
-                <div className="text-ml font-bold mobile:text-l">
+                <div className="my-[10px] break-keep text-lg font-semibold mobile:text-xl">{activity.title}</div>
+                <div className="text-2lg font-bold mobile:text-xl">
                   ₩ {activity.price.toLocaleString()}
-                  <span className="text-m font-normal text-gray-700 mobile:text-ml"> /인</span>
+                  <span className="text-md mobile:text-2lg font-regular text-gray-700"> /인</span>
                 </div>
               </div>
             </div>
           ))}
         {isError && (
-          <div className="flex h-[384px] w-full items-center justify-center text-l font-bold">
+          <div className="flex h-[384px] w-full items-center justify-center text-xl font-bold">
             데이터를 불러오는데 실패하였습니다.
             <br />
             다시 시도해주세요.

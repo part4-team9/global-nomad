@@ -34,7 +34,7 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
   const canGoToNextSet = Math.ceil(currentPage / visiblePages) !== Math.ceil(totalPages / visiblePages);
 
   return (
-    <div className="mx-[24px] flex w-full max-w-[1200px] items-center justify-center gap-[10px]">
+    <div className="mx-[24px] mb-[60px] flex w-full max-w-[1200px] items-center justify-center gap-[10px] mobile:mb-[100px]">
       <Button
         disabled={!canGoToPreviousSet}
         onClick={canGoToPreviousSet ? goToPreviousSet : undefined}
@@ -42,7 +42,7 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
         btnColor="white"
         textColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
         borderColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
+        className="text-2lg flex h-[40px] w-[40px] items-center justify-center rounded-[15px] font-bold mobile:h-[55px] mobile:w-[55px]"
       >
         {canGoToPreviousSet ? (
           <Image src={ArrowRight} alt="페이지네이션 버튼" className="rotate-180" />
@@ -60,7 +60,7 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
             border={!isActivePage}
             borderColor={isActivePage ? undefined : 'nomadBlack'}
             onClick={() => goToPage(pageNumber)}
-            className="h-[40px] w-[40px] rounded-[15px] text-ml font-normal mobile:h-[55px] mobile:w-[55px]"
+            className="text-2lg font-regular h-[40px] w-[40px] rounded-[15px] mobile:h-[55px] mobile:w-[55px]"
           >
             {pageNumber}
           </Button>
@@ -73,7 +73,7 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
         textColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
         border
         borderColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
-        className="flex h-[40px] w-[40px] items-center justify-center rounded-[15px] text-ml font-bold mobile:h-[55px] mobile:w-[55px]"
+        className="text-2lg flex h-[40px] w-[40px] items-center justify-center rounded-[15px] font-bold mobile:h-[55px] mobile:w-[55px]"
       >
         {canGoToPreviousSet ? (
           <Image src={ArrowRight} alt="페이지네이션 버튼" />
