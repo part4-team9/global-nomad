@@ -14,9 +14,9 @@ import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
 
 import Button from '@/_components/button';
-import Input from '@/_components/InputTest';
+import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
-import Textarea from '@/_components/TextareaTest';
+import Textarea from '@/_components/Textarea';
 
 import type { ActivityEdit, EditDetail } from '../../page';
 
