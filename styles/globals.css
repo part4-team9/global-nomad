@@ -56,7 +56,4 @@
     background: #fafafa;
     border-radius: 10px;
   }
-  .commonLayoutWrap {
-    @apply pb-[136px] pt-6 mobile:pb-[312px] tablet:pb-[344px] tablet:pt-[72px];
-  }
 }
