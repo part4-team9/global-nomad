@@ -9,8 +9,8 @@ import useResFetchCount from '@/_hooks/activities/useResFetchCount';
 
 import Rating from '@/_components/rating';
 
-import CategoryLists from './CategoryLists';
-import Pagination from './Pagination';
+import CategoryLists from '../CategoryLists';
+import Pagination from '../Pagination';
 
 import Spinner from 'public/assets/icons/spinner.svg';
 

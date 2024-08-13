@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 import usePagination from '@/_hooks/activities/usePagination';
 
-import Button from './Button';
+import Button from '../Button';
 
 import ArrowRight from 'public/assets/icons/arrow-right.svg';
 import ArrowRightDisabled from 'public/assets/icons/arrow-right-disabled.svg';

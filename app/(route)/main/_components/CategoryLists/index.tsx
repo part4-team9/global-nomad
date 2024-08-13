@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useScrollable } from '@/_hooks/activities/useScrollable';
 
-import SortLists from './SortLists';
+import SortLists from '../SortLists';
 
 interface CategoryListsProps {
   onCategoryClick: (category: string) => void;
