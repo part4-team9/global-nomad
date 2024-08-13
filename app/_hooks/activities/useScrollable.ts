@@ -9,7 +9,7 @@ export const useScrollable = () => {
     const handleScroll = () => {
       if (scrollRef.current) {
         const { scrollWidth, scrollLeft, clientWidth } = scrollRef.current;
-        if (scrollWidth - scrollLeft === clientWidth) {
+        if (Math.abs(scrollWidth - scrollLeft - clientWidth) <= 1) {
           setIsEnd(true);
         } else {
           setIsEnd(false);

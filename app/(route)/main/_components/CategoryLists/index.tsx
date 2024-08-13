@@ -45,7 +45,7 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
       <div className="relative top-[25px] flex h-[41px] justify-between mobile:top-[30px] mobile:h-[58px]">
         <div
           ref={scrollRef}
-          className="scrollbar-hide mobile:text-2lg flex gap-[8px] overflow-x-scroll text-lg font-medium mobile:gap-[14px] tablet:gap-[24px]"
+          className="scrollbar-hide mobile:text-2lg flex gap-[10px] overflow-x-scroll text-lg font-medium mobile:gap-[14px] tablet:gap-[20px]"
         >
           {categories.map((category) => (
             <button

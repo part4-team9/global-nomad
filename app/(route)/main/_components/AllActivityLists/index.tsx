@@ -77,7 +77,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
       {!isLoading && data?.activities && data.activities.length === 0 && (
         <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">등록된 체험이 없습니다.</div>
       )}
-      <div className="mx-auto mb-[40px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[5px] mobile:mb-[60px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
+      <div className="mx-auto mb-[40px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[60px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
         {isLoading && (
           <div className="flex items-center justify-center">
             <Image src={Spinner} width={150} height={150} alt="loading icon" />
