@@ -5,7 +5,7 @@ import defaultProfileImg from 'public/assets/images/default-profile.png';
 import useUserStore from '@/_stores/useUserStore';
 import useBackgroundClick from '@/_hooks/useBackgroundClick';
 
-import HeaderDropdown from './header-dropdown';
+import HeaderDropdown from './HeaderDropdown';
 
 import alarm from 'public/assets/icons/alarm.svg';
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
@@ -26,7 +26,7 @@ export default function UserHeader() {
 
   return (
     <div className="flex items-center text-m">
-      <div className="border-r-[1px] border-gray-200 pr-3 md:pr-[25px]">
+      <div className="border-r-[1px] border-gray-200 pr-3 md:pr-[25px] cursor-pointer">
         <Image src={alarm} alt="alarm" />
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]" onClick={toggleDropdown} ref={dropdownRef}>
