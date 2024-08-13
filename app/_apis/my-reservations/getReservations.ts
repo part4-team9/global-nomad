@@ -5,7 +5,7 @@ import type { MyReservations } from '@/_types/myReservations';
 
 import axiosInstance from '@/_libs/axios';
 
-const getReservations = async (): Promise<MyReservations> => {
+const getReservations = async () => {
   try {
     const res: AxiosResponse<MyReservations> = await axiosInstance.get('/my-reservations');
     return res.data;
