@@ -7,12 +7,16 @@ import CheckBlack from 'public/assets/lottie/check-black.json';
 
 interface CancelModalProps {
   closeModal: () => void;
+  id: number;
   message: string;
 }
 
-function CancelModal({ message, closeModal }: CancelModalProps) {
-  const handleCloseModal = () => {
-    // TODO 예약 취소하는 로직 필요
+function CancelModal({ id, message, closeModal }: CancelModalProps) {
+  const handleCloseModal = (action = 'close') => {
+    if (action === 'cancel') {
+      // TODO 예약 취소하는 로직 필요
+      console.log(id);
+    }
 
     closeModal();
   };
@@ -26,7 +30,7 @@ function CancelModal({ message, closeModal }: CancelModalProps) {
           <Button variant="white" onClick={handleCloseModal} className="h-[38px] w-20 text-sm font-bold">
             아니오
           </Button>
-          <Button variant="black" onClick={handleCloseModal} className="h-[38px] w-20 text-sm font-bold">
+          <Button variant="black" onClick={() => handleCloseModal('cancel')} className="h-[38px] w-20 text-sm font-bold">
             취소하기
           </Button>
         </div>

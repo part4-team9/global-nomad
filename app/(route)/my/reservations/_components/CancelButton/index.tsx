@@ -1,17 +1,10 @@
-import type { Reservations } from '@/_types/myReservations';
-
 import useModalState from '@/_hooks/useModalState';
 
 import Button from '@/_components/button';
 
 import CancelModal from '../CancelModal';
-import CardDataTransformer from '../CardDataTransformer';
 
-interface ReservationsWrapper {
-  datas: Reservations[];
-}
-
-function ReservationList({ datas }: ReservationsWrapper) {
+function CancelButton({ id }: { id: number }) {
   const { modalState, setModalState, openModal, closeModal } = useModalState();
 
   const handleClickCancel = () => {
@@ -23,8 +16,8 @@ function ReservationList({ datas }: ReservationsWrapper) {
   };
 
   return (
-    <div className="mt-3 grid gap-2 tablet:gap-6 mobile:mt-6 mobile:gap-4">
-      {/* TODO 카드 컴포넌트로 이동 필요 (현재 모달 테스트 중) */}
+    <>
+      {modalState.isOpen && <CancelModal id={id} message={modalState.message} closeModal={closeModal} />}
       <Button
         type="button"
         variant="white"
@@ -34,12 +27,8 @@ function ReservationList({ datas }: ReservationsWrapper) {
       >
         예약 취소
       </Button>
-      {modalState.isOpen && <CancelModal message={modalState.message} closeModal={closeModal} />}
-      {datas.map((data) => (
-        <CardDataTransformer key={data.id} data={data} />
-      ))}
-    </div>
+    </>
   );
 }
 
-export default ReservationList;
+export default CancelButton;

@@ -16,6 +16,7 @@ export interface ReservationContents {
   headCount: number;
   period: string;
   price: number;
+  reservationId: number;
   status: ReservationStatus;
   time1: string;
   time2: string;
