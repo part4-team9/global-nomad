@@ -13,20 +13,24 @@ import ProfileBtn from './_components/profile-btn';
 
 const profileActionButtons: ProfileBtnListProps[] = [
   {
-    icon: <IconMyInfo colorClass="fill-nomad-black" />,
+    icon: <IconMyInfo />,
     title: '내 정보',
+    href: '#',
   },
   {
     icon: <IconReservationHistory />,
     title: '예약 내역',
+    href: '#',
   },
   {
     icon: <IconManageMyActivity />,
     title: '내 체험 관리',
+    href: '#',
   },
   {
     icon: <IconReservationStatus />,
     title: '예약 현황',
+    href: '#',
   },
 ];
 
@@ -49,7 +53,14 @@ export default function SideUserProfileCard({ avatarSrc = '/assets/images/defaul
       </div>
       <div className="flex flex-col gap-2">
         {profileActionButtons.map((item, idx) => (
-          <ProfileBtn key={idx} icon={item.icon} title={item.title} isSelected={selectedIndex === idx} onClick={() => handleButtonClick(idx)} />
+          <ProfileBtn
+            key={idx}
+            icon={item.icon}
+            title={item.title}
+            href={item.href}
+            isSelected={selectedIndex === idx}
+            onClick={() => handleButtonClick(idx)}
+          />
         ))}
       </div>
     </div>

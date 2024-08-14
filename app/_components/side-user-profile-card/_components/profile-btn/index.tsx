@@ -1,8 +1,10 @@
+import React from 'react';
 import { cva } from 'class-variance-authority';
 
 import { cn } from '@/_utils/classNames';
 
 export interface ProfileBtnListProps {
+  href: string;
   icon: React.ReactNode;
   title: string;
 }
@@ -36,7 +38,7 @@ const IconVariants = cva('w-6 h-6', {
   },
 });
 
-export default function ProfileBtn({ icon, title, isSelected, onClick }: ProfileActionButtonProps) {
+export default function ProfileBtn({ icon, title, isSelected, href, onClick }: ProfileActionButtonProps) {
   return (
     <a href={href} aria-label={title} className={cn(ProfileBtnVariants({ selectedText: isSelected }))} onClick={onClick}>
       <div className="flex gap-[14px]">
