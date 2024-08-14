@@ -6,16 +6,16 @@ import { ContentType, ReservationStatus } from '@/_types/card';
 import { cn } from '@/_utils/classNames';
 import { formatDate, formatNumberWithCommas, formatTimeRange } from '@/_utils/format';
 
-const contentsWrapperVariants = cva('w-full px-6 tablet:pl-3 tablet:pr-[18px] mobile:pl-2 mobile:pr-[14px]', {
+const contentsWrapperVariants = cva('w-full px-6 under-tablet:pl-3 under-tablet:pr-[18px] under-mobile:pl-2 under-mobile:pr-[14px]', {
   variants: {
     type: {
-      reservation: 'pb-[24.5px] pt-[25.5px] tablet:py-3 mobile:py-[9px]',
-      activities: 'flex flex-col justify-between pb-5 pt-[21px] tablet:py-3',
+      reservation: 'pb-[24.5px] pt-[25.5px] under-tablet:py-3 under-mobile:py-[9px]',
+      activities: 'flex flex-col justify-between pb-5 pt-[21px] under-tablet:py-3',
     },
   },
 });
 
-const statusVariants = cva('mb-2 text-base/6.5 font-bold tablet:mb-0 mobile:text-sm/6.5', {
+const statusVariants = cva('mb-2 text-base/6.5 font-bold under-tablet:mb-0 under-mobile:text-sm/6.5', {
   variants: {
     status: {
       [ReservationStatus.Approved]: 'text-orange-500', // 예약 승인
@@ -27,9 +27,9 @@ const statusVariants = cva('mb-2 text-base/6.5 font-bold tablet:mb-0 mobile:text
   },
 });
 
-const titleStyle = cn('mb-[13px] truncate text-xl/6.5 font-bold tablet:mb-[5px] tablet:text-lg/6 mobile:mb-0 mobile:text-sm/6');
-const btnAreaStyle = cn('flex h-10 w-full items-center justify-between mobile:h-8');
-const priceStyle = cn('text-2xl/[28.64px] font-medium tablet:text-xl/[23.87px] mobile:text-base/[19.09px]');
+const titleStyle = cn('mb-[13px] truncate text-xl/6.5 font-bold under-tablet:mb-[5px] tablet:text-lg/6 under-mobile:mb-0 under-mobile:text-sm/6');
+const btnAreaStyle = cn('flex h-10 w-full items-center justify-between under-mobile:h-8');
+const priceStyle = cn('text-2xl/[28.64px] font-medium under-tablet:text-xl/[23.87px] under-mobile:text-base/[19.09px]');
 
 function toReservationStatus(status: string): ReservationStatus {
   switch (status) {
@@ -58,7 +58,7 @@ function ReservationContent({ contents }: { contents: Omit<ReservationContents, 
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <p className={cn(statusVariants({ status }))}>{status}</p>
       <p className={titleStyle}>{contents.title}</p>
-      <div className="mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal tablet:mb-[10px] tablet:text-sm/6 mobile:mb-0 mobile:text-xs/6">
+      <div className="under-tablet:mb-[10px] under-tablet:text-sm/6 under-mobile:mb-0 under-mobile:text-xs/6 mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal">
         <p>{formatDate(contents.period)}</p> · <p>{formatTimeRange(contents.time1, contents.time2)}</p> · <p>{contents.headCount}명</p>
       </div>
       <div className={btnAreaStyle}>
@@ -77,14 +77,14 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <div>
         {/* TODO rating 컴포넌트 적용 */}
-        <p className="mb-[6px] mobile:mb-0">{contents.rating}</p>
+        <p className="under-mobile:mb-0 mb-[6px]">{contents.rating}</p>
         <p className={titleStyle}>{contents.title}</p>
       </div>
 
       <div className={btnAreaStyle}>
         <div className="flex items-center gap-[10px]">
           <p className={priceStyle}>￦{formatNumberWithCommas(contents.price)}</p>
-          <p className="text-base/[19.09px] font-medium text-gray-700 tablet:hidden">/인</p>
+          <p className="under-tablet:hidden text-base/[19.09px] font-medium text-gray-700">/인</p>
         </div>
         {/* TODO button 공용 컴포넌트 적용 */}
         {contents.button}

@@ -11,8 +11,8 @@ interface CardFrameProps<T extends ContentsType> {
 
 export default function CardFrame<T extends ContentsType>({ contents, img }: CardFrameProps<T>) {
   return (
-    <div className="group flex h-[204px] w-full cursor-pointer overflow-hidden rounded-3xl bg-white shadow-[0_4px_16px_0_rgba(17,34,17,0.05)] tablet:h-[156px] mobile:h-[128px]">
-      <div className="relative size-full max-h-[204px] max-w-[204px] overflow-hidden tablet:max-w-[156px] mobile:max-w-[128px]">
+    <div className="under-tablet:h-[156px] under-mobile:h-[128px] group flex h-[204px] w-full cursor-pointer overflow-hidden rounded-3xl bg-white shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
+      <div className="under-tablet:max-w-[156px] under-mobile:max-w-[128px] relative size-full max-h-[204px] max-w-[204px] overflow-hidden">
         <Image
           src={img}
           alt={`${contents.title} img`}
