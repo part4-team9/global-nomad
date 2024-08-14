@@ -47,7 +47,7 @@ export default function SideUserProfileCard({ avatarSrc = '/assets/images/defaul
   };
 
   return (
-    <div className="flex h-[432px] w-full min-w-[215px] max-w-[384px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
+    <div className="flex h-[432px] w-full min-w-[215px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
       <div className="flex justify-center">
         <AvatarEditWrapper avatarSrc={avatarSrc} />
       </div>
