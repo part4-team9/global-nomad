@@ -20,7 +20,7 @@ function CancelModal({ message, closeModal }: CancelModalProps) {
   return (
     <Modal isOpen onClose={handleCloseModal}>
       <div className="mb-6 mt-5 flex w-full max-w-[298px] flex-col items-center px-[65px]">
-        <Lottie className="h-9 w-9" animationData={CheckBlack} play loop={false} />
+        <Lottie className="size-9" animationData={CheckBlack} play loop={false} />
         <p className="mt-3 leading-[1.6] text-black">{message}</p>
         <div className="mt-[30px] flex gap-2">
           <Button variant="white" onClick={handleCloseModal} className="h-[38px] w-20 text-sm font-bold">

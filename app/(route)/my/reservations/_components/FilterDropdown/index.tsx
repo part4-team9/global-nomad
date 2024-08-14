@@ -35,25 +35,25 @@ function FilterDropdown() {
 
   return (
     <>
-      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 h-full w-full" />}
+      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 size-full" />}
       <div className="relative ml-auto">
         <div
           onClick={showList ? closeSelectBox : openSelectBox}
-          className="z-[1] flex min-w-[120px] cursor-pointer items-center justify-between gap-[3px] rounded-[15px] border border-solid border-green-200 px-5 py-[10px] mobile:min-w-40 mobile:gap-2 mobile:py-4"
+          className="z-[1] flex min-w-[120px] cursor-pointer items-center justify-between gap-[3px] rounded-[15px] border border-solid border-green-200 bg-white px-5 py-[10px] mobile:min-w-40 mobile:gap-2 mobile:py-4"
         >
           <span className="text-sm font-medium leading-none text-green-200 mobile:text-lg mobile:leading-none">{selectedFilterLabel}</span>
           <Image src={ArrowDown} alt="더보기" className={cn(['duration-500', fade ? 'rotate-180' : 'rotate-0'])} />
         </div>
         {showList && (
-          <div className={cn(['shadow-small absolute mt-2 min-w-[120px] mobile:min-w-40', fade ? 'animate-fade-in' : 'animate-fade-out'])}>
+          <div className={cn(['absolute mt-2 min-w-[120px] shadow-small mobile:min-w-40', fade ? 'animate-fade-in' : 'animate-fade-out'])}>
             <div className="overflow-hidden rounded-md border border-solid border-gray-200">
               {RESERVATION_FILTER.map((filter) => (
                 <div
                   key={filter.status}
                   onClick={() => handleFilterSelect(filter)}
                   className={cn([
-                    'flex cursor-pointer items-center justify-center border-b border-solid border-gray-200 px-[5px] py-[10px] last-of-type:border-none mobile:px-2 mobile:py-[18px] tablet:px-3',
-                    selectedFilterLabel === filter.label ? 'bg-nomad-black text-white' : 'text-gray-700 hover:bg-green-100',
+                    'flex cursor-pointer items-center justify-center border-b border-solid border-gray-200 px-[5px] py-[10px] last-of-type:border-none tablet:px-3 mobile:px-2 mobile:py-[18px]',
+                    selectedFilterLabel === filter.label ? 'bg-nomad-black text-white' : 'bg-white text-gray-700 hover:bg-green-100',
                   ])}
                 >
                   <span className="text-sm font-medium mobile:text-lg">{filter.label}</span>

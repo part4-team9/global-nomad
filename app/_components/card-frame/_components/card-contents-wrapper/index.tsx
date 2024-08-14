@@ -4,7 +4,7 @@ import type { ActivitiesContents, ContentsType, ReservationContents } from '@/_t
 import { ContentType, ReservationStatus } from '@/_types/card';
 
 import { cn } from '@/_utils/classNames';
-import { formatDate, formatNumberWithCommas, formatTimeRange } from '@/_utils/format';
+import { formatDate, formatNumberWithCommas } from '@/_utils/format';
 
 const contentsWrapperVariants = cva('w-full px-6 under-tablet:pl-3 under-tablet:pr-[18px] under-mobile:pl-2 under-mobile:pr-[14px]', {
   variants: {
@@ -18,31 +18,39 @@ const contentsWrapperVariants = cva('w-full px-6 under-tablet:pl-3 under-tablet:
 const statusVariants = cva('mb-2 text-base/6.5 font-bold under-tablet:mb-0 under-mobile:text-sm/6.5', {
   variants: {
     status: {
-      [ReservationStatus.Approved]: 'text-orange-500', // 예약 승인
-      [ReservationStatus.Canceled]: 'text-gray-600', // 예약 취소
-      [ReservationStatus.Completed]: 'text-gray-600', // 체험 완료
-      [ReservationStatus.Confirmed]: 'text-blue-200', // 예약 완료
-      [ReservationStatus.Refusal]: 'text-red-500', // 예약 거절
+      [ReservationStatus.confirmed]: 'text-orange-500', // 예약 승인
+      [ReservationStatus.canceled]: 'text-gray-600', // 예약 취소
+      [ReservationStatus.completed]: 'text-gray-600', // 체험 완료
+      [ReservationStatus.pending]: 'text-blue-200', // 예약 신청
+      [ReservationStatus.declined]: 'text-red-500', // 예약 거절
     },
   },
 });
 
-const titleStyle = cn('mb-[13px] truncate text-xl/6.5 font-bold under-tablet:mb-[5px] tablet:text-lg/6 under-mobile:mb-0 under-mobile:text-sm/6');
+const statusLables = {
+  pending: '예약 신청',
+  canceled: '예약 취소',
+  confirmed: '예약 승인',
+  declined: '예약 거절',
+  completed: '체험 완료',
+};
+
+const titleStyle = cn('mb-[13px] truncate text-xl/6.5 font-bold tablet:text-lg/6 under-tablet:mb-[5px] under-mobile:mb-0 under-mobile:text-sm/6');
 const btnAreaStyle = cn('flex h-10 w-full items-center justify-between under-mobile:h-8');
 const priceStyle = cn('text-2xl/[28.64px] font-medium under-tablet:text-xl/[23.87px] under-mobile:text-base/[19.09px]');
 
-function toReservationStatus(status: string): ReservationStatus {
+export function toReservationStatus(status: string): ReservationStatus {
   switch (status) {
-    case 'Approved':
-      return ReservationStatus.Approved;
-    case 'Canceled':
-      return ReservationStatus.Canceled;
-    case 'Completed':
-      return ReservationStatus.Completed;
-    case 'Confirmed':
-      return ReservationStatus.Confirmed;
-    case 'Refusal':
-      return ReservationStatus.Refusal;
+    case 'pending':
+      return ReservationStatus.pending;
+    case 'canceled':
+      return ReservationStatus.canceled;
+    case 'completed':
+      return ReservationStatus.completed;
+    case 'confirmed':
+      return ReservationStatus.confirmed;
+    case 'declined':
+      return ReservationStatus.declined;
     default:
       throw new Error(`Unknown status: ${status}`);
   }
@@ -56,10 +64,14 @@ function ReservationContent({ contents }: { contents: Omit<ReservationContents, 
 
   return (
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
-      <p className={cn(statusVariants({ status }))}>{status}</p>
+      <p className={cn(statusVariants({ status }))}>{statusLables[status]}</p>
       <p className={titleStyle}>{contents.title}</p>
-      <div className="under-tablet:mb-[10px] under-tablet:text-sm/6 under-mobile:mb-0 under-mobile:text-xs/6 mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal">
-        <p>{formatDate(contents.period)}</p> · <p>{formatTimeRange(contents.time1, contents.time2)}</p> · <p>{contents.headCount}명</p>
+      <div className="mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal under-tablet:mb-[10px] under-tablet:text-sm/6 under-mobile:mb-0 under-mobile:text-xs/6">
+        <p>{formatDate(contents.period)}</p> ·{' '}
+        <p>
+          {contents.time1} - {contents.time2}
+        </p>
+        · <p>{contents.headCount}명</p>
       </div>
       <div className={btnAreaStyle}>
         <p className={priceStyle}>￦{formatNumberWithCommas(contents.price)}</p>
@@ -77,14 +89,14 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <div>
         {/* TODO rating 컴포넌트 적용 */}
-        <p className="under-mobile:mb-0 mb-[6px]">{contents.rating}</p>
+        <p className="mb-[6px] under-mobile:mb-0">{contents.rating}</p>
         <p className={titleStyle}>{contents.title}</p>
       </div>
 
       <div className={btnAreaStyle}>
         <div className="flex items-center gap-[10px]">
           <p className={priceStyle}>￦{formatNumberWithCommas(contents.price)}</p>
-          <p className="under-tablet:hidden text-base/[19.09px] font-medium text-gray-700">/인</p>
+          <p className="text-base/[19.09px] font-medium text-gray-700 under-tablet:hidden">/인</p>
         </div>
         {/* TODO button 공용 컴포넌트 적용 */}
         {contents.button}

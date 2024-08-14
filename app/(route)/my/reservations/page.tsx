@@ -1,7 +1,3 @@
-/**
- * @TODO SSR로 변경 필요!
- */
-
 'use client';
 
 import { useEffect } from 'react';
