@@ -38,11 +38,11 @@ const IconVariants = cva('w-6 h-6', {
 
 export default function ProfileBtn({ icon, title, isSelected, onClick }: ProfileActionButtonProps) {
   return (
-    <button type="button" aria-label={title} className={cn(ProfileBtnVariants({ selectedText: isSelected }))} onClick={onClick}>
+    <a href={href} aria-label={title} className={cn(ProfileBtnVariants({ selectedText: isSelected }))} onClick={onClick}>
       <div className="flex gap-[14px]">
         <div className={cn(IconVariants({ selected: isSelected }))}>{icon}</div>
         <p>{title}</p>
       </div>
-    </button>
+    </a>
   );
 }
