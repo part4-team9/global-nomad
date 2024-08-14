@@ -8,8 +8,8 @@ import { setCookie } from '@/_utils/cookie';
 
 export default function ExampleAxios() {
   const exampleSubmit = useMutation({
-    mutationFn: tokenRefresh,
-    onSuccess: response => {
+    mutationFn: refreshToken,
+    onSuccess: (response) => {
       const accessToken = (response as { accessToken?: string })?.accessToken;
       if (accessToken) {
         setCookie('accessToken', accessToken, {
