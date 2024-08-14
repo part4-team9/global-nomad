@@ -10,7 +10,7 @@ export default function ExampleZustand() {
       {bears} around here...
       <button
         onClick={() => {
-          setBear(prevBear => prevBear + 1);
+          setBear((prevBear) => prevBear + 1);
         }}
         type="button"
       >
