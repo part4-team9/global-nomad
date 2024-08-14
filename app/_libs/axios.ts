@@ -10,6 +10,12 @@ const axiosConfig = {
   },
 };
 
+declare module 'axios' {
+  export interface AxiosRequestConfig {
+    authorization?: boolean;
+  }
+}
+
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
