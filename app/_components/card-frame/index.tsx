@@ -16,8 +16,9 @@ export default function CardFrame<T extends ContentsType>({ contents, img }: Car
         <Image
           src={img}
           alt={`${contents.title} img`}
-          layout="fill"
-          objectFit="cover"
+          fill
+          sizes="max-width:100%"
+          style={{ objectFit: 'cover' }}
           className="transform transition-transform duration-300 ease-in-out group-hover:scale-125"
         />
       </div>
