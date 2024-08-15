@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+
 /**
  * useModalState
  *
@@ -13,8 +17,6 @@
  * @returns {Function} openModal - 모달을 열고 `isOpen` 상태를 true로 변경하는 함수입니다.
  * @returns {Function} closeModal - 모달을 닫고 `isOpen` 상태를 false로 변경하며, `onClose` 콜백 함수를 실행하는 함수입니다.
  */
-
-import { useState } from 'react';
 
 const useModalState = () => {
   const [modalState, setModalState] = useState({

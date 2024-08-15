@@ -15,7 +15,7 @@ export default function CardFrame<T extends ContentsType>({ contents, img }: Car
       <div className="relative size-full max-h-[204px] max-w-[204px] overflow-hidden under-tablet:max-w-[156px] under-mobile:max-w-[128px]">
         <Image
           src={img}
-          alt={`${contents?.title} img`}
+          alt={`${contents.title} img`}
           fill
           priority
           sizes="max-width:100%"

@@ -36,6 +36,8 @@ function MyReservations() {
     retry: 0,
   });
 
+  const showDropdown = searchParams.get('status') || data?.totalCount !== 0;
+
   useEffect(() => {
     if (isError && error instanceof AxiosError) {
       const status = error.response?.status;
@@ -56,7 +58,7 @@ function MyReservations() {
       <StickyLayout>
         <div className="flex flex-wrap items-center justify-between gap-1">
           <h1 className="break-keep text-3xl font-bold leading-[1.3] text-black">예약 내역</h1>
-          <FilterDropdown setParams={setParams} />
+          {showDropdown && <FilterDropdown setParams={setParams} />}
         </div>
         {data && <ReservationContainer data={data} />}
       </StickyLayout>
