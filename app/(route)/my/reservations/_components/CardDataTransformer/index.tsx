@@ -27,7 +27,7 @@ function CardDataTransformer({ data }: TransformerProps) {
     if (status === 'pending') {
       return <CancelButton id={data.id} />;
     }
-    if (status === 'completed') {
+    if (status === 'completed' && !data.reviewSubmitted) {
       return <ReviewButton id={data.id} />;
     }
     return undefined;

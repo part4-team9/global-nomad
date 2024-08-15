@@ -1,4 +1,15 @@
-export const RESERVATION_FILTER = [
+import type { ReservationStatus } from '@/_types/myReservations';
+
+export interface ReservationFilter {
+  label: '예약 신청' | '예약 취소' | '예약 승인' | '예약 거절' | '체험 완료' | '전체 예약';
+  status?: ReservationStatus;
+}
+
+export const RESERVATION_FILTER: ReservationFilter[] = [
+  {
+    status: undefined,
+    label: '전체 예약',
+  },
   {
     status: 'pending',
     label: '예약 신청',

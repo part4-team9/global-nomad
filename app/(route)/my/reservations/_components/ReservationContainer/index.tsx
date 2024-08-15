@@ -14,7 +14,7 @@ function ReservationContainer({ data }: ReservationData) {
   return totalCount === 0 ? (
     <NoReservation />
   ) : (
-    <div className="mt-3 grid gap-2 tablet:gap-6 mobile:mt-6 mobile:gap-4">
+    <div className="mt-3 grid gap-2 mobile:mt-6 mobile:gap-4 tablet:gap-6">
       {reservations.map((reservation) => (
         <CardDataTransformer key={reservation.id} data={reservation} />
       ))}

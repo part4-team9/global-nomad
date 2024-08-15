@@ -1,19 +1,24 @@
 'use client';
 
+import type { Dispatch, SetStateAction } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 
+import type { ReservationStatus } from '@/_types/myReservations';
+import type { ReservationFilter } from '@/_constants/reservation-filter';
 import { RESERVATION_FILTER } from '@/_constants/reservation-filter';
 
 import useSelectBox from '@/_hooks/useSelectBox';
 
 import { cn } from '@/_utils/classNames';
 
+import type { ReservationParams } from '../../page';
+
 import ArrowDown from 'public/assets/icons/cost-btn.svg';
 
-interface FilterData {
-  label: string;
-  status: string;
+interface DropdownProps {
+  setParams: Dispatch<SetStateAction<ReservationParams>>;
 }
 
 /**
@@ -24,11 +29,19 @@ interface FilterData {
  *
  * @TODO 메인 페이지 드롭다운과의 공통화 작업 필요
  */
-function FilterDropdown() {
+function FilterDropdown({ setParams }: DropdownProps) {
+  const searchParams = useSearchParams();
   const { showList, fade, openSelectBox, closeSelectBox } = useSelectBox();
-  const [selectedFilterLabel, setSelectedFilterLabel] = useState('필터');
 
-  const handleFilterSelect = (filter: FilterData) => {
+  const initialLabel = RESERVATION_FILTER.find((filter) => filter.status === searchParams.get('status'))?.label || '필터';
+
+  const [selectedFilterLabel, setSelectedFilterLabel] = useState(initialLabel);
+
+  const handleFilterSelect = (filter: ReservationFilter) => {
+    setParams((prev) => ({
+      ...prev,
+      status: filter.status,
+    }));
     setSelectedFilterLabel(filter.label);
     closeSelectBox();
   };
@@ -49,10 +62,10 @@ function FilterDropdown() {
             <div className="overflow-hidden rounded-md border border-solid border-gray-200">
               {RESERVATION_FILTER.map((filter) => (
                 <div
-                  key={filter.status}
+                  key={filter.label}
                   onClick={() => handleFilterSelect(filter)}
                   className={cn([
-                    'flex cursor-pointer items-center justify-center border-b border-solid border-gray-200 px-[5px] py-[10px] last-of-type:border-none tablet:px-3 mobile:px-2 mobile:py-[18px]',
+                    'flex cursor-pointer items-center justify-center border-b border-solid border-gray-200 px-[5px] py-[10px] last-of-type:border-none mobile:px-2 mobile:py-[18px] tablet:px-3',
                     selectedFilterLabel === filter.label ? 'bg-nomad-black text-white' : 'bg-white text-gray-700 hover:bg-green-100',
                   ])}
                 >
