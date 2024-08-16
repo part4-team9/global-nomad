@@ -12,6 +12,14 @@ import Button from '@/_components/button';
 
 import CancelModal from '../CancelModal';
 
+/**
+ * 예약 취소 버튼 컴포넌트.
+ * 사용자가 예약을 취소할 수 있도록 모달을 열고, 취소 절차를 진행합니다.
+ *
+ * @param {Object} props - 컴포넌트의 속성.
+ * @param {number} props.id - 취소할 예약의 ID.
+ * @returns {JSX.Element} CancelButton 컴포넌트.
+ */
 function CancelButton({ id }: { id: number }) {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -35,7 +43,6 @@ function CancelButton({ id }: { id: number }) {
         ...prev,
         message: '예약 취소가 완료되었습니다.',
       }));
-      // await queryClient.invalidateQueries({ queryKey: ['reservations'] });
     },
     onError: (error: AxiosError) => {
       setIsFirstRender(false);
