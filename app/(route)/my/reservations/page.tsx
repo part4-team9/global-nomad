@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import getReservations from '@/_apis/reservations/getReservations';
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 import type { ReservationStatus } from '@/_types/myReservations';
+
+import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObserver';
 
 import CommonLayout from '@/_components/common-layout';
 import StickyLayout from '@/_components/side-sticky-layout';
@@ -30,13 +32,21 @@ function MyReservations() {
     status: (searchParams.get('status') as ReservationStatus) || undefined,
   });
 
-  const { data, isError, error } = useQuery({
+  const { data, isError, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
     queryKey: ['reservations', params],
-    queryFn: () => getReservations(params),
+    queryFn: ({ pageParam = params.cursorId }) => getReservations({ ...params, cursorId: pageParam }),
+    getNextPageParam: (lastPage) => lastPage.cursorId || undefined,
+    initialPageParam: params.cursorId,
     retry: 0,
   });
 
-  const showDropdown = searchParams.get('status') || data?.totalCount !== 0;
+  const showDropdown = searchParams.get('status') || data?.pages?.[0]?.totalCount !== 0;
+
+  const { setTarget } = useIntersectionObserver({
+    threshold: 0.1,
+    hasNextPage,
+    fetchNextPage,
+  });
 
   useEffect(() => {
     if (isError && error instanceof AxiosError) {
@@ -60,7 +70,14 @@ function MyReservations() {
           <h1 className="break-keep text-3xl font-bold leading-[1.3] text-black">예약 내역</h1>
           {showDropdown && <FilterDropdown setParams={setParams} />}
         </div>
-        {data && <ReservationContainer data={data} />}
+        {data && (
+          <>
+            {data.pages.map((page) => (
+              <ReservationContainer key={page.cursorId ?? 'lastPage'} data={page} />
+            ))}
+            <div ref={setTarget} />
+          </>
+        )}
       </StickyLayout>
     </CommonLayout>
   );

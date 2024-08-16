@@ -1,6 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import type { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
+import patchCancelReservation from '@/_apis/reservations/patchCancelReservation';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import useModalState from '@/_hooks/useModalState';
 
@@ -9,10 +13,13 @@ import Button from '@/_components/button';
 import CancelModal from '../CancelModal';
 
 function CancelButton({ id }: { id: number }) {
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const { modalState, setModalState, openModal, closeModal } = useModalState();
-  const [cancel, setCancel] = useState(true);
 
   const handleClickCancel = () => {
+    setIsFirstRender(true);
     setModalState((prev) => ({
       ...prev,
       message: '예약을 취소하시겠어요?',
@@ -20,17 +27,63 @@ function CancelButton({ id }: { id: number }) {
     openModal();
   };
 
-  const handleCloseModal = (action = 'close') => {
-    if (action === 'cancel') {
-      // TODO 예약 취소하는 로직 필요
-    }
+  const reservationMutation = useMutation({
+    mutationFn: patchCancelReservation,
+    onSuccess: () => {
+      setIsFirstRender(false);
+      setModalState((prev) => ({
+        ...prev,
+        message: '예약 취소가 완료되었습니다.',
+      }));
+      // await queryClient.invalidateQueries({ queryKey: ['reservations'] });
+    },
+    onError: (error: AxiosError) => {
+      setIsFirstRender(false);
+      const status = error.response?.status;
+      const data = error.response?.data as { message?: string };
+      const message = data?.message || '예약 취소에 실패했습니다.';
+      if (status === 401) {
+        setModalState({
+          isOpen: true,
+          message,
+          onClose: () => {
+            router.push('/login');
+          },
+        });
+      } else {
+        setModalState((prev) => ({
+          ...prev,
+          isOpen: true,
+          message,
+        }));
+      }
+    },
+  });
 
-    closeModal();
+  const handleCloseModal = async (action = 'close') => {
+    if (action === 'cancel') {
+      reservationMutation.mutate(id);
+    } else if (action === 'confirm') {
+      await queryClient.invalidateQueries({ queryKey: ['reservations'] });
+    } else {
+      closeModal();
+    }
   };
+
+  const { isSuccess, isPending, isError } = reservationMutation;
 
   return (
     <>
-      {modalState.isOpen && <CancelModal cancelMode={cancel} message={modalState.message} onClose={handleCloseModal} />}
+      {modalState.isOpen && (
+        <CancelModal
+          message={modalState.message}
+          isFirstRender={isFirstRender}
+          isSuccess={isSuccess}
+          isPending={isPending}
+          isError={isError}
+          onClose={handleCloseModal}
+        />
+      )}
       <Button
         type="button"
         variant="white"

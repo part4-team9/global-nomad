@@ -13,7 +13,7 @@ function ReviewButton({ id }: { id: number }) {
       variant="black"
       borderRadius="6px"
       // onClick={}
-      className="h-8 w-20 text-sm tablet:h-[42px] tablet:w-[144px] mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6]"
+      className="h-8 w-20 text-sm mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6] tablet:h-[42px] tablet:w-[144px]"
     >
       후기 작성
     </Button>
