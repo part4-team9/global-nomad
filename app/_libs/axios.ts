@@ -19,8 +19,8 @@ declare module 'axios' {
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
-  async (config) => {
-    const token = await getCookie('accessToken');
+  (config) => {
+    const token = getCookie('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
