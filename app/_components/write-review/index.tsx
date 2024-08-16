@@ -4,6 +4,10 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 
+import usePostReview from '@/_hooks/my-reservations/usePostReview';
+
+import { getCookie } from '@/_utils/cookie';
+
 import ReviewCardFrame from './review-card-frame';
 import Button from '../button';
 import Modal from '../modal';
@@ -47,6 +51,7 @@ const mockData = [
 export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
   const [rating, setRating] = useState<number>(0);
   const [reviewText, setReviewText] = useState('');
+  const { mutate } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
     setRating(clicked);
@@ -59,15 +64,17 @@ export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (rating && reviewText) {
-      console.log('제출 성공');
-      // 제출 성공 로직
-      /**
-       * mutata({reservationId, rating, content: reviewText})
-       */
+    const token = getCookie('accessToken'); 
+
+    if (rating && reviewText && token) {
+      mutate({
+        reservationId: mockData[0].reservationId,
+        rating,
+        content: reviewText,
+        token,
+      });
     } else {
-      console.log('별점과 후기를 모두 작성해 주세요.');
-      // 제출 실패 로직
+      console.log('별점, 후기, 토큰을 모두 작성해 주세요.');
     }
   };
 
@@ -76,7 +83,7 @@ export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="box-border flex h-dvh w-dvw flex-col justify-center gap-9 px-6 pb-[41px] pt-[23px] mobile:max-h-[750px] mobile:max-w-[480px]">
           <div className="flex items-center justify-between">
-            <span className="text-[28px] font-bold leading-[26px] mobile:text-2xl">후기 작성</span>
+            <span className="text-[28px] font-bold leading-6.5 mobile:text-2xl">후기 작성</span>
             <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
           </div>
           <div className="flex flex-col gap-8 mobile:gap-12">

@@ -25,8 +25,8 @@ interface ReviewCardFrameProps {
 const formatPrice = (totalPrice: number) => totalPrice.toLocaleString('ko-KR');
 
 const formatDate = (date: string) => {
-  const formatDate = new Date(date);
-  return `${formatDate.getFullYear()}. ${formatDate.getMonth() + 1}. ${formatDate.getDate()}`;
+  const formDate = new Date(date);
+  return `${formDate.getFullYear()}. ${formDate.getMonth() + 1}. ${formDate.getDate()}`;
 };
 
 const formatTimeRange = (startTime: string, endTime: string): string => {
@@ -49,7 +49,7 @@ export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime
           <span>·</span>
           <span>{headCount}명</span>
         </div>
-        <div className="h-[1px] w-full bg-nomad-black opacity-10" />
+        <div className="h-px w-full bg-nomad-black opacity-10" />
         <span className="text-xl mobile:text-3xl">₩{formatPrice(totalPrice)}</span>
       </div>
     </div>
