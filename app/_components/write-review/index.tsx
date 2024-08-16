@@ -1,9 +1,10 @@
+'use client';
+
 import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { useModal } from '@/_hooks/useModal';
-
+import ReviewCardFrame from './review-card-frame';
 import Button from '../button';
 import Modal from '../modal';
 import Textarea from '../textarea';
@@ -11,10 +12,41 @@ import Textarea from '../textarea';
 import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
 
-export default function WriteReview() {
+interface WriteReviewProps {
+  closeModal: () => void;
+  isOpen: boolean;
+}
+
+/**
+ * 후기 작성 모달 컴포넌트 입니다.
+ * @param {boolean} isOpen - 모달을 열어줍니다.
+ * @param {function} closeModal - 모달을 닫아줍니다.
+ * @param {string} title - 체험 타이틀 입니다.
+ * @param {string} bannerImageUrl - 체험 사진경로 입니다.
+ * @param {string} date - 체험 날짜 입니다.
+ * @param {string} startTime 체험시작 시간 입니다.
+ * @param {string} endTime 체험종료 시간 입니다.
+ * @param {number} headCount - 체험 인원수 입니다.
+ * @param {number} totalPrice - 체험 가격 입니다.
+ * @param {number} reservationId - 리뷰할 체험 고유 값 입니다.
+ */
+
+const mockData = [
+  {
+    title: '함께 배우면 즐거운 스트릿 댄스',
+    bannerImageUrl: '',
+    date: '2024.08.09',
+    startTime: '2024-08-09T14:17:18.923Z',
+    endTime: '2024-08-09T20:17:18.923Z',
+    headCount: 99,
+    totalPrice: 200000000,
+    reservationId: 3,
+  },
+];
+
+export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
   const [rating, setRating] = useState<number>(0);
   const [reviewText, setReviewText] = useState('');
-  const { isOpen, openModal, closeModal } = useModal();
 
   const handleStarClick = (clicked: number) => {
     setRating(clicked);
@@ -29,24 +61,37 @@ export default function WriteReview() {
 
     if (rating && reviewText) {
       console.log('제출 성공');
+      // 제출 성공 로직
+      /**
+       * mutata({reservationId, rating, content: reviewText})
+       */
     } else {
       console.log('별점과 후기를 모두 작성해 주세요.');
+      // 제출 실패 로직
     }
   };
 
   return (
     <div>
-      <button type="button" onClick={openModal}>
-        모달 열기
-      </button>
       <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="flex w-dvw flex-col gap-9 px-6 pb-[41px] pt-[23px] mobile:max-w-[480px]">
+        <div className="box-border flex h-dvh w-dvw flex-col justify-center gap-9 px-6 pb-[41px] pt-[23px] mobile:max-h-[750px] mobile:max-w-[480px]">
           <div className="flex items-center justify-between">
             <span className="text-[28px] font-bold leading-[26px] mobile:text-2xl">후기 작성</span>
-            <Image src={Xbtn} alt="닫기" className="cursor-pointer" />
+            <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
           </div>
           <div className="flex flex-col gap-8 mobile:gap-12">
-            <div>카드 프레임 넣을거에요</div>
+            {mockData.map((data, idx) => (
+              <ReviewCardFrame
+                key={idx}
+                title={data.title}
+                bannerImageUrl={data.bannerImageUrl}
+                date={data.date}
+                startTime={data.startTime}
+                endTime={data.endTime}
+                headCount={data.headCount}
+                totalPrice={data.totalPrice}
+              />
+            ))}
             <div className="flex items-center justify-center gap-2">
               {[1, 2, 3, 4, 5].map((id) => (
                 <div key={id} onClick={() => handleStarClick(id)} className="cursor-pointer">
