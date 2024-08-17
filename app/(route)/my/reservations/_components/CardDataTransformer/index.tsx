@@ -28,7 +28,7 @@ function CardDataTransformer({ data }: TransformerProps) {
       return <CancelButton id={data.id} />;
     }
     if (status === 'completed' && !data.reviewSubmitted) {
-      return <ReviewButton id={data.id} />;
+      return <ReviewButton id={data.id} data={data} />;
     }
     return undefined;
   };

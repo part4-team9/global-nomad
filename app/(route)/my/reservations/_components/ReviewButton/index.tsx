@@ -1,22 +1,52 @@
 import Button from '@/_components/button';
+import { useModal } from '@/_hooks/useModal';
+import { Reservations } from '@/_types/myReservations';
+import ReviewModal from '../ReviewModal';
+
+interface ReviewButtonProps {
+  id: number;
+  data: Reservations;
+}
 
 /**
  * ReviewButton 컴포넌트
  *
  * 체험 완료된 항목의 경우 리뷰를 작성할 수 있도록 후기 작성 버튼을 렌더링합니다.
- * @TODO 후기 작성 컴포넌트 연동 필요
+ * 버튼 클릭 시, 리뷰 작성 모달을 열고 해당 예약 데이터를 모달에 전달합니다.
  */
-function ReviewButton({ id }: { id: number }) {
+function ReviewButton({ id, data }: ReviewButtonProps) {
+  const { isOpen, openModal, closeModal } = useModal();
+
+  console.log(id, data);
+
+  const handleClickButton = () => {
+    isOpen ? closeModal() : openModal();
+  };
+
   return (
-    <Button
-      type="button"
-      variant="black"
-      borderRadius="6px"
-      // onClick={}
-      className="h-8 w-20 text-sm mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6] tablet:h-[42px] tablet:w-[144px]"
-    >
-      후기 작성
-    </Button>
+    <>
+      <Button
+        type="button"
+        variant="black"
+        borderRadius="6px"
+        onClick={handleClickButton}
+        className="h-8 w-20 text-sm tablet:h-[42px] tablet:w-[144px] mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6]"
+      >
+        후기 작성
+      </Button>
+      <ReviewModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title={data.activity.title}
+        bannerImageUrl={data.activity.bannerImageUrl}
+        date={data.date}
+        startTime={data.startTime}
+        endTime={data.endTime}
+        headCount={data.headCount}
+        totalPrice={data.totalPrice}
+        reservationId={id}
+      />
+    </>
   );
 }
 
