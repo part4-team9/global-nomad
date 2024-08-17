@@ -6,8 +6,6 @@ import Image from 'next/image';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
 
-import { getCookie } from '@/_utils/cookie';
-
 import ReviewCardFrame from './review-card-frame';
 import Button from '../button';
 import Modal from '../modal';
@@ -17,8 +15,16 @@ import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
 
 interface WriteReviewProps {
+  bannerImageUrl: string;
   closeModal: () => void;
+  date: string;
+  endTime: string;
+  headCount: number;
   isOpen: boolean;
+  reservationId: number;
+  startTime: string;
+  title: string;
+  totalPrice: number;
 }
 
 /**
@@ -35,22 +41,21 @@ interface WriteReviewProps {
  * @param {number} reservationId - 리뷰할 체험 고유 값 입니다.
  */
 
-const mockData = [
-  {
-    title: '함께 배우면 즐거운 스트릿 댄스',
-    bannerImageUrl: '',
-    date: '2024.08.09',
-    startTime: '2024-08-09T14:17:18.923Z',
-    endTime: '2024-08-09T20:17:18.923Z',
-    headCount: 99,
-    totalPrice: 200000000,
-    reservationId: 3,
-  },
-];
-
-export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
+export default function WriteReview({
+  isOpen,
+  closeModal,
+  title,
+  bannerImageUrl,
+  date,
+  startTime,
+  endTime,
+  headCount,
+  totalPrice,
+  reservationId,
+}: WriteReviewProps) {
   const [rating, setRating] = useState<number>(0);
-  const [reviewText, setReviewText] = useState('');
+  const [reviewText, setReviewText] = useState<string>('');
+  const [errMessage, setErrMessage] = useState<string | null>(null);
   const { mutate } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
@@ -64,17 +69,15 @@ export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const token = getCookie('accessToken'); 
-
-    if (rating && reviewText && token) {
+    if (rating && reviewText) {
       mutate({
-        reservationId: mockData[0].reservationId,
+        reservationId,
         rating,
         content: reviewText,
-        token,
       });
+      setErrMessage(null);
     } else {
-      console.log('별점, 후기, 토큰을 모두 작성해 주세요.');
+      setErrMessage('별점과 후기를 모두 작성해 주세요.');
     }
   };
 
@@ -87,18 +90,15 @@ export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
             <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
           </div>
           <div className="flex flex-col gap-8 mobile:gap-12">
-            {mockData.map((data, idx) => (
-              <ReviewCardFrame
-                key={idx}
-                title={data.title}
-                bannerImageUrl={data.bannerImageUrl}
-                date={data.date}
-                startTime={data.startTime}
-                endTime={data.endTime}
-                headCount={data.headCount}
-                totalPrice={data.totalPrice}
-              />
-            ))}
+            <ReviewCardFrame
+              title={title}
+              bannerImageUrl={bannerImageUrl}
+              date={date}
+              startTime={startTime}
+              endTime={endTime}
+              headCount={headCount}
+              totalPrice={totalPrice}
+            />
             <div className="flex items-center justify-center gap-2">
               {[1, 2, 3, 4, 5].map((id) => (
                 <div key={id} onClick={() => handleStarClick(id)} className="cursor-pointer">
@@ -107,7 +107,10 @@ export default function WriteReview({ isOpen, closeModal }: WriteReviewProps) {
               ))}
             </div>
             <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-              <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
+              <div className="flex flex-col gap-2">
+                <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
+                {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
+              </div>
               <Button type="submit" variant="black" className="h-14 w-full text-lg">
                 작성하기
               </Button>

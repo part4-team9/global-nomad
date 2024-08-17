@@ -8,7 +8,7 @@ const usePostReview = () => {
   const { mutate } = useMutation({
     mutationFn: (request: Request) => postReview(request),
     onError: (error: AxiosError) => {
-      console.log(error);
+      throw error;
     },
   });
 
