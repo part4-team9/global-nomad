@@ -11,7 +11,6 @@ export async function logout() {
   removeCookie('accessToken');
   removeCookie('userId');
   removeCookie('profileImageUrl');
+  removeCookie('authConfirm');
   redirect('/');
 }
-
-

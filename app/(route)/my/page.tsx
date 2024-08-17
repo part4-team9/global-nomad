@@ -4,6 +4,7 @@ import CommonLayout from '@/_components/common-layout';
 import SideUserProfileCard from '@/_components/side-user-profile-card';
 import useWindowSize from '@/_hooks/useWindowSize';
 import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 
 /**
  * my
@@ -16,9 +17,11 @@ export default function my() {
   const windowSize = useWindowSize();
   const isMobile = windowSize <= 768;
 
-  if (!isMobile) {
-    router.push('/my/account/confirm');
-  }
+  useEffect(() => {
+    if (!isMobile) {
+      router.push('/my/account/confirm');
+    }
+  }, [router, isMobile]);
 
   return <CommonLayout>{isMobile && <SideUserProfileCard />}</CommonLayout>;
 }

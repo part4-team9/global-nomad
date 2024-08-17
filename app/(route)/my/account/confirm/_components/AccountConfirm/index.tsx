@@ -11,6 +11,7 @@ import DefaultProfile from 'public/assets/icons/default-profile.svg';
 import Input from '@/_components/input';
 import Button from '@/_components/button';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { setCookie } from '@/_utils/cookie';
 
 type Inputs = {
   email: string;
@@ -23,7 +24,7 @@ type Inputs = {
  * 비밀번호가 일치할 경우 정보 수정 페이지로 이동합니다. (my/account)
  * 비밀번호가 틀릴 경우 에러 메세지를 보여주고, 비밀번호 input 값을 초기화합니다.
  */
-function AccountCheck() {
+function AccountConfirm() {
   const router = useRouter();
   const { data, isError, error } = useQuery({ queryKey: ['account'], queryFn: getUser, retry: 0 });
   const [imagePath, setImagePath] = useState(data?.profileImageUrl || DefaultProfile);
@@ -37,8 +38,9 @@ function AccountCheck() {
   } = useForm<Inputs>();
 
   const accountCheckMutation = useMutation({
-    mutationFn: (data: Inputs) => postLogin(data),
-    onSuccess: () => {
+    mutationFn: async (data: Inputs) => postLogin(data),
+    onSuccess: async () => {
+      await setCookie('authConfirm', 'true');
       router.push('/my/account');
     },
     onError: (error) => {
@@ -99,4 +101,4 @@ function AccountCheck() {
   );
 }
 
-export default AccountCheck;
+export default AccountConfirm;
