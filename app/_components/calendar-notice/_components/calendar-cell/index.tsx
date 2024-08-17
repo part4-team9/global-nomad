@@ -15,6 +15,7 @@ interface CalendarCellProps {
   monthType: string;
   reservations: DateReservations[];
   today: string;
+  onClick?: ()=>void;
 }
 
 /**

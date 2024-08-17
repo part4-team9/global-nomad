@@ -42,11 +42,10 @@ const tokenRefresh = async () => {
     throw new Error('There is no storedRefreshToken');
   }
 
-  const response = await axiosInstance.post<Response>('/auth/tokens', null, {
-    headers: {
-      Authorization: `Bearer ${storedRefreshToken}`,
-    },
-  });
+  const response = await axiosInstance.post<Response>(
+    '/auth/tokens',
+    null,
+  );
 
   const { accessToken, refreshToken: newRefreshToken } = response.data;
 
