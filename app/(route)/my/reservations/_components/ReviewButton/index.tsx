@@ -1,12 +1,14 @@
-import Button from '@/_components/button';
-import ReviewModal from '../ReviewModal';
+import type { Reservations } from '@/_types/myReservations';
 
-import { Reservations } from '@/_types/myReservations';
 import { useModal } from '@/_hooks/useModal';
 
+import Button from '@/_components/button';
+
+import ReviewModal from '../ReviewModal';
+
 interface ReviewButtonProps {
-  id: number;
   data: Reservations;
+  id: number;
 }
 
 /**
@@ -18,18 +20,14 @@ interface ReviewButtonProps {
 function ReviewButton({ id, data }: ReviewButtonProps) {
   const { isOpen, openModal, closeModal } = useModal();
 
-  const handleClickButton = () => {
-    isOpen ? closeModal() : openModal();
-  };
-
   return (
     <>
       <Button
         type="button"
         variant="black"
         borderRadius="6px"
-        onClick={handleClickButton}
-        className="h-8 w-20 text-sm tablet:h-[42px] tablet:w-[144px] mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6]"
+        onClick={openModal}
+        className="h-8 w-20 text-sm mobile:h-10 mobile:w-28 mobile:text-base mobile:leading-[1.6] tablet:h-[42px] tablet:w-[144px]"
       >
         후기 작성
       </Button>

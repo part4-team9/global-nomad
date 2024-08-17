@@ -1,16 +1,16 @@
 import Modal from '@/_components/modal';
 
 interface ReviewModalProps {
-  isOpen: boolean;
-  closeModal: () => void;
-  title: string;
   bannerImageUrl: string;
+  closeModal: () => void;
   date: string;
-  startTime: string;
   endTime: string;
   headCount: number;
-  totalPrice: number;
+  isOpen: boolean;
   reservationId: number;
+  startTime: string;
+  title: string;
+  totalPrice: number;
 }
 
 /**
