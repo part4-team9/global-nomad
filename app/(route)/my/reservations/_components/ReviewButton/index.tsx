@@ -1,7 +1,8 @@
 import Button from '@/_components/button';
-import { useModal } from '@/_hooks/useModal';
-import { Reservations } from '@/_types/myReservations';
 import ReviewModal from '../ReviewModal';
+
+import { Reservations } from '@/_types/myReservations';
+import { useModal } from '@/_hooks/useModal';
 
 interface ReviewButtonProps {
   id: number;
@@ -16,8 +17,6 @@ interface ReviewButtonProps {
  */
 function ReviewButton({ id, data }: ReviewButtonProps) {
   const { isOpen, openModal, closeModal } = useModal();
-
-  console.log(id, data);
 
   const handleClickButton = () => {
     isOpen ? closeModal() : openModal();
