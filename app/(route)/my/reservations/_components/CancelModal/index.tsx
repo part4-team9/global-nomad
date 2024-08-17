@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 
 import { cn } from '@/_utils/classNames';
@@ -37,10 +38,18 @@ interface CancelModalProps {
  * @returns {JSX.Element} CancelModal 컴포넌트.
  */
 function CancelModal({ message, isFirstRender, isError, isPending, isSuccess, onClose }: CancelModalProps) {
+  const [animationKey, setAnimationKey] = useState(0);
+
+  useEffect(() => {
+    if (isSuccess) {
+      setAnimationKey((prev) => prev + 1);
+    }
+  }, [isSuccess]);
+
   return (
     <Modal isOpen onClose={onClose}>
-      <div className="relative mb-6 mt-5 flex w-full max-w-[298px] flex-col items-center px-[65px]">
-        {(isFirstRender || isSuccess) && <Lottie className="size-9" animationData={CheckBlack} play loop={false} />}
+      <div className={cn('relative mb-6 mt-5 flex w-full max-w-[298px] flex-col items-center px-[65px]', isSuccess && 'px-14')}>
+        {(isFirstRender || isSuccess) && <Lottie key={animationKey} className="size-9" animationData={CheckBlack} play loop={false} />}
 
         <p className={cn('mt-3 break-keep text-center leading-[1.6] text-black', isError && 'mt-5')}>{message}</p>
         <div className="mt-[30px] flex gap-2">
