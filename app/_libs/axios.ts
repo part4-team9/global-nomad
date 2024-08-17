@@ -37,7 +37,7 @@ axiosInstance.interceptors.request.use(
 );
 
 const tokenRefresh = async () => {
-  const storedRefreshToken = localStorage.getItem('refreshToken');
+  const storedRefreshToken = getCookie('refreshToken');
   if (!storedRefreshToken) {
     throw new Error('There is no storedRefreshToken');
   }

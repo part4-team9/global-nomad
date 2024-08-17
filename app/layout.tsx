@@ -3,15 +3,15 @@ import '../styles/globals.css';
 import Header from './_components/header';
 import Providers from './providers';
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+import { getLoginStatus } from '@/_utils/isLogin';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const isLogIn = getLoginStatus();
+
   return (
     <html lang="ko">
       <body>
-        <Header />
+        <Header isLogIn={isLogIn} />
         <Providers>
           <main className="mt-[70px]">{children}</main>
         </Providers>

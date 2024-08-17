@@ -1,12 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-
-import type { Response } from '@/_types/authentication';
-
-import useUserStore from '@/_stores/useUserStore';
 
 import GuestHeader from './_component/GuestHeader';
 import UserHeader from './_component/UserHeader';
