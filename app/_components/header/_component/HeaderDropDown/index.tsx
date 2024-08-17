@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import LogoutButton from './Logout';
+import LogoutButton from '../LogoutButton';
 
 export default function HeaderDropdown() {
   return (

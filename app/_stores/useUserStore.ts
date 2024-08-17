@@ -3,27 +3,27 @@ import { create } from 'zustand';
 import type { Response } from '@/_types/authentication';
 
 interface UserState {
-  isLoggedIn: boolean;
+  isLogIn: boolean;
   logout: () => void;
   setLoginStatus: (status: boolean, response?: Response) => void;
   user: Response | null;
 }
 
 const useUserStore = create<UserState>((set) => ({
-  isLoggedIn: false,
+  isLogIn: false,
   logout: () => {
-    set({ isLoggedIn: false, user: null });
+    set({ isLogIn: false, user: null });
     sessionStorage.removeItem('user');
-    sessionStorage.removeItem('isLoggedIn');
+    sessionStorage.removeItem('isLogIn');
   },
   setLoginStatus: (status, response) => {
-    set({ isLoggedIn: status, user: response || null });
+    set({ isLogIn: status, user: response || null });
     if (status && response) {
       sessionStorage.setItem('user', JSON.stringify(response));
-      sessionStorage.setItem('isLoggedIn', 'true');
+      sessionStorage.setItem('isLogIn', 'true');
     } else {
       sessionStorage.removeItem('user');
-      sessionStorage.removeItem('isLoggedIn');
+      sessionStorage.removeItem('isLogIn');
     }
   },
   user: null,
