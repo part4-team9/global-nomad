@@ -19,7 +19,7 @@ export default function my() {
 
   useEffect(() => {
     if (!isMobile) {
-      router.push('/my/account/confirm');
+      router.push('/my/account');
     }
   }, [router, isMobile]);
 

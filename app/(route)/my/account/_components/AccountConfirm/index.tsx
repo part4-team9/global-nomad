@@ -66,6 +66,8 @@ function AccountConfirm() {
     if (isError && error instanceof AxiosError) {
       if (error.response?.status === 401) {
         router.push('/login');
+      } else {
+        // TODO 에러 메세지 모달
       }
     }
   }, [isError, error, router]);

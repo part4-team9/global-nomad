@@ -1,19 +1,11 @@
 import axiosInstance from '@/_libs/axios';
 import { AxiosResponse } from 'axios';
 import { LoginFormValues, Response } from '../type';
-
-interface GetUser {
-  id: number;
-  email: string;
-  nickname: string;
-  profileImageUrl: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { GetUserType } from '@/_types/user';
 
 export const getUser = async () => {
   try {
-    const res: AxiosResponse<GetUser> = await axiosInstance.get('/users/me');
+    const res: AxiosResponse<GetUserType> = await axiosInstance.get('/users/me');
     return res.data;
   } catch (error) {
     throw error;
