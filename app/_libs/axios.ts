@@ -19,8 +19,9 @@ declare module 'axios' {
 const axiosInstance = axios.create(axiosConfig);
 
 axiosInstance.interceptors.request.use(
-  (config) => {
-    const token = getCookie('accessToken');
+  async (config) => {
+    // eslint-disable-next-line @typescript-eslint/await-thenable
+    const token = await getCookie('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
