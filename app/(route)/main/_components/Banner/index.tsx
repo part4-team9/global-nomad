@@ -27,9 +27,9 @@ export default function Banner() {
       ) : (
         data && <Image src={data?.activities[0].bannerImageUrl} alt={data?.activities[0].title} fill style={{ objectFit: 'cover' }} />
       )}
-      <div className="h-full w-full bg-bannerGradient" />
+      <div className="size-full bg-bannerGradient" />
       <div className="relative bottom-[170px] mx-auto max-w-[1200px] px-6 font-bold text-white mobile:bottom-[370px]">
-        <h4 className="w-[184px] break-keep text-xl mobile:w-[440px] mobile:text-[40px] mobile:leading-[60px] tablet:w-[502px] tablet:text-[54px] tablet:leading-[80px]">
+        <h4 className="w-[184px] break-keep text-xl tablet:w-[502px] tablet:text-[54px] tablet:leading-[80px] mobile:w-[440px] mobile:text-[40px] mobile:leading-[60px]">
           {isLoading ? '로딩 중입니다..' : data?.activities[0].title}
           {isError && (
             <div>
@@ -39,7 +39,7 @@ export default function Banner() {
             </div>
           )}
         </h4>
-        <span className="text-md mobile:text-xl tablet:text-2xl">
+        <span className="text-md tablet:text-2xl mobile:text-xl">
           {isLoading ? `${calendarNum}월의 인기 경험 로딩 중입니다...` : `${calendarNum}월의 인기 경험 BEST 🔥`}
           {isError && <div>데이터를 불러오는데 실패하였습니다.</div>}
         </span>

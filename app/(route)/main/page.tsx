@@ -17,7 +17,7 @@ export default function Home() {
     <div className="box-border flex w-full min-w-full flex-col content-center items-center">
       <Banner />
       <SearchBox onSearch={handleSearch} />
-      <div className="relative bottom-[20px] mx-auto w-full px-[16px] mobile:bottom-[20px] mobile:px-[24px] lg:max-w-[1200px]">
+      <div className="relative bottom-[20px] mx-auto w-full px-[16px] lg:max-w-[1200px] mobile:bottom-[20px] mobile:px-[24px]">
         {searchValue === '' && <HotActivityLists />}
         <AllActivityLists searchValue={searchValue} />
       </div>

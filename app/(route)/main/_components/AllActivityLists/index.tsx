@@ -1,18 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import useGetActivities from '@/_hooks/activities/useGetActivities';
 import useResFetchCount from '@/_hooks/activities/useResFetchCount';
 
-import Rating from '@/_components/rating';
-
+import ActivityGrid from './ActivityGrid/ActivityGrid';
 import CategoryLists from '../CategoryLists';
 import Pagination from '../Pagination';
-
-import Spinner from 'public/assets/icons/spinner.svg';
 
 interface AllActivityListsProps {
   searchValue: string;
@@ -38,9 +34,18 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
     page: currentPage,
     size: fetchSize,
     sort: currentSort,
-    keyword: searchValue || undefined,
-    category: searchValue ? undefined : categoryValue,
+    ...(searchValue && { keyword: searchValue }),
+    category: categoryValue,
   });
+
+  const isNoData = !isLoading && data?.activities.length === 0;
+  
+  const searchMessage = searchValue ? '검색 결과가 없습니다.' : '등록된 체험이 없습니다.';
+
+  const activities = data?.activities?.map((activity) => ({
+    ...activity,
+    id: activity.id.toString(),
+  }));
 
   const handleCategoryClick = (category: string) => {
     setSelectedCategories(category);
@@ -65,7 +70,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
   return (
     <div>
       {searchValue ? (
-        <div className="font-regular flex flex-col gap-[12px]">
+        <div className="flex flex-col gap-[12px] font-regular">
           <p className="text-2xl mobile:text-3xl">
             <span className="font-bold">{searchValue}</span>으로 검색한 결과 입니다.
           </p>
@@ -74,47 +79,8 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
       ) : (
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
       )}
-      {!isLoading && data?.activities && data.activities.length === 0 && (
-        <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">등록된 체험이 없습니다.</div>
-      )}
-      <div className="mx-auto mb-[40px] mt-[20px] grid grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[60px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
-        {isLoading && (
-          <div className="flex items-center justify-center">
-            <Image src={Spinner} width={150} height={150} alt="loading icon" />
-          </div>
-        )}
-        {data?.activities &&
-          data.activities.length > 0 &&
-          data.activities.map((activity) => (
-            <div key={activity.id} className="flex cursor-pointer flex-col gap-[16px]" onClick={() => router.push(`/activities/${activity.id}`)}>
-              <div className="overflow-hidden rounded-[24px]">
-                <Image
-                  src={activity.bannerImageUrl}
-                  alt="그림"
-                  width={168}
-                  height={168}
-                  style={{ objectFit: 'cover' }}
-                  className="aspect-square h-full w-full transition-transform duration-300 ease-in-out hover:scale-110"
-                />
-              </div>
-              <div className="text-balance">
-                <Rating rating={activity.rating} reviewCount={activity.reviewCount} use="all" />
-                <div className="my-[10px] break-keep text-lg font-semibold mobile:text-xl">{activity.title}</div>
-                <div className="text-2lg font-bold mobile:text-xl">
-                  ₩ {activity.price.toLocaleString()}
-                  <span className="text-md mobile:text-2lg font-regular text-gray-700"> /인</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        {isError && (
-          <div className="flex h-[384px] w-full items-center justify-center text-xl font-bold">
-            데이터를 불러오는데 실패하였습니다.
-            <br />
-            다시 시도해주세요.
-          </div>
-        )}
-      </div>
+      {isNoData && <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">{searchMessage}</div>}
+      <ActivityGrid isLoading={isLoading} isError={isError} activities={activities} onClick={(id: string) => router.push(`activities/${id}`)} />
       {data && data.totalCount !== 0 && (
         <div className="flex justify-center">
           <Pagination totalCount={data.totalCount} itemsInPage={fetchSize} visiblePages={5} onPageChange={handlePageChange} currentPage={currentPage} />

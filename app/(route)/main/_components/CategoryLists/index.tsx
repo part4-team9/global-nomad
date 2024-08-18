@@ -42,16 +42,16 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
 
   return (
     <div>
-      <div className="relative top-[25px] flex h-[41px] justify-between mobile:top-[30px] mobile:h-[58px]">
+      <div className="relative top-[10px] flex h-[41px] justify-between mobile:top-[20px] mobile:h-[58px]">
         <div
           ref={scrollRef}
-          className="scrollbar-hide mobile:text-2lg flex gap-[10px] overflow-x-scroll text-lg font-medium mobile:gap-[14px] tablet:gap-[20px]"
+          className="scrollbar-hide flex gap-[10px] overflow-x-scroll text-lg font-medium tablet:gap-[20px] mobile:gap-[14px] mobile:text-2lg"
         >
           {categories.map((category) => (
             <button
               key={category}
               type="button"
-              className={`category-button min-w-[80px] rounded-[15px] border border-nomad-black mobile:min-w-[120px] tablet:min-w-[127px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
+              className={`category-button min-w-[80px] rounded-[15px] border border-nomad-black tablet:min-w-[127px] mobile:min-w-[120px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
               onClick={() => onCategoryListClick(category)}
             >
               {category}
