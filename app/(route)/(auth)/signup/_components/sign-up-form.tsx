@@ -10,7 +10,7 @@ import { postSignup } from '@/_apis/user';
 import { useModal } from '@/_hooks/useModal';
 
 import Button from '@/_components/button';
-import Input from '@/_components/input';
+import Input from '@/_components/Input';
 import Modal from '@/_components/modal';
 
 interface InputField {
@@ -112,7 +112,14 @@ function SignUpForm() {
     closeModal();
   };
 
-  const renderInput = (id: keyof SignupFormValues, label: string, type: string, placeholder: string, validation: RegisterOptions<SignupFormValues>, error?: FieldError) => (
+  const renderInput = (
+    id: keyof SignupFormValues,
+    label: string,
+    type: string,
+    placeholder: string,
+    validation: RegisterOptions<SignupFormValues>,
+    error?: FieldError,
+  ) => (
     <div className="grid gap-2" key={id}>
       <label htmlFor={id}>{label}</label>
       <Input id={id} type={type} placeholder={placeholder} error={Boolean(error)} errorMessage={error?.message} {...register(id, validation)} />
