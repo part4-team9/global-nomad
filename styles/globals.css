@@ -42,4 +42,38 @@
   h3 {
     @apply text-xl font-bold;
   }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #eee;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #fafafa;
+    border-radius: 10px;
+  }
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.category-button:last-child {
+  margin-right: 10px;
+}
+
+.category-button:hover,
+.category-button:focus {
+  background-color: #112211;
+  color: white;
+}
+

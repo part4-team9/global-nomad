@@ -3,11 +3,9 @@
 import { forwardRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 
-import useSelectBox from '@/_hooks/useSelectBox';
-
 import { cn } from '@/_utils/classNames';
 
-import SelectUl from '../select-box-list';
+import SelectUl from '../SelectBoxList';
 
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
 
@@ -38,8 +36,22 @@ export default forwardRef(function SelectBox(
   { value, keyName, id, placeholder, values, head, onSelect, className, size = 'default', ...rest }: SelectBoxProps,
   ref: React.LegacyRef<HTMLInputElement>,
 ) {
+  const [showList, setShowList] = useState(false);
+  const [fade, setFade] = useState(false);
   const [inputValue, setInputValue] = useState(value); // user가 선택한 리스트
-  const { showList, fade, openSelectBox, closeSelectBox } = useSelectBox();
+
+  const openSelectBox = () => {
+    setShowList(true);
+    setFade(true);
+  };
+
+  const closeSelectBox = () => {
+    setFade(false);
+
+    setTimeout(() => {
+      setShowList(false);
+    }, 350);
+  };
 
   const handleClickListItem = (item: string) => {
     setInputValue(item);
@@ -55,7 +67,7 @@ export default forwardRef(function SelectBox(
 
   return (
     <>
-      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 h-full w-full" />}
+      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 size-full" />}
       <div className="relative">
         <fieldset
           onClick={showList ? closeSelectBox : openSelectBox}
@@ -65,7 +77,7 @@ export default forwardRef(function SelectBox(
             size === 'small' ? 'py-2 pl-3 pr-[6px] tablet:py-[15px] tablet:pl-4 tablet:pr-3' : 'py-[15px] pl-4 pr-3',
           ])}
         >
-          {head && <legend className="text-md px-1 leading-none">{head}</legend>}
+          {head && <legend className="px-1 text-md leading-none">{head}</legend>}
           <div className="flex items-center justify-between gap-[5px]">
             <input
               readOnly
@@ -81,14 +93,14 @@ export default forwardRef(function SelectBox(
             />
 
             <div className={cn([size === 'small' ? 'w-[20.5px] tablet:w-6' : 'w-6'])}>
-              <Image src={ArrowDown} alt="더보기" className={cn(['duration-500', fade ? 'rotate-180' : 'rotate-0'])} />
+              <Image src={ArrowDown} alt="더보기" className={`duration-500 ${fade ? 'rotate-180' : 'rotate-0'}`} />
             </div>
           </div>
         </fieldset>
         {showList && (
           <ul
             className={cn([
-              'absolute z-10 mt-2 grid h-[300px] w-full gap-[2px] overflow-y-scroll rounded-md bg-white p-2 opacity-100 shadow-medium',
+              'absolute z-10 mt-2 grid max-h-[300px] w-full gap-[2px] overflow-y-scroll rounded-md bg-white p-2 opacity-100 shadow-medium',
               fade ? 'animate-fade-in' : 'animate-fade-out',
             ])}
           >

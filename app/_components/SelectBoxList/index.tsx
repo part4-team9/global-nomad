@@ -40,7 +40,7 @@ function SelectUl({ value, onClick, inputValue, size = 'default' }: SelectUlProp
         isSelect ? 'bg-nomad-black' : 'hover:bg-green-100',
       ])}
     >
-      {isPC && size === 'default' && <div className="h-5 w-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>}
+      {isPC && size === 'default' && <div className="size-5">{isSelect && <Image src={CheckMark} alt="선택" />}</div>}
       <span className={cn(['leading-[1.6]', size === 'small' && 'text-sm tablet:text-base', isSelect ? 'text-white' : 'text-black'])}>{value}</span>
     </li>
   );

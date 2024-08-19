@@ -1,6 +1,3 @@
 export default function my() {
-  return (
-    <main>
-    </main>
-  );
+  return <main />;
 }

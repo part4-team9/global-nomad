@@ -10,8 +10,8 @@ import type { ReservationStatus } from '@/_types/myReservations';
 
 import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObserver';
 
-import CommonLayout from '@/_components/common-layout';
-import StickyLayout from '@/_components/side-sticky-layout';
+import CommonLayout from '@/_components/CommonLayout';
+import StickyLayout from '@/_components/SideStickyLayout';
 
 import FilterDropdown from './_components/FilterDropdown';
 import ReservationContainer from './_components/ReservationContainer';

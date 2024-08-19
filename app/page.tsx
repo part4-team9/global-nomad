@@ -1,6 +1,4 @@
-import NoticeCalender from './_components/calendar-notice';
-import StickyLayout from './_components/side-sticky-layout';
-import SideUserProfileCard from './_components/side-user-profile-card';
+import StickyLayout from "./_components/SideStickyLayout";
 
 export default function Home() {
   return (
