@@ -24,21 +24,20 @@ interface EditFormProps {
   buttonTitle: string;
   data?: ActivityDetail;
   isPending: boolean;
-  isSuccess: boolean;
   onSubmit: (formData: ActivityEdit) => void;
   title: string;
 }
 
 /**
- * 체험 수정 페이지 Form 데이터 다루는 컴포넌트 입니다.
- * @param data 기존 체험 정보 default값
- * @param isSuccess 데이터 patch 성공 결과
- * @param isPending api patch pending 상태 여부
- * @param onSubmit form 제출시 실행 함수
- * @param title 페이지 타이틀 제목
- * @param buttonTitle submit 버튼 텍스트
+ * 체험 수정 페이지 Form 데이터를 처리하고 렌더링하는 컴포넌트 입니다.
+ *
+ * @param {ActivityDetail} data 기존 체험 정보로 기본값으로 사용
+ * @param {boolean} isPending API 요청이 진행 중인지 여부를 나타냄
+ * @param {function} onSubmit form 제출시 실행되는 함수
+ * @param {string} title 페이지의 타이틀 제목
+ * @param {string} buttonTitle 제출 버튼의 텍스트
  */
-function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
+function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
   const [priceFormat, setPriceFormat] = useState('');
   const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(false);
@@ -60,7 +59,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
   });
 
   useEffect(() => {
-    if (isSuccess && data) {
+    if (data) {
       const { address, bannerImageUrl, category, description, price, schedules, subImages, title: ActivityTitle } = data;
 
       const formatPrice = addCommasToPrice(String(price));
@@ -81,7 +80,7 @@ function ActivityEditForm({ data, isSuccess, title, buttonTitle, onSubmit, isPen
         bannerImageUrl,
       }));
     }
-  }, [isSuccess, data]);
+  }, [data]);
 
   const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

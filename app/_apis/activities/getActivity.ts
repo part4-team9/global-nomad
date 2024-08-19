@@ -1,6 +1,3 @@
-/**
- * @TODO 체험 상세 api랑 통일 필요ㅓ
- */
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { EditSchedule } from '@/(route)/activity/edit/[id]/page';
@@ -27,8 +24,7 @@ export interface ActivityDetail extends Activity {
 const getActivity = async (activityId: string) => {
   try {
     const result: AxiosResponse<ActivityDetail> = await axiosInstance.get(`/activities/${activityId}`);
-    const { data } = result;
-    return data;
+    return result.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       const { status } = (error.response as AxiosResponse) ?? 500;

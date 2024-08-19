@@ -1,12 +1,13 @@
 'use client';
 
-import { useState } from 'react';
 import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
 import getActivity from '@/_apis/activities/getActivity';
 import patchActivity from '@/_apis/activities/patchActivity';
 import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
+
+import useModalState from '@/_hooks/useModalState';
 
 import type { ActivityEdit } from '../../page';
 import ActivityEditForm from '../ActivityEditForm';
@@ -16,26 +17,14 @@ interface EditLayoutProps {
 }
 
 /**
- * 체험 수정 페이지 렌더링 및 modal 상태관리, data fetching하는 컴포넌트입니다.
- * @param id 수정할 체험 id값
+ * 체험 수정 페이지를 렌더링하고, 모달 상태 관리와 데이터 페칭을 담당하는 컴포넌트입니다.
+ *
+ * @param {string} id 수정할 체험의 ID 값
  */
 function EditLayout({ id }: EditLayoutProps) {
   const router = useRouter();
-  const { data, isSuccess } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });
-
-  const [modalState, setModalState] = useState({
-    isOpen: false,
-    message: '',
-    onClose: () => {},
-  });
-
-  const closeModal = () => {
-    setModalState((prev) => ({
-      ...prev,
-      isOpen: false,
-    }));
-    modalState.onClose();
-  };
+  const { data } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });
+  const { closeModal, modalState, setModalState } = useModalState();
 
   const activityMutation = useMutation({
     mutationFn: patchActivity,
@@ -45,9 +34,6 @@ function EditLayout({ id }: EditLayoutProps) {
         isOpen: true,
         message: '수정이 완료되었습니다',
         onClose: () => {
-          /**
-           * @TODO 체험 상세 url에 맞게 수정 필요
-           */
           router.push(`/activity/${postId}`);
         },
       });
@@ -84,7 +70,7 @@ function EditLayout({ id }: EditLayoutProps) {
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}
       </CommonModal>
-      <ActivityEditForm data={data} isSuccess={isSuccess} onSubmit={onSubmitForm} isPending={isPending} title="내 체험 수정" buttonTitle="수정하기" />
+      <ActivityEditForm data={data} onSubmit={onSubmitForm} isPending={isPending} title="내 체험 수정" buttonTitle="수정하기" />
     </>
   );
 }

@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import postActivity from '@/_apis/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
 
+import useModalState from '@/_hooks/useModalState';
+
 import type { Activity } from '../../page';
 import ActivityForm from '../ActivityRegisterForm';
 import CommonModal from '../CommonModal';
@@ -15,19 +17,7 @@ import CommonModal from '../CommonModal';
  */
 function RegisterLayout() {
   const router = useRouter();
-  const [modalState, setModalState] = useState({
-    isOpen: false,
-    message: '',
-    onClose: () => {},
-  });
-
-  const closeModal = () => {
-    setModalState((prev) => ({
-      ...prev,
-      isOpen: false,
-    }));
-    modalState.onClose();
-  };
+  const { modalState, setModalState, closeModal } = useModalState();
 
   const activityMutation = useMutation({
     mutationFn: postActivity,

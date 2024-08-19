@@ -7,6 +7,7 @@ import type { SubImage } from '@/_apis/activities/getActivity';
 import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
 
 import { usePostImage } from '@/_hooks/use-post-image';
+import useModalState from '@/_hooks/useModalState';
 
 import type { Activity } from '../../page';
 import CommonModal from '../CommonModal';
@@ -33,19 +34,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
   const [subImages, setSubImages] = useState<string[]>([]);
   const [imageStore, setImageStore] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>([]);
-  const [modalState, setModalState] = useState({
-    isOpen: false,
-    message: '',
-    onClose: () => {},
-  });
-
-  const closeModal = () => {
-    setModalState((prev) => ({
-      ...prev,
-      isOpen: false,
-    }));
-    modalState.onClose();
-  };
+  const { modalState, setModalState, closeModal } = useModalState();
 
   const clearSubImage = (image: string, id?: number) => {
     if (edit) {
