@@ -10,10 +10,10 @@ function Footer() {
     <div className="bg-nomad-black py-8">
       <div className="mx-auto grid max-w-[1248px] gap-10 px-6">
         <div className="ml-auto flex items-center gap-3">
-          <Link target="_blank" href="https://bejewled-vanadium-ddd.notion.site/22221b10bfc84b4f8d87d20e44b18d9e" className="h-5 w-5">
+          <Link target="_blank" href="https://bejewled-vanadium-ddd.notion.site/22221b10bfc84b4f8d87d20e44b18d9e" className="size-5">
             <Image src={NotionIcon} alt="Notion" />
           </Link>
-          <Link target="_blank" href="https://github.com/part4-team9/global-nomad" className="h-5 w-5">
+          <Link target="_blank" href="https://github.com/part4-team9/global-nomad" className="size-5">
             <Image src={GithubIcon} alt="Github" />
           </Link>
         </div>

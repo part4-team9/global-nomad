@@ -28,7 +28,7 @@ function StickyLayout({ children }: PropsWithChildren) {
           </section>
         )
       )}
-      <section className="min-w-[430px] flex-1">{children}</section>
+      <section className="flex-1 tablet:min-w-[430px]">{children}</section>
     </div>
   );
 }
