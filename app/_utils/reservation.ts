@@ -27,8 +27,8 @@ export const statusStyles = {
  * @param date
  * @returns
  */
-export function filterReservationsByDate(reservations: DateReservations[], date: string): DateReservations | undefined {
-  return reservations.find((reservation) => reservation.date === date);
+export function filterReservationsByDate(date: string, reservations?: DateReservations[]): DateReservations | undefined {
+  return reservations?.find((reservation) => reservation.date === date);
 }
 
 export function getStatusChipData(reservation: DateReservations): Array<StatusChipProps> {
@@ -41,8 +41,8 @@ export function getStatusChipData(reservation: DateReservations): Array<StatusCh
     .filter((chipData) => chipData.count > 0);
 }
 
-export function extractReservationData(reservations: DateReservations[], keyDate: string) {
-  const dayReservation = filterReservationsByDate(reservations, keyDate);
+export function extractReservationData(keyDate: string, reservations?: DateReservations[]) {
+  const dayReservation = filterReservationsByDate(keyDate, reservations);
   const hasPending = dayReservation && dayReservation.reservations && dayReservation.reservations[ReservationStatus.PENDING] > 0;
   const hasConfirmed = dayReservation && dayReservation.reservations && dayReservation.reservations[ReservationStatus.CONFIRMED] > 0;
   const statusChipData = dayReservation ? getStatusChipData(dayReservation) : [];

@@ -13,8 +13,8 @@ interface CalendarCellProps {
   day: number;
   keyDate: string;
   monthType: string;
-  onDateSelect?: (day:number, monthType:string)=>void;
-  reservations: DateReservations[];
+  onDateSelect?: (day: number, monthType: string) => void;
+  reservations?: DateReservations[];
   today: string;
 }
 
@@ -29,7 +29,7 @@ interface CalendarCellProps {
  * @param children 셀 내부에 렌더링할 컴포넌트 (chips)
  */
 export default function CalendarCell({ day, monthType, keyDate, reservations, today, className, children, onDateSelect }: CalendarCellProps) {
-  const { hasPending, hasConfirmed, statusChipData } = extractReservationData(reservations, keyDate);
+  const { hasPending, hasConfirmed, statusChipData } = extractReservationData(keyDate, reservations);
   const handleDayClick = () => {
     if (onDateSelect) {
       onDateSelect(day, monthType);
@@ -41,7 +41,9 @@ export default function CalendarCell({ day, monthType, keyDate, reservations, to
         'flex cursor-pointer flex-col justify-between border-t text-base/[21px] transition-colors duration-200 hover:bg-gray-50 active:bg-gray-100',
         className,
       )}
-      onClick={() => {handleDayClick();}}
+      onClick={() => {
+        handleDayClick();
+      }}
     >
       <div className="m-3 flex gap-1">
         <DateDisplay day={day} monthType={monthType} keyDate={keyDate} today={today} />

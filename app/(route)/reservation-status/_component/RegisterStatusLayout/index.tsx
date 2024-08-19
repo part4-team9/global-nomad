@@ -4,7 +4,7 @@ import { useState } from 'react';
 import getMyActivities from '@/_apis/reservation/getMyActivities';
 import { useQuery } from '@tanstack/react-query';
 
-import type { ActivitiesResponse } from '@/_types';
+import { ActivitiesResponse, DateReservations } from '@/_types';
 
 import { useModal } from '@/_hooks/useModal';
 
@@ -13,21 +13,37 @@ import SelectBox from '@/_components/select-box';
 
 import NoReservation from '../NoReservation';
 import RegisterStatusModal from '../RegisterStatusModal';
+import axiosInstance from '@/_libs/axios';
 
 function RegisterStatusLayout() {
   const { isOpen, openModal, closeModal } = useModal();
   const [date, setDate] = useState<Date>();
+  const [selectedActivityTitle, setSelectedActivityTitle] = useState<string>('');
 
-  const {
-    data: myActivity,
-  } = useQuery<ActivitiesResponse>({
+  const { data: myActivity } = useQuery<ActivitiesResponse>({
     queryKey: ['reservations'],
     queryFn: getMyActivities,
   });
   const reservations = myActivity?.activities || [];
   const selectBoxvalue: string[] = reservations.map((reservation) => reservation.title);
+  const selectedActivity = reservations.find((reservation) => reservation.title === selectedActivityTitle);
+  const selectedActivityId = selectedActivity ? selectedActivity.id : undefined;
 
-  const handleDateSelect = (selectedDate:Date) => {
+  const { data: reservationDashboard } = useQuery<DateReservations[]>({
+    queryKey: ['reservationDashboard', selectedActivityId],
+    queryFn: async () => {
+      if (selectedActivityId) {
+        const response = await axiosInstance.get(`/my-Activities/${selectedActivityId}/reservation-dashboard`);
+        return response.data;
+      }
+    },
+  });
+
+  const handleActivityTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedActivityTitle(event.target.value);
+  };
+
+  const handleDateSelect = (selectedDate: Date) => {
     setDate(selectedDate);
     openModal();
   };
@@ -41,13 +57,10 @@ function RegisterStatusLayout() {
     <>
       <h1 className="mb-6">예약 현황</h1>
       <div className="mb-[30px]">
-        <SelectBox head="체험명" values={selectBoxvalue} />
+        <SelectBox head="체험명" values={selectBoxvalue} onChange={handleActivityTitleChange} />
       </div>
-      <CalendarNotice onDateSelect={handleDateSelect} />
-      <button type="button" onClick={openModal}>
-        모달 오픈
-      </button>
-      {date !== undefined && <RegisterStatusModal isOpen={isOpen} onClose={closeModal} date={date} />}
+      <CalendarNotice onDateSelect={handleDateSelect} data={reservationDashboard} />
+      {date !== undefined && <RegisterStatusModal isOpen={isOpen} onClose={closeModal} date={date} activityId={selectedActivityId} />}
     </>
   );
 }
