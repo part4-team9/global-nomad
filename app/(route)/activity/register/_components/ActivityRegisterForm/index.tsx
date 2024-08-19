@@ -122,13 +122,13 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
           <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
-        <div className="grid gap-4 lg:gap-5">
-          <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] lg:mb-1 tablet:mb-2 tablet:text-2xl tablet:leading-[1.1]">
+        <div className="pc:gap-5 grid gap-4">
+          <label htmlFor="date" className="pc:mb-1 w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1]">
             예약 가능한 시간대
           </label>
           <SchedulePicker setRegisterFormData={setFormData} />
           {formData.schedules.length > 0 && (
-            <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 lg:gap-5 lg:pt-5 tablet:gap-4">
+            <div className="pc:gap-5 pc:pt-5 grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4">
               {formData.schedules.map((s, index) => (
                 <ScheduleEditor key={index} index={index} schedule={s} scheduleArray={formData.schedules} setRegisterFormData={setFormData} />
               ))}

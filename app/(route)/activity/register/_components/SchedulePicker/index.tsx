@@ -84,16 +84,16 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
 
   return (
     <div className="grid gap-2 tablet:gap-[10px]">
-      {/* <div className="flex flex-wrap gap-[5px] tablet:grid tablet:grid-cols-[1fr_109px_101px_56px] lg:grid-cols-[1fr_158px_150px_56px] lg:gap-5">
+      {/* <div className="flex flex-wrap gap-[5px] tablet:grid tablet:grid-cols-[1fr_109px_101px_56px] pc:grid-cols-[1fr_158px_150px_56px] pc:gap-5">
         <span className="min-w-[130px] flex-1 font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">날짜</span>
         <span className="w-[79px] font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">시작 시간</span>
         <span className="w-[79px] font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">종료 시간</span>
         <div className="w-11 tablet:w-auto" />
       </div> */}
 
-      <div className="flex flex-wrap items-center gap-[5px] lg:grid-cols-[1fr_318px_56px] lg:gap-5 tablet:grid tablet:grid-cols-[1fr_213px_56px]">
+      <div className="pc:grid-cols-[1fr_318px_56px] pc:gap-5 flex flex-wrap items-center gap-[5px] tablet:grid tablet:grid-cols-[1fr_213px_56px]">
         <CalendarWrapper onChange={handleScheduleChange} value={scheduleData.date} />
-        <div className="grid w-[163px] grid-cols-2 items-center gap-[5px] lg:grid-cols-[1fr_14px_1fr] lg:gap-3 tablet:w-auto">
+        <div className="pc:grid-cols-[1fr_14px_1fr] pc:gap-3 grid w-[163px] grid-cols-2 items-center gap-[5px] tablet:w-auto">
           <SelectBox value={scheduleData.startTime} keyName="startTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
           {isPC && <span className="text-xl font-bold leading-[1.3]">~</span>}
           <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
