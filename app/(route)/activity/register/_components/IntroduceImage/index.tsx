@@ -33,7 +33,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
   const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);
   const [imageStore, setImageStore] = useState<string[]>([]);
-  const [editImages, setEditImages] = useState<SubImage[]>([]);
+  const [editImages, setEditImages] = useState<SubImage[]>(editValue || []);
   const { modalState, setModalState, closeModal } = useModalState();
 
   const clearSubImage = (image: string, id?: number) => {

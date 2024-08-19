@@ -1,5 +1,5 @@
 import type { AxiosResponse } from 'axios';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import type { EditSchedule } from '@/(route)/activity/edit/[id]/page';
 import type { Activity } from '@/(route)/activity/register/page';
 

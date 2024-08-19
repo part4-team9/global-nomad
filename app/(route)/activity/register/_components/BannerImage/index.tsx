@@ -25,7 +25,7 @@ export interface BannerImageProps<T> {
  */
 function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: BannerImageProps<T>) {
   const router = useRouter();
-  const [bannerImage, setBannerImage] = useState<string[]>([]);
+  const [bannerImage, setBannerImage] = useState<string[]>(value ? [value] : []);
   const { modalState, setModalState, closeModal } = useModalState();
 
   const getResponse = (res: string) => {
