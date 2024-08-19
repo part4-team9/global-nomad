@@ -42,7 +42,7 @@ export default function UserHeader() {
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]" onClick={toggleDropdown} ref={dropdownRef}>
         <div className="h-8 w-8 cursor-pointer overflow-hidden rounded-full">
-          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" width={32} height={32} />
+          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" width={32} height={32} priority/>
         </div>
         <div className="relative flex items-center gap-1">
           <div className="cursor-pointer">{userNickname}</div>

@@ -22,7 +22,7 @@ const MemoizedWeekdays = React.memo(Weekdays);
  * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
-function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[], onDateSelect?: (date: number, monthType:string) => void }) {
+function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[], onDateSelect?: (date: Date) => void }) {
   const reservations = data || reservationsExample;
 
   const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();
@@ -31,7 +31,15 @@ function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[], onD
 
   const handleDayClick = (day: number, monthType: string) => {
     if (onDateSelect) {
-      onDateSelect(day, monthType);
+      const currentYear = currentDate.year();
+      const currentMonth = currentDate.month();
+
+      const monthAdjustment = monthType === 'prev' ? -1 : monthType === 'next' ? 1 : 0;
+      const adjustedMonth = currentMonth + monthAdjustment;
+
+      const selectedDate = new Date(currentYear, adjustedMonth, day);
+
+      onDateSelect(selectedDate);
     }
   };
 

@@ -27,11 +27,7 @@ function RegisterStatusLayout() {
   const reservations = myActivity?.activities || [];
   const selectBoxvalue: string[] = reservations.map((reservation) => reservation.title);
 
-  const handleDateSelect = (day:number, monthType: string) => {
-    const currentYear = new Date().getFullYear();
-    const adjustedMonth = new Date().getMonth() + (monthType === 'prev' ? -1 : monthType === 'next' ? 1 : 0);
-  
-    const selectedDate = new Date(currentYear, adjustedMonth, day);
+  const handleDateSelect = (selectedDate:Date) => {
     setDate(selectedDate);
     openModal();
   };
