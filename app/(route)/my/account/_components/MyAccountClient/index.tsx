@@ -12,11 +12,7 @@ function MyAccountClient() {
   const { data, isError, error } = useQuery({ queryKey: ['account'], queryFn: getUser, retry: 0 });
 
   if (isError && error instanceof AxiosError) {
-    if (error.response?.status === 401) {
-      router.push('/login');
-    } else {
-      // TODO message modal
-    }
+    router.push('/login');
   }
 
   return data && <AccountForm data={data} />;

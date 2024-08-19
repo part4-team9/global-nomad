@@ -1,4 +1,5 @@
 import { AxiosError, type AxiosResponse } from 'axios';
+import type { UserFormData } from '@/(route)/my/account/_components/AccountForm';
 
 import type { GetUserType } from '@/_types/user';
 
@@ -9,6 +10,19 @@ import type { LoginFormValues, Response } from '../type';
 export const getUser = async () => {
   try {
     const res: AxiosResponse<GetUserType> = await axiosInstance.get('/users/me');
+    return res.data;
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      throw error;
+    } else {
+      throw error;
+    }
+  }
+};
+
+export const patchUser = async (body: UserFormData) => {
+  try {
+    const res: AxiosResponse<GetUserType> = await axiosInstance.patch('/users/me', body);
     return res.data;
   } catch (error) {
     if (error instanceof AxiosError) {
