@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react';
 import type { SubmitHandler } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
-import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -19,10 +18,14 @@ import Input from '@/_components/input';
 
 import DefaultProfile from 'public/assets/icons/default-profile.svg';
 
-type Inputs = {
+interface ErrorResponse {
+  message: string;
+}
+
+interface Inputs {
   email: string;
   password: string;
-};
+}
 
 /**
  * 내 정보 수정 페이지 진입 전 비밀번호 체크하는 컴포넌트입니다.
@@ -49,9 +52,10 @@ function AccountConfirm() {
       await setCookie('authConfirm', 'true');
       router.push('/my/account');
     },
-    onError: (mutationError: AxiosResponse) => {
-      const { status } = mutationError;
-      const { message } = mutationError.data;
+    onError: (mutationError: AxiosError<ErrorResponse>) => {
+      const status = mutationError.response?.status;
+      const message = mutationError?.response?.data?.message;
+
       if (status === 401) {
         router.push('/login');
       }
