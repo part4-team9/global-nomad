@@ -43,8 +43,10 @@ function AccountConfirm() {
     handleSubmit,
     setValue,
     setError,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<Inputs>();
+
+  const buttonDisabled = !isValid || isSubmitting;
 
   const accountCheckMutation = useMutation({
     mutationFn: async (formData: Inputs) => postLogin(formData),
@@ -107,7 +109,7 @@ function AccountConfirm() {
               minLength: { value: 8, message: '비밀번호는 최소 8자 이상이어야 합니다.' },
             })}
           />
-          <Button type="submit" variant="black" className="ml-auto px-5 py-[10px]">
+          <Button type="submit" variant="black" disabled={buttonDisabled} className="ml-auto px-5 py-[10px]">
             다음
           </Button>
         </form>

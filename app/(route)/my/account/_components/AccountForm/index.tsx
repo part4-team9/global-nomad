@@ -19,7 +19,7 @@ function AccountForm({ data }: { data: GetUserType }) {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<FormData>({
     mode: 'onChange',
     defaultValues: {
@@ -29,9 +29,10 @@ function AccountForm({ data }: { data: GetUserType }) {
     },
   });
 
-  const newPassword = watch('newPassword');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const newPassword = watch('newPassword');
+  const buttonDisabled = !isValid || isSubmitting || passwordConfirm === '' || passwordError;
 
   const handleChangePassword: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setPasswordConfirm(e.target.value);
@@ -43,11 +44,7 @@ function AccountForm({ data }: { data: GetUserType }) {
 
   useEffect(() => {
     if (passwordConfirm !== '') {
-      if (newPassword === passwordConfirm) {
-        setPasswordError(false);
-      } else {
-        setPasswordError(true);
-      }
+      setPasswordError(!(newPassword === passwordConfirm));
     }
   }, [newPassword, passwordConfirm]);
 
@@ -55,7 +52,7 @@ function AccountForm({ data }: { data: GetUserType }) {
     <form className="grid gap-4 tablet:gap-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold text-black">내 정보</h1>
-        <Button variant="black" type="submit" className="h-12 w-[120px]">
+        <Button variant="black" type="submit" disabled={buttonDisabled} className="h-12 w-[120px]">
           저장하기
         </Button>
       </div>
