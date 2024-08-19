@@ -1,17 +1,25 @@
+'use client';
+
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import Button from './_components/button';
+import Button from '@/_components/button';
 
 import Logo from 'public/assets/icons/banner-logo.svg';
 
-export default function Home() {
+function MainBanner() {
   return (
     <section
       className="relative bg-[linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)),url('/assets/images/main-banner.png')] bg-cover bg-no-repeat pb-20 pt-[120px] tablet:pb-[90px] tablet:pt-[200px]"
       style={{ backgroundPosition: 'center' }}
     >
-      <div className="z-[1] mx-auto grid max-w-[1248px] gap-10 px-6 tablet:gap-20">
+      <motion.div
+        initial={{ y: 10, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ ease: 'easeInOut', duration: 1 }}
+        className="z-[1] mx-auto grid max-w-[1248px] gap-10 px-6 tablet:gap-20"
+      >
         <div className="mobile:max-w-[80%]">
           <Image src={Logo} alt="GlobalNomad" />
         </div>
@@ -31,7 +39,9 @@ export default function Home() {
             </Button>
           </Link>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
+
+export default MainBanner;
