@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { getUser, patchUser } from '@/_apis/user/userAccount';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { patchUser } from '@/_apis/user/userAccount';
+import { useMutation } from '@tanstack/react-query';
 
 import type { GetUserType } from '@/_types/user';
 
@@ -26,6 +26,18 @@ interface ErrorResponse {
   message: string;
 }
 
+/**
+ * AccountForm
+ *
+ * 사용자가 계정 정보를 수정할 수 있는 폼 컴포넌트입니다.
+ * 이메일은 수정할 수 없으며, 읽기 전용으로 표시됩니다.
+ *
+ * 사용자가 페이지에서 벗어날 때 'authConfirm' 쿠키를 만료시켜, 보안성을 강화합니다.
+ *
+ * @param {GetUserType} data 기존 유저 데이터 (닉네임, 이메일, 프로필 이미지 URL)
+ *
+ * @returns {JSX.Element} 사용자가 정보를 수정할 수 있는 폼을 렌더링합니다.
+ */
 function AccountForm({ data }: { data: GetUserType }) {
   const router = useRouter();
   const {
@@ -46,6 +58,7 @@ function AccountForm({ data }: { data: GetUserType }) {
   const [passwordError, setPasswordError] = useState(false);
   const { modalState, setModalState, closeModal } = useModalState();
   const newPassword = watch('newPassword');
+  const newNickname = watch('nickname');
   const buttonDisabled = !isValid || isSubmitting || passwordConfirm === '' || passwordError;
 
   const handleChangePassword: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -97,6 +110,19 @@ function AccountForm({ data }: { data: GetUserType }) {
       setPasswordError(!(newPassword === passwordConfirm));
     }
   }, [newPassword, passwordConfirm]);
+
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      // 페이지 벗어날 때 authConfirm 쿠키 삭제 (과거로 설정)
+      document.cookie = 'authConfirm=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [data.nickname, newNickname, newPassword, passwordConfirm]);
 
   return (
     <>

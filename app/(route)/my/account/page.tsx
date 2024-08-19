@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/await-thenable */
+
 import { getUser } from '@/_apis/user/userAccount';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 

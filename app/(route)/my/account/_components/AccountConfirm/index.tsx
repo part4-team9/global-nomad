@@ -28,9 +28,11 @@ interface Inputs {
 }
 
 /**
- * 내 정보 수정 페이지 진입 전 비밀번호 체크하는 컴포넌트입니다.
+ * AccounConfirm
  *
- * 비밀번호가 일치할 경우 정보 수정 페이지로 이동합니다. (my/account)
+ * 사용자가 정보를 수정하기 전 비밀번호 체크하는 컴포넌트입니다.
+ *
+ * 비밀번호가 일치할 경우 쿠키에 authConfirm을 저장합니다.
  * 비밀번호가 틀릴 경우 에러 메세지를 보여주고, 비밀번호 input 값을 초기화합니다.
  */
 function AccountConfirm() {
@@ -54,7 +56,6 @@ function AccountConfirm() {
     mutationFn: async (formData: Inputs) => postLogin(formData),
     onSuccess: async () => {
       await setCookie('authConfirm', 'true');
-      router.push('/my/account');
     },
     onError: (mutationError: AxiosError<ErrorResponse>) => {
       const status = mutationError.response?.status;
@@ -81,11 +82,7 @@ function AccountConfirm() {
 
   useEffect(() => {
     if (isError && error instanceof AxiosError) {
-      if (error.response?.status === 401) {
-        router.push('/login');
-      } else {
-        // TODO 에러 메세지 모달
-      }
+      router.push('/login');
     }
   }, [isError, error, router]);
 
