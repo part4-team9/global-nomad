@@ -67,7 +67,7 @@ export default forwardRef(function SelectBox(
 
   return (
     <>
-      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 h-full w-full" />}
+      {showList && <div onClick={closeSelectBox} className="fixed left-0 top-0 z-0 size-full" />}
       <div className="relative">
         <fieldset
           onClick={showList ? closeSelectBox : openSelectBox}
@@ -100,7 +100,7 @@ export default forwardRef(function SelectBox(
         {showList && (
           <ul
             className={cn([
-              'absolute z-10 mt-2 grid h-[300px] w-full gap-[2px] overflow-y-scroll rounded-md bg-white p-2 opacity-100 shadow-medium',
+              'absolute z-10 mt-2 grid max-h-[300px] w-full gap-[2px] overflow-y-scroll rounded-md bg-white p-2 opacity-100 shadow-medium',
               fade ? 'animate-fade-in' : 'animate-fade-out',
             ])}
           >

@@ -34,12 +34,20 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
   const timeArray = generateTimeArray();
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
+  const [timeError, setTimeError] = useState(false);
   const [buttonDisabled, setButtonDisabed] = useState(true);
   const [scheduleData, setScheduleData] = useState<Schedule>({
     date: '',
     startTime: '',
     endTime: '',
   });
+
+  const validateTimeRange = () => {
+    const startTime = Number(scheduleData.startTime.split(':')[0]);
+    const endTime = Number(scheduleData.endTime.split(':')[0]);
+    const isInvalidTimeRange = scheduleData.startTime !== '' && scheduleData.endTime !== '' && endTime <= startTime;
+    setTimeError(isInvalidTimeRange);
+  };
 
   const handleScheduleChange = (key: string, value: string | Date) => {
     let formattedValue = value;
@@ -77,19 +85,23 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
   };
 
   useEffect(() => {
-    const { date, endTime, startTime } = scheduleData;
-    const isDisabled = date === '' || endTime === '' || startTime === '';
-    setButtonDisabed(isDisabled);
+    validateTimeRange();
   }, [scheduleData]);
+
+  useEffect(() => {
+    const { date, endTime, startTime } = scheduleData;
+    const isDisabled = date === '' || endTime === '' || startTime === '' || timeError;
+    setButtonDisabed(isDisabled);
+  }, [scheduleData, timeError]);
 
   return (
     <div className="grid gap-2 tablet:gap-[10px]">
-      {/* <div className="flex flex-wrap gap-[5px] tablet:grid tablet:grid-cols-[1fr_109px_101px_56px] pc:grid-cols-[1fr_158px_150px_56px] pc:gap-5">
+      <div className="pc:grid-cols-[1fr_160px_140px_56px] pc:gap-5 flex flex-wrap gap-[5px] tablet:grid tablet:grid-cols-[1fr_109px_101px_56px]">
         <span className="min-w-[130px] flex-1 font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">날짜</span>
         <span className="w-[79px] font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">시작 시간</span>
         <span className="w-[79px] font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">종료 시간</span>
         <div className="w-11 tablet:w-auto" />
-      </div> */}
+      </div>
 
       <div className="pc:grid-cols-[1fr_318px_56px] pc:gap-5 flex flex-wrap items-center gap-[5px] tablet:grid tablet:grid-cols-[1fr_213px_56px]">
         <CalendarWrapper onChange={handleScheduleChange} value={scheduleData.date} />
@@ -102,6 +114,11 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
           {buttonDisabled ? <Image src={AddDisabled} alt="추가 불가" /> : <Image src={AddIcon} alt="추가" />}
         </button>
       </div>
+      {timeError && (
+        <span className="mt-2 block break-keep pl-2 text-xs leading-[1.3] text-red-500">
+          시작 시간은 종료 시간보다 이전이어야 합니다. 올바른 시간을 선택해 주세요.
+        </span>
+      )}
     </div>
   );
 }
