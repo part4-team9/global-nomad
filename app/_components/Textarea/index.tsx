@@ -21,7 +21,7 @@ export default forwardRef(function Textarea({ size, error, errorMessage, ...rest
     <div className="grid">
       <textarea
         className={cn([
-          'size-4 h-[346px] w-full resize-none rounded border border-solid border-gray-600 leading-[1.6] text-black outline-none placeholder:text-gray-500 focus:border-green-200',
+          'h-[346px] w-full resize-none rounded border border-solid border-gray-600 p-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 focus:border-green-200',
           size === 'small' && 'mobile:h-[240px]',
         ])}
         ref={ref}

@@ -44,7 +44,7 @@ function EditLayout({ id }: EditLayoutProps) {
       if (status === 401) {
         setModalState({
           isOpen: true,
-          message,
+          message: '로그인이 필요한 서비스입니다.',
           onClose: () => {
             router.push('/login');
           },
