@@ -91,9 +91,9 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
         <div className="w-11 tablet:w-auto" />
       </div> */}
 
-      <div className="flex flex-wrap items-center gap-[5px] tablet:grid tablet:grid-cols-[1fr_213px_56px] lg:grid-cols-[1fr_318px_56px] lg:gap-5">
+      <div className="flex flex-wrap items-center gap-[5px] lg:grid-cols-[1fr_318px_56px] lg:gap-5 tablet:grid tablet:grid-cols-[1fr_213px_56px]">
         <CalendarWrapper onChange={handleScheduleChange} value={scheduleData.date} />
-        <div className="grid w-[163px] grid-cols-2 items-center gap-[5px] tablet:w-auto lg:grid-cols-[1fr_14px_1fr] lg:gap-3">
+        <div className="grid w-[163px] grid-cols-2 items-center gap-[5px] lg:grid-cols-[1fr_14px_1fr] lg:gap-3 tablet:w-auto">
           <SelectBox value={scheduleData.startTime} keyName="startTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />
           {isPC && <span className="text-xl font-bold leading-[1.3]">~</span>}
           <SelectBox value={scheduleData.endTime} keyName="endTime" values={timeArray} placeholder="HH:MM" onSelect={handleScheduleChange} size="small" />

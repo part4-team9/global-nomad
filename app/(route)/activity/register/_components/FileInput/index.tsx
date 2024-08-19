@@ -21,27 +21,27 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 export default forwardRef(function FileInput({ images, editImages, onClear, ...rest }: FileInputProps, ref: React.LegacyRef<HTMLInputElement>) {
   return (
     <div className="grid">
-      <div className="flex flex-wrap items-center gap-2 tablet:gap-4 lg:gap-6">
-        <div className="relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2 tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
+      <div className="flex flex-wrap items-center gap-2 lg:gap-6 tablet:gap-4">
+        <div className="relative flex aspect-square w-[calc((100%-8px)/2)] flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2 lg:w-[calc((100%-72px)/4)] tablet:w-[calc((100%-16px)/2)]">
           <Image src={PlusIcon} alt="등록" />
           <span className="text-center text-xl leading-[1.1] text-gray-700">이미지 등록</span>
-          <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0" />
+          <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
         </div>
         {images?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
+          <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl lg:w-[calc((100%-72px)/4)] tablet:w-[calc((100%-16px)/2)]">
             <Image fill sizes="max-width:100%" src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button type="button" onClick={() => onClear(image)} className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10">
+            <button type="button" onClick={() => onClear(image)} className="absolute -right-2 -top-2 size-6 lg:-right-5 lg:-top-5 lg:size-10">
               <Image src={DeleteIcon} alt="삭제" />
             </button>
           </div>
         ))}
         {editImages?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl tablet:w-[calc((100%-16px)/2)] lg:w-[calc((100%-72px)/4)]">
+          <div key={idx} className="relative aspect-square w-[calc((100%-8px)/2)] rounded-xl lg:w-[calc((100%-72px)/4)] tablet:w-[calc((100%-16px)/2)]">
             <Image fill sizes="max-width:100%" src={image.imageUrl} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
             <button
               type="button"
               onClick={() => onClear(image.imageUrl, image?.id)}
-              className="absolute -right-2 -top-2 h-6 w-6 lg:-right-5 lg:-top-5 lg:h-10 lg:w-10"
+              className="absolute -right-2 -top-2 size-6 lg:-right-5 lg:-top-5 lg:size-10"
             >
               <Image src={DeleteIcon} alt="삭제" />
             </button>

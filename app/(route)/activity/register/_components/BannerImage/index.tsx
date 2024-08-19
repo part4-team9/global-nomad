@@ -76,7 +76,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
         {modalState.message}
       </CommonModal>
       <div className="grid gap-6">
-        <label htmlFor="banner" className="tablet:text-2xlxl w-fit text-xl font-bold leading-[1.3] tablet:leading-[1.1]">
+        <label htmlFor="banner" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
           배너 이미지
         </label>
         <FileInput id="banner" images={bannerImage} onClear={onClearBanner} onChange={onChangeBanner} accept="image/*" />
