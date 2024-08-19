@@ -4,7 +4,7 @@ import { ReservationStatus } from '@/_types';
 import type { StatusChipProps } from '@/_components/calendar-notice/_components/status-chips';
 
 export const statusStyles = {
-  [ReservationStatus.COMPLETE]: {
+  [ReservationStatus.COMPLETED]: {
     bgColor: 'bg-gray-200',
     textColor: 'text-gray-700',
     label: '완료',

@@ -23,14 +23,14 @@ export interface ActivitiesResponse {
 }
 
 export enum ReservationStatus {
-  COMPLETE = 'complete', // 완료 싱태 (완료)
+  COMPLETED = 'completed', // 완료 상태 (완료)
   CONFIRMED = 'confirmed', // 확정 상태 (승인)
   DECLINED = 'declined', // 거절 상태 (거절)
   PENDING = 'pending', // 신청 상태 (예약)
 }
 
 export interface ReservationStatusCount {
-  [ReservationStatus.COMPLETE]?: number;
+  [ReservationStatus.COMPLETED]?: number;
   [ReservationStatus.CONFIRMED]: number;
   [ReservationStatus.DECLINED]?: number;
   [ReservationStatus.PENDING]: number;

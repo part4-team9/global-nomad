@@ -26,21 +26,27 @@ function RegisterStatusLayout() {
   });
   const reservations = myActivity?.activities || [];
   const selectBoxvalue: string[] = reservations.map((reservation) => reservation.title);
+
   const selectedActivity = reservations.find((reservation) => reservation.title === selectedActivityTitle);
   const selectedActivityId = selectedActivity ? selectedActivity.id : undefined;
+
+  const year = date?.getFullYear();
+  const mmonth = (Number(date?.getMonth() ?? 0) + 1).toString().padStart(2, '0');
+  // const month = (date?.getMonth() + 1).toString().padStart(2, '0');
 
   const { data: reservationDashboard } = useQuery<DateReservations[]>({
     queryKey: ['reservationDashboard', selectedActivityId],
     queryFn: async () => {
       if (selectedActivityId) {
-        const response = await axiosInstance.get(`/my-Activities/${selectedActivityId}/reservation-dashboard`);
+        const response = await axiosInstance.get(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${mmonth}`);
         return response.data;
       }
     },
+    enabled: !!selectedActivityId,
   });
 
-  const handleActivityTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSelectedActivityTitle(event.target.value);
+  const handleActivityTitleChange = (value: string) => {
+    setSelectedActivityTitle(value);
   };
 
   const handleDateSelect = (selectedDate: Date) => {
@@ -57,6 +63,7 @@ function RegisterStatusLayout() {
     <>
       <h1 className="mb-6">예약 현황</h1>
       <div className="mb-[30px]">
+        {/* 일단 작동은 하는데, onChange string-ChangeEventHandler<HTMLInputElement> 타입오류 */}
         <SelectBox head="체험명" values={selectBoxvalue} onChange={handleActivityTitleChange} />
       </div>
       <CalendarNotice onDateSelect={handleDateSelect} data={reservationDashboard} />

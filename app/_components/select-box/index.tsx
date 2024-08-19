@@ -20,7 +20,7 @@ interface SelectBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @values select box 리스트에 들어갈 string 배열 (map 돌려서 보여줌)
  * @head legend에 보여줄 텍스트
  */
-function SelectBox({ id, placeholder, values, head }: SelectBoxProps) {
+function SelectBox({ id, placeholder, values, head, onChange }: SelectBoxProps) {
   const [showList, setShowList] = useState(false);
   const [fade, setFade] = useState(false);
   const [inputValue, setInputValue] = useState(''); // user가 선택한 리스트
@@ -41,6 +41,11 @@ function SelectBox({ id, placeholder, values, head }: SelectBoxProps) {
   const handleClickListItem = (item: string) => {
     setInputValue(item);
     closeSelectBox();
+    if (onChange) {
+      // 일단 작동은 하는데, string-ChangeEvent<HTMLInputElement> 타입 오류
+      //onChange에 따라 체험 명, 시간을 받기 위한 함수(저 값을 받아서 체험id, scheduleId 가져오도록 설계중)
+      onChange(item);
+    }
   };
 
   return (

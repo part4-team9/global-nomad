@@ -1,5 +1,3 @@
-import Button from '@/_components/button';
-
 export default function CardApprove() {
   return (
     <div className="mt-4 w-[381px] border p-4">
