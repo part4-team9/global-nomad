@@ -34,7 +34,6 @@ export default function Banner() {
           {isError && (
             <div>
               데이터를 불러오는데 실패하였습니다.
-              <br />
               다시 시도해주세요.
             </div>
           )}
