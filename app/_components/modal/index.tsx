@@ -31,7 +31,6 @@ export type ModalProps = {
 
 /**
  * Modal 컴포넌트의 props
- *
  * @property {boolean} isOpen - Modal Open 여부
  * @property {() => void} onClose - Modal Close 함수
  * @property {ReactNode} children - Modal 자식 요소들
@@ -76,6 +75,6 @@ export default function Modal({ isOpen, onClose, size = 'default', children }: M
     >
       <div className={`relative rounded-[12px] bg-white shadow-lg ${fullClass}`}>{children}</div>
     </div>,
-    document.getElementById('modal-root') as HTMLElement,
+    document.body,
   );
 }

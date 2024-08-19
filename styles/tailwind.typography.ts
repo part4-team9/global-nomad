@@ -20,6 +20,9 @@ const typography = {
     medium: 500,
     regular: 400,
   },
+  lineHeight: {
+    '6.5': '26px',
+  },
 };
 
 export default typography;

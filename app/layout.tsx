@@ -17,7 +17,6 @@ export default function RootLayout({
           <main className="mt-[70px]">{children}</main>
         </Providers>
         <Footer />
-        <div id="modal-root" />
       </body>
     </html>
   );

@@ -1,4 +1,4 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useModal = () => {
   const [isOpen, setIsOpen] = useState(false);
