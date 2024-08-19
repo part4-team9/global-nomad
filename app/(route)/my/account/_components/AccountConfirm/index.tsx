@@ -1,17 +1,23 @@
+/* eslint-disable @typescript-eslint/await-thenable */
+
 'use client';
 
-import { getUser, postLogin } from '@/_apis/user/userAccount';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import type { SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { getUser, postLogin } from '@/_apis/user/userAccount';
+import { useMutation, useQuery } from '@tanstack/react-query';
+
+import { setCookie } from '@/_utils/cookie';
+
+import Button from '@/_components/button';
+import Input from '@/_components/input';
 
 import DefaultProfile from 'public/assets/icons/default-profile.svg';
-import Input from '@/_components/input';
-import Button from '@/_components/button';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { setCookie } from '@/_utils/cookie';
 
 type Inputs = {
   email: string;
@@ -38,22 +44,25 @@ function AccountConfirm() {
   } = useForm<Inputs>();
 
   const accountCheckMutation = useMutation({
-    mutationFn: async (data: Inputs) => postLogin(data),
+    mutationFn: async (formData: Inputs) => postLogin(formData),
     onSuccess: async () => {
       await setCookie('authConfirm', 'true');
       router.push('/my/account');
     },
-    onError: (error) => {
-      if (error instanceof AxiosError) {
-        const { message } = error.response?.data;
-        setError('password', { message: message });
-        setValue('password', '');
+    onError: (mutationError: AxiosResponse) => {
+      const { status } = mutationError;
+      const { message } = mutationError.data;
+      if (status === 401) {
+        router.push('/login');
       }
+
+      setError('password', { message });
+      setValue('password', '');
     },
   });
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    accountCheckMutation.mutate(data);
+  const onSubmit: SubmitHandler<Inputs> = (formData) => {
+    accountCheckMutation.mutate(formData);
   };
 
   useEffect(() => {

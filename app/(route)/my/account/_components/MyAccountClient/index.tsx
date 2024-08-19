@@ -1,10 +1,11 @@
 'use client';
 
-import { getUser } from '@/_apis/user/userAccount';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { getUser } from '@/_apis/user/userAccount';
+import { useQuery } from '@tanstack/react-query';
+
 import AccountForm from '../AccountForm';
 
 function MyAccountClient() {

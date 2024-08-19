@@ -1,21 +1,17 @@
 'use client';
 
-import Button from '@/_components/button';
-import Input from '@/_components/input';
-import { GetUserType } from '@/_types/user';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import type { GetUserType } from '@/_types/user';
+
+import Button from '@/_components/button';
+import Input from '@/_components/input';
+
 interface FormData {
+  newPassword: string;
   nickname: string;
   profileImageUrl?: string;
-  newPassword: string;
-}
-
-interface PasswordConfirm {
-  value: string;
-  error: boolean;
-  errorMessage?: string;
 }
 
 function AccountForm({ data }: { data: GetUserType }) {
@@ -47,7 +43,11 @@ function AccountForm({ data }: { data: GetUserType }) {
 
   useEffect(() => {
     if (passwordConfirm !== '') {
-      newPassword === passwordConfirm ? setPasswordError(false) : setPasswordError(true);
+      if (newPassword === passwordConfirm) {
+        setPasswordError(false);
+      } else {
+        setPasswordError(true);
+      }
     }
   }, [newPassword, passwordConfirm]);
 
@@ -76,7 +76,7 @@ function AccountForm({ data }: { data: GetUserType }) {
           <label htmlFor="email" className="text-2xl font-bold leading-none text-black">
             이메일
           </label>
-          <Input readOnly id="email" defaultValue={data.email} placeholder="이메일을 입력해 주세요" />
+          <Input readOnly disabled id="email" defaultValue={data.email} placeholder="이메일을 입력해 주세요" />
         </div>
         <div className="grid gap-4">
           <label htmlFor="new-password" className="text-2xl font-bold leading-none text-black">

@@ -1,14 +1,14 @@
 export interface GetUserType {
-  id: number;
+  createdAt: string;
   email: string;
+  id: number;
   nickname: string;
   profileImageUrl: string;
-  createdAt: string;
   updatedAt: string;
 }
 
 export interface UserData {
+  newPassword: string;
   nickname: string;
   profileImageUrl: string;
-  newPassword: string;
 }
