@@ -5,8 +5,12 @@ import { useForm } from 'react-hook-form';
 
 import type { GetUserType } from '@/_types/user';
 
+import useModalState from '@/_hooks/useModalState';
+
 import Button from '@/_components/button';
 import Input from '@/_components/input';
+
+import CommonModal from '../CommonModal';
 
 interface FormData {
   newPassword: string;
@@ -31,8 +35,12 @@ function AccountForm({ data }: { data: GetUserType }) {
 
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [passwordError, setPasswordError] = useState(false);
+  const { modalState, setModalState, openModal, closeModal } = useModalState();
   const newPassword = watch('newPassword');
+  const newNickname = watch('nickname');
   const buttonDisabled = !isValid || isSubmitting || passwordConfirm === '' || passwordError;
+
+  console.log(newNickname);
 
   const handleChangePassword: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setPasswordConfirm(e.target.value);
@@ -48,12 +56,29 @@ function AccountForm({ data }: { data: GetUserType }) {
     }
   }, [newPassword, passwordConfirm]);
 
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      // 페이지 벗어날 때 authConfirm 쿠키 삭제 (과거로 설정)
+      document.cookie = 'authConfirm=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      const hasChanged = data.nickname !== newNickname || newPassword !== '' || passwordConfirm !== '';
+      if (hasChanged) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
+  }, [data.nickname, newNickname, newPassword, passwordConfirm]);
+
   return (
     <form className="grid gap-4 tablet:gap-6" onSubmit={handleSubmit(onSubmit)}>
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold text-black">내 정보</h1>
         <Button variant="black" type="submit" disabled={buttonDisabled} className="h-12 w-[120px]">
-          저장하기
+          수정하기
         </Button>
       </div>
       <div className="grid gap-8">

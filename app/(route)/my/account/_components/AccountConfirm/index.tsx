@@ -44,7 +44,9 @@ function AccountConfirm() {
     setValue,
     setError,
     formState: { errors, isValid, isSubmitting },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    mode: 'onChange',
+  });
 
   const buttonDisabled = !isValid || isSubmitting;
 

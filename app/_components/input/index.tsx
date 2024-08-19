@@ -20,7 +20,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param errorMessage input 밑에 보여줄 에러 메세지
  * @param className input 커스텀 className
  */
-export default forwardRef(function Input({ type, error, errorMessage, className, disabled, ...rest }: InputProps, ref: React.LegacyRef<HTMLInputElement>) {
+export default forwardRef(function Input({ type, error, errorMessage, className, ...rest }: InputProps, ref: React.LegacyRef<HTMLInputElement>) {
   const [passwordToggle, setPasswordToggle] = useState(false);
   const isPassword = type === 'password';
   const newType = passwordToggle && isPassword ? 'text' : type;
@@ -36,10 +36,9 @@ export default forwardRef(function Input({ type, error, errorMessage, className,
         <input
           type={newType}
           className={cn([
-            `w-full rounded border border-solid px-5 py-4 leading-[1.6] outline-none placeholder:text-gray-500 ${className}`,
+            `w-full rounded border border-solid px-5 py-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${className}`,
             isPassword ? 'pr-[54px]' : 'pr-5',
             error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200',
-            disabled ? 'cursor-default border-gray-300 bg-[#efefef4d] text-gray-500' : 'text-black',
           ])}
           ref={ref}
           {...rest}
