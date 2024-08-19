@@ -63,13 +63,13 @@ function ScheduleEditor({ index, detailData, schedule, scheduleArray, setRegiste
   };
 
   return (
-    <div className="pc:grid-cols-[1fr_318px_56px] pc:gap-5 flex flex-wrap items-center gap-[5px] tablet:grid tablet:grid-cols-[1fr_213px_56px]">
+    <div className="flex flex-wrap items-center gap-[5px] tablet:grid tablet:grid-cols-[1fr_213px_56px] pc:grid-cols-[1fr_318px_56px] pc:gap-5">
       <input
         readOnly
         value={schedule.date}
         className="min-w-[130px] flex-1 rounded border border-solid border-gray-600 px-[10px] py-2 text-md leading-[1.8] outline-none tablet:py-[15px] tablet:pl-4 tablet:pr-3 tablet:text-base tablet:leading-[1.6]"
       />
-      <div className="pc:grid-cols-[1fr_14px_1fr] pc:gap-3 grid w-[163px] grid-cols-2 items-center gap-[5px] tablet:w-auto">
+      <div className="grid w-[163px] grid-cols-2 items-center gap-[5px] tablet:w-auto pc:grid-cols-[1fr_14px_1fr] pc:gap-3">
         <input
           readOnly
           value={schedule.startTime}

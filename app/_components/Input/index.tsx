@@ -36,7 +36,7 @@ export default forwardRef(function Input({ type, error, errorMessage, className,
         <input
           type={newType}
           className={cn([
-            `leading-1.6 w-full rounded border border-solid px-5 py-4 text-black outline-none placeholder:text-gray-500 ${className}`,
+            `w-full rounded border border-solid px-5 py-4 leading-[1.6] text-black outline-none placeholder:text-gray-500 ${className}`,
             isPassword ? 'pr-[54px]' : 'pr-5',
             error ? 'border-red-500 focus:border-red-500' : 'border-gray-600 focus:border-green-200',
           ])}
