@@ -1,25 +1,33 @@
 'use client';
 
-import Modal from '@/_components/modal';
-import SelectBox from '@/_components/select-box';
-import CardPending from '../CardPending';
-import CardApprove from '../CardApprove';
-import CardRejected from '../CardRejected';
 import { useState } from 'react';
 
+import Modal from '@/_components/modal';
+import SelectBox from '@/_components/select-box';
+
+import CardApprove from '../CardApprove';
+import CardPending from '../CardPending';
+import CardRejected from '../CardRejected';
+
 type RegisterStatusModalProps = {
+  date: Date;
   isOpen: boolean;
-  message: string;
   onClose: () => void;
 };
 
 const values = ['2시', '3시', '4시'];
 
-function RegisterStatusModal({ isOpen, onClose, message }: RegisterStatusModalProps) {
+function RegisterStatusModal({ isOpen, onClose, date }: RegisterStatusModalProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const handleClick = (index: number) => {
     setActiveIndex(index);
   };
+
+  const formattedDate = new Date(date).toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -42,7 +50,7 @@ function RegisterStatusModal({ isOpen, onClose, message }: RegisterStatusModalPr
           ))}
         </ul>
         <h3 className="mb-[14px] mt-[25px]">예약 날짜</h3>
-        <p>2023년 2월 10일</p>
+        <p>{formattedDate}</p>
         <SelectBox values={values} />
         <h3 className="mt-8">예약 내역</h3>
         <CardPending />
