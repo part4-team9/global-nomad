@@ -7,7 +7,7 @@ interface CommonLayoutProps extends PropsWithChildren {
 function CommonLayout({ children, className }: CommonLayoutProps) {
   return (
     <div className="mx-auto w-full max-w-[1248px] px-4 mobile:px-6">
-      <div className={`commonLayoutWrap ${className}`}>{children}</div>
+      <div className={`pb-[120px] pt-6 tablet:pt-[72px] ${className}`}>{children}</div>
     </div>
   );
 }
