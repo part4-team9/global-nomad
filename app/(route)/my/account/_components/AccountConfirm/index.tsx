@@ -14,7 +14,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { setCookie } from '@/_utils/cookie';
 
 import Button from '@/_components/button';
-import Input from '@/_components/input';
+import Input from '@/_components/Input';
 
 import DefaultProfile from 'public/assets/icons/default-profile.svg';
 

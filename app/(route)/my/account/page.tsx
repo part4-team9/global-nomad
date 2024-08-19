@@ -5,8 +5,8 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 
 import { getCookie } from '@/_utils/cookie';
 
-import CommonLayout from '@/_components/common-layout';
-import StickyLayout from '@/_components/side-sticky-layout';
+import CommonLayout from '@/_components/CommonLayout';
+import StickyLayout from '@/_components/SideStickyLayout';
 
 import AccountConfirm from './_components/AccountConfirm';
 import MyAccountClient from './_components/MyAccountClient';

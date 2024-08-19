@@ -1,4 +1,4 @@
-import StickyLayout from './_components/side-sticky-layout';
+import StickyLayout from "./_components/SideStickyLayout";
 
 export default function Home() {
   return (

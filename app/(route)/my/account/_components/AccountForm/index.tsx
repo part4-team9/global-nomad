@@ -12,7 +12,7 @@ import type { GetUserType } from '@/_types/user';
 import useModalState from '@/_hooks/useModalState';
 
 import Button from '@/_components/button';
-import Input from '@/_components/input';
+import Input from '@/_components/Input';
 
 import CommonModal from '../CommonModal';
 
