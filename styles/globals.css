@@ -43,3 +43,23 @@
     @apply text-xl font-bold;
   }
 }
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.category-button:last-child {
+  margin-right: 10px;
+}
+
+.category-button:hover,
+.category-button:focus {
+  background-color: #112211;
+  color: white;
+}
+
