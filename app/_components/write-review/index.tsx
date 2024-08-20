@@ -9,7 +9,7 @@ import usePostReview from '@/_hooks/my-reservations/usePostReview';
 import ReviewCardFrame from './review-card-frame';
 import Button from '../button';
 import Modal from '../modal';
-import Textarea from '../textarea';
+import Textarea from '../Textarea';
 
 import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
