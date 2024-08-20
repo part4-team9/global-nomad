@@ -32,7 +32,6 @@ function RegisterStatusLayout() {
 
   const year = date?.getFullYear();
   const mmonth = (Number(date?.getMonth() ?? 0) + 1).toString().padStart(2, '0');
-  // const month = (date?.getMonth() + 1).toString().padStart(2, '0');
 
   const { data: reservationDashboard } = useQuery<DateReservations[]>({
     queryKey: ['reservationDashboard', selectedActivityId],
@@ -63,7 +62,6 @@ function RegisterStatusLayout() {
     <>
       <h1 className="mb-6">예약 현황</h1>
       <div className="mb-[30px]">
-        {/* 일단 작동은 하는데, onChange string-ChangeEventHandler<HTMLInputElement> 타입오류 */}
         <SelectBox head="체험명" values={selectBoxvalue} onChange={handleActivityTitleChange} />
       </div>
       <CalendarNotice onDateSelect={handleDateSelect} data={reservationDashboard} />

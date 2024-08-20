@@ -12,6 +12,7 @@ interface SelectBoxProps extends React.InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   placeholder?: string;
   values: string[];
+  onChange?: (value: string) => void;
 }
 
 /**
@@ -42,8 +43,6 @@ function SelectBox({ id, placeholder, values, head, onChange }: SelectBoxProps) 
     setInputValue(item);
     closeSelectBox();
     if (onChange) {
-      // 일단 작동은 하는데, string-ChangeEvent<HTMLInputElement> 타입 오류
-      //onChange에 따라 체험 명, 시간을 받기 위한 함수(저 값을 받아서 체험id, scheduleId 가져오도록 설계중)
       onChange(item);
     }
   };

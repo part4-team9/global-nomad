@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { reservationsExample } from '@/_mocks/notice-calendar-example-reservations';
 
 import type { DateReservations } from '@/_types/myActivities';
 
@@ -29,10 +28,13 @@ function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[]; onD
 
   const today = getToday();
 
+  let currentYear=0;
+  let currentMonth=0;
+
   const handleDayClick = (day: number, monthType: string) => {
     if (onDateSelect) {
-      const currentYear = currentDate.year();
-      const currentMonth = currentDate.month();
+      currentYear = currentDate.year();
+      currentMonth = currentDate.month();
 
       const monthAdjustment = monthType === 'prev' ? -1 : monthType === 'next' ? 1 : 0;
       const adjustedMonth = currentMonth + monthAdjustment;
