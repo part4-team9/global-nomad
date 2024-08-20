@@ -69,7 +69,12 @@ interface Reservation extends BaseReservation {
 }
 
 export interface ReservationsResponse {
-  cursorId: number;
+  cursorId?: number;
   reservations: Reservation[];
   totalCount: number;
 }
+
+export type ReservationCardProps = {
+  nickname: string;
+  headCount: number;
+};

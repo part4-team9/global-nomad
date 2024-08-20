@@ -37,13 +37,13 @@ function RegisterStatusLayout() {
   const selectedActivityId = selectedActivity ? selectedActivity.id : undefined;
 
   const year = date?.getFullYear();
-  const mmonth = (Number(date?.getMonth() ?? 0) + 1).toString().padStart(2, '0');
+  const month = (Number(date?.getMonth() ?? 0) + 1).toString().padStart(2, '0');
 
   const { data: reservationDashboard } = useQuery<DateReservations[]>({
     queryKey: ['reservationDashboard', selectedActivityId],
     queryFn: async () => {
       if (selectedActivityId) {
-        const response = await axiosInstance.get(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${mmonth}`);
+        const response = await axiosInstance.get(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${month}`);
         return response.data;
       }
     },
