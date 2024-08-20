@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import Modal from '@/_components/modal';
-import SelectBox from '@/_components/select-box';
+import SelectBox from '@/_components/SelectBox';
 
 import CardApprove from '../CardApprove';
 import CardPending from '../CardPending';
@@ -79,6 +79,12 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
       id: schedule.scheduleId,
     })) || [];
 
+    useEffect(() => {
+      if (values.length > 0 && selectedScheduleId === null) {
+        setSelectedScheduleId(values[0].id);
+      }
+    }, [values, selectedScheduleId]);
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="p-6">
@@ -102,8 +108,10 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
         <h3 className="mb-[14px] mt-[25px]">예약 날짜</h3>
         <p className="mb-[10px]">{formattedDate}</p>
         <SelectBox
+          keyName='activity-title'
           values={values.map((item) => item.text)}
-          onChange={(selectedText) => {
+          value={selectedScheduleId ? values.find(item => item.id === selectedScheduleId)?.text : values.length > 0 ? values[0].text : ''}
+          onSelect={(keyname, selectedText) => {
             const stringSelectedText = selectedText.toString();
             const selectedItem = values.find((item) => item.text === stringSelectedText);
             if (selectedItem) {

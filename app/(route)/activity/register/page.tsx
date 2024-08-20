@@ -1,9 +1,8 @@
-import React from 'react';
-
+// 체험 등록 페이지
 import CommonLayout from '@/_components/CommonLayout';
 import StickyLayout from '@/_components/SideStickyLayout';
 
-import RegisterStatusLayout from './_component/RegisterStatusLayout';
+import RegisterLayout from './_components/RegisterLayout';
 
 export interface Schedule {
   date: string;
@@ -22,12 +21,14 @@ export interface Activity {
   title: string;
 }
 
-export default function RegisterStatus() {
+function ActivityRegister() {
   return (
     <CommonLayout>
       <StickyLayout>
-        <RegisterStatusLayout />
+        <RegisterLayout />
       </StickyLayout>
     </CommonLayout>
   );
 }
+
+export default ActivityRegister;

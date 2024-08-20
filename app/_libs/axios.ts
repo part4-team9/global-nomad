@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/await-thenable */
 /* eslint-disable no-param-reassign */
 import type { AxiosError, AxiosRequestConfig } from 'axios';
 import axios from 'axios';
