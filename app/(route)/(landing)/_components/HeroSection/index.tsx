@@ -28,7 +28,12 @@ function HeroSection() {
           <source src="/assets/video/main-video.mp4" />
         </video>
         <div className="absolute size-full bg-[rgba(0,0,0,0.4)]" />
-        <TransitionBox />
+        <div className="relative z-[1]">
+          <div key={1} className="px-12">
+            <Image src={Logo} alt="GlobalNomad" />
+          </div>
+        </div>
+        {/* <TransitionBox /> */}
       </div>
     </section>
   );
