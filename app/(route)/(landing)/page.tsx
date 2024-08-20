@@ -1,5 +1,5 @@
-import MainBanner from './_components/MainBanner';
+import HeroSection from './_components/HeroSection';
 
 export default function Home() {
-  return <MainBanner />;
+  return <HeroSection />;
 }
