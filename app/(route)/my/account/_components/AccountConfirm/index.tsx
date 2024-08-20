@@ -95,7 +95,7 @@ function AccountConfirm() {
             <div className="size-8 overflow-hidden rounded-full">
               <Image src={imagePath} alt={`${data?.nickname} 프로필 이미지`} onError={() => setImagePath(DefaultProfile)} className="rounded-full" />
             </div>
-            <input readOnly defaultValue={data.email} className="flex-1 outline-none" {...register('email')} />
+            <input readOnly defaultValue={data.email} className="flex-1 truncate outline-none" {...register('email')} />
           </div>
           <p className="break-keep text-black">내 정보를 수정하려면 비밀번호를 입력해주세요.</p>
           <Input
