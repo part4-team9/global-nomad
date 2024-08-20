@@ -26,8 +26,8 @@ interface ReviewCardFrameProps {
 export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime, endTime, headCount, totalPrice }: ReviewCardFrameProps) {
   return (
     <div className="flex gap-2 mobile:gap-6">
-      <div className="mobiel:max-w-[126px] max-h-[100px] max-w-[100px] overflow-hidden mobile:max-h-[126px] mobile:py-[5.5px]">
-        <Image src={bannerImageUrl} alt={`${title} 사진`} className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110" />
+      <div className="max-h-[100px] max-w-[100px] overflow-hidden mobile:max-h-[126px] mobile:max-w-[126px] mobile:py-[5.5px]">
+        <Image src={bannerImageUrl} width={100} height={100} alt={`${title} 사진`} className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110" />
       </div>
       <div className="flex w-full flex-col gap-1.5 font-bold">
         <span className="break-keep text-lg mobile:text-xl">{title}</span>
