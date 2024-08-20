@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 
-// NaverMap 컴포넌트의 props 타입 정의
 interface NaverMapProps {
   latitude: number;
   longitude: number;
 }
 
-// Naver Maps API의 타입 정의
 interface LatLng {
   new (lat: number, lng: number): naver.maps.LatLng;
 }
@@ -27,7 +25,6 @@ interface NaverMaps {
   Marker: new (options: MarkerOptions) => naver.maps.Marker;
 }
 
-// 글로벌 네임스페이스에 naver 추가
 declare global {
   interface Window {
     naver: {
@@ -36,7 +33,6 @@ declare global {
   }
 }
 
-// 컴포넌트 정의 및 타입 적용
 export default function NaverMap({ latitude, longitude }: NaverMapProps) {
   useEffect(() => {
     const loadMap = () => {

@@ -7,5 +7,5 @@ type Params = {
 export default function ExperiencePage({ params }: { params: Params }) {
   const { id: activityId } = params;
 
-  return <ExperienceClientPage activityId="2148" />;
+  return <ExperienceClientPage activityId={activityId} />;
 }
