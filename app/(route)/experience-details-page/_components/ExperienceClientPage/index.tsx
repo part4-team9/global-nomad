@@ -58,8 +58,6 @@ interface ExperienceClientPageProps {
 }
 
 export default function ExperienceClientPage({ activityId }: ExperienceClientPageProps) {
-  const teamId = '6-9';
-
   const [experience, setExperience] = useState<Experience | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -77,8 +75,8 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
 
       try {
         const [experienceResponse, reviewsResponse] = await Promise.all([
-          axiosInstance.get<Experience>(`/${teamId}/activities/${activityId}`),
-          axiosInstance.get<ReviewResponse>(`/${teamId}/activities/${activityId}/reviews`),
+          axiosInstance.get<Experience>(`/activities/${activityId}`),
+          axiosInstance.get<ReviewResponse>(`/activities/${activityId}/reviews`),
         ]);
 
         setExperience(experienceResponse.data);
@@ -96,14 +94,14 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
         } else {
           setError('알 수 없는 오류가 발생했습니다.');
         }
-        console.error('데이터를 불러오는 중 오류가 발생했습니다:', err);
+        setError('데이터를 불러오는 중 오류가 발생했습니다:');
       } finally {
         setLoading(false);
       }
     };
 
     void fetchData();
-  }, [activityId, teamId]);
+  }, [activityId]);
 
   if (loading) return <div>데이터를 불러오는 중입니다...</div>;
   if (error) return <div>오류: {error}</div>;

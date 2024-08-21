@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 
 import axiosInstance from '@/_libs/axios';
 
@@ -11,10 +12,9 @@ import type { ActivityData } from './types';
 
 interface CalendarProps {
   activityId: number;
-  teamId: string;
 }
 
-export default function Calendar({ teamId, activityId }: CalendarProps) {
+export default function Calendar({ activityId }: CalendarProps) {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [activityData, setActivityData] = useState<ActivityData | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -49,18 +49,20 @@ export default function Calendar({ teamId, activityId }: CalendarProps) {
   useEffect(() => {
     const fetchActivityData = async () => {
       try {
-        const response = await axiosInstance.get<ActivityData>(`/${teamId}/activities/${activityId}`);
+        const response = await axiosInstance.get<ActivityData>(`/activities/${activityId}`);
         setActivityData(response.data);
         if (response.data) {
           setTotalPrice(response.data.price * peopleCount);
         }
       } catch (error) {
-        console.error('데이터 받기 에러:', error);
+        if (error instanceof AxiosError) {
+          throw error;
+        }
       }
     };
 
     void fetchActivityData();
-  }, [teamId, activityId, peopleCount]);
+  }, [activityId, peopleCount]);
 
   useEffect(() => {
     if (activityData) {
@@ -70,7 +72,6 @@ export default function Calendar({ teamId, activityId }: CalendarProps) {
 
   const handleReservation = async () => {
     if (!selectedDate || !selectedTime) {
-      alert('날짜와 시간을 선택해주세요.');
       return;
     }
 
@@ -79,22 +80,22 @@ export default function Calendar({ teamId, activityId }: CalendarProps) {
       const schedule = activityData?.schedules.find((s) => s.date === selectedDate && s.startTime === startTime);
 
       if (!schedule) {
-        alert('유효한 일정을 찾을 수 없습니다.');
         return;
       }
 
-      const response = await axiosInstance.post(`/${teamId}/activities/${activityId}/reservations`, {
+      const response = await axiosInstance.post(`/activities/${activityId}/reservations`, {
         scheduleId: schedule.id,
         headCount: peopleCount,
       });
 
       if (response.status === 201) {
+        // eslint-disable-next-line no-alert
         alert('예약이 완료되었습니다.');
-      } else {
-        alert('예약 중 문제가 발생했습니다.');
       }
     } catch (error) {
-      alert('체험 예약중 에러가 발생했습니다.');
+      if (error instanceof AxiosError) {
+        throw error;
+      }
     }
   };
 

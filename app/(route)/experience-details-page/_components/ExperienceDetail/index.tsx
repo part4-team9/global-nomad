@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 
-import axiosInstance from '@/_libs/axios';
-import getCoordinates from '@/_libs/getCoordinates';
+import { fetchCoordinates } from '@/_libs/fetchCoordinates';
 
 import Rating from '@/_components/rating';
 
@@ -48,9 +48,13 @@ interface ExperienceDetailProps {
   totalReviews: number;
 }
 
-export default function ExperienceDetail({ experience, reviews, totalReviews, averageRating }: ExperienceDetailProps) {
-  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | null>(null);
+interface Coordinates {
+  latitude: number;
+  longitude: number;
+}
 
+export default function ExperienceDetail({ experience, reviews, totalReviews, averageRating }: ExperienceDetailProps) {
+  const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const allImages = [experience.bannerImageUrl, ...experience.subImages.map((img) => img.imageUrl)];
@@ -72,20 +76,20 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
   };
 
   useEffect(() => {
-    const fetchCoordinates = async () => {
+    const fetchCoordinatesData = async () => {
       try {
-        const coords = await getCoordinates(experience.address);
-        if (coords.latitude && coords.longitude) {
+        const coords = await fetchCoordinates(experience.address);
+        if (coords) {
           setCoordinates(coords);
-        } else {
-          console.error('좌표를 찾을 수 없습니다.');
         }
       } catch (error) {
-        console.error('좌표를 가져오는 중 오류가 발생했습니다:', error);
+        if (error instanceof AxiosError) {
+          throw error;
+        }
       }
     };
 
-    void fetchCoordinates();
+    void fetchCoordinatesData();
   }, [experience.address]);
 
   const getSatisfactionLabel = (rating: number) => {
@@ -182,7 +186,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
             </section>
 
             <section className="mb-[24px] border-t px-[24px] pt-[40px] tablet:px-0" style={{ borderColor: 'rgba(17, 34, 17, 0.25)', borderTopWidth: '1px' }}>
-              {coordinates ? <NaverMap latitude={coordinates.latitude} longitude={coordinates.longitude} /> : <div>지도를 로드할 수 없습니다.</div>}
+              {coordinates ? <NaverMap latitude={coordinates.latitude} longitude={coordinates.longitude} /> : <p>지도를 불러오는 중입니다...</p>}
               <div className="mt-2 flex items-center gap-2">
                 <Image src={Location} alt="Location" width={16} height={16} />
                 <span className="text-md text-nomad-black">{experience.address}</span>
@@ -221,13 +225,13 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
             <div className="relative">
               <div className="fixed bottom-20 left-0 right-0 z-[999] block flex justify-center mobile:hidden">
                 <div className="w-full rounded-lg bg-white shadow-md">
-                  <Calendar teamId="6-9" activityId={experience.id} />
+                  <Calendar activityId={experience.id} />
                 </div>
               </div>
 
               <div className="hidden w-full pr-[24px] mobile:block tablet:pr-0">
                 <div className="w-full rounded-lg bg-white shadow-md">
-                  <Calendar teamId="6-9" activityId={experience.id} />
+                  <Calendar activityId={experience.id} />
                 </div>
               </div>
             </div>
