@@ -1,26 +1,15 @@
 'use client';
 
+import { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
-
-import TransitionBox from '../TransitionBox';
 
 import Logo from 'public/assets/icons/logo-big-white.svg';
 
-const ELEMENT_ARRAY: React.ReactNode[] = [
-  <div key={1} className="px-12">
-    <Image src={Logo} alt="GlobalNomad" />
-  </div>,
-  <p key={2} className="grid break-keep px-6 text-center text-3xl font-semibold text-white tablet:text-5xl">
-    <span className="leading-[1.2]">당신의 여정이</span>
-    <span className="leading-[1.2]">매 순간 즐거울 수 있도록</span>
-  </p>,
-  <p key={3} className="grid break-keep px-6 text-center font-semibold text-white">
-    <span className="text-2xl leading-[1.2] tablet:text-4xl">여행에 활력을 더하다,</span>
-    <span className="text-4xl leading-[1.2] tablet:text-[64px]">글로벌 노마드</span>
-  </p>,
-];
-
 function HeroSection() {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
+
   return (
     <section>
       <div className="relative flex h-[calc(100dvh-70px)] w-full items-center justify-center bg-gray-50">
@@ -28,12 +17,32 @@ function HeroSection() {
           <source src="/assets/video/main-video.mp4" />
         </video>
         <div className="absolute size-full bg-[rgba(0,0,0,0.4)]" />
-        <div className="relative z-[1]">
-          <div key={1} className="px-12">
-            <Image src={Logo} alt="GlobalNomad" />
+        <div ref={ref} className="z-[1]">
+          <div className="absolute left-1/2 top-1/2 w-full -translate-x-1/2 -translate-y-1/2">
+            <motion.p
+              style={{
+                transform: isInView ? 'scale(0.97)' : 'none',
+                opacity: isInView ? 0 : 1,
+                transition: 'all 0.6s ease-in-out 0.7s',
+              }}
+              className="grid gap-2 break-keep px-6 text-center text-5xl font-semibold text-white"
+            >
+              <span>당신의 여정이</span>
+              <span className="leading-[1.2]">매 순간 즐거울 수 있도록</span>
+            </motion.p>
+          </div>
+          <div className="absolute left-1/2 top-1/2 flex w-full -translate-x-1/2 -translate-y-1/2 items-center justify-center px-12">
+            <Image
+              src={Logo}
+              alt="GlobalNomad"
+              style={{
+                transform: isInView ? 'none' : 'scale(0.97)',
+                opacity: isInView ? 1 : 0,
+                transition: 'all 0.6s ease-in-out 1.5s',
+              }}
+            />
           </div>
         </div>
-        {/* <TransitionBox /> */}
       </div>
     </section>
   );
