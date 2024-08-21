@@ -43,7 +43,7 @@ function CallToActionSection() {
               <TypewriterComponent
                 options={{
                   strings: ['글로벌 노마드'],
-                  cursor: '',
+                  // cursor: '',
                   autoStart: !!isInView,
                   delay: 100,
                   loop: false,

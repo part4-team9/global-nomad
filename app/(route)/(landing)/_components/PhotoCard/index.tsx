@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import { cn } from '@/_utils/classNames';
-
 interface PhotoCardProps {
   image: string;
   title: string;
