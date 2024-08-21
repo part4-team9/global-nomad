@@ -23,9 +23,9 @@ function HeroSection() {
               style={{
                 transform: isInView ? 'scale(0.97)' : 'none',
                 opacity: isInView ? 0 : 1,
-                transition: 'all 0.6s ease-in-out 0.5s',
+                transition: 'all 0.4s ease-in-out 0.5s',
               }}
-              className="grid gap-2 break-keep px-6 text-center text-5xl font-semibold text-white"
+              className="grid gap-2 break-keep px-6 text-center text-3xl font-semibold text-white tablet:text-5xl"
             >
               <span>당신의 여정이</span>
               <span className="leading-[1.2]">매 순간 즐거울 수 있도록</span>

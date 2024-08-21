@@ -4021,11 +4021,6 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-performance-now@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
-  integrity sha512-7EAHlyLHI56VEIdK57uwHdHKIaAGbnXPiw0yWbarQZOKaKpvUIgW0jWRVLiatnM+XXlSwsanIBH/hzGMJulMow==
-
 picocolors@^1.0.0, picocolors@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/picocolors/-/picocolors-1.0.1.tgz#a8ad579b571952f0e5d25892de5445bcfe25aaa1"
@@ -4211,13 +4206,6 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-raf@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.1.tgz#0742e99a4a6552f445d73e3ee0328af0ff1ede39"
-  integrity sha512-Sq4CW4QhwOHE8ucn6J34MqtZCeWFP2aQSmrlroYgqAV1PjStIhJXxYuTgUIfkEk7zTLjmIjLmU5q+fbD1NnOJA==
-  dependencies:
-    performance-now "^2.1.0"
-
 react-datepicker@*, react-datepicker@^7.3.0:
   version "7.3.0"
   resolved "https://registry.yarnpkg.com/react-datepicker/-/react-datepicker-7.3.0.tgz#666664a609d4b57b095083fe29d080943fa7b3ed"
@@ -4261,6 +4249,11 @@ react-onclickoutside@^6.13.0:
   version "6.13.1"
   resolved "https://registry.yarnpkg.com/react-onclickoutside/-/react-onclickoutside-6.13.1.tgz#1f5e0241c08784b6e65745d91aca0d700c548a89"
   integrity sha512-LdrrxK/Yh9zbBQdFbMTXPp3dTSN9B+9YJQucdDu3JNKRrbdU+H+/TVONJoWtOwy4II8Sqf1y/DTI6w/vGPYW0w==
+
+react-type-animation@^3.2.0:
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/react-type-animation/-/react-type-animation-3.2.0.tgz#6863d5d60e3beb237f2bd690cceb585402c47e6a"
+  integrity sha512-WXTe0i3rRNKjmggPvT5ntye1QBt0ATGbijeW6V3cQe2W0jaMABXXlPPEdtofnS9tM7wSRHchEvI9SUw+0kUohw==
 
 react@^18:
   version "18.3.1"
@@ -4919,14 +4912,6 @@ typescript@^5:
   version "5.5.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.5.4.tgz#d9852d6c82bad2d2eda4fd74a5762a8f5909e9ba"
   integrity sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==
-
-typewriter-effect@^2.21.0:
-  version "2.21.0"
-  resolved "https://registry.yarnpkg.com/typewriter-effect/-/typewriter-effect-2.21.0.tgz#7150f12fd2c188248ab2b2b031f77c0663d24c54"
-  integrity sha512-Y3VL1fuJpUBj0gS4OTXBLzy1gnYTYaBuVuuO99tGNyTkkub5CXi+b/hsV7Og9fp6HlhogOwWJwgq7iXI5sQlEg==
-  dependencies:
-    prop-types "^15.8.1"
-    raf "^3.4.1"
 
 unbox-primitive@^1.0.2:
   version "1.0.2"
