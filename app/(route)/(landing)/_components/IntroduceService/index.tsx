@@ -13,7 +13,7 @@ import MobilePreview from 'public/assets/icons/landing/mockup.svg';
 
 function IntroduceService() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: false });
+  const isInView = useInView(ref, { once: true });
   const windowSize = useWindowSize();
 
   return (

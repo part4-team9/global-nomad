@@ -40,10 +40,10 @@ const CATEGORY_CARD = [
 
 function CategorySection() {
   const ref1 = useRef<HTMLDivElement>(null);
-  const isInView1 = useInView(ref1, { once: false });
+  const isInView1 = useInView(ref1, { once: true });
 
   const ref2 = useRef<HTMLUListElement>(null);
-  const isInView2 = useInView(ref2, { once: false });
+  const isInView2 = useInView(ref2, { once: true });
 
   return (
     <section className="bg-gray-100 py-20">
@@ -59,8 +59,8 @@ function CategorySection() {
         >
           <h2 className="break-keep text-5xl font-bold leading-[1.2]">취향 따라 떠나는 여정</h2>
           <p className="grid text-gray-600">
-            <span>당신의 취향에 맞는 특별한 경험을 선택해 보세요.</span>
-            <span>여행의 매 순간이 더욱 풍성해질 것입니다.</span>
+            <span>당신의 취향에 맞는 특별한 경험을 선택해 보세요</span>
+            <span>여행의 매 순간이 더욱 풍성해질 것입니다</span>
           </p>
         </div>
         <ul
