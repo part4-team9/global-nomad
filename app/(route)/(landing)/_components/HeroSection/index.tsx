@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
 
-import Logo from 'public/assets/icons/logo-big-white.svg';
+import Logo from 'public/assets/icons/landing/logo-big-white.svg';
 
 function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
@@ -23,7 +23,7 @@ function HeroSection() {
               style={{
                 transform: isInView ? 'scale(0.97)' : 'none',
                 opacity: isInView ? 0 : 1,
-                transition: 'all 0.6s ease-in-out 0.7s',
+                transition: 'all 0.6s ease-in-out 0.5s',
               }}
               className="grid gap-2 break-keep px-6 text-center text-5xl font-semibold text-white"
             >
@@ -35,10 +35,11 @@ function HeroSection() {
             <Image
               src={Logo}
               alt="GlobalNomad"
+              priority
               style={{
                 transform: isInView ? 'none' : 'scale(0.97)',
                 opacity: isInView ? 1 : 0,
-                transition: 'all 0.6s ease-in-out 1.5s',
+                transition: 'all 1s ease-in-out 1.2s',
               }}
             />
           </div>
