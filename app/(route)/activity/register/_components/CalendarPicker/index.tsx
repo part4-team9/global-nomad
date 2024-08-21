@@ -1,6 +1,6 @@
 'use client';
 
-import '../../../../../../styles/datepicker.css';
+import 'styles/datepicker.css';
 
 import { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';

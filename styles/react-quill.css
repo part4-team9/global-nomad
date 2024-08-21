@@ -1,0 +1,45 @@
+.ql-toolbar.ql-snow {
+  border: 1px solid #79747e;
+  border-radius: 4px 4px 0 0;
+  background-color: #fff;
+}
+
+.ql-container.ql-snow {
+  border: 1px solid #79747e;
+  border-radius: 0 0 4px 4px;
+  background-color: #fff;
+}
+
+.ql-editor {
+  padding: 16px;
+  height: 300px;
+  font-family:
+    'Pretendard Variable',
+    Pretendard,
+    -apple-system,
+    BlinkMacSystemFont,
+    system-ui,
+    Roboto,
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'SpoqaHanSansNeo-Regular',
+    'Inter',
+    sans-serif;
+}
+
+.ql-editor p {
+  font-size: 16px;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal;
+  color: #a4a1aa;
+  font-size: 16px;
+  left: 16px;
+}
