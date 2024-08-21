@@ -58,7 +58,7 @@ export default function Banner() {
               fill
               className={`object-cover transition-opacity duration-300 ${transition}`}
             />
-            <div className="absolute inset-0 z-30 flex items-center justify-between mobile:px-2 tablet:px-6">
+            <div className="absolute inset-0 z-30 flex items-center justify-between mobile:px-2 tablet:px-4">
               <button type="button" onClick={handlePrevClick}>
                 <Image src={Btn} alt="이전 버튼" width={40} height={40} className="size-8 mobile:size-16" />
               </button>
@@ -71,7 +71,7 @@ export default function Banner() {
       )}
       <div className="relative z-10 size-full bg-bannerGradient" />
       <div className="relative bottom-[170px] z-20 mx-auto max-w-[1200px] px-8 font-bold text-white mobile:bottom-[360px] mobile:px-20">
-        <h4 className="w-[184px] break-keep text-xl mobile:w-[440px] mobile:text-[40px] mobile:leading-[60px] tablet:w-[502px] tablet:text-[54px] tablet:leading-[80px]">
+        <h4 className="w-[184px] break-keep text-xl mobile:w-[440px] mobile:text-[40px] mobile:leading-[60px] tablet:w-[502px] tablet:text-5xl tablet:leading-[60px]">
           {isLoading ? '로딩 중입니다..' : data?.activities[0].title}
           {isError && <div>데이터를 불러오는데 실패하였습니다. 다시 시도해주세요.</div>}
         </h4>
