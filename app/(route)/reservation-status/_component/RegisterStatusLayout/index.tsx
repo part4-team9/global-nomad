@@ -20,6 +20,7 @@ function RegisterStatusLayout() {
   const { isOpen, openModal, closeModal } = useModal();
   const [date, setDate] = useState<Date>();
   const [selectedActivityTitle, setSelectedActivityTitle] = useState<string>('');
+  const [selectedActivityId, setSelectedActivityId] = useState<number | undefined>(undefined);
   const [year, setYear] = useState<number>();
   const [month, setMonth] = useState<string>();
 
@@ -27,42 +28,51 @@ function RegisterStatusLayout() {
     queryKey: ['reservations'],
     queryFn: getMyActivities,
   });
+
   const reservations = myActivity?.activities || [];
   const selectBoxValue: string[] = reservations.map((reservation) => reservation.title);
 
   useEffect(() => {
-    if (selectBoxValue.length > 0) {
+    if (selectBoxValue.length > 0 && !selectedActivityTitle) {
+      const initialActivity = reservations.find((reservation) => reservation.title === selectBoxValue[0]);
       setSelectedActivityTitle(selectBoxValue[0]);
+      setSelectedActivityId(initialActivity ? initialActivity.id : undefined);
     }
-  }, [selectBoxValue]);
+  }, [selectBoxValue, reservations, selectedActivityTitle]);
 
-  const selectedActivity = reservations.find((reservation) => reservation.title === selectedActivityTitle);
-  const selectedActivityId = selectedActivity ? selectedActivity.id : undefined;
+  const handleActivityTitleChange = (keyName: string, value: string) => {
+    setSelectedActivityTitle(value);
+    const selectedActivity = reservations.find((reservation) => reservation.title === value);
+    setSelectedActivityId(selectedActivity ? selectedActivity.id : undefined);
+  };
+
+  useEffect(() => {
+    if (selectedActivityTitle && reservations.length > 0) {
+      const selectedActivity = reservations.find((reservation) => reservation.title === selectedActivityTitle);
+      setSelectedActivityId(selectedActivity ? selectedActivity.id : undefined);
+    }
+  }, [selectedActivityTitle, reservations]);
 
   useEffect(() => {
     const currentDate = date || new Date();
-
     if (selectedActivityId) {
       setYear(currentDate.getFullYear());
       setMonth(((currentDate.getMonth() ?? 0) + 1).toString().padStart(2, '0'));
     }
   }, [date, selectedActivityId]);
 
-  const { data: reservationDashboard } = useQuery<DateReservations[]>({
-    queryKey: ['reservationDashboard', selectedActivityId],
+  const { data: reservationDashboard, refetch } = useQuery<DateReservations[]>({
+    queryKey: ['reservationDashboard', selectedActivityId, year, month],
     queryFn: async () => {
       if (selectedActivityId) {
         const response = await axiosInstance.get<DateReservations[]>(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${month}`);
+        await refetch();
         return response.data ?? [];
       }
       return [];
     },
     enabled: !!selectedActivityId,
   });
-
-  const handleActivityTitleChange = (keyName: string, value: string) => {
-    setSelectedActivityTitle(value);
-  };
 
   const handleDateSelect = (selectedDate: Date) => {
     setDate(selectedDate);
