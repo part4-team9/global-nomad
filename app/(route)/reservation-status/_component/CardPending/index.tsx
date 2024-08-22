@@ -1,7 +1,27 @@
-import Button from '@/_components/button';
-import { ReservationCardProps } from '@/_types';
+import axios from 'axios';
 
-export default function CardPending({nickname, headCount}: ReservationCardProps) {
+import type { ReservationCardProps } from '@/_types';
+
+import axiosInstance from '@/_libs/axios';
+
+import Button from '@/_components/button';
+
+export default function CardPending({ activityId, nickname, headCount, reservationId }: ReservationCardProps) {
+  const handleAction = async (status: 'confirmed' | 'declined') => {
+    try {
+      await axiosInstance.patch(`/my-activities/${activityId}/reservations/${reservationId}`, {
+        status,
+      });
+      console.log(`Reservation ${status} successfully.`);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        throw error.response;
+      } else {
+        throw error;
+      }
+    }
+  };
+
   return (
     <div className="mt-4 w-[381px] border p-4">
       <div className="flex gap-[10px]">
@@ -13,10 +33,10 @@ export default function CardPending({nickname, headCount}: ReservationCardProps)
         <p className="text-lg">{headCount}명</p>
       </div>
       <div className="text-right font-SpoqaHanSans">
-        <Button className="text-md px-[15px] py-[10px]" variant="black">
+        <Button onClick={() => handleAction('confirmed')} className="px-[15px] py-[10px] text-md" variant="black">
           승인하기
         </Button>
-        <Button className="text-md ml-[6px] px-[15px] py-[10px]" variant="white">
+        <Button onClick={() => handleAction('declined')} className="ml-[6px] px-[15px] py-[10px] text-md" variant="white">
           거절하기
         </Button>
       </div>

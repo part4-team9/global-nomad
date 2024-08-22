@@ -2,10 +2,11 @@ import { isAxiosError } from 'axios';
 
 import type { LoginFormValues, Response } from '@/_types/authentication';
 
+import useUserStore from '@/_stores/useUserStore';
+
 import { setCookie } from '@/_utils/cookie';
 
 import axiosInstance from './axios';
-import useUserStore from '@/_stores/useUserStore';
 
 interface ErrorResponse {
   message: string;
@@ -16,13 +17,10 @@ type PostLogin = (params: LoginFormValues) => Promise<Response>;
 export const postLogin: PostLogin = async ({ email, password }) => {
   const { setLoginStatus } = useUserStore.getState();
   try {
-    const { data } = await axiosInstance.post<Response>(
-      '/auth/login',
-      {
-        email,
-        password,
-      },
-    );
+    const { data } = await axiosInstance.post<Response>('/auth/login', {
+      email,
+      password,
+    });
     setCookie('accessToken', data.accessToken);
     setCookie('refreshToken', data.refreshToken);
     setLoginStatus(true, data);

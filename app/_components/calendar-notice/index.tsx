@@ -28,8 +28,8 @@ function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[]; onD
 
   const today = getToday();
 
-  let currentYear=0;
-  let currentMonth=0;
+  let currentYear = 0;
+  let currentMonth = 0;
 
   const handleDayClick = (day: number, monthType: string) => {
     if (onDateSelect) {
@@ -48,7 +48,7 @@ function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[]; onD
   return (
     <div className="flex min-w-[345px] max-w-[800px] select-none flex-col">
       <Header currentDate={currentDate} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} goToday={goToday} />
-      <table className="border-grey-150 w-full table-fixed border-separate border-spacing-0 rounded-lg border bg-white font-Inter text-gray-450">
+      <table className="w-full table-fixed border-separate border-spacing-0 rounded-lg border border-gray-150 bg-white font-Inter text-gray-450">
         <thead>
           <MemoizedWeekdays />
         </thead>

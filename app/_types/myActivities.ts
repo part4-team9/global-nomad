@@ -75,6 +75,8 @@ export interface ReservationsResponse {
 }
 
 export type ReservationCardProps = {
-  nickname: string;
+  activityId?: number;
   headCount: number;
+  nickname: string;
+  reservationId: number;
 };

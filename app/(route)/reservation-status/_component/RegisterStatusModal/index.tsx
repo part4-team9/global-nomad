@@ -1,20 +1,22 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import type { Schedule } from '@/_types';
+
+import axiosInstance from '@/_libs/axios';
 
 import Modal from '@/_components/modal';
 import SelectBox from '@/_components/SelectBox';
 
-import { useQuery } from '@tanstack/react-query';
-import axiosInstance from '@/_libs/axios';
 import CardSection from '../CardSection';
-import { Schedule } from '@/_types';
 
 type RegisterStatusModalProps = {
+  activityId?: number;
   date: Date;
   isOpen: boolean;
   onClose: () => void;
-  activityId?: number;
 };
 
 function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStatusModalProps) {
@@ -40,7 +42,7 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   const { data: reservedSchedule } = useQuery<Schedule[]>({
     queryKey: ['scheduleId', activityId, formattedDate],
     queryFn: async () => {
-      const response = await axiosInstance.get(`/my-Activities/${activityId}/reserved-schedule?date=${nextApiDate}`);
+      const response = await axiosInstance.get<Schedule[]>(`/my-Activities/${activityId}/reserved-schedule?date=${nextApiDate}`);
       return response.data;
     },
     enabled: !!activityId,
@@ -48,13 +50,16 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
 
   const modalPending = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.pending || 0;
   const modalConfirmed = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.confirmed || 0;
-  const modalCompleted = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.completed || 0;
+  const modalDeclined = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.declined || 0;
 
-  const values =
-    reservedSchedule?.map((schedule) => ({
-      text: `${schedule.startTime} - ${schedule.endTime}`,
-      id: schedule.scheduleId,
-    })) || [];
+  const values = useMemo(
+    () =>
+      reservedSchedule?.map((schedule) => ({
+        text: `${schedule.startTime} - ${schedule.endTime}`,
+        id: schedule.scheduleId,
+      })) || [],
+    [reservedSchedule],
+  );
 
   useEffect(() => {
     if (values.length > 0 && selectedScheduleId === null) {
@@ -64,15 +69,15 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="w-[430px] h-[700px] overflow-hidden p-6">
+      <div className="h-[700px] w-[430px] overflow-hidden p-6">
         <header className="flex justify-between">
           <h2>예약 정보</h2>
-          <p className="tex cursor-pointer text-3xl" onClick={onClose}>
+          <p className="cursor-pointer text-3xl" onClick={onClose}>
             ×
           </p>
         </header>
         <ul className="mt-[27px] flex h-[43px] border-b-2">
-          {[`신청 ${modalPending}`, `승인 ${modalConfirmed}`, `거절 ${modalCompleted}`].map((label, index) => (
+          {[`신청 ${modalPending}`, `승인 ${modalConfirmed}`, `거절 ${modalDeclined}`].map((label, index) => (
             <li
               key={index}
               className={`cursor-pointer px-[10px] pb-[13px] text-xl font-semibold ${activeIndex === index ? 'border-b-4 border-green-200 text-green-200' : ''}`}
@@ -96,7 +101,7 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
             }
           }}
         />
-        <CardSection activityId={activityId} selectedScheduleId={selectedScheduleId} activeIndex={activeIndex}/>
+        <CardSection activityId={activityId} selectedScheduleId={selectedScheduleId} activeIndex={activeIndex} />
       </div>
     </Modal>
   );
