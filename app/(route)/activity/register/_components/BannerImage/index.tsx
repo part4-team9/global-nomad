@@ -48,6 +48,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
 
   const onChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
+      setBannerImage([]);
       const json = new FormData();
       json.set('image', e.target.files?.[0]);
       activityMutation.mutate(json);
@@ -69,7 +70,15 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
         <label htmlFor="banner" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
           배너 이미지
         </label>
-        <FileInput id="banner" images={bannerImage} onClear={onClearBanner} onChange={onChangeBanner} accept="image/*" />
+        <FileInput
+          id="banner"
+          count={1}
+          isPending={activityMutation.isPending}
+          images={bannerImage}
+          onClear={onClearBanner}
+          onChange={onChangeBanner}
+          accept="image/*"
+        />
       </div>
     </>
   );

@@ -3,12 +3,23 @@
 import 'react-quill/dist/quill.snow.css';
 import 'styles/react-quill.css';
 
-import { useMemo } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import type { Activity } from '@/_types/activities/formTypes';
 
-function TextEditor() {
+import Textarea from '@/_components/Textarea';
+
+const ReactQuill = dynamic(() => import('react-quill'), { loading: () => <Textarea size="big" placeholder="설명" />, ssr: false });
+
+interface TextEditorProps {
+  setFormData: Dispatch<SetStateAction<Activity>>;
+}
+
+function TextEditor({ setFormData }: TextEditorProps) {
+  const [description, setDescription] = useState('');
+
   const modules = useMemo(
     () => ({
       toolbar: {
@@ -18,7 +29,14 @@ function TextEditor() {
     [],
   );
 
-  return <ReactQuill theme="snow" modules={modules} placeholder="설명" />;
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      description,
+    }));
+  }, [description, setFormData]);
+
+  return <ReactQuill theme="snow" onChange={setDescription} modules={modules} placeholder="설명" />;
 }
 
 export default TextEditor;

@@ -18,6 +18,7 @@ interface PostImageProps {
 export const usePostImage = ({ router, setModalState, callback }: PostImageProps) =>
   useMutation({
     mutationFn: postImage,
+    mutationKey: ['postImage'],
     onSuccess: (res) => {
       callback(String(res.activityImageUrl));
     },

@@ -11,7 +11,6 @@ import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
 import Button from '@/_components/button';
 import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
-import Textarea from '@/_components/Textarea';
 
 import BannerImage from '../BannerImage';
 import IntroduceImage from '../IntroduceImage';
@@ -85,7 +84,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
-      price: removeCommas(priceFormat),
+      price: priceFormat !== '' ? removeCommas(priceFormat) : undefined,
     }));
   }, [priceFormat]);
 
@@ -108,8 +107,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <TextEditor />
-        <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} autoComplete="off" />
+        <TextEditor setFormData={setFormData} />
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             가격

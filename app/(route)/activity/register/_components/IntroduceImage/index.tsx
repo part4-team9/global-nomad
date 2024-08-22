@@ -33,6 +33,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
   const [subImages, setSubImages] = useState<string[]>([]);
   const [imageStore, setImageStore] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>(editValue || []);
+  const [imageCount, setImageCount] = useState(0);
   const { modalState, setModalState, closeModal } = useModalState();
 
   const clearSubImage = (image: string, id?: number) => {
@@ -87,6 +88,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
   const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
+      setImageCount(e.target.files.length);
       const imageLength = e.target.files.length + subImages.length + editImages.length;
 
       if (imageLength > 4) {
@@ -116,7 +118,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         subImageUrlsToAdd: imageStore,
       }));
     }
-  }, [imageStore]);
+  }, [imageStore, setEditFormData]);
 
   useEffect(() => {
     if (setRegisterFormData) {
@@ -130,7 +132,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         return prev;
       });
     }
-  }, [subImages]);
+  }, [subImages, setRegisterFormData]);
 
   useEffect(() => {
     if (editValue) {
@@ -143,7 +145,17 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
       <label htmlFor="sub" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
         소개 이미지
       </label>
-      <FileInput id="sub" images={subImages} editImages={editImages} onClear={clearSubImage} onChange={handleSubImages} accept="image/*" multiple />
+      <FileInput
+        id="sub"
+        isPending={activityMutation.isPending}
+        count={imageCount}
+        images={subImages}
+        editImages={editImages}
+        onClear={clearSubImage}
+        onChange={handleSubImages}
+        accept="image/*"
+        multiple
+      />
       <span className="break-keep pl-2 text-2lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}

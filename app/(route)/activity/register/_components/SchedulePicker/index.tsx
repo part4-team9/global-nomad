@@ -42,13 +42,6 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
     endTime: '',
   });
 
-  const validateTimeRange = () => {
-    const startTime = Number(scheduleData.startTime.split(':')[0]);
-    const endTime = Number(scheduleData.endTime.split(':')[0]);
-    const isInvalidTimeRange = scheduleData.startTime !== '' && scheduleData.endTime !== '' && endTime <= startTime;
-    setTimeError(isInvalidTimeRange);
-  };
-
   const handleScheduleChange = (key: string, value: string | Date) => {
     let formattedValue = value;
 
@@ -85,8 +78,11 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
   };
 
   useEffect(() => {
-    validateTimeRange();
-  }, [scheduleData]);
+    const startTime = Number(scheduleData.startTime.split(':')[0]);
+    const endTime = Number(scheduleData.endTime.split(':')[0]);
+    const isInvalidTimeRange = scheduleData.startTime !== '' && scheduleData.endTime !== '' && endTime <= startTime;
+    setTimeError(isInvalidTimeRange);
+  }, [scheduleData.startTime, scheduleData.endTime]);
 
   useEffect(() => {
     const { date, endTime, startTime } = scheduleData;
