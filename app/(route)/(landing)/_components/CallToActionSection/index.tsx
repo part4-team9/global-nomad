@@ -3,12 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 import { useInView } from 'framer-motion';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import Button from '@/_components/button';
 
 function CallToActionSection() {
-  const ref = useRef<HTMLAnchorElement>(null);
+  const router = useRouter();
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const [startTyping, setStartTyping] = useState(false);
 
@@ -50,9 +51,9 @@ function CallToActionSection() {
           )}
         </div>
         <div className="mb-24 mt-12 flex items-center justify-center">
-          <Link
+          <div
             ref={ref}
-            href="/main"
+            onClick={() => router.push('/main')}
             className="w-full max-w-[350px]"
             style={{
               transform: isInView ? 'none' : 'translateY(10px)',
@@ -63,7 +64,7 @@ function CallToActionSection() {
             <Button variant="white" className="h-12 w-full">
               지금 둘러보기
             </Button>
-          </Link>
+          </div>
         </div>
       </div>
     </div>

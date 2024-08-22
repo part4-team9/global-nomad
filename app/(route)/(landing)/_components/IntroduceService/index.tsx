@@ -3,14 +3,15 @@
 import { useRef } from 'react';
 import { useInView } from 'framer-motion';
 import Image from 'next/image';
-import Link from 'next/link';
-import MobilePreview2 from 'public/assets/images/service-mockup.png';
+import { useRouter } from 'next/navigation';
+import MobilePreview2 from 'public/assets/images/mockup.png';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
 import Button from '@/_components/button';
 
 function IntroduceService() {
+  const router = useRouter();
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true });
   const windowSize = useWindowSize();
@@ -19,7 +20,7 @@ function IntroduceService() {
     <section className="bg-gray-50">
       <div className="mx-auto flex max-w-[1248px] flex-col-reverse items-center justify-between gap-5 px-6 py-8 tablet:flex-row">
         {windowSize > 768 && (
-          <div className="pl-7">
+          <div className="max-w-[375px] pl-7">
             <Image src={MobilePreview2} alt="모바일 프리뷰" priority />
           </div>
         )}
@@ -40,16 +41,9 @@ function IntroduceService() {
             </p>
           </div>
           <div className="ml-auto flex flex-wrap gap-3">
-            <Link href="/main">
-              <Button variant="white" className="h-12 w-36 border-none">
-                둘러보기
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button variant="white" className="h-12 w-36 border-none">
-                가입하러 가기
-              </Button>
-            </Link>
+            <Button onClick={() => router.push('/signup')} variant="white" className="h-12 w-36">
+              가입하러 가기
+            </Button>
           </div>
         </div>
       </div>
