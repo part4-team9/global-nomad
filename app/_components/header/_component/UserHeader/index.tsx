@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import defaultProfileImg from 'public/assets/images/default-profile.png';
@@ -22,7 +25,7 @@ export default function UserHeader() {
     if (userData) {
       const parsedUser = JSON.parse(userData);
       setUserNickname(parsedUser?.user.nickname || 'error');
-      setUserProfileImgUrl(parsedUser? parsedUser.user.profileImageUrl : defaultProfileImg);
+      setUserProfileImgUrl(parsedUser ? parsedUser.user.profileImageUrl : defaultProfileImg);
     }
   }, []);
 
@@ -36,17 +39,17 @@ export default function UserHeader() {
   });
 
   return (
-    <div className="flex items-center text-m">
-      <div className="cursor-pointer border-r-[1px] border-gray-200 pr-3 md:pr-[25px]">
+    <div className="flex items-center">
+      <div className="cursor-pointer border-r border-gray-200 pr-3 md:pr-[25px]">
         <Image src={alarm} alt="alarm" />
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]" onClick={toggleDropdown} ref={dropdownRef}>
-        <div className="h-8 w-8 cursor-pointer overflow-hidden rounded-full">
-          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" width={32} height={32} priority/>
+        <div className="size-8 cursor-pointer overflow-hidden rounded-full">
+          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" width={32} height={32} priority />
         </div>
         <div className="relative flex items-center gap-1">
           <div className="cursor-pointer">{userNickname}</div>
-          <div className="h-4 w-4 cursor-pointer">
+          <div className="size-4 cursor-pointer">
             <Image src={ArrowDown} alt="dropdown arrow" className={`duration-500 ${showList ? 'rotate-180' : 'rotate-0'}`} />
           </div>
           {showList && <HeaderDropdown />}

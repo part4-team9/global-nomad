@@ -1,10 +1,10 @@
 import '../styles/globals.css';
 
+import { getLoginStatus } from '@/_utils/isLogin';
+
 import Footer from './_components/Footer';
 import Header from './_components/header';
 import Providers from './providers';
-
-import { getLoginStatus } from '@/_utils/isLogin';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const isLogIn = getLoginStatus();
