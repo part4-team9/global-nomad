@@ -4,7 +4,9 @@ import 'react-quill/dist/quill.snow.css';
 import 'styles/react-quill.css';
 
 import { useMemo } from 'react';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 function TextEditor() {
   const modules = useMemo(
@@ -16,11 +18,7 @@ function TextEditor() {
     [],
   );
 
-  return (
-    <div>
-      <ReactQuill theme="snow" modules={modules} placeholder="설명" />
-    </div>
-  );
+  return <ReactQuill theme="snow" modules={modules} placeholder="설명" />;
 }
 
 export default TextEditor;

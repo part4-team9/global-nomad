@@ -1,12 +1,12 @@
-// 체험 등록 페이지
+/**
+ * 체험 등록 페이지
+ */
 import CommonLayout from '@/_components/CommonLayout';
 import StickyLayout from '@/_components/SideStickyLayout';
 
 import RegisterLayout from './_components/RegisterLayout';
 
 function ActivityRegister() {
-  const isClient = typeof window !== 'undefined';
-
   return (
     <CommonLayout>
       <StickyLayout>
