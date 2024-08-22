@@ -16,7 +16,7 @@ export default function AvatarEditWrapper({ avatarSrc }: { avatarSrc: string }) 
         <EditButton />
       </div>
       <div className="h-[160px] w-[160px] overflow-hidden rounded-[50%]">
-        <Image src={avatarSrc} alt="user avatar" width={160} height={160} />
+        <Image src={avatarSrc} alt="user avatar" width={160} height={160} priority />
       </div>
     </div>
   );

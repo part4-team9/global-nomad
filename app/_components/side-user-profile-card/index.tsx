@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
 import IconReservationHistory from 'public/assets/icons/profile-card/reservation-history';
@@ -39,17 +38,19 @@ interface SideUserProfileCardProps {
   avatarSrc?: string;
 }
 
-export default function SideUserProfileCard({ avatarSrc = '/assets/images/default-profile.png' }: SideUserProfileCardProps) {
+export default function SideUserProfileCard({ avatarSrc }: SideUserProfileCardProps) {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const handleButtonClick = (index: number) => {
     setSelectedIndex(index);
   };
 
+  const defaultAvatarSrc = '/assets/images/default-profile.png';
+
   return (
     <div className="flex h-[432px] w-full min-w-[215px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
       <div className="flex justify-center">
-        <AvatarEditWrapper avatarSrc={avatarSrc} />
+        <AvatarEditWrapper avatarSrc={avatarSrc || defaultAvatarSrc} />
       </div>
       <div className="flex flex-col gap-2">
         {profileActionButtons.map((item, idx) => (

@@ -1,16 +1,32 @@
 'use client';
 
-import type { PropsWithChildren } from 'react';
+import { useEffect, type PropsWithChildren } from 'react';
 
 import useDeviceType from '@/_hooks/useDeviceType';
 
 import SideUserProfileCard from '../side-user-profile-card';
+import { getUserProfile } from '@/_libs/userService';
+import { useUserProfileStore } from '@/_stores/useUserInfoState';
+import { useQuery } from '@tanstack/react-query';
 
 /**
  * 왼쪽 내정보 사이드 메뉴 고정된 레이아웃
  */
 function StickyLayout({ children }: PropsWithChildren) {
   const { isDevice: isPC, isLoading } = useDeviceType();
+
+  const { userProfile, setUserProfile } = useUserProfileStore();
+
+  const { data: UserProfileData } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getUserProfile,
+  });
+
+  useEffect(() => {
+    if (UserProfileData) {
+      setUserProfile(() => UserProfileData);
+    }
+  }, [UserProfileData, setUserProfile]);
 
   return (
     <div className="flex gap-6">
@@ -24,7 +40,7 @@ function StickyLayout({ children }: PropsWithChildren) {
       ) : (
         isPC && (
           <section className="sticky top-20 h-fit max-w-[384px] flex-1">
-            <SideUserProfileCard />
+            <SideUserProfileCard avatarSrc={userProfile?.profileImageUrl} />
           </section>
         )
       )}
