@@ -3,7 +3,7 @@
 import { forwardRef } from 'react';
 import Image from 'next/image';
 
-import type { SubImage } from '@/_types/activities/register';
+import type { SubImage } from '@/_types/activities/formTypes';
 
 import DeleteIcon from 'public/assets/icons/delete.svg';
 import PlusIcon from 'public/assets/icons/plus.svg';

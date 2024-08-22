@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import AddressModal from '@/(route)/activity/register/_components/AddressModal';
 
-import type { Activity } from '@/_types/activities/register';
+import type { Activity } from '@/_types/activities/formTypes';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';

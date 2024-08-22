@@ -3,7 +3,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
 
-import type { Activity, ActivityEdit, EditDetail, EditSchedule } from '@/_types/activities/register';
+import type { Activity, ActivityEdit, EditDetail, EditSchedule } from '@/_types/activities/formTypes';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 

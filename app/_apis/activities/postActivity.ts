@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import type { Activity } from '@/_types/activities/register';
+import type { Activity } from '@/_types/activities/formTypes';
 
 import axiosInstance from '@/_libs/axios';
 

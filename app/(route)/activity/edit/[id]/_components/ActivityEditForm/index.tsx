@@ -8,7 +8,7 @@ import PriceButtons from '@/(route)/activity/register/_components/PriceButtons';
 import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEditor';
 import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
 
-import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/register';
+import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/formTypes';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';

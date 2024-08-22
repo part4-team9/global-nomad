@@ -7,7 +7,7 @@ import patchActivity from '@/_apis/activities/patchActivity';
 import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import type { ActivityEdit } from '@/_types/activities/register';
+import type { ActivityEdit } from '@/_types/activities/formTypes';
 
 import useModalState from '@/_hooks/useModalState';
 
