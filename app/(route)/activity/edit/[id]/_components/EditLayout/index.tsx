@@ -71,7 +71,7 @@ function EditLayout({ id }: EditLayoutProps) {
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}
       </CommonModal>
-      <ActivityEditForm data={data} onSubmit={onSubmitForm} isPending={isPending} title="내 체험 수정" buttonTitle="수정하기" />
+      {data && <ActivityEditForm data={data} onSubmit={onSubmitForm} isPending={isPending} title="내 체험 수정" buttonTitle="수정하기" />}
     </>
   );
 }

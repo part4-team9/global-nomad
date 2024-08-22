@@ -7,6 +7,7 @@ import IntroduceImage from '@/(route)/activity/register/_components/IntroduceIma
 import PriceButtons from '@/(route)/activity/register/_components/PriceButtons';
 import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEditor';
 import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
+import TextEditor from '@/(route)/activity/register/_components/TextEditor';
 
 import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/formTypes';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
@@ -16,11 +17,10 @@ import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
 import Button from '@/_components/button';
 import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
-import Textarea from '@/_components/Textarea';
 
 interface EditFormProps {
   buttonTitle: string;
-  data?: ActivityDetail;
+  data: ActivityDetail;
   isPending: boolean;
   onSubmit: (formData: ActivityEdit) => void;
   title: string;
@@ -44,17 +44,16 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
     subImages: data?.subImages || [],
   });
   const [formData, setFormData] = useState<ActivityEdit>({
-    title: '',
-    category: '',
-    description: '',
-    price: undefined,
-    address: '',
-    bannerImageUrl: '',
+    title: data.title,
+    category: data.category,
+    description: data.description,
+    price: data.price,
+    address: data.address,
+    bannerImageUrl: data.bannerImageUrl,
     subImageIdsToRemove: [],
     subImageUrlsToAdd: [],
     scheduleIdsToRemove: [],
     schedulesToAdd: [],
-    ...data,
   });
 
   useEffect(() => {
@@ -139,7 +138,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <Textarea id="description" value={formData.description} size="big" placeholder="설명" onChange={handleChangeInput} autoComplete="off" />
+        <TextEditor value={formData.description} setFormData={setFormData} />
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             가격

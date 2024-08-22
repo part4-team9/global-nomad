@@ -7,18 +7,19 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-import type { Activity } from '@/_types/activities/formTypes';
+import type { Activity, ActivityEdit } from '@/_types/activities/formTypes';
 
 import Textarea from '@/_components/Textarea';
 
 const ReactQuill = dynamic(() => import('react-quill'), { loading: () => <Textarea size="big" placeholder="설명" />, ssr: false });
 
-interface TextEditorProps {
-  setFormData: Dispatch<SetStateAction<Activity>>;
+interface TextEditorProps<T> {
+  setFormData: Dispatch<SetStateAction<T>>;
+  value: string;
 }
 
-function TextEditor({ setFormData }: TextEditorProps) {
-  const [description, setDescription] = useState('');
+function TextEditor<T>({ setFormData, value }: TextEditorProps<T>) {
+  const [description, setDescription] = useState(value);
 
   const modules = useMemo(
     () => ({
@@ -30,13 +31,13 @@ function TextEditor({ setFormData }: TextEditorProps) {
   );
 
   useEffect(() => {
-    setFormData((prev) => ({
+    setFormData((prev: T) => ({
       ...prev,
       description,
     }));
   }, [description, setFormData]);
 
-  return <ReactQuill theme="snow" onChange={setDescription} modules={modules} placeholder="설명" />;
+  return <ReactQuill theme="snow" value={description} onChange={setDescription} modules={modules} placeholder="설명" />;
 }
 
 export default TextEditor;

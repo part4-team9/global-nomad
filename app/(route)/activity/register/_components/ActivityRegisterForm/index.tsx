@@ -76,6 +76,8 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     }
   };
 
+  console.log(formData);
+
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     onSubmit(formData);
@@ -107,7 +109,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
       <div className="grid gap-6">
         <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
         <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <TextEditor setFormData={setFormData} />
+        <TextEditor value={formData.description} setFormData={setFormData} />
         <div className="grid gap-3 tablet:gap-4">
           <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
             가격

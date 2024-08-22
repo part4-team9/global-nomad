@@ -41,6 +41,19 @@ export default forwardRef(function FileInput(
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
         </div>
 
+        {editImages?.map((image, idx) => (
+          <div key={idx} className="relative aspect-square rounded-xl">
+            <Image fill sizes="max-width:100%" src={image.imageUrl} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
+            <button
+              type="button"
+              onClick={() => onClear(image.imageUrl, image?.id)}
+              className="absolute -right-2 -top-2 size-6 pc:-right-5 pc:-top-5 pc:size-10"
+            >
+              <Image src={DeleteIcon} alt="삭제" />
+            </button>
+          </div>
+        ))}
+
         {images?.map((image, idx) => (
           <div key={idx} className="relative aspect-square rounded-xl">
             <Image fill sizes="max-width:100%" src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
@@ -59,19 +72,6 @@ export default forwardRef(function FileInput(
               </div>
             </div>
           ))}
-
-        {editImages?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square rounded-xl">
-            <Image fill sizes="max-width:100%" src={image.imageUrl} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button
-              type="button"
-              onClick={() => onClear(image.imageUrl, image?.id)}
-              className="absolute -right-2 -top-2 size-6 pc:-right-5 pc:-top-5 pc:size-10"
-            >
-              <Image src={DeleteIcon} alt="삭제" />
-            </button>
-          </div>
-        ))}
       </div>
     </div>
   );
