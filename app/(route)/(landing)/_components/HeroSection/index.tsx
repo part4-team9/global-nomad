@@ -13,7 +13,7 @@ function HeroSection() {
   return (
     <section>
       <div className="relative flex h-[calc(100dvh-70px)] w-full items-center justify-center bg-gray-50">
-        <video muted autoPlay loop className="absolute size-full object-cover">
+        <video muted autoPlay loop playsInline className="absolute size-full object-cover">
           <source src="/assets/video/main-video.mp4" />
         </video>
         <div className="absolute size-full bg-[rgba(0,0,0,0.4)]" />

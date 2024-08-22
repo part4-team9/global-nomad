@@ -32,7 +32,7 @@ function IntroduceService() {
           }}
         >
           <div ref={ref} className="grid gap-4">
-            <h2 className="break-keep text-5xl font-bold leading-[1.2]">당신의 여행을 더 특별하게</h2>
+            <h2 className="break-keep text-3xl font-bold leading-[1.2] tablet:text-5xl">당신의 여행을 더 특별하게</h2>
             <p className="grid gap-2">
               <span className="text-gray-600">· 단조로운 일상에서 벗어나 활기찬 모험을 찾는 분</span>
               <span className="text-gray-600">· 자유로운 여행 속에서 예상치 못한 즐거움을 발견하고 싶은 분</span>

@@ -57,7 +57,7 @@ function CategorySection() {
             transition: 'all 0.6s ease-in-out',
           }}
         >
-          <h2 className="break-keep text-5xl font-bold leading-[1.2]">취향 따라 떠나는 여정</h2>
+          <h2 className="break-keep text-3xl font-bold leading-[1.2] tablet:text-5xl">취향 따라 떠나는 여정</h2>
           <p className="grid text-gray-600">
             <span>당신의 취향에 맞는 특별한 경험을 선택해 보세요</span>
             <span>여행의 매 순간이 더욱 풍성해질 것입니다</span>
