@@ -20,6 +20,7 @@ function StickyLayout({ children }: PropsWithChildren) {
   const { data: UserProfileData } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getUserProfile,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
