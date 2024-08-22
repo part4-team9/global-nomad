@@ -4,7 +4,8 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
+
+import type { Activity, ActivityEdit, EditDetail, Schedule } from '@/_types/activities/register';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
@@ -12,7 +13,6 @@ import { generateTimeArray } from '@/_utils/generateTimeArray';
 
 import SelectBox from '@/_components/SelectBox';
 
-import type { Activity, Schedule } from '../../page';
 import CalendarWrapper from '../CalendarPicker';
 
 import AddIcon from 'public/assets/icons/btn-plus.svg';

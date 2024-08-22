@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import AddressModal from '@/(route)/activity/register/_components/AddressModal';
 
+import type { Activity } from '@/_types/activities/register';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
@@ -12,7 +13,6 @@ import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
 import Textarea from '@/_components/Textarea';
 
-import type { Activity } from '../../page';
 import BannerImage from '../BannerImage';
 import IntroduceImage from '../IntroduceImage';
 import PriceButtons from '../PriceButtons';

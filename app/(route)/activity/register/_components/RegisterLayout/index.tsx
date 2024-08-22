@@ -5,9 +5,10 @@ import { useRouter } from 'next/navigation';
 import postActivity from '@/_apis/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
 
+import type { Activity } from '@/_types/activities/register';
+
 import useModalState from '@/_hooks/useModalState';
 
-import type { Activity } from '../../page';
 import ActivityForm from '../ActivityRegisterForm';
 import CommonModal from '../CommonModal';
 

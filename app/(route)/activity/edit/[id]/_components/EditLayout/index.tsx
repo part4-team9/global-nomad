@@ -7,9 +7,10 @@ import patchActivity from '@/_apis/activities/patchActivity';
 import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import type { ActivityEdit } from '@/_types/activities/register';
+
 import useModalState from '@/_hooks/useModalState';
 
-import type { ActivityEdit } from '../../page';
 import ActivityEditForm from '../ActivityEditForm';
 
 interface EditLayoutProps {

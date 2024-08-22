@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type { Activity } from '@/(route)/activity/register/page';
+
+import type { Activity } from '@/_types/activities/register';
 
 import axiosInstance from '@/_libs/axios';
 

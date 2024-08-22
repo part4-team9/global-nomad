@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { ActivityDetail } from '@/_apis/activities/getActivity';
 import AddressModal from '@/(route)/activity/register/_components/AddressModal';
 import BannerImage from '@/(route)/activity/register/_components/BannerImage';
 import IntroduceImage from '@/(route)/activity/register/_components/IntroduceImage';
@@ -9,6 +8,7 @@ import PriceButtons from '@/(route)/activity/register/_components/PriceButtons';
 import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEditor';
 import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
 
+import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/register';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
@@ -17,8 +17,6 @@ import Button from '@/_components/button';
 import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
 import Textarea from '@/_components/Textarea';
-
-import type { ActivityEdit, EditDetail } from '../../page';
 
 interface EditFormProps {
   buttonTitle: string;
@@ -156,14 +154,14 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
           <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
           <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
         </div>
-        <div className="pc:gap-5 grid gap-4">
-          <label htmlFor="date" className="pc:mb-1 w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1]">
+        <div className="grid gap-4 pc:gap-5">
+          <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] pc:mb-1">
             예약 가능한 시간대
           </label>
           <SchedulePicker setEditFormData={setFormData} setEditDetail={setDetailData} />
 
           {detailData.schedules.length > 0 && (
-            <div className="pc:gap-5 pc:pt-5 grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4">
+            <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
               {detailData.schedules.map((s, index) => (
                 <ScheduleEditor
                   key={index}

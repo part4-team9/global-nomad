@@ -1,5 +1,6 @@
 import axios from 'axios';
-import type { ActivityEdit } from '@/(route)/activity/edit/[id]/page';
+
+import type { ActivityEdit } from '@/_types/activities/register';
 
 import axiosInstance from '@/_libs/axios';
 

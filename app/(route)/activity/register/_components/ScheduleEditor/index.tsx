@@ -2,11 +2,10 @@
 
 import type { Dispatch, SetStateAction } from 'react';
 import Image from 'next/image';
-import type { ActivityEdit, EditDetail, EditSchedule } from '@/(route)/activity/edit/[id]/page';
+
+import type { Activity, ActivityEdit, EditDetail, EditSchedule } from '@/_types/activities/register';
 
 import useWindowSize from '@/_hooks/useWindowSize';
-
-import type { Activity } from '../../page';
 
 import DeleteIcon from 'public/assets/icons/btn-minus.svg';
 

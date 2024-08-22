@@ -3,12 +3,12 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { ActivityEdit } from '@/(route)/activity/edit/[id]/page';
+
+import type { Activity, ActivityEdit } from '@/_types/activities/register';
 
 import { usePostImage } from '@/_hooks/use-post-image';
 import useModalState from '@/_hooks/useModalState';
 
-import type { Activity } from '../../page';
 import CommonModal from '../CommonModal';
 import FileInput from '../FileInput';
 
