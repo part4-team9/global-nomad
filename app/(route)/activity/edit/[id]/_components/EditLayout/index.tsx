@@ -2,8 +2,8 @@
 
 import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
-import getActivity from '@/_apis/activities/getActivity';
-import patchActivity from '@/_apis/activities/patchActivity';
+import getActivity from '@/api/activities/getActivity';
+import patchActivity from '@/api/activities/patchActivity';
 import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 

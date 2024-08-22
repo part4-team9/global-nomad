@@ -3,7 +3,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import type { SubImage } from '@/_apis/activities/getActivity';
+import type { SubImage } from '@/api/activities/getActivity';
 import type { ActivityEdit, EditDetail } from '@/(route)/activity/edit/[id]/page';
 
 import { usePostImage } from '@/_hooks/use-post-image';
