@@ -68,8 +68,8 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   }, [values, selectedScheduleId]);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="h-[700px] w-[430px] overflow-hidden p-6">
+    <Modal isOpen={isOpen} onClose={onClose} size='full'>
+      <div className="h-dvh w-dvw overflow-hidden p-6 mobile:max-h-[750px] mobile:max-w-[430px]">
         <header className="flex justify-between">
           <h2>예약 정보</h2>
           <p className="cursor-pointer text-3xl" onClick={onClose}>

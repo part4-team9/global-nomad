@@ -15,7 +15,7 @@ type CardSectionProps = {
 };
 
 export default function CardSection({ activityId, selectedScheduleId, activeIndex }: CardSectionProps) {
-  const { data: reservationStatus } = useQuery<ReservationsResponse>({
+  const { data: reservationStatus, refetch } = useQuery<ReservationsResponse>({
     queryKey: ['reservationStatus', activityId, selectedScheduleId, activeIndex],
     queryFn: async () => {
       const status = activeIndex === 0 ? 'pending' : activeIndex === 1 ? 'confirmed' : 'declined';
@@ -30,15 +30,15 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
       <div className="h-[300px] overflow-x-hidden overflow-y-scroll">
         {reservationStatus?.reservations &&
           activeIndex === 0 &&
-          reservationStatus.reservations.map((res) => <CardPending key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id}/>)}
+          reservationStatus.reservations.map((res) => <CardPending key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id} refetch={refetch}/>)}
 
         {reservationStatus?.reservations &&
           activeIndex === 1 &&
-          reservationStatus.reservations.map((res) => <CardApprove key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id}/>)}
+          reservationStatus.reservations.map((res) => <CardApprove key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id} refetch={refetch}/>)}
 
         {reservationStatus?.reservations &&
           activeIndex === 2 &&
-          reservationStatus.reservations.map((res) => <CardRejected key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id}/>)}
+          reservationStatus.reservations.map((res) => <CardRejected key={res.id} activityId={activityId} nickname={res.nickname} headCount={res.headCount} reservationId={res.id} refetch={refetch}/>)}
       </div>
     </>
   );

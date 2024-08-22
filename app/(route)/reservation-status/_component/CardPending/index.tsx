@@ -6,13 +6,13 @@ import axiosInstance from '@/_libs/axios';
 
 import Button from '@/_components/button';
 
-export default function CardPending({ activityId, nickname, headCount, reservationId }: ReservationCardProps) {
+export default function CardPending({ activityId, nickname, headCount, reservationId, refetch }: ReservationCardProps) {
   const handleAction = async (status: 'confirmed' | 'declined') => {
     try {
       await axiosInstance.patch(`/my-activities/${activityId}/reservations/${reservationId}`, {
         status,
       });
-      console.log(`Reservation ${status} successfully.`);
+      await refetch();
     } catch (error) {
       if (axios.isAxiosError(error)) {
         throw error.response;

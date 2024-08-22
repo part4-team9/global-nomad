@@ -1,3 +1,5 @@
+import type { QueryObserverResult } from '@tanstack/react-query';
+
 export interface BaseEntity {
   createdAt: string;
   id: number;
@@ -78,5 +80,6 @@ export type ReservationCardProps = {
   activityId?: number;
   headCount: number;
   nickname: string;
+  refetch: () => Promise<QueryObserverResult<ReservationsResponse, unknown>>;
   reservationId: number;
 };
