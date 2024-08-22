@@ -47,7 +47,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
     title: '',
     category: '',
     description: '',
-    price: '',
+    price: undefined,
     address: '',
     bannerImageUrl: '',
     subImageIdsToRemove: [],
@@ -124,7 +124,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
     const { schedules } = detailData;
     // 버튼 disable 조건
     const isDisabled =
-      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || schedules.length === 0 || formTitle === '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === undefined || schedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled || isPending);
   }, [formData, detailData, isPending]);
 

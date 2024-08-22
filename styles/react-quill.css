@@ -1,3 +1,7 @@
+.quill {
+  height: fit-content;
+}
+
 .ql-toolbar.ql-snow {
   border: 1px solid #79747e;
   border-radius: 4px 4px 0 0;

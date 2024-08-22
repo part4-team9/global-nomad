@@ -45,7 +45,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     bannerImageUrl: '',
     category: '',
     description: '',
-    price: '',
+    price: undefined,
     schedules: [],
     subImageUrls: [],
     title: '',
@@ -93,7 +93,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
     // 버튼 disable 조건
     const isDisabled =
-      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === '' || formSchedules.length === 0 || formTitle === '';
+      address === '' || bannerImageUrl === '' || category === '' || description === '' || price === undefined || formSchedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled || isPending);
   }, [formData, isPending]);
 
