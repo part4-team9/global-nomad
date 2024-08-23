@@ -44,12 +44,23 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
     }));
   };
 
+  const handleBannerUpload = (file: File) => {
+    const formData = new FormData();
+    formData.set(IMAGE_FIELD_NAME, file);
+    clearBannerImage();
+    activityMutation.mutate(formData);
+  };
+
   const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      const formData = new FormData();
-      formData.set(IMAGE_FIELD_NAME, e.target.files?.[0]);
-      clearBannerImage();
-      activityMutation.mutate(formData);
+      handleBannerUpload(e.target.files?.[0]);
+    }
+  };
+
+  const handleDropImage: React.DragEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleBannerUpload(e.dataTransfer.files?.[0]);
     }
   };
 
@@ -69,6 +80,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
           images={value}
           onClear={clearBannerImage}
           onChange={handleBannerChange}
+          onDrop={handleDropImage}
           accept="image/*"
         />
       </div>

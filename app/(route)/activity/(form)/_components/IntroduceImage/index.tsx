@@ -117,6 +117,10 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     }
   };
 
+  const handleDropImage = () => {
+    console.log('hi');
+  };
+
   useEffect(() => {
     if (setEditFormData) {
       setEditFormData((prev) => ({
@@ -159,6 +163,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         editImages={editImages}
         onClear={clearSubImage}
         onChange={handleSubImages}
+        onDrop={handleDropImage}
         accept="image/*"
         multiple
       />

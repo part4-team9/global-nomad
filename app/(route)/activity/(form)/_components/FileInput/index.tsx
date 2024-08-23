@@ -7,6 +7,7 @@ import Image from 'next/image';
 import type { SubImage } from '@/_types/activities/form.types';
 
 import ImagePreview from '../ImagePreview';
+import UploadBox from '../UploadBox';
 
 import ImagePlus from 'public/assets/icons/image-upload.svg';
 
@@ -18,6 +19,7 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   images?: string[];
   isPending?: boolean;
   onClear: (image: string, id?: number) => void;
+  onDrop: React.DragEventHandler<HTMLDivElement>;
 }
 
 /**
@@ -30,18 +32,16 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param {boolean} isPending - 이미지 업로드 중인 상태를 나타내는 boolean 값.
  * @param {number} count - 로딩 상태를 나타내는 빈 슬롯의 개수.
  */
-export default forwardRef(function FileInput(
-  { images, editImages, count, isPending, onClear, ...rest }: FileInputProps,
-  ref: React.LegacyRef<HTMLInputElement>,
-) {
+function FileInput({ images, editImages, count, isPending, onClear, onDrop, ...rest }: FileInputProps) {
   return (
     <div className="grid">
       <div className="grid grid-cols-2 gap-2 tablet:gap-4 pc:grid-cols-4 pc:gap-6">
-        <div className="relative flex aspect-square flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2">
+        <UploadBox {...rest} onDrop={onDrop} />
+        {/* <div className="relative flex aspect-square flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2">
           <Image src={ImagePlus} alt="등록" />
           <span className="break-keep text-center text-lg leading-[1.1] text-gray-700">이미지를 드래그하거나 클릭해서 업로드하세요</span>
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
-        </div>
+        </div> */}
 
         {editImages?.map((image, idx) => <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />)}
 
@@ -58,4 +58,6 @@ export default forwardRef(function FileInput(
       </div>
     </div>
   );
-});
+}
+
+export default FileInput;
