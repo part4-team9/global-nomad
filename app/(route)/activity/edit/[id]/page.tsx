@@ -1,4 +1,4 @@
-import getActivity from '@/_apis/activities/getActivity';
+import { getActivity } from '@/_apis/activities/activityForm';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import CommonLayout from '@/_components/CommonLayout';

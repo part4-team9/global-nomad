@@ -1,3 +1,7 @@
+export interface ErrorResponseMessage {
+  message: string;
+}
+
 export interface Schedule {
   date: string;
   endTime: string;

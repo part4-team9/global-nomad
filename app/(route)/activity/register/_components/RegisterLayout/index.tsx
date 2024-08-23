@@ -1,11 +1,11 @@
 'use client';
 
-import type { AxiosResponse } from 'axios';
+import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import postActivity from '@/_apis/activities/postActivity';
+import { postActivity } from '@/_apis/activities/activityForm';
 import { useMutation } from '@tanstack/react-query';
 
-import type { Activity } from '@/_types/activities/form.types';
+import type { Activity, ErrorResponseMessage } from '@/_types/activities/form.types';
 
 import useModalState from '@/_hooks/useModalState';
 
@@ -31,23 +31,25 @@ function RegisterLayout() {
         },
       });
     },
-    onError: (error: AxiosResponse) => {
-      const { status } = error;
-      const { message } = error.data;
-      if (status === 401) {
-        setModalState({
-          isOpen: true,
-          message,
-          onClose: () => {
-            router.push('/login');
-          },
-        });
-      } else {
-        setModalState((prev) => ({
-          ...prev,
-          isOpen: true,
-          message,
-        }));
+    onError: (error: AxiosError<ErrorResponseMessage>) => {
+      if (error.response) {
+        const { status } = error.response;
+        const message = status === 500 ? '죄송합니다. 체험 등록에 실패했습니다.' : error.response.data.message;
+        if (status === 401) {
+          setModalState({
+            isOpen: true,
+            message,
+            onClose: () => {
+              router.push('/login');
+            },
+          });
+        } else {
+          setModalState((prev) => ({
+            ...prev,
+            isOpen: true,
+            message,
+          }));
+        }
       }
     },
   });

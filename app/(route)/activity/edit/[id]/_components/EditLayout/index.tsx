@@ -1,13 +1,12 @@
 'use client';
 
-import type { AxiosResponse } from 'axios';
+import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
-import getActivity from '@/_apis/activities/getActivity';
-import patchActivity from '@/_apis/activities/patchActivity';
+import { getActivity, patchActivity } from '@/_apis/activities/activityForm';
 import CommonModal from '@/(route)/activity/register/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
-import type { ActivityEdit } from '@/_types/activities/form.types';
+import type { ActivityEdit, ErrorResponseMessage } from '@/_types/activities/form.types';
 
 import useModalState from '@/_hooks/useModalState';
 
@@ -35,27 +34,30 @@ function EditLayout({ id }: EditLayoutProps) {
         isOpen: true,
         message: '수정이 완료되었습니다',
         onClose: () => {
-          router.push(`/activity/${postId}`);
+          router.push(`/activity/detail/${postId}`);
         },
       });
     },
-    onError: (error: AxiosResponse) => {
-      const { status } = error;
-      const { message } = error.data;
-      if (status === 401) {
-        setModalState({
-          isOpen: true,
-          message: '로그인이 필요한 서비스입니다.',
-          onClose: () => {
-            router.push('/login');
-          },
-        });
-      } else {
-        setModalState((prev) => ({
-          ...prev,
-          isOpen: true,
-          message,
-        }));
+    onError: (error: AxiosError<ErrorResponseMessage>) => {
+      if (error.response) {
+        const { status } = error.response;
+        const message = status === 500 ? '죄송합니다. 체험 수정에 실패했습니다.' : error.response.data.message;
+
+        if (status === 401) {
+          setModalState({
+            isOpen: true,
+            message: '로그인이 필요한 서비스입니다.',
+            onClose: () => {
+              router.push('/login');
+            },
+          });
+        } else {
+          setModalState((prev) => ({
+            ...prev,
+            isOpen: true,
+            message,
+          }));
+        }
       }
     },
   });

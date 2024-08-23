@@ -16,7 +16,7 @@ function StickyLayout({ children }: PropsWithChildren) {
     <div className="flex gap-6">
       {isLoading ? (
         <section className="sticky top-20 hidden h-fit max-w-[384px] flex-1 rounded-xl bg-slate-300 p-6 tablet:block">
-          {/* 스켈레톤 UI */}
+          {/* TODO 스켈레톤 ui 적용 필요 */}
           <div className="animate-pulse">
             <div className="h-6 rounded bg-gray-300" />
           </div>

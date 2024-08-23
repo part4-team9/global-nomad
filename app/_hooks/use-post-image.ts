@@ -1,6 +1,6 @@
 import type { Dispatch, SetStateAction } from 'react';
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import postImage from '@/_apis/activities/postImage';
+import { postImage } from '@/_apis/activities/activityForm';
 import { useMutation } from '@tanstack/react-query';
 
 interface PostImageProps {
