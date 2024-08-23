@@ -7,8 +7,6 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import dynamic from 'next/dynamic';
 
-import type { Activity, ActivityEdit } from '@/_types/activities/form.types';
-
 import Textarea from '@/_components/Textarea';
 
 const ReactQuill = dynamic(() => import('react-quill'), { loading: () => <Textarea size="big" placeholder="설명" />, ssr: false });

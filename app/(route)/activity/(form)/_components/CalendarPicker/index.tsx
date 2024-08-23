@@ -14,9 +14,10 @@ interface DatePickerProps {
 }
 
 /**
- * 날짜 선택하는 input입니다 (react-datepicker 사용)
- * @param onChange 날짜 선택시 스케줄 state 업데이트하는 함수
- * @param value 선택한 날짜 value state값 (스케줄 추가하면 초기화됨)
+ * 날짜 선택을 위한 입력 컴포넌트입니다. (react-datepicker 사용)
+ *
+ * @param {Function} onChange - 날짜 선택 시 호출되는 함수로, 선택된 날짜 값을 상위 컴포넌트에 전달합니다.
+ * @param {string} value - 선택된 날짜 값으로, 폼의 초기 값 또는 리셋된 값을 나타냅니다.
  */
 function CalendarWrapper({ onChange, value }: DatePickerProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -31,6 +32,8 @@ function CalendarWrapper({ onChange, value }: DatePickerProps) {
   useEffect(() => {
     if (value === '') {
       setStartDate(null);
+    } else {
+      setStartDate(new Date(value));
     }
   }, [value]);
 

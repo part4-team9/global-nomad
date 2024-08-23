@@ -13,10 +13,11 @@ interface AddressModalProps {
 }
 
 /**
- * 다음 우편번호 서비스를 이용한 주소 검색 모달입니다
- * @param isOpen modal 오픈 boolean 값
- * @param onClose modal close 하는 함수
- * @param onComplete 주소 선택시 주소 데이터 받아서 form에 저장하는 함수
+ * 다음 우편번호 서비스를 이용한 주소 검색 모달입니다.
+ *
+ * @param {boolean} isOpen - 모달 오픈 여부를 결정하는 boolean 값
+ * @param {function} onClose - 모달을 닫는 함수
+ * @param {function} onComplete - 주소 선택 시 주소 데이터를 받아서 폼에 저장하는 함수
  */
 function AddressModal({ isOpen, onClose, onComplete }: AddressModalProps) {
   const onCompletePost = (data: Address) => {
