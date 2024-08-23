@@ -81,6 +81,8 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     onSubmit(formData);
   };
 
+  console.log(formData);
+
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -135,7 +137,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
             </div>
           )}
         </div>
-        <BannerImage setFormData={setFormData} />
+        <BannerImage value={formData.bannerImageUrl !== '' ? [formData.bannerImageUrl] : undefined} setFormData={setFormData} />
         <IntroduceImage setRegisterFormData={setFormData} />
       </div>
     </form>

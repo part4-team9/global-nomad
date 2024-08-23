@@ -111,6 +111,8 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
     }
   };
 
+  console.log(formData);
+
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -175,7 +177,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
             </div>
           )}
         </div>
-        <BannerImage value={formData.bannerImageUrl} setFormData={setFormData} />
+        <BannerImage value={formData.bannerImageUrl !== '' ? [formData.bannerImageUrl] : undefined} setFormData={setFormData} />
         <IntroduceImage edit editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
       </div>
     </form>

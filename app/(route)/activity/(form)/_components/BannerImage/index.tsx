@@ -1,7 +1,6 @@
 'use client';
 
 import type { Dispatch, SetStateAction } from 'react';
-import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import type { Activity, ActivityEdit } from '@/_types/activities/form.types';
@@ -14,22 +13,22 @@ import FileInput from '../FileInput';
 
 export interface BannerImageProps<T> {
   setFormData: Dispatch<SetStateAction<T>>;
-  value?: string;
+  value?: string[];
 }
 
 /**
- * 메인 배너 이미지 업로드 및 form 데이터 업데이트하는 컴포넌트입니다.
+ * 메인 배너 이미지 업로드 및 폼 데이터 업데이트를 처리하는 컴포넌트입니다.
  *
- * @param value 체험 수정 페이지에서 이미 default 이미지값이 있는 경우 (이미지 주소)
- * @setFormdata 업로드한 이미지로 formdata 업데이트 (setState 함수)
+ * @param {string[]} value - 체험 수정 페이지에서 기본 이미지 URL 값 (선택 사항)
+ * @param {Dispatch<SetStateAction<T>>} setFormData - 업로드한 이미지로 폼 데이터를 업데이트하는 함수
  */
 function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: BannerImageProps<T>) {
   const router = useRouter();
-  const [bannerImage, setBannerImage] = useState<string[]>(value ? [value] : []);
   const { modalState, setModalState, closeModal } = useModalState();
 
+  const IMAGE_FIELD_NAME = 'image';
+
   const getResponse = (res: string) => {
-    setBannerImage([res]);
     setFormData((prev) => ({
       ...prev,
       bannerImageUrl: res,
@@ -38,28 +37,21 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
 
   const activityMutation = usePostImage({ router, setModalState, callback: getResponse });
 
-  const onClearBanner = () => {
-    setBannerImage([]);
+  const clearBannerImage = () => {
     setFormData((prev) => ({
       ...prev,
       bannerImageUrl: '',
     }));
   };
 
-  const onChangeBanner = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setBannerImage([]);
-      const json = new FormData();
-      json.set('image', e.target.files?.[0]);
-      activityMutation.mutate(json);
+      const formData = new FormData();
+      formData.set(IMAGE_FIELD_NAME, e.target.files?.[0]);
+      clearBannerImage();
+      activityMutation.mutate(formData);
     }
   };
-
-  useEffect(() => {
-    if (value) {
-      setBannerImage([value]);
-    }
-  }, [value]);
 
   return (
     <>
@@ -74,9 +66,9 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
           id="banner"
           count={1}
           isPending={activityMutation.isPending}
-          images={bannerImage}
-          onClear={onClearBanner}
-          onChange={onChangeBanner}
+          images={value}
+          onClear={clearBannerImage}
+          onChange={handleBannerChange}
           accept="image/*"
         />
       </div>
