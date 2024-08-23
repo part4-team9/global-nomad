@@ -42,6 +42,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         if (setEditFormData && setEditDetailData) {
           setEditFormData((prev) => ({
             ...prev,
+
             subImageIdsToRemove: [...prev.subImageIdsToRemove, id],
           }));
           const updatedImages = editImages.filter((data) => data.id !== id);
@@ -53,9 +54,13 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         }
       } else {
         const filteredImages = editImages.filter((data) => data.imageUrl !== image);
-        if (setEditDetailData) {
+        if (setEditDetailData && setEditFormData) {
           setImageStore((prev) => prev.filter((img) => img !== image));
           setEditImages(filteredImages);
+          setEditFormData((prev) => ({
+            ...prev,
+            subImageUrlsToAdd: imageStore,
+          }));
           setEditDetailData((prev) => ({
             ...prev,
             subImages: filteredImages,

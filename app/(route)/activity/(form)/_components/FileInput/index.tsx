@@ -6,7 +6,8 @@ import Image from 'next/image';
 
 import type { SubImage } from '@/_types/activities/form.types';
 
-import DeleteIcon from 'public/assets/icons/delete.svg';
+import ImagePreview from '../ImagePreview';
+
 import PlusIcon from 'public/assets/icons/plus.svg';
 
 import Loading from 'public/assets/lottie/loading.json';
@@ -20,13 +21,14 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 /**
- * input file type 컴포넌트
+ * FileInput 컴포넌트는 사용자가 이미지를 업로드하거나, 기존 이미지를 수정할 수 있는 기능을 제공합니다.
+ * 이미지 미리보기, 삭제 기능, 로딩 애니메이션 등을 지원합니다.
  *
- * @param images 이미지 미리보기
- * @param editImages 체험 수정 기존 이미지 배열
- * @param onClear 삭제 버튼 클릭 이벤트 함수
- * @param isPending Post 이미지 isPending 여부
- * @param count 첨부 이미지 개수
+ * @param {string[]} images - 새로 업로드된 이미지 URL 배열.
+ * @param {SubImage[]} editImages - 수정 중인 기존 이미지 배열, SubImage 객체를 포함합니다.
+ * @param {function} onClear - 이미지 삭제 버튼 클릭 시 호출되는 함수. 삭제할 이미지 URL과 해당 이미지의 ID(선택 사항)를 인수로 받습니다.
+ * @param {boolean} isPending - 이미지 업로드 중인 상태를 나타내는 boolean 값.
+ * @param {number} count - 로딩 상태를 나타내는 빈 슬롯의 개수.
  */
 export default forwardRef(function FileInput(
   { images, editImages, count, isPending, onClear, ...rest }: FileInputProps,
@@ -41,28 +43,9 @@ export default forwardRef(function FileInput(
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
         </div>
 
-        {editImages?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square rounded-xl">
-            <Image fill sizes="max-width:100%" src={image.imageUrl} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button
-              type="button"
-              onClick={() => onClear(image.imageUrl, image?.id)}
-              className="absolute -right-2 -top-2 size-6 pc:-right-5 pc:-top-5 pc:size-10"
-            >
-              <Image src={DeleteIcon} alt="삭제" />
-            </button>
-          </div>
-        ))}
+        {editImages?.map((image, idx) => <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />)}
 
-        {images?.map((image, idx) => (
-          <div key={idx} className="relative aspect-square rounded-xl">
-            <Image fill sizes="max-width:100%" src={image} alt="이미지 미리보기" priority style={{ objectFit: 'contain', borderRadius: '12px' }} />
-            <button type="button" onClick={() => onClear(image)} className="absolute -right-2 -top-2 size-6 pc:-right-5 pc:-top-5 pc:size-10">
-              <Image src={DeleteIcon} alt="삭제" />
-            </button>
-            {isPending}
-          </div>
-        ))}
+        {images?.map((image, idx) => <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} />)}
 
         {isPending &&
           Array.from({ length: count }).map((_, idx) => (
