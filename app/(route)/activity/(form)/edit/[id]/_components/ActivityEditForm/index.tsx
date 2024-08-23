@@ -171,7 +171,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
                   scheduleArray={detailData.schedules}
                   setEditFormData={setFormData}
                   detailData={formData.schedulesToAdd}
-                  setEditDetailData={setDetailData}
+                  setFormData={setDetailData}
                 />
               ))}
             </div>

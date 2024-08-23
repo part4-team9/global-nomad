@@ -132,7 +132,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
           {formData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
               {formData.schedules.map((s, index) => (
-                <ScheduleEditor key={index} index={index} schedule={s} scheduleArray={formData.schedules} setRegisterFormData={setFormData} />
+                <ScheduleEditor key={index} index={index} schedule={s} scheduleArray={formData.schedules} setFormData={setFormData} />
               ))}
             </div>
           )}
