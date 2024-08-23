@@ -1,15 +1,11 @@
 'use client';
 
-import { forwardRef } from 'react';
 import Lottie from 'react-lottie-player';
-import Image from 'next/image';
 
 import type { SubImage } from '@/_types/activities/form.types';
 
 import ImagePreview from '../ImagePreview';
 import UploadBox from '../UploadBox';
-
-import ImagePlus from 'public/assets/icons/image-upload.svg';
 
 import Loading from 'public/assets/lottie/loading.json';
 
@@ -19,7 +15,7 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   images?: string[];
   isPending?: boolean;
   onClear: (image: string, id?: number) => void;
-  onDrop: React.DragEventHandler<HTMLDivElement>;
+  onDrop?: React.DragEventHandler<HTMLDivElement>;
 }
 
 /**
