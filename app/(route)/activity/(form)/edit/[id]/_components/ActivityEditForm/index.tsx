@@ -1,24 +1,17 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AddressModal from '@/(route)/activity/(form)/_components/AddressModal';
 import BannerImage from '@/(route)/activity/(form)/_components/BannerImage';
+import BasicInfoForm from '@/(route)/activity/(form)/_components/BasicInfoForm';
 import FormContainer from '@/(route)/activity/(form)/_components/FormContainer';
 import FormField from '@/(route)/activity/(form)/_components/FormField';
 import IntroduceImage from '@/(route)/activity/(form)/_components/IntroduceImage';
-import PriceButtons from '@/(route)/activity/(form)/_components/PriceButtons';
 import ScheduleEditor from '@/(route)/activity/(form)/_components/ScheduleEditor';
 import SchedulePicker from '@/(route)/activity/(form)/_components/SchedulePicker';
-import TextEditor from '@/(route)/activity/(form)/_components/TextEditor';
 
 import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/form.types';
-import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
-import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
-
-import Button from '@/_components/button';
-import Input from '@/_components/Input';
-import SelectBox from '@/_components/SelectBox';
+import useActivityForm from '@/_hooks/useActivityForm';
 
 interface EditFormProps {
   buttonTitle: string;
@@ -38,84 +31,29 @@ interface EditFormProps {
  * @param {string} buttonTitle 제출 버튼의 텍스트
  */
 function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: EditFormProps) {
-  const [priceFormat, setPriceFormat] = useState(addCommasToPrice(String(data?.price)));
-  const [addressModalState, setAddressModalState] = useState(false);
   const [buttonDisable, setButtonDisable] = useState(false);
+  const { formData, setFormData, priceFormat, setPriceFormat, addressModalState, handleAddressModal, handleSelectChange, handleChangeInput } =
+    useActivityForm<ActivityEdit>({
+      title: data.title,
+      category: data.category,
+      description: data.description,
+      price: data.price,
+      address: data.address,
+      bannerImageUrl: data.bannerImageUrl,
+      subImageIdsToRemove: [],
+      subImageUrlsToAdd: [],
+      scheduleIdsToRemove: [],
+      schedulesToAdd: [],
+    });
   const [detailData, setDetailData] = useState<EditDetail>({
     schedules: data?.schedules || [],
     subImages: data?.subImages || [],
   });
-  const [formData, setFormData] = useState<ActivityEdit>({
-    title: data.title,
-    category: data.category,
-    description: data.description,
-    price: data.price,
-    address: data.address,
-    bannerImageUrl: data.bannerImageUrl,
-    subImageIdsToRemove: [],
-    subImageUrlsToAdd: [],
-    scheduleIdsToRemove: [],
-    schedulesToAdd: [],
-  });
-
-  useEffect(() => {
-    if (data) {
-      const { address, bannerImageUrl, category, description, price, schedules, subImages, title: ActivityTitle } = data;
-
-      const formatPrice = addCommasToPrice(String(price));
-      setPriceFormat(formatPrice);
-
-      setDetailData({
-        schedules,
-        subImages,
-      });
-
-      setFormData((prev) => ({
-        ...prev,
-        title: ActivityTitle,
-        category,
-        description,
-        price,
-        address,
-        bannerImageUrl,
-      }));
-    }
-  }, [data]);
 
   const onSubmitForm: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     onSubmit(formData);
   };
-
-  const handleAddressModal = () => {
-    setAddressModalState((prev) => !prev);
-  };
-
-  const handleSelectChange = (key: string, value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-  };
-
-  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { id, value } = e.target;
-    if (id === 'price') {
-      setPriceFormat(addCommasToPrice(value));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [id]: value,
-      }));
-    }
-  };
-
-  useEffect(() => {
-    setFormData((prev) => ({
-      ...prev,
-      price: removeCommas(priceFormat),
-    }));
-  }, [priceFormat]);
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, title: formTitle } = formData;
@@ -127,17 +65,16 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
 
   return (
     <FormContainer onSubmit={onSubmitForm} title={title} buttonTitle={buttonTitle} buttonDisable={buttonDisable}>
-      <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
-      <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-      <TextEditor value={formData.description} setFormData={setFormData} />
-      <FormField htmlFor="price" label="가격">
-        <Input id="price" placeholder="가격" value={priceFormat} onChange={handleChangeInput} className="px-4" />
-        <PriceButtons setPriceFormat={setPriceFormat} />
-      </FormField>
-      <FormField htmlFor="address" label="주소">
-        <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
-        <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
-      </FormField>
+      <BasicInfoForm
+        formData={formData}
+        setFormData={setFormData}
+        handleChangeInput={handleChangeInput}
+        handleSelectChange={handleSelectChange}
+        priceFormat={priceFormat}
+        setPriceFormat={setPriceFormat}
+        addressModalState={addressModalState}
+        handleAddressModal={handleAddressModal}
+      />
       <FormField htmlFor="date" label="예약 가능한 시간대">
         <SchedulePicker setEditFormData={setFormData} setFormData={setDetailData} />
 

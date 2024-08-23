@@ -6,8 +6,8 @@ import { useRouter } from 'next/navigation';
 
 import type { Activity, ActivityEdit, EditDetail, SubImage } from '@/_types/activities/form.types';
 
-import { usePostImage } from '@/_hooks/use-post-image';
 import useModalState from '@/_hooks/useModalState';
+import { usePostImage } from '@/_hooks/usePostImage';
 
 import CommonModal from '../CommonModal';
 import FileInput from '../FileInput';
