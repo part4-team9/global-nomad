@@ -159,7 +159,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         editImages={editImages}
         onClear={clearSubImage}
         onChange={handleSubImages}
-        accept="image/*"
         multiple
       />
       <span className="break-keep pl-2 text-2lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>

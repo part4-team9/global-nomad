@@ -33,14 +33,7 @@ function FileInput({ images, editImages, count, isPending, onClear, onDrop, ...r
     <div className="grid">
       <div className="grid grid-cols-2 gap-2 tablet:gap-4 pc:grid-cols-4 pc:gap-6">
         <UploadBox {...rest} onDrop={onDrop} />
-        {/* <div className="relative flex aspect-square flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2">
-          <Image src={ImagePlus} alt="등록" />
-          <span className="break-keep text-center text-lg leading-[1.1] text-gray-700">이미지를 드래그하거나 클릭해서 업로드하세요</span>
-          <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
-        </div> */}
-
         {editImages?.map((image, idx) => <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />)}
-
         {images?.map((image, idx) => <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} />)}
 
         {isPending &&

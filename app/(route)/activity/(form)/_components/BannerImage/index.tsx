@@ -81,7 +81,6 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
           onClear={clearBannerImage}
           onChange={handleBannerChange}
           onDrop={handleDropImage}
-          accept="image/*"
         />
       </div>
     </>

@@ -48,7 +48,7 @@ function UploadBox({ onDrop, ...rest }: UploadBox) {
     >
       <Image src={ImagePlus} alt="등록" />
       <span className="break-keep text-center text-lg leading-[1.1] text-gray-700">이미지를 드래그하거나 클릭해서 업로드하세요</span>
-      <input type="file" {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
+      <input type="file" accept='"image/png, image/jpeg, image/jpg"' {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
     </div>
   );
 }
