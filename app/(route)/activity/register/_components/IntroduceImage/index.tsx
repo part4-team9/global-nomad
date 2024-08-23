@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-import type { Activity, ActivityEdit, EditDetail, SubImage } from '@/_types/activities/formTypes';
+import type { Activity, ActivityEdit, EditDetail, SubImage } from '@/_types/activities/form.types';
 
 import { usePostImage } from '@/_hooks/use-post-image';
 import useModalState from '@/_hooks/useModalState';

@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 import Lottie from 'react-lottie-player';
 import Image from 'next/image';
 
-import type { SubImage } from '@/_types/activities/formTypes';
+import type { SubImage } from '@/_types/activities/form.types';
 
 import DeleteIcon from 'public/assets/icons/delete.svg';
 import PlusIcon from 'public/assets/icons/plus.svg';

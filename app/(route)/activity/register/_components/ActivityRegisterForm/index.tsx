@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import AddressModal from '@/(route)/activity/register/_components/AddressModal';
 
-import type { Activity } from '@/_types/activities/formTypes';
+import type { Activity } from '@/_types/activities/form.types';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';
@@ -75,8 +75,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
       }));
     }
   };
-
-  console.log(formData);
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

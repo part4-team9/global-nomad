@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import { AxiosError } from 'axios';
 
-import type { ActivityDetail } from '@/_types/activities/formTypes';
+import type { ActivityDetail } from '@/_types/activities/form.types';
 
 import axiosInstance from '@/_libs/axios';
 

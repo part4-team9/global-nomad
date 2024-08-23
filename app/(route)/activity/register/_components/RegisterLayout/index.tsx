@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import postActivity from '@/_apis/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
 
-import type { Activity } from '@/_types/activities/formTypes';
+import type { Activity } from '@/_types/activities/form.types';
 
 import useModalState from '@/_hooks/useModalState';
 
@@ -27,7 +27,7 @@ function RegisterLayout() {
         isOpen: true,
         message: '체험 등록이 완료되었습니다',
         onClose: () => {
-          router.push(`/activity/${id}`);
+          router.push(`/activity/detail/${id}`);
         },
       });
     },
@@ -52,7 +52,6 @@ function RegisterLayout() {
     },
   });
 
-  // isPending 상태에서 버튼 disable 처리
   const { isPending } = activityMutation;
 
   const onSubmitForm = (formData: Activity) => {

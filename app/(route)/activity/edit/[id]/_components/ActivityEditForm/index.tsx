@@ -9,7 +9,7 @@ import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEdit
 import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
 import TextEditor from '@/(route)/activity/register/_components/TextEditor';
 
-import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/formTypes';
+import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/form.types';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
 
 import { addCommasToPrice, removeCommas } from '@/_utils/formatNumber';

@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 
-import type { Activity, ActivityEdit, EditDetail, Schedule } from '@/_types/activities/formTypes';
+import type { Activity, ActivityEdit, EditDetail, Schedule } from '@/_types/activities/form.types';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
