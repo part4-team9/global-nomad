@@ -21,17 +21,19 @@ interface IntroduceImage {
 }
 
 /**
- * 소개 이미지 업로드 및 form 업데이트하는 컴포넌트입니다.
- * @param edit 체험 수정 페이지 여부 boolean 값
- * @param editValue 체험 수정 페이지의 경우 기존 default 값
- * @param setRegisterFormData 체험 등록 페이지 form setState 함수
- * @param setEditFormData 체험 수정 페이지 form setState 함수
- * @param setEditDetailData 체험 수정 페이지 화면 렌더링위한 setState 함수
+ * IntroduceImage 컴포넌트는 사용자가 소개 이미지를 업로드하고, 이를 폼 데이터에 반영하는 기능을 제공합니다.
+ * 이 컴포넌트는 체험 등록 및 체험 수정 페이지에서 사용되며, 최대 4개의 이미지를 업로드할 수 있습니다.
+ *
+ * @param {boolean} [edit] - 체험 수정 페이지에서 사용되는 경우, true로 설정됩니다.
+ * @param {SubImage[]} [editValue] - 체험 수정 페이지의 기존 이미지 배열입니다.
+ * @param {Dispatch<SetStateAction<EditDetail>>} [setEditDetailData] - 체험 수정 페이지에서 화면에 렌더링되는 데이터를 업데이트하는 함수입니다.
+ * @param {Dispatch<SetStateAction<ActivityEdit>>} [setEditFormData] - 체험 수정 페이지의 폼 데이터를 업데이트하는 함수입니다.
+ * @param {Dispatch<SetStateAction<Activity>>} [setRegisterFormData] - 체험 등록 페이지의 폼 데이터를 업데이트하는 함수입니다.
  */
 function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData, setEditDetailData }: IntroduceImage) {
   const router = useRouter();
   const [subImages, setSubImages] = useState<string[]>([]);
-  const [imageStore, setImageStore] = useState<string[]>([]);
+  const [pendingImageUrls, setPendingImageUrls] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>(editValue || []);
   const [imageCount, setImageCount] = useState(0);
   const { modalState, setModalState, closeModal } = useModalState();
@@ -42,7 +44,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         if (setEditFormData && setEditDetailData) {
           setEditFormData((prev) => ({
             ...prev,
-
             subImageIdsToRemove: [...prev.subImageIdsToRemove, id],
           }));
           const updatedImages = editImages.filter((data) => data.id !== id);
@@ -55,11 +56,11 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
       } else {
         const filteredImages = editImages.filter((data) => data.imageUrl !== image);
         if (setEditDetailData && setEditFormData) {
-          setImageStore((prev) => prev.filter((img) => img !== image));
+          setPendingImageUrls((prev) => prev.filter((img) => img !== image));
           setEditImages(filteredImages);
           setEditFormData((prev) => ({
             ...prev,
-            subImageUrlsToAdd: imageStore,
+            subImageUrlsToAdd: pendingImageUrls,
           }));
           setEditDetailData((prev) => ({
             ...prev,
@@ -83,7 +84,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         ...prev,
         subImages: [...prev.subImages, { imageUrl: res }],
       }));
-      setImageStore((prev) => [...prev, res]);
+      setPendingImageUrls((prev) => [...prev, res]);
     } else {
       setSubImages((prev) => [...prev, res]);
     }
@@ -120,10 +121,10 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
     if (setEditFormData) {
       setEditFormData((prev) => ({
         ...prev,
-        subImageUrlsToAdd: imageStore,
+        subImageUrlsToAdd: pendingImageUrls,
       }));
     }
-  }, [imageStore, setEditFormData]);
+  }, [pendingImageUrls, setEditFormData]);
 
   useEffect(() => {
     if (setRegisterFormData) {
