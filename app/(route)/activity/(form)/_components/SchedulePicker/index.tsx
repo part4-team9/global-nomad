@@ -18,22 +18,25 @@ import CalendarWrapper from '../CalendarPicker';
 import AddIcon from 'public/assets/icons/btn-plus.svg';
 import AddDisabled from 'public/assets/icons/btn-plus-disabled.svg';
 
-interface PickerProps {
-  setEditDetail?: Dispatch<SetStateAction<EditDetail>>;
+interface PickerProps<T> {
   setEditFormData?: Dispatch<SetStateAction<ActivityEdit>>;
-  setRegisterFormData?: Dispatch<SetStateAction<Activity>>;
+  setFormData: Dispatch<SetStateAction<T>>;
 }
 
 /**
- * 예약 가능한 시간대 선택, 추가 기능 컴포넌트
- * @param setRegisterFormData 체험 등록 form 데이터 업데이트 함수
- * @param setEditFormData 체험 수정 form 데이터 업데이트 함수
- * @param setEditDetail 체험 수정 스케줄 렌더링 업데이트 함수
+ * SchedulePicker 컴포넌트는 사용자가 예약 가능한 시간대를 선택하고 추가할 수 있는 기능을 제공합니다.
+ * 이 컴포넌트는 체험 등록과 체험 수정 페이지에서 사용되며, 추가된 스케줄 데이터를 관리합니다.
+ *
+ * @template T - 이 컴포넌트에서 관리할 데이터 타입으로, Activity 또는 EditDetail 타입을 따릅니다.
+ *
+ * @param {Dispatch<SetStateAction<T>>} setFormData - 스케줄 데이터를 업데이트하는 함수입니다.
+ * @param {Dispatch<SetStateAction<ActivityEdit>>} [setEditFormData] - 체험 수정 데이터를 업데이트하는 함수입니다. 선택적으로 제공됩니다.
  */
-function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }: PickerProps) {
+function SchedulePicker<T extends Activity | EditDetail>({ setEditFormData, setFormData }: PickerProps<T>) {
   const timeArray = generateTimeArray();
   const windowSize = useWindowSize();
   const isPC = windowSize > 1023;
+
   const [timeError, setTimeError] = useState(false);
   const [buttonDisabled, setButtonDisabed] = useState(true);
   const [scheduleData, setScheduleData] = useState<Schedule>({
@@ -55,19 +58,14 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
   };
 
   const handleAddSchedule = () => {
-    if (setEditFormData && setEditDetail) {
+    setFormData((prev) => ({
+      ...prev,
+      schedules: [...prev.schedules, scheduleData],
+    }));
+    if (setEditFormData) {
       setEditFormData((prev) => ({
         ...prev,
         schedulesToAdd: [...prev.schedulesToAdd, scheduleData],
-      }));
-      setEditDetail((prev) => ({
-        ...prev,
-        schedules: [...prev.schedules, scheduleData],
-      }));
-    } else if (setRegisterFormData) {
-      setRegisterFormData((prev) => ({
-        ...prev,
-        schedules: [...prev.schedules, scheduleData],
       }));
     }
     setScheduleData({
@@ -110,6 +108,7 @@ function SchedulePicker({ setRegisterFormData, setEditFormData, setEditDetail }:
           {buttonDisabled ? <Image src={AddDisabled} alt="추가 불가" /> : <Image src={AddIcon} alt="추가" />}
         </button>
       </div>
+
       {timeError && (
         <span className="mt-2 block break-keep pl-2 text-xs leading-[1.3] text-red-500">
           시작 시간은 종료 시간보다 이전이어야 합니다. 올바른 시간을 선택해 주세요.

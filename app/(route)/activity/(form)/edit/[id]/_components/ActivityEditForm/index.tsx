@@ -159,7 +159,7 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
           <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] pc:mb-1">
             예약 가능한 시간대
           </label>
-          <SchedulePicker setEditFormData={setFormData} setEditDetail={setDetailData} />
+          <SchedulePicker setEditFormData={setFormData} setFormData={setDetailData} />
 
           {detailData.schedules.length > 0 && (
             <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
