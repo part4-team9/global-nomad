@@ -1,17 +1,33 @@
 import axios from 'axios';
 
-import type { ReservationCardProps } from '@/_types';
+import type { ReservationCardProps, ReservationsResponse } from '@/_types';
 
 import axiosInstance from '@/_libs/axios';
 
 import Button from '@/_components/button';
 
-export default function CardPending({ activityId, nickname, headCount, reservationId, refetch, onRefetch }: ReservationCardProps) {
+export default function CardPending({ activityId, nickname, headCount, reservationId, scheduleId, refetch, onRefetch }: ReservationCardProps) {
   const handleAction = async (status: 'confirmed' | 'declined') => {
     try {
       await axiosInstance.patch(`/my-activities/${activityId}/reservations/${reservationId}`, {
         status,
       });
+
+      if (status === 'confirmed') {
+        const otherReservations = await axiosInstance.get<ReservationsResponse>(
+          `/my-activities/${activityId}/reservations?scheduleId=${scheduleId}status=pending`,
+        );
+        const otherReservationIds = otherReservations.data.reservations.filter((res) => res.id !== reservationId).map((res) => res.id);
+
+        await Promise.all(
+          otherReservationIds.map((id) =>
+            axiosInstance.patch(`/my-activities/${activityId}/reservations/${id}`, {
+              status: 'declined',
+            }),
+          ),
+        );
+      }
+
       await refetch();
       onRefetch?.();
     } catch (error) {

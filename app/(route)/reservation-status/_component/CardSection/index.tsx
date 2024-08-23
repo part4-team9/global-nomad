@@ -42,6 +42,7 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
               reservationId={res.id}
               refetch={refetch}
               onRefetch={onRefetch}
+              scheduleId={selectedScheduleId}
             />
           ))}
 
@@ -56,6 +57,7 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
               reservationId={res.id}
               refetch={refetch}
               onRefetch={onRefetch}
+              scheduleId={selectedScheduleId}
             />
           ))}
 
@@ -70,6 +72,7 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
               reservationId={res.id}
               refetch={refetch}
               onRefetch={onRefetch}
+              scheduleId={selectedScheduleId}
             />
           ))}
       </div>

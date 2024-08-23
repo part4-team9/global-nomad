@@ -32,51 +32,49 @@ function RegisterStatusLayout() {
   const reservations = myActivity?.activities || [];
   const selectBoxValue: string[] = reservations.map((reservation) => reservation.title);
 
+  // 초기 title 및 id 세팅해 주는 useEffect
   useEffect(() => {
-    if (selectBoxValue.length > 0 && !selectedActivityTitle) {
+    if (!selectedActivityTitle) {
       const initialActivity = reservations.find((reservation) => reservation.title === selectBoxValue[0]);
       setSelectedActivityTitle(selectBoxValue[0]);
       setSelectedActivityId(initialActivity ? initialActivity.id : undefined);
     }
   }, [selectBoxValue, reservations, selectedActivityTitle]);
 
+  // title, id 바꿔주는 핸들러
   const handleActivityTitleChange = (keyName: string, value: string) => {
     setSelectedActivityTitle(value);
     const selectedActivity = reservations.find((reservation) => reservation.title === value);
     setSelectedActivityId(selectedActivity ? selectedActivity.id : undefined);
   };
-
-  useEffect(() => {
-    if (selectedActivityTitle && reservations.length > 0) {
-      const selectedActivity = reservations.find((reservation) => reservation.title === selectedActivityTitle);
-      setSelectedActivityId(selectedActivity ? selectedActivity.id : undefined);
-    }
-  }, [selectedActivityTitle, reservations]);
-
+  // 연 월 초기 세팅하는 useEffect
   useEffect(() => {
     const currentDate = date || new Date();
     if (selectedActivityId) {
-      setYear(currentDate.getFullYear());
-      setMonth(((currentDate.getMonth() ?? 0) + 1).toString().padStart(2, '0'));
+      const newYear = currentDate.getFullYear();
+      const newMonth = ((currentDate.getMonth() ?? 0) + 1).toString().padStart(2, '0');
+      setYear(newYear);
+      setMonth(newMonth);
     }
   }, [date, selectedActivityId]);
 
-  const { data: reservationDashboard, refetch } = useQuery<DateReservations[]>({
+  const { data: reservationDashboard } = useQuery<DateReservations[]>({
     queryKey: ['reservationDashboard', selectedActivityId, year, month],
     queryFn: async () => {
-      if (selectedActivityId) {
-        const response = await axiosInstance.get<DateReservations[]>(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${month}`);
-        await refetch();
-        return response.data ?? [];
-      }
-      return [];
+      const response = await axiosInstance.get<DateReservations[]>(`/my-Activities/${selectedActivityId}/reservation-dashboard?year=${year}&month=${month}`);
+      return response.data ?? [];
     },
-    enabled: !!selectedActivityId,
+    enabled: !!selectedActivityId && !!year && !!month,
   });
+
+  const hasReservationsOnDate = (selectedDate: Date): boolean =>
+    reservationDashboard?.some((reservation) => new Date(reservation.date).toDateString() === selectedDate.toDateString()) ?? false;
 
   const handleDateSelect = (selectedDate: Date) => {
     setDate(selectedDate);
-    openModal();
+    if (hasReservationsOnDate(selectedDate)) {
+      openModal();
+    }
   };
 
   return reservations?.length === 0 ? (

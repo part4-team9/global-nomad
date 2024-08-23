@@ -83,4 +83,5 @@ export type ReservationCardProps = {
   onRefetch?: () => void;
   refetch: () => Promise<QueryObserverResult<ReservationsResponse, unknown>>;
   reservationId: number;
+  scheduleId: number | null ;
 };
