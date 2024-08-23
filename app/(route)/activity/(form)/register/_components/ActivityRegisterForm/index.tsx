@@ -14,6 +14,7 @@ import SelectBox from '@/_components/SelectBox';
 
 import BannerImage from '../../../_components/BannerImage';
 import FormContainer from '../../../_components/FormContainer';
+import FormField from '../../../_components/FormField';
 import IntroduceImage from '../../../_components/IntroduceImage';
 import PriceButtons from '../../../_components/PriceButtons';
 import ScheduleEditor from '../../../_components/ScheduleEditor';
@@ -55,9 +56,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     setAddressModalState((prev) => !prev);
   };
 
-  /**
-   * 카테고리, 주소 선택 다루는 함수
-   */
   const handleSelectChange = (key: string, value: string) => {
     setFormData((prev) => ({
       ...prev,
@@ -82,8 +80,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
     onSubmit(formData);
   };
 
-  console.log(formData);
-
   useEffect(() => {
     setFormData((prev) => ({
       ...prev,
@@ -93,7 +89,6 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
 
   useEffect(() => {
     const { address, bannerImageUrl, category, description, price, schedules: formSchedules, title: formTitle } = formData;
-    // 버튼 disable 조건
     const isDisabled =
       address === '' || bannerImageUrl === '' || category === '' || description === '' || price === undefined || formSchedules.length === 0 || formTitle === '';
     setButtonDisable(isDisabled || isPending);
@@ -104,24 +99,15 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
       <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
       <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
       <TextEditor value={formData.description} setFormData={setFormData} />
-      <div className="grid gap-3 tablet:gap-4">
-        <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
-          가격
-        </label>
+      <FormField htmlFor="price" label="가격">
         <Input id="price" placeholder="가격" value={priceFormat} onChange={handleChangeInput} className="px-4" />
         <PriceButtons setPriceFormat={setPriceFormat} />
-      </div>
-      <div className="grid gap-3 tablet:gap-4">
-        <label htmlFor="address" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
-          주소
-        </label>
+      </FormField>
+      <FormField htmlFor="address" label="주소">
         <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
         <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
-      </div>
-      <div className="grid gap-4 pc:gap-5">
-        <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] pc:mb-1">
-          예약 가능한 시간대
-        </label>
+      </FormField>
+      <FormField htmlFor="date" label="예약 가능한 시간대">
         <SchedulePicker setFormData={setFormData} />
         {formData.schedules.length > 0 && (
           <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
@@ -130,7 +116,7 @@ function ActivityForm({ title, buttonTitle, onSubmit, isPending }: ActivityFormP
             ))}
           </div>
         )}
-      </div>
+      </FormField>
       <BannerImage value={formData.bannerImageUrl !== '' ? [formData.bannerImageUrl] : undefined} setFormData={setFormData} />
       <IntroduceImage setRegisterFormData={setFormData} />
     </FormContainer>

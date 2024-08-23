@@ -89,7 +89,7 @@ function SchedulePicker<T extends Activity | EditDetail>({ setEditFormData, setF
   }, [scheduleData, timeError]);
 
   return (
-    <div className="grid gap-2 tablet:gap-[10px]">
+    <div className="my-1 grid gap-2 tablet:mt-3 tablet:gap-[10px] pc:mt-2">
       <div className="flex flex-wrap gap-[5px] tablet:grid tablet:grid-cols-[1fr_109px_101px_56px] pc:grid-cols-[1fr_160px_140px_56px] pc:gap-5">
         <span className="min-w-[130px] flex-1 font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">날짜</span>
         <span className="w-[79px] font-medium leading-[1.6] text-gray-700 tablet:text-xl tablet:leading-[1.3]">시작 시간</span>
