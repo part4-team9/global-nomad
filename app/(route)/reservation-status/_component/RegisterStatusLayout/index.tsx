@@ -77,6 +77,11 @@ function RegisterStatusLayout() {
     }
   };
 
+  const handleMonthChange = (newYear: number, newMonth: string) => {
+    setYear(newYear);
+    setMonth(newMonth);
+  };
+
   return reservations?.length === 0 ? (
     <>
       <h1 className="mb-6">예약 현황</h1>
@@ -88,7 +93,7 @@ function RegisterStatusLayout() {
       <div className="mb-[30px]">
         <SelectBox head="체험명" keyName="activity-name" values={selectBoxValue} value={selectBoxValue[0]} onSelect={handleActivityTitleChange} />
       </div>
-      <CalendarNotice onDateSelect={handleDateSelect} data={reservationDashboard} />
+      <CalendarNotice onDateSelect={handleDateSelect} onMonthChange={handleMonthChange} data={reservationDashboard} />
       {date !== undefined && <RegisterStatusModal isOpen={isOpen} onClose={closeModal} date={date} activityId={selectedActivityId} />}
     </>
   );

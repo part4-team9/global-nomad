@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import type { DateReservations } from '@/_types/myActivities';
 
@@ -21,12 +21,18 @@ const MemoizedWeekdays = React.memo(Weekdays);
  * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
-function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[]; onDateSelect?: (date: Date) => void }) {
+function NoticeCalendar({ data, onDateSelect, onMonthChange }: { data?: DateReservations[]; onDateSelect?: (date: Date) => void; onMonthChange: (year: number, month: string) => void; }) {
   const reservations = data;
 
   const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();
 
   const today = getToday();
+
+  useEffect(() => {
+    if (onMonthChange) {
+      onMonthChange(currentDate.year(), ((currentDate.month() ?? 0) + 1).toString().padStart(2, '0'));
+    }
+  }, [currentDate, onMonthChange]);
 
   let currentYear = 0;
   let currentMonth = 0;
@@ -83,4 +89,4 @@ function NoticeCalender({ data, onDateSelect }: { data?: DateReservations[]; onD
   );
 }
 
-export default React.memo(NoticeCalender);
+export default React.memo(NoticeCalendar);
