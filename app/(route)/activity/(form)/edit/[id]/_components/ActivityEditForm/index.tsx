@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import AddressModal from '@/(route)/activity/(form)/_components/AddressModal';
 import BannerImage from '@/(route)/activity/(form)/_components/BannerImage';
+import FormContainer from '@/(route)/activity/(form)/_components/FormContainer';
 import IntroduceImage from '@/(route)/activity/(form)/_components/IntroduceImage';
 import PriceButtons from '@/(route)/activity/(form)/_components/PriceButtons';
 import ScheduleEditor from '@/(route)/activity/(form)/_components/ScheduleEditor';
@@ -130,57 +131,49 @@ function ActivityEditForm({ data, title, buttonTitle, onSubmit, isPending }: Edi
   }, [formData, detailData, isPending]);
 
   return (
-    <form className="grid gap-6" onSubmit={onSubmitForm}>
-      <div className="flex flex-wrap justify-between">
-        <h2 className="text-3xl font-bold leading-[1.3]">{title}</h2>
-        <Button type="submit" variant="black" disabled={buttonDisable} className="h-12 w-[120px]">
-          {buttonTitle}
-        </Button>
+    <FormContainer onSubmit={onSubmitForm} title={title} buttonTitle={buttonTitle} buttonDisable={buttonDisable}>
+      <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
+      <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
+      <TextEditor value={formData.description} setFormData={setFormData} />
+      <div className="grid gap-3 tablet:gap-4">
+        <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
+          가격
+        </label>
+        <Input id="price" placeholder="가격" value={priceFormat} onChange={handleChangeInput} className="px-4" />
+        <PriceButtons setPriceFormat={setPriceFormat} />
       </div>
-      <div className="grid gap-6">
-        <Input id="title" placeholder="제목" value={formData.title} onChange={handleChangeInput} className="px-4" />
-        <SelectBox keyName="category" value={formData.category} values={ACTIVITY_CATEGORY} placeholder="카테고리" onSelect={handleSelectChange} />
-        <TextEditor value={formData.description} setFormData={setFormData} />
-        <div className="grid gap-3 tablet:gap-4">
-          <label htmlFor="price" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
-            가격
-          </label>
-          <Input id="price" placeholder="가격" value={priceFormat} onChange={handleChangeInput} className="px-4" />
-          <PriceButtons setPriceFormat={setPriceFormat} />
-        </div>
-        <div className="grid gap-3 tablet:gap-4">
-          <label htmlFor="address" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
-            주소
-          </label>
-          <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
-          <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
-        </div>
-        <div className="grid gap-4 pc:gap-5">
-          <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] pc:mb-1">
-            예약 가능한 시간대
-          </label>
-          <SchedulePicker setEditFormData={setFormData} setFormData={setDetailData} />
+      <div className="grid gap-3 tablet:gap-4">
+        <label htmlFor="address" className="w-fit text-xl font-bold leading-[1.3] tablet:text-2xl tablet:leading-[1.1]">
+          주소
+        </label>
+        <Input readOnly id="address" placeholder="주소를 입력해주세요" onClick={handleAddressModal} value={formData.address} />
+        <AddressModal isOpen={addressModalState} onClose={handleAddressModal} onComplete={handleSelectChange} />
+      </div>
+      <div className="grid gap-4 pc:gap-5">
+        <label htmlFor="date" className="w-fit text-xl font-bold leading-[1.3] tablet:mb-2 tablet:text-2xl tablet:leading-[1.1] pc:mb-1">
+          예약 가능한 시간대
+        </label>
+        <SchedulePicker setEditFormData={setFormData} setFormData={setDetailData} />
 
-          {detailData.schedules.length > 0 && (
-            <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
-              {detailData.schedules.map((s, index) => (
-                <ScheduleEditor
-                  key={index}
-                  index={index}
-                  schedule={s}
-                  scheduleArray={detailData.schedules}
-                  setEditFormData={setFormData}
-                  detailData={formData.schedulesToAdd}
-                  setFormData={setDetailData}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-        <BannerImage value={formData.bannerImageUrl !== '' ? [formData.bannerImageUrl] : undefined} setFormData={setFormData} />
-        <IntroduceImage edit editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
+        {detailData.schedules.length > 0 && (
+          <div className="grid gap-2 border-t border-solid border-gray-200 pt-4 tablet:gap-4 pc:gap-5 pc:pt-5">
+            {detailData.schedules.map((s, index) => (
+              <ScheduleEditor
+                key={index}
+                index={index}
+                schedule={s}
+                scheduleArray={detailData.schedules}
+                setEditFormData={setFormData}
+                detailData={formData.schedulesToAdd}
+                setFormData={setDetailData}
+              />
+            ))}
+          </div>
+        )}
       </div>
-    </form>
+      <BannerImage value={formData.bannerImageUrl !== '' ? [formData.bannerImageUrl] : undefined} setFormData={setFormData} />
+      <IntroduceImage edit editValue={detailData.subImages} setEditFormData={setFormData} setEditDetailData={setDetailData} />
+    </FormContainer>
   );
 }
 
