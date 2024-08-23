@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AddressModal from '@/(route)/activity/register/_components/AddressModal';
+import AddressModal from '@/(route)/activity/(form)/_components/AddressModal';
 
 import type { Activity } from '@/_types/activities/form.types';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';
@@ -12,12 +12,12 @@ import Button from '@/_components/button';
 import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';
 
-import BannerImage from '../BannerImage';
-import IntroduceImage from '../IntroduceImage';
-import PriceButtons from '../PriceButtons';
-import ScheduleEditor from '../ScheduleEditor';
-import SchedulePicker from '../SchedulePicker';
-import TextEditor from '../TextEditor';
+import BannerImage from '../../../_components/BannerImage';
+import IntroduceImage from '../../../_components/IntroduceImage';
+import PriceButtons from '../../../_components/PriceButtons';
+import ScheduleEditor from '../../../_components/ScheduleEditor';
+import SchedulePicker from '../../../_components/SchedulePicker';
+import TextEditor from '../../../_components/TextEditor';
 
 interface ActivityFormProps {
   buttonTitle: string;

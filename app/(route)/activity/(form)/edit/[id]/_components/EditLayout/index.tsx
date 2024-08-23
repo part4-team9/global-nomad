@@ -3,7 +3,7 @@
 import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { getActivity, patchActivity } from '@/_apis/activities/activityForm';
-import CommonModal from '@/(route)/activity/register/_components/CommonModal';
+import CommonModal from '@/(route)/activity/(form)/_components/CommonModal';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 import type { ActivityEdit, ErrorResponseMessage } from '@/_types/activities/form.types';

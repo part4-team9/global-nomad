@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import AddressModal from '@/(route)/activity/register/_components/AddressModal';
-import BannerImage from '@/(route)/activity/register/_components/BannerImage';
-import IntroduceImage from '@/(route)/activity/register/_components/IntroduceImage';
-import PriceButtons from '@/(route)/activity/register/_components/PriceButtons';
-import ScheduleEditor from '@/(route)/activity/register/_components/ScheduleEditor';
-import SchedulePicker from '@/(route)/activity/register/_components/SchedulePicker';
-import TextEditor from '@/(route)/activity/register/_components/TextEditor';
+import AddressModal from '@/(route)/activity/(form)/_components/AddressModal';
+import BannerImage from '@/(route)/activity/(form)/_components/BannerImage';
+import IntroduceImage from '@/(route)/activity/(form)/_components/IntroduceImage';
+import PriceButtons from '@/(route)/activity/(form)/_components/PriceButtons';
+import ScheduleEditor from '@/(route)/activity/(form)/_components/ScheduleEditor';
+import SchedulePicker from '@/(route)/activity/(form)/_components/SchedulePicker';
+import TextEditor from '@/(route)/activity/(form)/_components/TextEditor';
 
 import type { ActivityDetail, ActivityEdit, EditDetail } from '@/_types/activities/form.types';
 import ACTIVITY_CATEGORY from '@/_constants/activity-category';

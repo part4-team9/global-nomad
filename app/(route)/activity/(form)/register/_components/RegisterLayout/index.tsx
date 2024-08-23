@@ -9,8 +9,8 @@ import type { Activity, ErrorResponseMessage } from '@/_types/activities/form.ty
 
 import useModalState from '@/_hooks/useModalState';
 
+import CommonModal from '../../../_components/CommonModal';
 import ActivityForm from '../ActivityRegisterForm';
-import CommonModal from '../CommonModal';
 
 /**
  * 체험 등록 페이지 렌더링 및 modal 상태관리, data post하는 컴포넌트입니다.
