@@ -8,7 +8,7 @@ import type { SubImage } from '@/_types/activities/form.types';
 
 import ImagePreview from '../ImagePreview';
 
-import PlusIcon from 'public/assets/icons/plus.svg';
+import ImagePlus from 'public/assets/icons/image-upload.svg';
 
 import Loading from 'public/assets/lottie/loading.json';
 
@@ -38,8 +38,8 @@ export default forwardRef(function FileInput(
     <div className="grid">
       <div className="grid grid-cols-2 gap-2 tablet:gap-4 pc:grid-cols-4 pc:gap-6">
         <div className="relative flex aspect-square flex-col items-center justify-center gap-[30px] rounded-xl border border-dashed border-gray-700 p-2">
-          <Image src={PlusIcon} alt="등록" />
-          <span className="text-center text-xl leading-[1.1] text-gray-700">이미지 등록</span>
+          <Image src={ImagePlus} alt="등록" />
+          <span className="break-keep text-center text-lg leading-[1.1] text-gray-700">이미지를 드래그하거나 클릭해서 업로드하세요</span>
           <input type="file" ref={ref} {...rest} className="absolute left-0 top-0 size-full cursor-pointer opacity-0" />
         </div>
 
