@@ -80,6 +80,7 @@ export type ReservationCardProps = {
   activityId?: number;
   headCount: number;
   nickname: string;
+  onRefetch?: () => void;
   refetch: () => Promise<QueryObserverResult<ReservationsResponse, unknown>>;
   reservationId: number;
 };

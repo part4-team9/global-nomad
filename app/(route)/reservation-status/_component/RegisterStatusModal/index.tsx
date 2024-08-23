@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Schedule } from '@/_types';
@@ -22,6 +22,9 @@ type RegisterStatusModalProps = {
 function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStatusModalProps) {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [selectedScheduleId, setSelectedScheduleId] = useState<number | null>(null);
+  const [modalPending, setModalPending] = useState<number>(0);
+  const [modalConfirmed, setModalConfirmed] = useState<number>(0);
+  const [modalDeclined, setModalDeclined] = useState<number>(0);
 
   useEffect(() => {
     if (isOpen) {
@@ -39,7 +42,7 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   nextDay.setDate(nextDay.getDate() + 1);
   const nextApiDate = nextDay.toISOString().split('T')[0];
 
-  const { data: reservedSchedule } = useQuery<Schedule[]>({
+  const { data: reservedSchedule, refetch } = useQuery<Schedule[]>({
     queryKey: ['scheduleId', activityId, formattedDate],
     queryFn: async () => {
       const response = await axiosInstance.get<Schedule[]>(`/my-Activities/${activityId}/reserved-schedule?date=${nextApiDate}`);
@@ -48,10 +51,16 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
     enabled: !!activityId,
   });
 
-  const modalPending = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.pending || 0;
-  const modalConfirmed = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.confirmed || 0;
-  const modalDeclined = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId)?.count.declined || 0;
+  const updateModalCounts = useCallback(() => {
+    const selectedSchedule = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId);
+    setModalPending(selectedSchedule?.count.pending || 0);
+    setModalConfirmed(selectedSchedule?.count.confirmed || 0);
+    setModalDeclined(selectedSchedule?.count.declined || 0);
+  }, [reservedSchedule, selectedScheduleId]);
 
+  useEffect(() => {
+    updateModalCounts();
+  }, [updateModalCounts, reservedSchedule, selectedScheduleId]);
   const values = useMemo(
     () =>
       reservedSchedule?.map((schedule) => ({
@@ -67,8 +76,14 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
     }
   }, [values, selectedScheduleId]);
 
+  const handleRefetch = useCallback(() => {
+    void refetch().then(() => {
+      updateModalCounts();
+    });
+  }, [refetch, updateModalCounts]);
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='full'>
+    <Modal isOpen={isOpen} onClose={onClose} size="full">
       <div className="h-dvh w-dvw overflow-hidden p-6 mobile:max-h-[750px] mobile:max-w-[430px]">
         <header className="flex justify-between">
           <h2>예약 정보</h2>
@@ -101,7 +116,7 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
             }
           }}
         />
-        <CardSection activityId={activityId} selectedScheduleId={selectedScheduleId} activeIndex={activeIndex} />
+        <CardSection activityId={activityId} selectedScheduleId={selectedScheduleId} activeIndex={activeIndex} onRefetch={handleRefetch} />
       </div>
     </Modal>
   );
