@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 
+import AuthSession from './_components/AuthSession';
 import Footer from './_components/Footer';
 import Header from './_components/header';
 import Providers from './providers';
@@ -12,11 +13,13 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Header />
-        <Providers>
-          <main className="mt-[70px]">{children}</main>
-        </Providers>
-        <Footer />
+        <AuthSession>
+          <Header />
+          <Providers>
+            <main className="mt-[70px]">{children}</main>
+          </Providers>
+          <Footer />
+        </AuthSession>
       </body>
     </html>
   );
