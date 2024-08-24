@@ -19,7 +19,7 @@ import ActivityForm from '../ActivityRegisterForm';
  */
 function RegisterLayout() {
   const router = useRouter();
-  const { modalState, setModalState, closeModal } = useModalState();
+  const { modalState, setModalState, activeCloseModal } = useModalState();
   const { isLogin } = useAuthStatus();
 
   const activityMutation = useMutation({
@@ -77,7 +77,7 @@ function RegisterLayout() {
 
   return (
     <>
-      <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
+      <CommonModal isOpen={modalState.isOpen} activeCloseModal={activeCloseModal}>
         {modalState.message}
       </CommonModal>
       <ActivityForm title="내 체험 등록" buttonTitle="등록하기" onSubmit={onSubmitForm} isPending={isPending} />

@@ -24,7 +24,7 @@ export interface BannerImageProps<T> {
  */
 function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: BannerImageProps<T>) {
   const router = useRouter();
-  const { modalState, setModalState, closeModal } = useModalState();
+  const { modalState, setModalState, activeCloseModal } = useModalState();
 
   const IMAGE_FIELD_NAME = 'image';
 
@@ -66,7 +66,7 @@ function BannerImage<T extends Activity | ActivityEdit>({ value, setFormData }: 
 
   return (
     <>
-      <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
+      <CommonModal isOpen={modalState.isOpen} activeCloseModal={activeCloseModal}>
         {modalState.message}
       </CommonModal>
       <div className="grid gap-6">

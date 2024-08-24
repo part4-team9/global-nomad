@@ -15,7 +15,8 @@ import { useState } from 'react';
  *
  * @returns {Function} setModalState - 모달 상태를 직접 설정할 수 있는 함수입니다.
  * @returns {Function} openModal - 모달을 열고 `isOpen` 상태를 true로 변경하는 함수입니다.
- * @returns {Function} closeModal - 모달을 닫고 `isOpen` 상태를 false로 변경하며, `onClose` 콜백 함수를 실행하는 함수입니다.
+ * @returns {Function} activeCloseModal - 모달을 닫고 `isOpen` 상태를 false로 변경하는 함수입니다.
+ * @returns {Function} activeCloseModal - 모달을 닫고 `isOpen` 상태를 false로 변경하며, `onClose` 콜백 함수를 실행하는 함수입니다.
  */
 
 const useModalState = () => {
@@ -37,10 +38,17 @@ const useModalState = () => {
       ...prev,
       isOpen: false,
     }));
+  };
+
+  const activeCloseModal = () => {
+    setModalState((prev) => ({
+      ...prev,
+      isOpen: false,
+    }));
     modalState.onClose();
   };
 
-  return { modalState, setModalState, openModal, closeModal };
+  return { modalState, setModalState, openModal, closeModal, activeCloseModal };
 };
 
 export default useModalState;

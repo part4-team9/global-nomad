@@ -36,7 +36,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
   const [pendingImageUrls, setPendingImageUrls] = useState<string[]>([]);
   const [editImages, setEditImages] = useState<SubImage[]>(editValue || []);
   const [imageCount, setImageCount] = useState(0);
-  const { modalState, setModalState, closeModal } = useModalState();
+  const { modalState, setModalState, activeCloseModal } = useModalState();
 
   const clearSubImage = (image: string, id?: number) => {
     if (edit) {
@@ -174,7 +174,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         multiple
       />
       <span className="break-keep pl-2 text-2lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
-      <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
+      <CommonModal isOpen={modalState.isOpen} activeCloseModal={activeCloseModal}>
         {modalState.message}
       </CommonModal>
     </div>

@@ -26,7 +26,7 @@ interface EditLayoutProps {
 function EditLayout({ id }: EditLayoutProps) {
   const router = useRouter();
   const { data } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });
-  const { closeModal, modalState, setModalState } = useModalState();
+  const { modalState, setModalState, activeCloseModal } = useModalState();
   const { isLogin, userId } = useAuthStatus();
   const isMyPost = isLogin && userId === data?.userId;
 
@@ -86,7 +86,7 @@ function EditLayout({ id }: EditLayoutProps) {
 
   return (
     <>
-      <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
+      <CommonModal isOpen={modalState.isOpen} activeCloseModal={activeCloseModal}>
         {modalState.message}
       </CommonModal>
       {data && <ActivityEditForm data={data} onSubmit={onSubmitForm} isPending={isPending} title="내 체험 수정" buttonTitle="수정하기" />}
