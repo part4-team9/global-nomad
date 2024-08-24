@@ -1,7 +1,7 @@
 import { AxiosError, type AxiosResponse } from 'axios';
-import type { UserFormData } from '@/(route)/my/account/_components/AccountForm';
 
 import type { GetUserType } from '@/_types/user';
+import type { UserFormData } from '@/_types/user.account';
 
 import axiosInstance from '@/_libs/axios';
 

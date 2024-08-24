@@ -11,16 +11,14 @@ import { useRouter } from 'next/navigation';
 import { getUser, postLogin } from '@/_apis/user/userAccount';
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import type { ErrorResponse } from '@/_types/user.account';
+
 import { setCookie } from '@/_utils/cookie';
 
 import Button from '@/_components/button';
 import Input from '@/_components/Input';
 
 import DefaultProfile from 'public/assets/icons/default-profile.svg';
-
-interface ErrorResponse {
-  message: string;
-}
 
 interface Inputs {
   email: string;

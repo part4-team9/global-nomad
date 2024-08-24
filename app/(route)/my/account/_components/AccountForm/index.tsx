@@ -8,6 +8,7 @@ import { patchUser } from '@/_apis/user/userAccount';
 import { useMutation } from '@tanstack/react-query';
 
 import type { GetUserType } from '@/_types/user';
+import type { ErrorResponse, UserFormData } from '@/_types/user.account';
 
 import useModalState from '@/_hooks/useModalState';
 
@@ -15,16 +16,6 @@ import Button from '@/_components/button';
 import Input from '@/_components/Input';
 
 import CommonModal from '../CommonModal';
-
-export interface UserFormData {
-  newPassword: string;
-  nickname: string;
-  profileImageUrl?: string;
-}
-
-interface ErrorResponse {
-  message: string;
-}
 
 /**
  * AccountForm
