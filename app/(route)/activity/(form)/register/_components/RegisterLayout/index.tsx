@@ -80,7 +80,7 @@ function RegisterLayout() {
       <CommonModal isOpen={modalState.isOpen} onClose={closeModal}>
         {modalState.message}
       </CommonModal>
-      {isLogin && <ActivityForm title="내 체험 등록" buttonTitle="등록하기" onSubmit={onSubmitForm} isPending={isPending} />}
+      <ActivityForm title="내 체험 등록" buttonTitle="등록하기" onSubmit={onSubmitForm} isPending={isPending} />
     </>
   );
 }
