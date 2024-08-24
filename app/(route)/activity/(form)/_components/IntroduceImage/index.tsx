@@ -92,28 +92,39 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
   const activityMutation = usePostImage({ router, setModalState, callback: getResponse });
 
+  const handleSubUpload = (fileList: FileList) => {
+    setImageCount(fileList.length);
+    const imageLength = fileList.length + subImages.length + editImages.length;
+
+    if (imageLength > 4) {
+      setModalState((prev) => ({
+        ...prev,
+        isOpen: true,
+        message: '이미지는 최대 4개 첨부 가능합니다.',
+      }));
+    } else {
+      const filesArray = Array.from(fileList);
+
+      filesArray.forEach((file, idx) => {
+        if (fileList) {
+          const json = new FormData();
+          json.set('image', fileList[idx]);
+          activityMutation.mutate(json);
+        }
+      });
+    }
+  };
+
   const handleSubImages = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setImageCount(e.target.files.length);
-      const imageLength = e.target.files.length + subImages.length + editImages.length;
+      handleSubUpload(e.target.files);
+    }
+  };
 
-      if (imageLength > 4) {
-        setModalState((prev) => ({
-          ...prev,
-          isOpen: true,
-          message: '이미지는 최대 4개 첨부 가능합니다.',
-        }));
-      } else {
-        const filesArray = Array.from(e.target.files);
-
-        filesArray.forEach((file, idx) => {
-          if (e.target.files) {
-            const json = new FormData();
-            json.set('image', e.target.files[idx]);
-            activityMutation.mutate(json);
-          }
-        });
-      }
+  const handleDropImage: React.DragEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      handleSubUpload(e.dataTransfer.files);
     }
   };
 
@@ -159,6 +170,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
         editImages={editImages}
         onClear={clearSubImage}
         onChange={handleSubImages}
+        onDrop={handleDropImage}
         multiple
       />
       <span className="break-keep pl-2 text-2lg leading-[1.4] text-gray-700">*이미지는 최대 4개까지 등록 가능합니다.</span>
