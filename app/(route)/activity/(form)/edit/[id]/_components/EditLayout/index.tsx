@@ -73,7 +73,7 @@ function EditLayout({ id }: EditLayoutProps) {
   };
 
   useEffect(() => {
-    if (!isMyPost) {
+    if (isMyPost === false) {
       setModalState({
         isOpen: true,
         message: '로그인이 필요합니다. 작성자만 글을 수정할 수 있습니다.',

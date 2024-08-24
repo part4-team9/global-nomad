@@ -14,7 +14,7 @@ import type { Response } from '@/_apis/type';
  * @returns {number | null} userId - 사용자의 ID를 나타내는 값입니다. 로그인되어 있지 않으면 null을 반환합니다.
  */
 function useAuthStatus() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState<boolean | null>(null);
   const [userId, setUserId] = useState<number | null>(null);
 
   useEffect(() => {

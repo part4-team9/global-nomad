@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { postActivity } from '@/_apis/activities/activityForm';
@@ -64,7 +64,7 @@ function RegisterLayout() {
   };
 
   useEffect(() => {
-    if (!isLogin) {
+    if (isLogin === false) {
       setModalState({
         isOpen: true,
         message: '로그인이 필요한 서비스입니다.',
