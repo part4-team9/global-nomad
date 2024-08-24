@@ -89,8 +89,7 @@ export const postImage = async (body: FormData): Promise<PostImageResponse> => {
     return response.data;
   } catch (error) {
     if (axios.isAxiosError(error)) {
-      const { status } = (error.response as AxiosResponse) ?? { status: 500 };
-      throw status;
+      throw error;
     } else {
       throw error;
     }
