@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { getActivity, patchActivity } from '@/_apis/activities/activityForm';
@@ -8,6 +9,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 
 import type { ActivityEdit, ErrorResponseMessage } from '@/_types/activities/form.types';
 
+import useAuthStatus from '@/_hooks/useAuthStatus';
 import useModalState from '@/_hooks/useModalState';
 
 import ActivityEditForm from '../ActivityEditForm';
@@ -25,6 +27,8 @@ function EditLayout({ id }: EditLayoutProps) {
   const router = useRouter();
   const { data } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });
   const { closeModal, modalState, setModalState } = useModalState();
+  const { isLogin, userId } = useAuthStatus();
+  const isMyPost = isLogin && userId === data?.userId;
 
   const activityMutation = useMutation({
     mutationFn: patchActivity,
@@ -67,6 +71,18 @@ function EditLayout({ id }: EditLayoutProps) {
   const onSubmitForm = (formData: ActivityEdit) => {
     activityMutation.mutate({ id, body: formData });
   };
+
+  useEffect(() => {
+    if (!isMyPost) {
+      setModalState({
+        isOpen: true,
+        message: '로그인이 필요합니다. 작성자만 글을 수정할 수 있습니다.',
+        onClose: () => {
+          router.push('/login');
+        },
+      });
+    }
+  }, [isMyPost, router, setModalState]);
 
   return (
     <>
