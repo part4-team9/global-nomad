@@ -30,7 +30,7 @@ const profileActionButtons: ProfileBtnListProps[] = [
   {
     icon: <IconReservationStatus />,
     title: '예약 현황',
-    href: '#',
+    href: 'my/reservation-status',
   },
 ];
 
