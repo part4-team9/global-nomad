@@ -98,6 +98,7 @@ function AccountForm({ data }: { data: GetUserType }) {
   const onSubmit = (formData: UserFormData) => {
     setModalState((prev) => ({
       ...prev,
+      mode: 'confirm',
       isOpen: true,
       message: '변경된 내용을 저장하시겠습니까?',
       onClose: () => accountMutation.mutate(formData),
@@ -140,7 +141,14 @@ function AccountForm({ data }: { data: GetUserType }) {
           <PasswordConfirmField value={passwordConfirm} error={passwordError} onChange={handleChangePassword} />
         </div>
       </form>
-      <CommonModal message={modalState.message} isOpen={modalState.isOpen} closeModal={closeModal} activeCloseModal={activeCloseModal} isPending={isPending} />
+      <CommonModal
+        mode={modalState.mode}
+        message={modalState.message}
+        isOpen={modalState.isOpen}
+        closeModal={closeModal}
+        activeCloseModal={activeCloseModal}
+        isPending={isPending}
+      />
     </>
   );
 }

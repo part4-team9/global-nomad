@@ -2,6 +2,13 @@
 
 import { useState } from 'react';
 
+export interface ModalStateProps {
+  isOpen: boolean;
+  message: string;
+  mode: 'alert' | 'confirm';
+  onClose: () => void;
+}
+
 /**
  * useModalState
  *
@@ -20,7 +27,8 @@ import { useState } from 'react';
  */
 
 const useModalState = () => {
-  const [modalState, setModalState] = useState({
+  const [modalState, setModalState] = useState<ModalStateProps>({
+    mode: 'alert',
     isOpen: false,
     message: '',
     onClose: () => {},
@@ -36,6 +44,7 @@ const useModalState = () => {
   const closeModal = () => {
     setModalState((prev) => ({
       ...prev,
+      mode: 'alert',
       isOpen: false,
     }));
   };
@@ -43,6 +52,7 @@ const useModalState = () => {
   const activeCloseModal = () => {
     setModalState((prev) => ({
       ...prev,
+      mode: 'alert',
       isOpen: false,
     }));
     modalState.onClose();
