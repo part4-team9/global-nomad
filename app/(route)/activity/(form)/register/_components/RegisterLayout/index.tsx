@@ -26,26 +26,28 @@ function RegisterLayout() {
     mutationFn: postActivity,
     onSuccess: (res) => {
       const { id } = res.data;
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '체험 등록이 완료되었습니다',
         onClose: () => {
           router.push(`/activity/detail/${id}`);
         },
-      });
+      }));
     },
     onError: (error: AxiosError<ErrorResponseMessage>) => {
       if (error.response) {
         const { status } = error.response;
         const message = status === 500 ? '죄송합니다. 체험 등록에 실패했습니다.' : error.response.data.message;
         if (status === 401) {
-          setModalState({
+          setModalState((prev) => ({
+            ...prev,
             isOpen: true,
             message: '로그인이 필요한 서비스입니다.',
             onClose: () => {
               router.push('/login');
             },
-          });
+          }));
         } else {
           setModalState((prev) => ({
             ...prev,
@@ -65,13 +67,14 @@ function RegisterLayout() {
 
   useEffect(() => {
     if (isLogin === false) {
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '로그인이 필요한 서비스입니다.',
         onClose: () => {
           router.push('/login');
         },
-      });
+      }));
     }
   }, [isLogin, router, setModalState]);
 

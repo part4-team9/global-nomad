@@ -34,13 +34,14 @@ function EditLayout({ id }: EditLayoutProps) {
     mutationFn: patchActivity,
     onSuccess: (res) => {
       const { id: postId } = res.data;
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '수정이 완료되었습니다',
         onClose: () => {
           router.push(`/activity/detail/${postId}`);
         },
-      });
+      }));
     },
     onError: (error: AxiosError<ErrorResponseMessage>) => {
       if (error.response) {
@@ -48,13 +49,14 @@ function EditLayout({ id }: EditLayoutProps) {
         const message = status === 500 ? '죄송합니다. 체험 수정에 실패했습니다.' : error.response.data.message;
 
         if (status === 401) {
-          setModalState({
+          setModalState((prev) => ({
+            ...prev,
             isOpen: true,
             message: '로그인이 필요한 서비스입니다.',
             onClose: () => {
               router.push('/login');
             },
-          });
+          }));
         } else {
           setModalState((prev) => ({
             ...prev,
@@ -74,13 +76,14 @@ function EditLayout({ id }: EditLayoutProps) {
 
   useEffect(() => {
     if (isMyPost === false) {
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '로그인이 필요합니다. 작성자만 글을 수정할 수 있습니다.',
         onClose: () => {
           router.push('/login');
         },
-      });
+      }));
     }
   }, [isMyPost, router, setModalState]);
 
