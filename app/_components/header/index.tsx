@@ -3,7 +3,6 @@
 import { useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import type { Response } from '@/api/type';
 import useUserStore from '@/store/useUserStore';
 
@@ -14,22 +13,14 @@ import logoWithTitle from 'public/assets/icons/logo-with-title.svg';
 
 export default function Header() {
   const { isLoggedIn, setLoginStatus } = useUserStore((state) => state);
-  const { data: session } = useSession();
 
   useEffect(() => {
-    if (session) {
-      setLoginStatus(true, session.user as Response);
-      sessionStorage.setItem('user', JSON.stringify(session.user));
-      sessionStorage.setItem('isLoggedIn', 'true');
-    } else {
-      const storedUser = sessionStorage.getItem('user');
-      const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
-
-      if (storedUser && storedIsLoggedIn === 'true') {
-        setLoginStatus(true, JSON.parse(storedUser) as Response);
-      }
+    const storedUser = sessionStorage.getItem('user');
+    const storedIsLoggedIn = sessionStorage.getItem('isLoggedIn');
+    if (storedUser && storedIsLoggedIn) {
+      setLoginStatus(true, JSON.parse(storedUser) as Response);
     }
-  }, [setLoginStatus, session]);
+  }, [setLoginStatus]);
 
   return (
     <header className="fixed inset-x-0 top-0 z-30 w-full bg-white shadow-sm">

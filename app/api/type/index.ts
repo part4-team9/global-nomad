@@ -15,8 +15,6 @@ export interface LoginFormValues {
 // api 요청시 돌아오는 response 타입
 export interface Response {
   accessToken: string;
-  image?: string;
-  name?: string;
   refreshToken: string;
   user: {
     createdAt: string;

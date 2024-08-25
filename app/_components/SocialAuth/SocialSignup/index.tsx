@@ -1,20 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { signIn, useSession } from 'next-auth/react';
 
 import google from 'public/assets/icons/logo-google.svg';
 import kakao from 'public/assets/icons/logo-kakao.svg';
 
 export default function SocialSignup() {
-  const router = useRouter();
-  const { data: session } = useSession();
-
-  if (session) {
-    router.push('/main');
-  }
-
   return (
     <div className="flex w-full flex-col items-center gap-6 px-3 mobile:gap-10">
       <div className="flex w-full items-center justify-between">
@@ -23,10 +14,10 @@ export default function SocialSignup() {
         <div className="h-px w-20 bg-gray-200 mobile:w-[180px]" />
       </div>
       <div className="flex gap-4">
-        <button type="button" onClick={() => signIn('google')} className="focus:outline-none">
+        <button type="button" className="focus:outline-none">
           <Image src={google} alt="구글 로그인" width={72} height={72} className="size-12 mobile:size-16 tablet:size-[78px]" />
         </button>
-        <button type="button" onClick={() => signIn('kakao')} className="focus:outline-none">
+        <button type="button" className="focus:outline-none">
           <Image src={kakao} alt="카카오 로그인" width={72} height={72} className="size-12 mobile:size-16 tablet:size-[78px]" />
         </button>
       </div>
