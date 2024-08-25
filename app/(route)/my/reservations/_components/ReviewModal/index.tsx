@@ -10,6 +10,7 @@ import Button from '../../../../../_components/button';
 import Modal from '../../../../../_components/modal';
 import Textarea from '../../../../../_components/Textarea';
 import ReviewCardFrame from '../ReviewCardFrame';
+import ReviewConfirmModal from '../ReviewConfirmModal';
 
 import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
@@ -57,6 +58,7 @@ export default function ReviewModal({
   const [reviewText, setReviewText] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [confirmModal, setConfirmModal] = useState(false);
   const { mutate, isPending, isSuccess } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
@@ -69,23 +71,28 @@ export default function ReviewModal({
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setConfirmModal(true);
+    // if (rating && reviewText) {
+    //   mutate({
+    //     reservationId,
+    //     rating,
+    //     content: reviewText,
+    //   });
+    //   setErrMessage(null);
+    // } else {
+    //   setErrMessage('별점과 후기를 모두 작성해 주세요.');
+    // }
+  };
 
-    if (rating && reviewText) {
-      mutate({
-        reservationId,
-        rating,
-        content: reviewText,
-      });
-      setErrMessage(null);
-    } else {
-      setErrMessage('별점과 후기를 모두 작성해 주세요.');
-    }
+  const handleCloseConfirmModal = () => {
+    setConfirmModal(false);
   };
 
   const handleCloseModal = useCallback(() => {
     setRating(0);
     setReviewText('');
     closeModal();
+    setConfirmModal(false);
   }, [closeModal]);
 
   useEffect(() => {
@@ -135,6 +142,7 @@ export default function ReviewModal({
           </div>
         </div>
       </div>
+      <ReviewConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} />
     </Modal>
   );
 }
