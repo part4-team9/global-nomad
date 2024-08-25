@@ -115,7 +115,7 @@ export default function CalendarGrid({
 
           <div className="mt-4 grid grid-cols-7 gap-[1px]">
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
-              <div key={day} className="text-m text-center font-bold text-gray-700">
+              <div key={day} className="text-center text-md font-bold text-gray-700">
                 {day}
               </div>
             ))}

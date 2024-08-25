@@ -20,7 +20,7 @@ interface ExperienceInfoProps {
 export default function ExperienceInfo({ experience, averageRating, totalReviews, currentUserId, handleEdit, handleDelete }: ExperienceInfoProps) {
   return (
     <div className="px-[16px] mobile:px-0">
-      <div className="text-m mb-[10px] text-nomad-black">{experience.category}</div>
+      <div className="mb-[10px] text-md text-nomad-black">{experience.category}</div>
       <div className="mb-[10px] flex items-center justify-between">
         <h1 className="text-2xl font-bold mobile:text-[3xl]">{experience.title}</h1>
         <div className="relative">

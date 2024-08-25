@@ -7,7 +7,7 @@ function LogIn() {
     <>
       <LogInForm />
       <nav className="mt-[23px]">
-        <span className="text-instruction text-base font-normal leading-5">회원이 아니신가요?  </span>
+        <span className="text-instruction text-base font-normal leading-5">회원이 아니신가요? </span>
         <Link href="/signup" className="cursor-pointer text-green-200 underline">
           회원가입하기
         </Link>

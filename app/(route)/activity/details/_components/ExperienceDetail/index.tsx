@@ -1,19 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
+'use client';
+
 import { AxiosError } from 'axios';
 import Image from 'next/image';
-import { fetchCoordinates } from '@/_libs/fetchCoordinates';
 import { useRouter } from 'next/navigation';
-
-import Calendar from '../Calendar';
-import NaverMap from '../NaverMap';
+import { useEffect, useState } from 'react';
 
 import Location from 'public/assets/icons/Location.svg';
 
+import { fetchCoordinates } from '@/_libs/fetchCoordinates';
 import axiosInstance from '@/_libs/axios';
+import { useModal } from '@/_hooks/useModal';
 
-import ImageSlider from './ImageSlider';
+import Calendar from '../Calendar';
 import ExperienceInfo from './ExperienceInfo';
+import ImageSlider from './ImageSlider';
+import Modal from '@/_components/modal';
+import NaverMap from '../NaverMap';
 import Reviews from './Reviews';
 
 interface Review {
@@ -63,23 +65,30 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
   const allImages = [experience.bannerImageUrl, ...experience.subImages.map((img) => img.imageUrl)];
   const router = useRouter();
 
+  const { isOpen, openModal, closeModal } = useModal();
+  const [modalMessage, setModalMessage] = useState('');
+
   const handleEdit = () => {
     router.push(`/activity/edit/${experience.id}`);
   };
 
-  const handleDelete = async () => {
-    const confirmed = confirm('정말로 삭제하시겠습니까?');
-    if (!confirmed) return;
+  const handleDeleteConfirmation = () => {
+    setModalMessage('정말로 삭제하시겠습니까?');
+    openModal();
+  };
 
+  const handleDelete = async () => {
     try {
       await axiosInstance.delete(`/my-activities/${experience.id}`);
-      alert('체험이 성공적으로 삭제되었습니다.');
+      closeModal();
       router.push('/main');
-    } catch (error: any) {
-      if (error.response && error.response.status === 400) {
-        alert(error.response.data.message || '삭제할 수 없습니다.');
+    } catch (error: unknown) {
+      if (error instanceof AxiosError && error.response) {
+        setModalMessage(error.response.data.message || '삭제할 수 없습니다.');
+        openModal();
       } else {
-        alert('삭제 중 오류가 발생했습니다.');
+        setModalMessage('삭제 중 오류가 발생했습니다.');
+        openModal();
       }
     }
   };
@@ -129,7 +138,21 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
   };
 
   return (
-    <div className="mx-[auto] max-w-[1248px] pt-[24px] tablet:pt-[78px]">
+    <div className="mx-auto max-w-[1248px] pt-[24px] tablet:pt-[78px]">
+      <Modal isOpen={isOpen} onClose={closeModal}>
+        <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-[18px] md:w-[540px] md:px-[33px]">
+          <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
+          <span className="flex justify-center gap-4">
+            <button type="button" className="h-[42px] w-[138px] rounded-[8px] bg-gray-500 text-white" onClick={closeModal}>
+              취소
+            </button>
+            <button type="button" className="h-[42px] w-[138px] rounded-[8px] bg-red-500 text-white" onClick={handleDelete}>
+              삭제
+            </button>
+          </span>
+        </div>
+      </Modal>
+
       <div className="flex-grow">
         <div>
           <div className="px-0 mobile:px-[24px]">
@@ -142,7 +165,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
               totalReviews={totalReviews}
               currentUserId={currentUserId}
               handleEdit={handleEdit}
-              handleDelete={handleDelete}
+              handleDelete={handleDeleteConfirmation}
             />
             <ImageSlider
               allImages={allImages}
@@ -176,7 +199,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
           </div>
 
           <div className="relative">
-            <div className="fixed bottom-20 left-0 right-0 z-[999] block flex justify-center mobile:hidden">
+            <div className="fixed inset-x-0 bottom-20 z-[999] block flex justify-center mobile:hidden">
               <div className="w-full rounded-lg bg-white shadow-md">
                 <Calendar activityId={experience.id} />
               </div>

@@ -100,7 +100,7 @@ export default function TabletCalendar({
               <Image src={CalArrow} alt="닫기" width={24} height={24} className="cursor-pointer" onClick={() => setIsCalendarOpen(false)} />
             </div>
 
-            <div className="b-[1px] mx-[30px] rounded-[8px] border border-gray-200 px-[27px]">
+            <div className="mx-[30px] rounded-[8px] border border-gray-200 px-[27px]">
               <div className="p-[5px]">
                 <div className="mb-2 flex justify-between py-[5px]">
                   <Image
@@ -126,7 +126,7 @@ export default function TabletCalendar({
 
                 <div className="grid grid-cols-7 gap-[1px]">
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
-                    <div key={day} className="text-m text-center font-bold text-gray-700">
+                    <div key={day} className="text-center text-md font-bold text-gray-700">
                       {day}
                     </div>
                   ))}

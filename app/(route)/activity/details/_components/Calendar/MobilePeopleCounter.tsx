@@ -22,7 +22,7 @@ export default function MobilePeopleCounter({ peopleCount, setPeopleCount }: Peo
           onClick={() => handlePeopleCountChange(-1)}
           className="cursor-pointer"
         />
-        <div className="font-400 text-m text-gray-700">{peopleCount}</div>
+        <div className="text-md text-gray-700">{peopleCount}</div>
         <Image
           src="/assets/icons/plus-button.svg"
           alt="플러스 버튼"

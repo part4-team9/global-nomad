@@ -61,7 +61,7 @@ export default function MobileCalendar({
     for (let i = firstDayOfMonth - 1; i >= 0; i -= 1) {
       const day = prevMonthDays - i;
       days.push(
-        <div key={`prev-${day}`} className="py-[6px] text-center text-[13px] text-gray-300">
+        <div key={`prev-${day}`} className="py-[10px] text-center text-sm text-gray-500">
           {day}
         </div>,
       );
@@ -73,7 +73,7 @@ export default function MobileCalendar({
       days.push(
         <div
           key={day}
-          className={`cursor-pointer rounded-[8px] py-[6px] text-center ${hasSchedule ? '' : 'text-gray-700'} ${
+          className={`cursor-pointer rounded-[8px] py-[10px] text-center ${hasSchedule ? '' : 'text-gray-700'} ${
             selectedDate === date ? 'bg-green-200 text-white' : hasSchedule ? 'bg-green-100 text-green-200' : 'text-gray-700'
           } text-[13px] font-[600]`}
           onClick={() => hasSchedule && handleDateSelection(date)}
@@ -86,7 +86,7 @@ export default function MobileCalendar({
     let nextMonthDay = 1;
     while (days.length < 35) {
       days.push(
-        <div key={`next-${nextMonthDay}`} className="py-[6px] text-center text-[13px] text-gray-300">
+        <div key={`next-${nextMonthDay}`} className="py-[6px] text-center text-[13px] text-gray-500">
           {nextMonthDay}
         </div>,
       );
@@ -125,7 +125,7 @@ export default function MobileCalendar({
                 <div className="text-[28px] font-bold">날짜</div>
                 <Image src={CalArrow} alt="닫기" width={40} height={40} onClick={() => setIsCalendarOpen(false)} />
               </div>
-              <div className="b-[1px] border-gary-100 rounded-[8px] border px-[27px] py-[5px]">
+              <div className="rounded-[8px] border border-gray-100 px-[27px] py-[5px]">
                 <div className="mb-2 flex justify-between py-[5px]">
                   <Image
                     src={CalPrev}
@@ -150,7 +150,7 @@ export default function MobileCalendar({
 
                 <div className="grid grid-cols-7 gap-[1px]">
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
-                    <div key={day} className="text-m text-center font-bold text-gray-700">
+                    <div key={day} className="text-center text-md font-bold text-gray-700">
                       {day}
                     </div>
                   ))}
