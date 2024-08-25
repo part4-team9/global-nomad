@@ -34,12 +34,12 @@ function PhotoSlide() {
     <section className="bg-gray-50 py-16">
       <div className="flex items-center justify-center">
         <div className="group flex w-fit overflow-hidden">
-          <div className="flex animate-infinite-slide-original gap-7 pr-7">
+          <div className="animate-infinite-slide-original flex gap-7 pr-7">
             {PHOTO_CARDS.map((card) => (
               <PhotoCard key={card.title} {...card} />
             ))}
           </div>
-          <div className="flex animate-infinite-slide-copy gap-7 pr-7">
+          <div className="animate-infinite-slide-copy flex gap-7 pr-7">
             {PHOTO_CARDS.map((card) => (
               <PhotoCard key={card.title} {...card} />
             ))}

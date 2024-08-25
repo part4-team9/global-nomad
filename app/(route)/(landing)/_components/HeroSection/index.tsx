@@ -3,6 +3,7 @@
 import { useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import Logo from 'public/assets/icons/landing/logo-big-white.svg';
@@ -45,7 +46,6 @@ function HeroSection() {
               }}
             />
             <div
-              onClick={() => router.push('/main')}
               className="mx-auto mt-8 w-full max-w-60"
               style={{
                 transform: isInView ? 'none' : 'scale(0.97)',
@@ -53,12 +53,12 @@ function HeroSection() {
                 transition: 'all 1s ease-in-out 1.2s',
               }}
             >
-              <button
-                type="button"
-                className="mx-auto w-full rounded border border-solid border-[rgba(255,255,255,0.6)] bg-[rgba(255,255,255,0.15)] px-3 py-2 font-bold text-white backdrop-blur transition-none hover:bg-[rgba(255,255,255,0.15)]"
+              <Link
+                href="/main"
+                className="mx-auto block w-full rounded border border-solid border-[rgba(255,255,255,0.6)] bg-[rgba(255,255,255,0.15)] px-3 py-2 text-center font-bold text-white backdrop-blur transition-none hover:bg-[rgba(255,255,255,0.15)]"
               >
                 체험 둘러보기
-              </button>
+              </Link>
             </div>
           </div>
         </div>
