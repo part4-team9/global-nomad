@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import Button from '@/_components/button';
 
+import fail from 'public/assets/lottie/fail.json';
 import loading from 'public/assets/lottie/loading.json';
 import success from 'public/assets/lottie/success.json';
 
@@ -30,6 +31,18 @@ export function SuccessModal({ activityId }: { activityId: number }) {
         <Button variant="white" onClick={() => router.push(`/activity/detail/${activityId}`)} className="mt-5 px-5 py-1 font-medium">
           체험 후기 확인하기
         </Button>
+      </div>
+    </div>
+  );
+}
+
+export function FailModal() {
+  return (
+    <div className="absolute z-[1] flex size-full items-center justify-center bg-white">
+      <div className="-mt-10 flex flex-col items-center justify-center gap-3">
+        <Lottie animationData={fail} play className="size-40" />
+        <h5 className="text-xl font-bold">후기 작성 실패</h5>
+        <span>죄송합니다. 후기 작성에 실패했습니다.</span>
       </div>
     </div>
   );

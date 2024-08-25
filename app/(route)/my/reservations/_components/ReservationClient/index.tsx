@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Lottie from 'react-lottie-player';
 import { AxiosError } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
 import getReservations from '@/_apis/reservations/getReservations';
@@ -13,6 +14,8 @@ import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObse
 import FilterDropdown from '../FilterDropdown';
 import ReservationContainer from '../ReservationContainer';
 
+import loading from 'public/assets/lottie/loading.json';
+
 function ReservationClient() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -23,7 +26,7 @@ function ReservationClient() {
     status: (searchParams.get('status') as ReservationStatus) || undefined,
   });
 
-  const { data, isError, error, fetchNextPage, hasNextPage } = useInfiniteQuery({
+  const { data, isError, error, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['reservations', params],
     queryFn: ({ pageParam = params.cursorId }) => getReservations({ ...params, cursorId: pageParam }),
     getNextPageParam: (lastPage) => lastPage.cursorId || undefined,
@@ -67,6 +70,11 @@ function ReservationClient() {
           ))}
           <div ref={setTarget} />
         </>
+      )}
+      {(isFetching || isFetchingNextPage) && (
+        <div className="flex items-center justify-center py-20">
+          <Lottie animationData={loading} loop play className="size-16" />
+        </div>
       )}
     </>
   );

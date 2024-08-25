@@ -3,13 +3,14 @@
 import type { ChangeEvent, FormEvent } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
 
 import Button from '../../../../../_components/button';
 import Modal from '../../../../../_components/modal';
 import Textarea from '../../../../../_components/Textarea';
-import { LoadingModal, SuccessModal } from '../ResultModal';
+import { FailModal, LoadingModal, SuccessModal } from '../ResultModal';
 import ReviewCardFrame from '../ReviewCardFrame';
 import ReviewConfirmModal from '../ReviewConfirmModal';
 
@@ -57,6 +58,7 @@ export default function ReviewModal({
   totalPrice,
   reservationId,
 }: ReviewModalProps) {
+  const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(0);
   const [reviewText, setReviewText] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string | null>(null);
@@ -72,23 +74,22 @@ export default function ReviewModal({
     setReviewText(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onClickSubmitButton = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setConfirmModal(true);
-    // if (rating && reviewText) {
-    //   mutate({
-    //     reservationId,
-    //     rating,
-    //     content: reviewText,
-    //   });
-    //   setErrMessage(null);
-    // } else {
-    //   setErrMessage('별점과 후기를 모두 작성해 주세요.');
-    // }
   };
 
-  const handleCloseConfirmModal = () => {
-    setConfirmModal(false);
+  const handleSubmit = () => {
+    if (rating && reviewText) {
+      mutate({
+        reservationId,
+        rating,
+        content: reviewText,
+      });
+      setErrMessage(null);
+    } else {
+      setErrMessage('별점과 후기를 모두 작성해 주세요.');
+    }
   };
 
   const handleCloseModal = useCallback(() => {
@@ -98,18 +99,17 @@ export default function ReviewModal({
     setConfirmModal(false);
   }, [closeModal]);
 
-  useEffect(() => {
-    if (isSuccess) {
-      handleCloseModal();
-    }
-  }, [isSuccess, handleCloseModal]);
+  const handleSubmitCloseModal = async () => {
+    await queryClient.invalidateQueries({ queryKey: ['reservations'] });
+    handleCloseModal();
+  };
 
   useEffect(() => {
     setButtonDisabled(reviewText === '' || rating === 0 || isPending);
   }, [reviewText, rating, isPending]);
 
   return (
-    <Modal isOpen={isOpen} size="full" onClose={handleCloseModal}>
+    <Modal isOpen={isOpen} size="full" onClose={isPending || isSuccess || isError ? handleSubmitCloseModal : handleCloseModal}>
       <div className="mobile:max-h-[calc(100dvh-40px)]">
         <div className="box-border flex w-dvw flex-col justify-center gap-6 px-4 pb-[45px] pt-6 mobile:max-w-[480px] mobile:gap-10 mobile:px-6 mobile:pt-7">
           <div className="flex items-center justify-between px-2 mobile:px-0">
@@ -133,7 +133,7 @@ export default function ReviewModal({
                 </div>
               ))}
             </div>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form onSubmit={onClickSubmitButton} className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
                 {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
@@ -143,11 +143,12 @@ export default function ReviewModal({
               </Button>
             </form>
             {isPending && <LoadingModal />}
-            <SuccessModal activityId={activityId} />
+            {isSuccess && <SuccessModal activityId={activityId} />}
+            {isError && <FailModal />}
           </div>
         </div>
       </div>
-      <ReviewConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} />
+      <ReviewConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} handleSubmit={handleSubmit} />
     </Modal>
   );
 }

@@ -10,15 +10,19 @@ import checkAnimation from 'public/assets/lottie/check-black.json';
 
 interface ReviewConfirmProps {
   confirmModal: boolean;
+  handleSubmit: () => void;
   setConfirmModal: Dispatch<SetStateAction<boolean>>;
 }
 
-function ReviewConfirmModal({ confirmModal, setConfirmModal }: ReviewConfirmProps) {
+function ReviewConfirmModal({ confirmModal, setConfirmModal, handleSubmit }: ReviewConfirmProps) {
   const closeModal = () => {
     setConfirmModal(false);
   };
 
-  const activeCloseModal = () => {};
+  const activeCloseModal = () => {
+    setConfirmModal(false);
+    handleSubmit();
+  };
 
   return (
     <AnimatePresence>
@@ -44,7 +48,7 @@ function ReviewConfirmModal({ confirmModal, setConfirmModal }: ReviewConfirmProp
               <Button variant="white" onClick={closeModal} className="w-[120px] py-2">
                 이어서 작성
               </Button>
-              <Button variant="black" className="w-[120px] py-2">
+              <Button variant="black" className="w-[120px] py-2" onClick={activeCloseModal}>
                 등록하기
               </Button>
             </div>
