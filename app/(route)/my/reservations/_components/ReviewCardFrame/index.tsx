@@ -25,28 +25,31 @@ interface ReviewCardFrameProps {
 
 export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime, endTime, headCount, totalPrice }: ReviewCardFrameProps) {
   return (
-    <div className="flex gap-2 mobile:gap-6">
-      <div className="max-h-[100px] max-w-[100px] overflow-hidden mobile:max-h-[126px] mobile:max-w-[126px] mobile:py-[5.5px]">
-        <Image
-          src={bannerImageUrl}
-          width={100}
-          height={100}
-          alt={`${title} 사진`}
-          className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110"
-        />
+    <div className="flex gap-2 overflow-hidden mobile:gap-6">
+      <div>
+        <div className="relative aspect-square min-w-[100px] overflow-hidden mobile:w-[126px]">
+          <Image
+            src={bannerImageUrl}
+            fill
+            alt={`${title} 사진`}
+            style={{ objectFit: 'cover' }}
+            className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110"
+          />
+        </div>
       </div>
-      <div className="flex w-full flex-col gap-1.5 font-bold">
-        <span className="break-keep text-lg mobile:text-xl">{title}</span>
-        <div className="flex gap-0.5 text-md font-regular mobile:gap-2 mobile:text-2lg">
+      <div className="flex flex-1 flex-col gap-1.5 overflow-hidden font-bold mobile:gap-4">
+        <span className="truncate break-keep text-lg leading-[1.6] mobile:text-xl mobile:leading-[1.3]">{title}</span>
+        <div className="flex flex-wrap gap-0.5 text-md font-regular leading-[1.7] mobile:gap-2 mobile:text-2lg mobile:leading-[1.3]">
           <span>{formatDate(date)}</span>
           <span>·</span>
-          {/* TODO error 근원지 해결 필요 */}
-          {/* <span>{formatTimeRange(startTime, endTime)}</span>
-          <span>·</span> */}
+          <span>
+            {startTime} - {endTime}
+          </span>
+          <span>·</span>
           <span>{headCount}명</span>
         </div>
         <div className="h-px w-full bg-nomad-black opacity-10" />
-        <span className="text-xl mobile:text-3xl">₩{formatNumberWithCommas(totalPrice)}</span>
+        <span className="text-xl leading-none mobile:text-3xl mobile:leading-none">₩{formatNumberWithCommas(totalPrice)}</span>
       </div>
     </div>
   );
