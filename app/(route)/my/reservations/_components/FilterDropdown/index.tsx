@@ -59,7 +59,7 @@ function FilterDropdown({ setParams }: DropdownProps) {
           <Image src={ArrowDown} alt="더보기" className={cn(['duration-500', fade ? 'rotate-180' : 'rotate-0'])} />
         </div>
         {showList && (
-          <div className={cn(['shadow-small absolute mt-2 min-w-[120px] mobile:min-w-40', fade ? 'animate-fade-in' : 'animate-fade-out'])}>
+          <div className={cn(['absolute mt-2 min-w-[120px] shadow-small mobile:min-w-40', fade ? 'animate-fade-in' : 'animate-fade-out'])}>
             <div className="overflow-hidden rounded-md border border-solid border-gray-200">
               {RESERVATION_FILTER.map((filter) => (
                 <div

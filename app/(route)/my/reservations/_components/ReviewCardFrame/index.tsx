@@ -27,15 +27,22 @@ export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime
   return (
     <div className="flex gap-2 mobile:gap-6">
       <div className="max-h-[100px] max-w-[100px] overflow-hidden mobile:max-h-[126px] mobile:max-w-[126px] mobile:py-[5.5px]">
-        <Image src={bannerImageUrl} width={100} height={100} alt={`${title} 사진`} className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110" />
+        <Image
+          src={bannerImageUrl}
+          width={100}
+          height={100}
+          alt={`${title} 사진`}
+          className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110"
+        />
       </div>
       <div className="flex w-full flex-col gap-1.5 font-bold">
         <span className="break-keep text-lg mobile:text-xl">{title}</span>
         <div className="flex gap-0.5 text-md font-regular mobile:gap-2 mobile:text-2lg">
           <span>{formatDate(date)}</span>
           <span>·</span>
-          <span>{formatTimeRange(startTime, endTime)}</span>
-          <span>·</span>
+          {/* TODO error 근원지 해결 필요 */}
+          {/* <span>{formatTimeRange(startTime, endTime)}</span>
+          <span>·</span> */}
           <span>{headCount}명</span>
         </div>
         <div className="h-px w-full bg-nomad-black opacity-10" />
