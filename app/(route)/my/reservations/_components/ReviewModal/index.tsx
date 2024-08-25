@@ -1,7 +1,7 @@
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
@@ -56,7 +56,8 @@ export default function ReviewModal({
   const [rating, setRating] = useState<number>(0);
   const [reviewText, setReviewText] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string | null>(null);
-  const { mutate } = usePostReview();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const { mutate, isPending, isSuccess } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
     setRating(clicked);
@@ -81,8 +82,24 @@ export default function ReviewModal({
     }
   };
 
+  const handleCloseModal = useCallback(() => {
+    setRating(0);
+    setReviewText('');
+    closeModal();
+  }, [closeModal]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleCloseModal();
+    }
+  }, [isSuccess, handleCloseModal]);
+
+  useEffect(() => {
+    setButtonDisabled(reviewText === '' || rating === 0 || isPending);
+  }, [reviewText, rating, isPending]);
+
   return (
-    <Modal isOpen={isOpen} size="full" onClose={closeModal}>
+    <Modal isOpen={isOpen} size="full" onClose={handleCloseModal}>
       <div className="mobile:max-h-[calc(100dvh-40px)]">
         <div className="box-border flex w-dvw flex-col justify-center gap-6 px-4 pb-[45px] pt-6 mobile:max-w-[480px] mobile:gap-10 mobile:px-6 mobile:pt-7">
           <div className="flex items-center justify-between px-2 mobile:px-0">
@@ -111,7 +128,7 @@ export default function ReviewModal({
                 <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
                 {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
               </div>
-              <Button type="submit" variant="black" className="h-14 w-full text-lg">
+              <Button type="submit" variant="black" disabled={buttonDisabled} className="h-14 w-full text-lg">
                 작성하기
               </Button>
             </form>

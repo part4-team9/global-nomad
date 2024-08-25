@@ -46,7 +46,7 @@ function CardDataTransformer({ data }: TransformerProps) {
     type: ContentType.Reservation,
   };
 
-  return <CardFrame img={data.activity.bannerImageUrl} contents={cardFrameData} />;
+  return <CardFrame img={data.activity.bannerImageUrl} contents={cardFrameData} activityId={data.activity.id} />;
 }
 
 export default CardDataTransformer;

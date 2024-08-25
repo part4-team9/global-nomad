@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import { formatDate, formatNumberWithCommas, formatTimeRange } from '@/_utils/format';
+import { formatDate, formatNumberWithCommas } from '@/_utils/format';
 
 interface ReviewCardFrameProps {
   bannerImageUrl: string;
@@ -33,12 +33,14 @@ export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime
             fill
             alt={`${title} 사진`}
             style={{ objectFit: 'cover' }}
+            sizes="max-width:100%"
+            priority
             className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110"
           />
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-1.5 overflow-hidden font-bold mobile:gap-4">
-        <span className="truncate break-keep text-lg leading-[1.6] mobile:text-xl mobile:leading-[1.3]">{title}</span>
+        <span className="break-keep text-lg leading-[1.6] mobile:text-xl mobile:leading-[1.3]">{title}</span>
         <div className="flex flex-wrap gap-0.5 text-md font-regular leading-[1.7] mobile:gap-2 mobile:text-2lg mobile:leading-[1.3]">
           <span>{formatDate(date)}</span>
           <span>·</span>

@@ -1,4 +1,5 @@
 import { cva } from 'class-variance-authority';
+import Link from 'next/link';
 
 import type { ActivitiesContents, ContentsType, ReservationContents } from '@/_types/card';
 import { ContentType, ReservationStatus } from '@/_types/card';
@@ -59,13 +60,15 @@ export function toReservationStatus(status: string): ReservationStatus {
 /**
  * 예약 리스트 아이템 컴포넌트
  */
-function ReservationContent({ contents }: { contents: Omit<ReservationContents, 'status'> & { status: string } }) {
+function ReservationContent({ contents, activityId }: { activityId: number; contents: Omit<ReservationContents, 'status'> & { status: string } }) {
   const status = toReservationStatus(contents.status);
 
   return (
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <p className={cn(statusVariants({ status }))}>{statusLables[status]}</p>
-      <p className={titleStyle}>{contents.title}</p>
+      <p className={titleStyle}>
+        <Link href={`/activity/detail/${activityId}`}>{contents.title}</Link>
+      </p>
       <div className="mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal under-tablet:mb-[10px] under-tablet:text-sm/6 under-mobile:mb-0 under-mobile:text-xs/6">
         <p>{formatDate(contents.period)}</p> ·{' '}
         <p>
@@ -110,10 +113,10 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
  * @param contents contents type (Reservation, Activities)
  * @returns contents component
  */
-export default function ContentWrapper({ contents }: { contents: ContentsType }) {
+export default function ContentWrapper({ contents, activityId }: { activityId: number; contents: ContentsType }) {
   switch (contents.type) {
     case ContentType.Reservation:
-      return <ReservationContent contents={contents} />;
+      return <ReservationContent contents={contents} activityId={activityId} />;
     case ContentType.Activities:
       return <ActivitiesContent contents={contents} />;
     default:
