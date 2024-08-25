@@ -7,14 +7,13 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 
+import type { ReservationParams } from '@/_types/myReservations';
 import type { ReservationFilter } from '@/_constants/reservation-filter';
 import { RESERVATION_FILTER } from '@/_constants/reservation-filter';
 
 import useSelectBox from '@/_hooks/useSelectBox';
 
 import { cn } from '@/_utils/classNames';
-
-import type { ReservationParams } from '../../page';
 
 import ArrowDown from 'public/assets/icons/cost-btn.svg';
 

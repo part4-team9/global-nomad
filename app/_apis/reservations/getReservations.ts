@@ -1,8 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import axios from 'axios';
-import type { ReservationParams } from '@/(route)/my/reservations/page';
 
-import type { MyReservations } from '@/_types/myReservations';
+import type { MyReservations, ReservationParams } from '@/_types/myReservations';
 
 import axiosInstance from '@/_libs/axios';
 

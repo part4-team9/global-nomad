@@ -43,3 +43,9 @@ export interface MyReservations {
   reservations: Reservations[];
   totalCount: number;
 }
+
+export interface ReservationParams {
+  cursorId?: number;
+  size?: number;
+  status?: ReservationStatus;
+}

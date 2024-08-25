@@ -6,11 +6,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import getReservations from '@/_apis/reservations/getReservations';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import type { ReservationStatus } from '@/_types/myReservations';
+import type { ReservationParams, ReservationStatus } from '@/_types/myReservations';
 
 import { useIntersectionObserver } from '@/_hooks/activities/useIntersectionObserver';
 
-import type { ReservationParams } from '../../page';
 import FilterDropdown from '../FilterDropdown';
 import ReservationContainer from '../ReservationContainer';
 
