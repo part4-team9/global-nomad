@@ -41,6 +41,7 @@
   }
   h3 {
     @apply text-xl font-bold;
+  }
 
   ::-webkit-scrollbar {
     width: 10px;
@@ -75,4 +76,3 @@
   background-color: #112211;
   color: white;
 }
-
