@@ -72,29 +72,28 @@ export default function Calendar({ activityId }: CalendarProps) {
 
   const handleReservation = async () => {
     if (!selectedDate || !selectedTime) {
+      alert('날짜와 시간을 선택해주세요.');
       return;
     }
 
     try {
       const [startTime] = selectedTime.split('-');
-      const schedule = activityData?.schedules.find((s) => s.date === selectedDate && s.startTime === startTime);
-
-      if (!schedule) {
-        return;
-      }
 
       const response = await axiosInstance.post(`/activities/${activityId}/reservations`, {
-        scheduleId: schedule.id,
+        scheduleId: activityData?.schedules.find((s) => s.date === selectedDate && s.startTime === startTime)?.id,
         headCount: peopleCount,
       });
 
       if (response.status === 201) {
-        // eslint-disable-next-line no-alert
         alert('예약이 완료되었습니다.');
+      } else {
+        alert('예약 중 문제가 발생했습니다. 다시 시도해주세요.');
       }
     } catch (error) {
       if (error instanceof AxiosError) {
-        throw error;
+        alert(`${error.response?.data?.message || error.message}`);
+      } else {
+        alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }
   };
