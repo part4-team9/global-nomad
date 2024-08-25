@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Lottie from 'react-lottie-player';
 import { AxiosError } from 'axios';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -17,6 +17,14 @@ import ReservationContainer from '../ReservationContainer';
 import loading from 'public/assets/lottie/loading.json';
 
 function ReservationClient() {
+  return (
+    <Suspense fallback={<div>Loading ...</div>}>
+      <Content />
+    </Suspense>
+  );
+}
+
+function Content() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
