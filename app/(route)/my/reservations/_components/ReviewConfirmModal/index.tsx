@@ -1,3 +1,5 @@
+'use client';
+
 import type { Dispatch, SetStateAction } from 'react';
 import Lottie from 'react-lottie-player';
 import { AnimatePresence, motion } from 'framer-motion';

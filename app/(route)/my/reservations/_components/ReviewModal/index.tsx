@@ -9,6 +9,7 @@ import usePostReview from '@/_hooks/my-reservations/usePostReview';
 import Button from '../../../../../_components/button';
 import Modal from '../../../../../_components/modal';
 import Textarea from '../../../../../_components/Textarea';
+import { LoadingModal, SuccessModal } from '../ResultModal';
 import ReviewCardFrame from '../ReviewCardFrame';
 import ReviewConfirmModal from '../ReviewConfirmModal';
 
@@ -16,6 +17,7 @@ import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
 
 interface ReviewModalProps {
+  activityId: number;
   bannerImageUrl: string;
   closeModal: () => void;
   date: string;
@@ -45,6 +47,7 @@ interface ReviewModalProps {
 export default function ReviewModal({
   isOpen,
   closeModal,
+  activityId,
   title,
   bannerImageUrl,
   date,
@@ -59,7 +62,7 @@ export default function ReviewModal({
   const [errMessage, setErrMessage] = useState<string | null>(null);
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [confirmModal, setConfirmModal] = useState(false);
-  const { mutate, isPending, isSuccess } = usePostReview();
+  const { mutate, isPending, isSuccess, isError } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
     setRating(clicked);
@@ -113,7 +116,7 @@ export default function ReviewModal({
             <span className="text-[28px] font-bold leading-6.5">후기 작성</span>
             <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
           </div>
-          <div className="scrollbar-hide grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
+          <div className="scrollbar-hide relative grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
             <ReviewCardFrame
               title={title}
               bannerImageUrl={bannerImageUrl}
@@ -139,6 +142,8 @@ export default function ReviewModal({
                 작성하기
               </Button>
             </form>
+            {isPending && <LoadingModal />}
+            <SuccessModal activityId={activityId} />
           </div>
         </div>
       </div>

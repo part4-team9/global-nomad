@@ -34,6 +34,7 @@ function ReviewButton({ id, data }: ReviewButtonProps) {
       <ReviewModal
         isOpen={isOpen}
         closeModal={closeModal}
+        activityId={data.activity.id}
         title={data.activity.title}
         bannerImageUrl={data.activity.bannerImageUrl}
         date={data.date}
