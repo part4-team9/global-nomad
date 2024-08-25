@@ -2,7 +2,7 @@
 
 import type { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
-import postActivity from '@/_apis/activities/postActivity';
+import postActivity from '@/api/activities/postActivity';
 import { useMutation } from '@tanstack/react-query';
 
 import useModalState from '@/_hooks/useModalState';

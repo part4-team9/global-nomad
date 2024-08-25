@@ -15,4 +15,5 @@ module.exports = {
     './eslint/tailwindcss.js',
   ],
   plugins: [],
+  rules: { 'import/no-extraneous-dependencies': 0 },
 };

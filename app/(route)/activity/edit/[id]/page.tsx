@@ -1,5 +1,5 @@
-import type { SubImage } from '@/_apis/activities/getActivity';
-import getActivity from '@/_apis/activities/getActivity';
+import type { SubImage } from '@/api/activities/getActivity';
+import getActivity from '@/api/activities/getActivity';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 
 import CommonLayout from '@/_components/CommonLayout';
