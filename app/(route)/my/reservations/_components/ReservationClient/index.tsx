@@ -18,9 +18,17 @@ import loading from 'public/assets/lottie/loading.json';
 
 function ReservationClient() {
   return (
-    <Suspense fallback={<div>Loading ...</div>}>
+    <Suspense fallback={<LoadingAnimation />}>
       <Content />
     </Suspense>
+  );
+}
+
+function LoadingAnimation() {
+  return (
+    <div className="flex items-center justify-center py-20">
+      <Lottie animationData={loading} loop play className="size-16" />
+    </div>
   );
 }
 
@@ -63,7 +71,7 @@ function Content() {
     const queryStatus = params.status ? `status=${params.status}` : '';
     const url = `?${queryStatus}`;
     router.replace(url);
-  }, [params, router]);
+  }, [params.status, router]);
 
   return (
     <>
@@ -79,11 +87,7 @@ function Content() {
           <div ref={setTarget} />
         </>
       )}
-      {(isFetching || isFetchingNextPage) && (
-        <div className="flex items-center justify-center py-20">
-          <Lottie animationData={loading} loop play className="size-16" />
-        </div>
-      )}
+      {(isFetching || isFetchingNextPage) && <LoadingAnimation />}
     </>
   );
 }

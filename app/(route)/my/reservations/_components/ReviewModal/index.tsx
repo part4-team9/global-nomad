@@ -1,15 +1,16 @@
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
 
-import Button from '../../../../../_components/button';
-import Modal from '../../../../../_components/modal';
-import Textarea from '../../../../../_components/Textarea';
+import Button from '@/_components/button';
+import Modal from '@/_components/modal';
+import Textarea from '@/_components/Textarea';
+
 import { FailModal, LoadingModal, SuccessModal } from '../ResultModal';
 import ReviewCardFrame from '../ReviewCardFrame';
 import ReviewConfirmModal from '../ReviewConfirmModal';
@@ -92,16 +93,15 @@ export default function ReviewModal({
     }
   };
 
-  const handleCloseModal = useCallback(() => {
-    setRating(0);
-    setReviewText('');
-    closeModal();
-    setConfirmModal(false);
-  }, [closeModal]);
-
-  const handleSubmitCloseModal = async () => {
-    await queryClient.invalidateQueries({ queryKey: ['reservations'] });
-    handleCloseModal();
+  const handleCloseModal = async () => {
+    if (isSuccess || isError) {
+      await queryClient.invalidateQueries({ queryKey: ['reservations'] });
+    } else {
+      setRating(0);
+      setReviewText('');
+      setConfirmModal(false);
+      closeModal();
+    }
   };
 
   useEffect(() => {
@@ -109,12 +109,12 @@ export default function ReviewModal({
   }, [reviewText, rating, isPending]);
 
   return (
-    <Modal isOpen={isOpen} size="full" onClose={isPending || isSuccess || isError ? handleSubmitCloseModal : handleCloseModal}>
+    <Modal isOpen={isOpen} size="full" onClose={handleCloseModal}>
       <div className="mobile:max-h-[calc(100dvh-40px)]">
         <div className="box-border flex w-dvw flex-col justify-center gap-6 px-4 pb-[45px] pt-6 mobile:max-w-[480px] mobile:gap-10 mobile:px-6 mobile:pt-7">
           <div className="flex items-center justify-between px-2 mobile:px-0">
             <span className="text-[28px] font-bold leading-6.5">후기 작성</span>
-            <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
+            <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={handleCloseModal} />
           </div>
           <div className="scrollbar-hide relative grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
             <ReviewCardFrame
