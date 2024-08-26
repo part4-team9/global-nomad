@@ -20,7 +20,14 @@ function IntroduceService() {
     <section className="bg-gray-50">
       <div className="mx-auto flex max-w-[1248px] flex-col-reverse items-center justify-between gap-5 px-6 py-8 tablet:flex-row">
         {windowSize > 767 && (
-          <div className="max-w-[375px] pl-7">
+          <div
+            className="max-w-[375px] pl-7"
+            style={{
+              transform: isInView ? 'none' : 'translateY(10px)',
+              opacity: isInView ? 1 : 0,
+              transition: 'all 0.9s ease-in-out 0.4s',
+            }}
+          >
             <Image src={MobilePreview2} alt="모바일 프리뷰" priority />
           </div>
         )}

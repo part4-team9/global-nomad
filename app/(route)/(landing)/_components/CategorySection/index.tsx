@@ -39,21 +39,18 @@ const CATEGORY_CARD = [
 ];
 
 function CategorySection() {
-  const ref1 = useRef<HTMLDivElement>(null);
-  const isInView1 = useInView(ref1, { once: true });
-
-  const ref2 = useRef<HTMLUListElement>(null);
-  const isInView2 = useInView(ref2, { once: true });
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true });
 
   return (
     <section className="bg-gray-100 py-20">
       <div className="mx-auto max-w-[1248px] px-6">
         <div
-          ref={ref1}
+          ref={ref}
           className="grid gap-4 text-center"
           style={{
-            transform: isInView1 ? 'none' : 'translateY(10px)',
-            opacity: isInView1 ? 1 : 0,
+            transform: isInView ? 'none' : 'translateY(10px)',
+            opacity: isInView ? 1 : 0,
             transition: 'all 0.6s ease-in-out',
           }}
         >
@@ -63,15 +60,7 @@ function CategorySection() {
             <span>여행의 매 순간이 더욱 풍성해질 것입니다</span>
           </p>
         </div>
-        <ul
-          ref={ref2}
-          className="mt-16 grid grid-cols-1 gap-6 mobile:grid-cols-2 tablet:grid-cols-3"
-          style={{
-            transform: isInView2 ? 'none' : 'translateY(15px)',
-            opacity: isInView2 ? 1 : 0,
-            transition: 'all 0.6s ease-in-out 0.3s',
-          }}
-        >
+        <ul className="mt-16 grid grid-cols-1 gap-6 mobile:grid-cols-2 tablet:grid-cols-3">
           {CATEGORY_CARD.map((card) => (
             <CategoryCard key={card.title} {...card} />
           ))}
