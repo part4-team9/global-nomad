@@ -30,25 +30,27 @@ function EditLayout({ id }: EditLayoutProps) {
     mutationFn: patchActivity,
     onSuccess: (res) => {
       const { id: postId } = res.data;
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '수정이 완료되었습니다',
         onClose: () => {
           router.push(`/activity/${postId}`);
         },
-      });
+      }));
     },
     onError: (error: AxiosResponse) => {
       const { status } = error;
       const { message } = error.data;
       if (status === 401) {
-        setModalState({
+        setModalState((prev) => ({
+          ...prev,
           isOpen: true,
           message: '로그인이 필요한 서비스입니다.',
           onClose: () => {
             router.push('/login');
           },
-        });
+        }));
       } else {
         setModalState((prev) => ({
           ...prev,
