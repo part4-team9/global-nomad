@@ -50,13 +50,14 @@ function CancelButton({ id }: { id: number }) {
       const data = error.response?.data as { message?: string };
       const message = data?.message || '예약 취소에 실패했습니다.';
       if (status === 401) {
-        setModalState({
+        setModalState((prev) => ({
+          ...prev,
           isOpen: true,
           message,
           onClose: () => {
             router.push('/login');
           },
-        });
+        }));
       } else {
         setModalState((prev) => ({
           ...prev,
