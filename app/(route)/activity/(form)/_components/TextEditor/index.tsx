@@ -22,7 +22,7 @@ function TextEditor<T>({ setFormData, value }: TextEditorProps<T>) {
   const modules = useMemo(
     () => ({
       toolbar: {
-        container: [[{ header: [1, 2, 3, 4, 5, false] }], ['bold', 'italic', 'underline', 'strike']],
+        container: [[{ header: [2, 3, 4, 5, false] }], ['bold', 'italic', 'underline', 'strike', 'blockquote'], [{ list: 'ordered' }, { list: 'bullet' }]],
       },
     }),
     [],

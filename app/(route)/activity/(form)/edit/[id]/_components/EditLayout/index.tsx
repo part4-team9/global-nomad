@@ -39,7 +39,7 @@ function EditLayout({ id }: EditLayoutProps) {
         isOpen: true,
         message: '수정이 완료되었습니다',
         onClose: () => {
-          router.push(`/activity/detail/${postId}`);
+          router.push(`/activity/details/${postId}`);
         },
       }));
     },

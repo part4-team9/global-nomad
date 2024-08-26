@@ -31,7 +31,7 @@ function RegisterLayout() {
         isOpen: true,
         message: '체험 등록이 완료되었습니다',
         onClose: () => {
-          router.push(`/activity/detail/${id}`);
+          router.push(`/activity/details/${id}`);
         },
       }));
     },
