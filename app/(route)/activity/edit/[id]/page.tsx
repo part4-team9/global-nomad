@@ -1,3 +1,4 @@
+import type { Metadata } from 'next';
 import type { SubImage } from '@/_apis/activities/getActivity';
 import getActivity from '@/_apis/activities/getActivity';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
@@ -31,6 +32,12 @@ export interface ActivityEdit {
   subImageIdsToRemove: number[];
   subImageUrlsToAdd: string[];
   title: string;
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'GlobalNomad | 체험 수정',
+  };
 }
 
 /**
