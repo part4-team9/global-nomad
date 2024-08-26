@@ -7,7 +7,10 @@ interface Coordinates {
 
 export async function fetchCoordinates(address: string): Promise<Coordinates | null> {
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
+    // 로컬 환경에서는 NEXT_PUBLIC_API_URL, 배포 환경에서는 NEXT_PUBLIC_API_BASE_URL 사용
+    const apiUrl = process.env.NODE_ENV === 'production' ? process.env.NEXT_PUBLIC_API_BASE_URL : process.env.NEXT_PUBLIC_API_URL;
+
+    const response = await axios.get(`${apiUrl}/api`, {
       params: { address },
     });
 
