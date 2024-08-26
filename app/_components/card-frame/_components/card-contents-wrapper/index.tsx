@@ -67,7 +67,7 @@ function ReservationContent({ contents, activityId }: { activityId: number; cont
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <p className={cn(statusVariants({ status }))}>{statusLables[status]}</p>
       <p className={titleStyle}>
-        <Link href={`/activity/detail/${activityId}`}>{contents.title}</Link>
+        <Link href={`/activity/details/${activityId}`}>{contents.title}</Link>
       </p>
       <div className="mb-[17px] flex items-center gap-2 whitespace-nowrap text-lg/6 font-normal under-tablet:mb-[10px] under-tablet:text-sm/6 under-mobile:mb-0 under-mobile:text-xs/6">
         <p>{formatDate(contents.period)}</p> ·{' '}
