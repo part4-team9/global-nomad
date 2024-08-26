@@ -1,20 +1,25 @@
 'use client';
 
 import type { ChangeEvent, FormEvent } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useQueryClient } from '@tanstack/react-query';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
 
-import ReviewCardFrame from './review-card-frame';
-import Button from '../button';
-import Modal from '../modal';
-import Textarea from '../Textarea';
+import Button from '@/_components/button';
+import Modal from '@/_components/modal';
+import Textarea from '@/_components/Textarea';
+
+import { FailModal, LoadingModal, SuccessModal } from '../ResultModal';
+import ReviewCardFrame from '../ReviewCardFrame';
+import ReviewConfirmModal from '../ReviewConfirmModal';
 
 import Star from 'public/assets/icons/star.svg';
 import Xbtn from 'public/assets/icons/x-btn.svg';
 
-interface WriteReviewProps {
+interface ReviewModalProps {
+  activityId: number;
   bannerImageUrl: string;
   closeModal: () => void;
   date: string;
@@ -41,9 +46,10 @@ interface WriteReviewProps {
  * @param {number} reservationId - 리뷰할 체험 고유 값 입니다.
  */
 
-export default function WriteReview({
+export default function ReviewModal({
   isOpen,
   closeModal,
+  activityId,
   title,
   bannerImageUrl,
   date,
@@ -52,11 +58,14 @@ export default function WriteReview({
   headCount,
   totalPrice,
   reservationId,
-}: WriteReviewProps) {
+}: ReviewModalProps) {
+  const queryClient = useQueryClient();
   const [rating, setRating] = useState<number>(0);
   const [reviewText, setReviewText] = useState<string>('');
   const [errMessage, setErrMessage] = useState<string | null>(null);
-  const { mutate } = usePostReview();
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [confirmModal, setConfirmModal] = useState(false);
+  const { mutate, isPending, isSuccess, isError } = usePostReview();
 
   const handleStarClick = (clicked: number) => {
     setRating(clicked);
@@ -66,9 +75,12 @@ export default function WriteReview({
     setReviewText(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const onClickSubmitButton = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setConfirmModal(true);
+  };
 
+  const handleSubmit = () => {
     if (rating && reviewText) {
       mutate({
         reservationId,
@@ -81,15 +93,30 @@ export default function WriteReview({
     }
   };
 
+  const handleCloseModal = async () => {
+    if (isSuccess || isError) {
+      await queryClient.invalidateQueries({ queryKey: ['reservations'] });
+    } else {
+      setRating(0);
+      setReviewText('');
+      setConfirmModal(false);
+      closeModal();
+    }
+  };
+
+  useEffect(() => {
+    setButtonDisabled(reviewText === '' || rating === 0 || isPending);
+  }, [reviewText, rating, isPending]);
+
   return (
-    <div>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="box-border flex h-dvh w-dvw flex-col justify-center gap-9 px-6 pb-[41px] pt-[23px] mobile:max-h-[750px] mobile:max-w-[480px]">
-          <div className="flex items-center justify-between">
-            <span className="text-[28px] font-bold leading-6.5 mobile:text-2xl">후기 작성</span>
-            <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={closeModal} />
+    <Modal isOpen={isOpen} size="full" onClose={handleCloseModal}>
+      <div className="mobile:max-h-[calc(100dvh-40px)]">
+        <div className="box-border flex w-dvw flex-col justify-center gap-6 px-4 pb-[45px] pt-6 mobile:max-w-[480px] mobile:gap-10 mobile:px-6 mobile:pt-7">
+          <div className="flex items-center justify-between px-2 mobile:px-0">
+            <span className="text-[28px] font-bold leading-6.5">후기 작성</span>
+            <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={handleCloseModal} />
           </div>
-          <div className="flex flex-col gap-8 mobile:gap-12">
+          <div className="scrollbar-hide relative grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
             <ReviewCardFrame
               title={title}
               bannerImageUrl={bannerImageUrl}
@@ -106,18 +133,22 @@ export default function WriteReview({
                 </div>
               ))}
             </div>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form onSubmit={onClickSubmitButton} className="flex flex-col gap-6">
               <div className="flex flex-col gap-2">
                 <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
                 {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
               </div>
-              <Button type="submit" variant="black" className="h-14 w-full text-lg">
+              <Button type="submit" variant="black" disabled={buttonDisabled} className="h-14 w-full text-lg">
                 작성하기
               </Button>
             </form>
+            {isPending && <LoadingModal />}
+            {isSuccess && <SuccessModal activityId={activityId} />}
+            {isError && <FailModal />}
           </div>
         </div>
-      </Modal>
-    </div>
+      </div>
+      <ReviewConfirmModal confirmModal={confirmModal} setConfirmModal={setConfirmModal} handleSubmit={handleSubmit} />
+    </Modal>
   );
 }
