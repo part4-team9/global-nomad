@@ -7,7 +7,7 @@ interface Coordinates {
 
 export async function fetchCoordinates(address: string): Promise<Coordinates | null> {
   try {
-    const response = await axios.get('/api', {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api`, {
       params: { address },
     });
 
