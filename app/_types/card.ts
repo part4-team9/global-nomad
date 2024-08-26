@@ -4,11 +4,11 @@ export enum ContentType {
 }
 
 export enum ReservationStatus {
-  Approved = 'Approved', // 예약 승인
-  Canceled = 'Canceled', // 예약 취소
-  Completed = 'Completed', // 체험 완료
-  Confirmed = 'Confirmed', // 예약 완료
-  Refusal = 'Refusal', // 예약 거절
+  canceled = 'canceled', // 예약 취소
+  completed = 'completed', // 체험 완료
+  confirmed = 'confirmed', // 예약 승인
+  declined = 'declined', // 예약 거절
+  pending = 'pending', // 예약 신청
 }
 
 export interface ReservationContents {
@@ -16,6 +16,7 @@ export interface ReservationContents {
   headCount: number;
   period: string;
   price: number;
+  reservationId: number;
   status: ReservationStatus;
   time1: string;
   time2: string;
