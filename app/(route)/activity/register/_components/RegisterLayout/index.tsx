@@ -22,25 +22,27 @@ function RegisterLayout() {
     mutationFn: postActivity,
     onSuccess: (res) => {
       const { id } = res.data;
-      setModalState({
+      setModalState((prev) => ({
+        ...prev,
         isOpen: true,
         message: '체험 등록이 완료되었습니다',
         onClose: () => {
           router.push(`/activity/${id}`);
         },
-      });
+      }));
     },
     onError: (error: AxiosResponse) => {
       const { status } = error;
       const { message } = error.data;
       if (status === 401) {
-        setModalState({
+        setModalState((prev) => ({
+          ...prev,
           isOpen: true,
           message,
           onClose: () => {
             router.push('/login');
           },
-        });
+        }));
       } else {
         setModalState((prev) => ({
           ...prev,

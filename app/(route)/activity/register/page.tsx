@@ -1,4 +1,6 @@
 // 체험 등록 페이지
+import type { Metadata } from 'next';
+
 import CommonLayout from '@/_components/CommonLayout';
 import StickyLayout from '@/_components/SideStickyLayout';
 
@@ -19,6 +21,12 @@ export interface Activity {
   schedules: Schedule[];
   subImageUrls?: string[];
   title: string;
+}
+
+export function generateMetadata(): Metadata {
+  return {
+    title: 'GlobalNomad | 체험 등록',
+  };
 }
 
 function ActivityRegister() {
