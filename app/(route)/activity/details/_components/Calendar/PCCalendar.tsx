@@ -35,14 +35,6 @@ export default function CalendarGrid({
     }
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const year = String(date.getFullYear()).slice(2);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}/${month}/${day}`;
-  };
-
   const renderCalendar = () => {
     const days = [];
     const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
@@ -114,7 +106,7 @@ export default function CalendarGrid({
             />
           </div>
 
-          <div className="mt-4 grid grid-cols-7 gap-[1px]">
+          <div className="mt-4 grid grid-cols-7 gap-px">
             {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
               <div key={day} className="text-center text-md font-bold text-gray-700">
                 {day}

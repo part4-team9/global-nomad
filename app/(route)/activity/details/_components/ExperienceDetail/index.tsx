@@ -1,7 +1,7 @@
-'use client';
-
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import parse from 'html-react-parser';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -10,6 +10,7 @@ import { useModal } from '@/_hooks/useModal';
 import axiosInstance from '@/_libs/axios';
 import { fetchCoordinates } from '@/_libs/fetchCoordinates';
 
+import Button from '@/_components/button';
 import Modal from '@/_components/modal';
 
 import ExperienceInfo from './ExperienceInfo';
@@ -19,18 +20,6 @@ import Calendar from '../Calendar';
 import NaverMap from '../NaverMap';
 
 import Location from 'public/assets/icons/Location.svg';
-
-interface Review {
-  content: string;
-  createdAt: string;
-  id: number;
-  rating: number;
-  user: {
-    id: number;
-    nickname: string;
-    profileImageUrl?: string;
-  };
-}
 
 interface ExperienceDetailProps {
   averageRating: number;
@@ -51,7 +40,6 @@ interface ExperienceDetailProps {
     updatedAt: string;
     userId: number;
   };
-  reviews: Review[];
   totalReviews: number;
 }
 
@@ -60,7 +48,7 @@ interface Coordinates {
   longitude: number;
 }
 
-export default function ExperienceDetail({ experience, reviews, totalReviews, averageRating, currentUserId }: ExperienceDetailProps) {
+export default function ExperienceDetail({ experience, totalReviews, averageRating, currentUserId }: ExperienceDetailProps) {
   const [coordinates, setCoordinates] = useState<Coordinates | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -124,6 +112,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
   }, [experience.address]);
 
   const getSatisfactionLabel = (rating: number) => {
+    if (totalReviews === 0) return '후기 없음';
     if (rating >= 4) return '매우만족';
     if (rating >= 3) return '만족';
     if (rating >= 2) return '보통';
@@ -145,12 +134,12 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
         <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-[18px] md:w-[540px] md:px-[33px]">
           <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
           <span className="flex justify-center gap-4">
-            <button type="button" className="h-[42px] w-[138px] rounded-[8px] bg-gray-500 text-white" onClick={closeModal}>
+            <Button variant="white" className="h-[42px] w-[138px] rounded-[8px]" onClick={closeModal}>
               취소
-            </button>
-            <button type="button" className="h-[42px] w-[138px] rounded-[8px] bg-red-500 text-white" onClick={handleDelete}>
+            </Button>
+            <Button variant="black" className="h-[42px] w-[138px] rounded-[8px]" onClick={handleDelete}>
               삭제
-            </button>
+            </Button>
           </span>
         </div>
       </Modal>
@@ -186,7 +175,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
               style={{ borderColor: 'rgba(17, 34, 17, 0.25)', borderTopWidth: '1px', left: '15px' }}
             >
               <h2 className="mb-3 text-xl font-bold text-nomad-black">체험 설명</h2>
-              <div className="text-base text-nomad-black">{experience.description}</div>
+              <div className="text-base text-nomad-black">{parse(experience.description)}</div>
             </section>
 
             <section className="mb-[24px] border-t px-[24px] pt-[40px] tablet:px-0" style={{ borderColor: 'rgba(17, 34, 17, 0.25)', borderTopWidth: '1px' }}>
@@ -197,7 +186,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
               </div>
             </section>
 
-            <Reviews averageRating={averageRating} reviews={reviews} totalReviews={totalReviews} getSatisfactionLabel={getSatisfactionLabel} />
+            <Reviews averageRating={averageRating} totalReviews={totalReviews} getSatisfactionLabel={getSatisfactionLabel} activityId={experience.id} />
           </div>
 
           <div className="relative">

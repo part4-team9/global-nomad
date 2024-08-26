@@ -60,13 +60,5 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
   if (error) return <div>오류: {error}</div>;
   if (!experience) return <div>체험 정보를 찾을 수 없습니다!</div>;
 
-  return (
-    <ExperienceDetail
-      averageRating={averageRating}
-      experience={experience}
-      reviews={reviews}
-      totalReviews={totalReviews}
-      currentUserId={currentUserId || null}
-    />
-  );
+  return <ExperienceDetail averageRating={averageRating} experience={experience} totalReviews={totalReviews} currentUserId={currentUserId || null} />;
 }

@@ -1,6 +1,5 @@
-'use client';
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import DefaultProfileImage from 'public/assets/images/default-profile.png';
 import Pagination from '@/(route)/main/_components/Pagination';
@@ -19,20 +18,42 @@ interface Review {
   };
 }
 
+interface ApiResponse {
+  reviews: Review[];
+  totalCount: number;
+}
+
 interface ReviewSectionProps {
+  activityId: number;
   averageRating: number;
   getSatisfactionLabel: (rating: number) => string;
-  reviews: Review[];
   totalReviews: number;
 }
 
-export default function Reviews({ averageRating, reviews, totalReviews, getSatisfactionLabel }: ReviewSectionProps) {
+export default function Reviews({ averageRating, totalReviews, getSatisfactionLabel, activityId }: ReviewSectionProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
+  const [reviews, setReviews] = useState<Review[]>([]);
 
-  const indexOfLastReview = currentPage * reviewsPerPage;
-  const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
-  const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch(`https://sp-globalnomad-api.vercel.app/6-9/activities/${activityId}/reviews?page=${currentPage}&limit=${reviewsPerPage}`);
+
+        const data: ApiResponse = await response.json();
+
+        if (data && Array.isArray(data.reviews)) {
+          setReviews(data.reviews);
+        }
+      } catch (error) {
+        if (error instanceof AxiosError) {
+          throw error;
+        }
+      }
+    };
+
+    void fetchReviews();
+  }, [currentPage, activityId]);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -55,41 +76,45 @@ export default function Reviews({ averageRating, reviews, totalReviews, getSatis
       </div>
 
       <div className="mb-[72px] space-y-[24px]">
-        {currentReviews.map((review, index) => (
-          <div
-            key={review.id}
-            className={`flex gap-[16px] px-[24px] pb-[24px] tablet:px-0 ${index !== currentReviews.length - 1 ? 'border-b border-gray-200' : ''}`}
-          >
-            <div>
-              <Image
-                src={review.user.profileImageUrl || DefaultProfileImage}
-                alt={`${review.user.nickname} 프로필 이미지`}
-                width={45}
-                height={45}
-                className="rounded-full object-cover"
-              />
-            </div>
-            <div className="flex flex-col justify-start">
-              <div className="my-[4px] flex items-center">
-                <p className="text-lg font-bold text-nomad-black">{review.user.nickname}</p>
-                <span className="mx-2 text-black">|</span>
-                <p className="text-lg text-gray-500">
-                  {new Date(review.createdAt)
-                    .toLocaleDateString('ko-KR', {
-                      year: 'numeric',
-                      month: 'numeric',
-                      day: 'numeric',
-                    })
-                    .replace(/\//g, '. ')}
-                </p>
+        {reviews.length > 0 ? (
+          reviews.map((review, index) => (
+            <div
+              key={review.id}
+              className={`flex gap-[16px] px-[24px] pb-[24px] tablet:px-0 ${index !== reviews.length - 1 ? 'border-b border-gray-200' : ''}`}
+            >
+              <div>
+                <Image
+                  src={review.user.profileImageUrl || DefaultProfileImage}
+                  alt={`${review.user.nickname} 프로필 이미지`}
+                  width={45}
+                  height={45}
+                  className="rounded-full object-cover"
+                />
               </div>
-              <p className="text-lg text-nomad-black">{review.content}</p>
+              <div className="flex flex-col justify-start">
+                <div className="my-[4px] flex items-center">
+                  <p className="text-lg font-bold text-nomad-black">{review.user.nickname}</p>
+                  <span className="mx-2 text-black">|</span>
+                  <p className="text-lg text-gray-500">
+                    {new Date(review.createdAt)
+                      .toLocaleDateString('ko-KR', {
+                        year: 'numeric',
+                        month: 'numeric',
+                        day: 'numeric',
+                      })
+                      .replace(/\//g, '. ')}
+                  </p>
+                </div>
+                <p className="text-lg text-nomad-black">{review.content}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-center">리뷰가 없습니다.</p>
+        )}
       </div>
 
-      <Pagination totalCount={reviews.length} itemsInPage={reviewsPerPage} currentPage={currentPage} onPageChange={handlePageChange} />
+      <Pagination totalCount={totalReviews} itemsInPage={reviewsPerPage} currentPage={currentPage} onPageChange={handlePageChange} />
     </section>
   );
 }

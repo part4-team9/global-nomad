@@ -1,12 +1,14 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
+import { useRouter } from 'next/navigation';
 
 import { useModal } from '@/_hooks/useModal';
 
 import axiosInstance from '@/_libs/axios';
 
+import Button from '@/_components/button';
 import Modal from '@/_components/modal';
 
 import MobileCalendar from './MobileCalendar';
@@ -34,7 +36,15 @@ export default function Calendar({ activityId }: CalendarProps) {
   const [modalMessage, setModalMessage] = useState('');
   const [fetchError, setFetchErrorState] = useState<string | null>(null);
 
-  const renderPriceDisplay = () => {
+  const router = useRouter();
+
+  const handleLoginRedirect = useCallback(() => {
+    setTimeout(() => {
+      router.push('/login');
+    }, 2000);
+  }, [router]);
+
+  const renderPriceDisplay = useCallback(() => {
     if (isMobile) return null;
     return (
       <div className="flex items-center gap-[5px] px-[24px] pb-[16px] pt-[24px] tablet:px-[16px]">
@@ -42,7 +52,7 @@ export default function Calendar({ activityId }: CalendarProps) {
         <span className="text-lg text-gray-600 tablet:text-xl"> /인</span>
       </div>
     );
-  };
+  }, [isMobile, activityData]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,14 +65,14 @@ export default function Calendar({ activityId }: CalendarProps) {
   }, []);
 
   useEffect(() => {
-    const fetchActivityData = async () => {
+    void (async () => {
       try {
         const response = await axiosInstance.get<ActivityData>(`/activities/${activityId}`);
         setActivityData(response.data);
         if (response.data) {
           setTotalPrice(response.data.price * peopleCount);
         }
-      } catch (error: unknown) {
+      } catch (error) {
         if (error instanceof AxiosError) {
           if (error.response?.status === 401) {
             setFetchErrorState('로그인을 해주세요.');
@@ -73,9 +83,7 @@ export default function Calendar({ activityId }: CalendarProps) {
           setFetchErrorState('데이터를 불러오는 중 오류가 발생했습니다.');
         }
       }
-    };
-
-    void fetchActivityData();
+    })();
   }, [activityId, peopleCount]);
 
   useEffect(() => {
@@ -86,16 +94,17 @@ export default function Calendar({ activityId }: CalendarProps) {
     }
   }, [fetchError, openModal]);
 
-  useEffect(() => {
-    if (activityData) {
-      setTotalPrice(activityData.price * peopleCount);
-    }
-  }, [activityData, peopleCount]);
-
   const handleReservation = async () => {
     if (!selectedDate || !selectedTime) {
-      setModalMessage('날짜와 시간을 선택해주세요.');
-      openModal();
+      setFetchErrorState('날짜와 시간을 선택해주세요.');
+      return;
+    }
+
+    const now = new Date();
+    const selectedDateTime = new Date(`${selectedDate}T${selectedTime.split('-')[0]}:00`);
+
+    if (selectedDateTime <= now) {
+      setFetchErrorState('이미 지난 시간은 예약할 수 없습니다.');
       return;
     }
 
@@ -108,18 +117,31 @@ export default function Calendar({ activityId }: CalendarProps) {
       });
 
       if (response.status === 201) {
-        setModalMessage('예약이 완료되었습니다.');
-        openModal();
+        setFetchErrorState('예약이 완료되었습니다.');
       } else {
-        setModalMessage('예약 중 문제가 발생했습니다. 다시 시도해주세요.');
-        openModal();
+        setFetchErrorState('예약 중 문제가 발생했습니다. 다시 시도해주세요.');
       }
-    } catch (reservationError: unknown) {
-      if (reservationError instanceof AxiosError) {
-        if (reservationError.response?.status === 401) {
-          setFetchErrorState('로그인이 필요합니다.');
-        } else {
-          setFetchErrorState(`${reservationError.message}`);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        switch (error.response?.status) {
+          case 401:
+            setFetchErrorState('로그인이 필요합니다.');
+            handleLoginRedirect();
+            return;
+          case 400:
+            setFetchErrorState('이미 지난 날짜의 체험은 예약할 수 없습니다.');
+            break;
+          case 403:
+            setFetchErrorState('해당 작업을 수행할 권한이 없습니다.');
+            break;
+          case 404:
+            setFetchErrorState('요청한 리소스를 찾을 수 없습니다.');
+            break;
+          case 500:
+            setFetchErrorState('서버 내부 오류가 발생했습니다. 잠시 후 다시 시도해주세요.');
+            break;
+          default:
+            setFetchErrorState('이미 예약한 체험이거나 중복된 시간에 예약이 있습니다.');
         }
       } else {
         setFetchErrorState('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
@@ -127,15 +149,27 @@ export default function Calendar({ activityId }: CalendarProps) {
     }
   };
 
+  const handleModalClose = useCallback(() => {
+    closeModal();
+    if (modalMessage === '로그인이 필요합니다.') {
+      handleLoginRedirect();
+    }
+  }, [closeModal, modalMessage, handleLoginRedirect]);
+
   return (
     <>
-      <Modal isOpen={isOpen} onClose={closeModal}>
-        <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-[18px] md:w-[540px] md:px-[33px]">
-          <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
-          <span className="flex justify-center">
-            <button type="button" className="h-[42px] w-[138px] rounded-[8px] bg-black text-white" onClick={closeModal}>
+      <Modal isOpen={isOpen} onClose={handleModalClose}>
+        <div className="m-auto flex h-[200px] w-[300px] flex-col justify-between rounded-lg px-[33px] pb-[28px] pt-[26px] text-2lg font-medium shadow-lg mobile:h-[250px] mobile:w-[540px]">
+          <p className="flex flex-grow items-center justify-center text-center">{modalMessage}</p>
+          <span className="flex justify-end">
+            <Button
+              variant="black"
+              className="h-[36px] w-[90px] bg-black text-white mobile:h-[48px] mobile:w-[120px]"
+              borderRadius="8px"
+              onClick={handleModalClose}
+            >
               확인
-            </button>
+            </Button>
           </span>
         </div>
       </Modal>
