@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import useUserStore from '@/store/useUserStore';
+import { AxiosError } from 'axios';
 import { fetchExperienceData } from '@/_apis/activities/fetchExperienceData';
 import { fetchReviewsData } from '@/_apis/activities/fetchReviewsData';
-import { Experience, Review } from '@/_types/details/types';
+import useUserStore from '@/store/useUserStore';
+
+import type { Experience, Review } from '@/_types/details/types';
+
 import ExperienceDetail from '../ExperienceDetail';
-import { AxiosError } from 'axios';
 
 interface ExperienceClientPageProps {
   activityId: string;
@@ -40,7 +42,7 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
         setAverageRating(reviewsData.averageRating);
       } catch (err) {
         if (err instanceof AxiosError) {
-          setError(`API 호출 오류: ${err.response?.data?.message || err.message}`);
+          setError(`API 호출 오류: ${err.message}`);
         } else if (err instanceof Error) {
           setError(`알 수 없는 오류: ${err.message}`);
         } else {
@@ -51,7 +53,7 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
       }
     };
 
-    fetchData();
+    void fetchData();
   }, [activityId]);
 
   if (loading) return <div>데이터를 불러오는 중입니다...</div>;

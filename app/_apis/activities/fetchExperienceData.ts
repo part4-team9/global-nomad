@@ -1,6 +1,8 @@
-import axiosInstance from '@/_libs/axios';
 import { AxiosError } from 'axios';
-import { Experience } from '@/_types/details/types';
+
+import type { Experience } from '@/_types/details/types';
+
+import axiosInstance from '@/_libs/axios';
 
 export const fetchExperienceData = async (activityId: string): Promise<Experience> => {
   try {

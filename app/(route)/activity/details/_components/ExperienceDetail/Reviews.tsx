@@ -1,14 +1,17 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
-import Pagination from '@/(route)/main/_components/Pagination';
-import Start from 'public/assets/icons/star.svg';
 import DefaultProfileImage from 'public/assets/images/default-profile.png';
+import Pagination from '@/(route)/main/_components/Pagination';
+
+import Start from 'public/assets/icons/star.svg';
 
 interface Review {
   content: string;
+  createdAt: string;
   id: number;
   rating: number;
-  createdAt: string;
   user: {
     id: number;
     nickname: string;
@@ -18,9 +21,9 @@ interface Review {
 
 interface ReviewSectionProps {
   averageRating: number;
+  getSatisfactionLabel: (rating: number) => string;
   reviews: Review[];
   totalReviews: number;
-  getSatisfactionLabel: (rating: number) => string;
 }
 
 export default function Reviews({ averageRating, reviews, totalReviews, getSatisfactionLabel }: ReviewSectionProps) {

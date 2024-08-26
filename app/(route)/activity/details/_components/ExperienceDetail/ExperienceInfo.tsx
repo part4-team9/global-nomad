@@ -1,20 +1,25 @@
+'use client';
+
 import Image from 'next/image';
+
 import Rating from '@/_components/rating';
-import Location from 'public/assets/icons/Location.svg';
+
 import Dropdown from '../Dropdown';
 
+import Location from 'public/assets/icons/Location.svg';
+
 interface ExperienceInfoProps {
-  experience: {
-    title: string;
-    category: string;
-    address: string;
-    creatorId: number;
-  };
   averageRating: number;
-  totalReviews: number;
   currentUserId: number | null;
-  handleEdit: () => void;
+  experience: {
+    address: string;
+    category: string;
+    creatorId: number;
+    title: string;
+  };
   handleDelete: () => void;
+  handleEdit: () => void;
+  totalReviews: number;
 }
 
 export default function ExperienceInfo({ experience, averageRating, totalReviews, currentUserId, handleEdit, handleDelete }: ExperienceInfoProps) {
@@ -34,7 +39,7 @@ export default function ExperienceInfo({ experience, averageRating, totalReviews
 
       <div className="mb-0 flex items-center gap-2 mobile:mb-[20px]">
         <span className="text-md text-nomad-black">
-          <Rating rating={averageRating} reviewCount={totalReviews} ratingTarget={'detail'} />
+          <Rating rating={averageRating} reviewCount={totalReviews} ratingTarget="detail" />
         </span>
         <span className="flex gap-[2px]">
           <Image src={Location} alt="Location" width={16} height={16} />

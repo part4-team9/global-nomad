@@ -1,10 +1,13 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
+
 import OptionMenuIcon from 'public/assets/icons/option-menu.svg';
 
 interface DropdownProps {
-  onEdit: () => void;
   onDelete: () => void;
+  onEdit: () => void;
 }
 
 export default function Dropdown({ onEdit, onDelete }: DropdownProps) {

@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 
 interface PeopleCounterProps {
@@ -11,9 +13,9 @@ export default function MobilePeopleCounter({ peopleCount, setPeopleCount }: Peo
   };
 
   return (
-    <div className="px-[24px] tablet:px-[0]">
+    <div className="px-[24px] tablet:px-0">
       <h3 className="pb-[8px] pt-[12px] text-xl font-bold text-gray-700 tablet:text-2lg">예약할 인원을 선택해 주세요.</h3>
-      <div className="border-#CDD0DC flex w-[120px] items-center justify-between rounded-[6px] border">
+      <div className="mt-[16px] flex w-[120px] items-center justify-between rounded-[6px] border border-gray-200">
         <Image
           src="/assets/icons/minus-button.svg"
           alt="마이너스 버튼"

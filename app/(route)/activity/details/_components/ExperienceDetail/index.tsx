@@ -1,28 +1,30 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+
+import { useModal } from '@/_hooks/useModal';
+
+import axiosInstance from '@/_libs/axios';
+import { fetchCoordinates } from '@/_libs/fetchCoordinates';
+
+import Modal from '@/_components/modal';
+
+import ExperienceInfo from './ExperienceInfo';
+import ImageSlider from './ImageSlider';
+import Reviews from './Reviews';
+import Calendar from '../Calendar';
+import NaverMap from '../NaverMap';
 
 import Location from 'public/assets/icons/Location.svg';
 
-import { fetchCoordinates } from '@/_libs/fetchCoordinates';
-import axiosInstance from '@/_libs/axios';
-import { useModal } from '@/_hooks/useModal';
-
-import Calendar from '../Calendar';
-import ExperienceInfo from './ExperienceInfo';
-import ImageSlider from './ImageSlider';
-import Modal from '@/_components/modal';
-import NaverMap from '../NaverMap';
-import Reviews from './Reviews';
-
 interface Review {
   content: string;
+  createdAt: string;
   id: number;
   rating: number;
-  createdAt: string;
   user: {
     id: number;
     nickname: string;
@@ -32,6 +34,7 @@ interface Review {
 
 interface ExperienceDetailProps {
   averageRating: number;
+  currentUserId: number | null;
   experience: {
     address: string;
     bannerImageUrl: string;
@@ -50,7 +53,6 @@ interface ExperienceDetailProps {
   };
   reviews: Review[];
   totalReviews: number;
-  currentUserId: number | null;
 }
 
 interface Coordinates {
@@ -84,7 +86,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
       router.push('/main');
     } catch (error: unknown) {
       if (error instanceof AxiosError && error.response) {
-        setModalMessage(error.response.data.message || '삭제할 수 없습니다.');
+        setModalMessage('삭제할 수 없습니다.');
         openModal();
       } else {
         setModalMessage('삭제 중 오류가 발생했습니다.');
@@ -180,7 +182,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
         <div className="flex tablet:gap-[26px] tablet:px-[24px]">
           <div className="w-full px-0">
             <section
-              className="border-t py-[16px] pl-[24px] pr-[14px] tablet:pl-0 tablet:pr-0"
+              className="border-t py-[16px] pl-[24px] pr-[14px] tablet:px-0"
               style={{ borderColor: 'rgba(17, 34, 17, 0.25)', borderTopWidth: '1px', left: '15px' }}
             >
               <h2 className="mb-3 text-xl font-bold text-nomad-black">체험 설명</h2>
@@ -199,7 +201,7 @@ export default function ExperienceDetail({ experience, reviews, totalReviews, av
           </div>
 
           <div className="relative">
-            <div className="fixed inset-x-0 bottom-20 z-[999] block flex justify-center mobile:hidden">
+            <div className="fixed inset-x-0 bottom-20 z-[999] flex justify-center mobile:hidden">
               <div className="w-full rounded-lg bg-white shadow-md">
                 <Calendar activityId={experience.id} />
               </div>

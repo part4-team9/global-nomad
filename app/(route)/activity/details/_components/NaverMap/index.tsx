@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 interface NaverMapProps {
   latitude: number;
@@ -34,6 +34,8 @@ declare global {
 }
 
 export default function NaverMap({ latitude, longitude }: NaverMapProps) {
+  const [mapLoadError, setMapLoadError] = useState<string | null>(null);
+
   useEffect(() => {
     const loadMap = () => {
       if (document.getElementById('naver-map-script')) return;
@@ -63,17 +65,25 @@ export default function NaverMap({ latitude, longitude }: NaverMapProps) {
           // eslint-disable-next-line no-new
           new maps.Marker(markerOptions);
         } else {
-          console.error('Naver Maps API가 로드되지 않았습니다.');
+          setMapLoadError('Naver Maps API가 로드되지 않았습니다.');
         }
       };
 
       script.onerror = () => {
-        console.error('네이버 지도 API를 로드하는 데 실패했습니다.');
+        setMapLoadError('네이버 지도 API를 로드하는 데 실패했습니다.');
       };
     };
 
     loadMap();
   }, [latitude, longitude]);
 
-  return <div id="map" style={{ width: '100%', height: '400px' }} className="rounded-[16px]" />;
+  return (
+    <div>
+      {mapLoadError ? (
+        <div className="text-red-500">지도를 불러오는 중 오류가 발생했습니다: {mapLoadError}</div>
+      ) : (
+        <div id="map" style={{ width: '100%', height: '400px' }} className="rounded-[16px]" />
+      )}
+    </div>
+  );
 }

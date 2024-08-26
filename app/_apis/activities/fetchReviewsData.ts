@@ -1,5 +1,6 @@
+import type { ReviewResponse } from '@/_types/details/types';
+
 import axiosInstance from '@/_libs/axios';
-import { ReviewResponse } from '@/_types/details/types';
 
 export const fetchReviewsData = async (activityId: string): Promise<ReviewResponse> => {
   try {

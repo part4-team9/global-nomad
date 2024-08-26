@@ -10,6 +10,7 @@ export interface Review {
 
 export interface ExperienceDetailProps {
   averageRating: number;
+  currentUserId: number | null;
   experience: {
     address: string;
     bannerImageUrl: string;
@@ -28,5 +29,4 @@ export interface ExperienceDetailProps {
   };
   reviews: Review[];
   totalReviews: number;
-  currentUserId: number | null;
 }

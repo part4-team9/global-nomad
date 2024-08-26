@@ -1,3 +1,5 @@
+'use client';
+
 import ExperienceClientPage from '../_components/ExperienceClientPage';
 
 type Params = {

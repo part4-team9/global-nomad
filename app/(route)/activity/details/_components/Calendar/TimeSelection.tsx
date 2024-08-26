@@ -1,4 +1,4 @@
-// 선택된 날짜에 대한 가능한 시간 슬롯을 표시합니다.
+'use client';
 
 import Button from '@/_components/button';
 

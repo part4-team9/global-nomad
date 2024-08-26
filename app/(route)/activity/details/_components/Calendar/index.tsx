@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 
 import { useModal } from '@/_hooks/useModal';
+
 import axiosInstance from '@/_libs/axios';
 
 import Modal from '@/_components/modal';
+
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';
 import PeopleCounter from './PeopleCounter';
@@ -30,12 +32,13 @@ export default function Calendar({ activityId }: CalendarProps) {
 
   const { isOpen, openModal, closeModal } = useModal();
   const [modalMessage, setModalMessage] = useState('');
+  const [fetchError, setFetchErrorState] = useState<string | null>(null);
 
   const renderPriceDisplay = () => {
     if (isMobile) return null;
     return (
       <div className="flex items-center gap-[5px] px-[24px] pb-[16px] pt-[24px] tablet:px-[16px]">
-        <span className="text-xl font-bold text-black tablet:text-3xl">₩ {activityData?.price.toLocaleString() || '0'}</span>
+        <span className="text-xl font-bold text-black tablet:text-3xl">₩ {activityData?.price?.toLocaleString() || '0'}</span>
         <span className="text-lg text-gray-600 tablet:text-xl"> /인</span>
       </div>
     );
@@ -62,20 +65,26 @@ export default function Calendar({ activityId }: CalendarProps) {
       } catch (error: unknown) {
         if (error instanceof AxiosError) {
           if (error.response?.status === 401) {
-            setModalMessage('로그인을 해주세요.');
+            setFetchErrorState('로그인을 해주세요.');
           } else {
-            setModalMessage(`오류 발생: ${error.message}`);
+            setFetchErrorState(`오류 발생: ${error.message}`);
           }
-          openModal();
         } else {
-          setModalMessage('데이터를 불러오는 중 오류가 발생했습니다.');
-          openModal();
+          setFetchErrorState('데이터를 불러오는 중 오류가 발생했습니다.');
         }
       }
     };
 
-    fetchActivityData();
-  }, [activityId]);
+    void fetchActivityData();
+  }, [activityId, peopleCount]);
+
+  useEffect(() => {
+    if (fetchError) {
+      setModalMessage(fetchError);
+      openModal();
+      setFetchErrorState(null);
+    }
+  }, [fetchError, openModal]);
 
   useEffect(() => {
     if (activityData) {
@@ -105,17 +114,15 @@ export default function Calendar({ activityId }: CalendarProps) {
         setModalMessage('예약 중 문제가 발생했습니다. 다시 시도해주세요.');
         openModal();
       }
-    } catch (error: unknown) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 401) {
-          setModalMessage('로그인이 필요합니다.');
+    } catch (reservationError: unknown) {
+      if (reservationError instanceof AxiosError) {
+        if (reservationError.response?.status === 401) {
+          setFetchErrorState('로그인이 필요합니다.');
         } else {
-          setModalMessage(`${error.response?.data?.message || error.message}`);
+          setFetchErrorState(`${reservationError.message}`);
         }
-        openModal();
       } else {
-        setModalMessage('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
-        openModal();
+        setFetchErrorState('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
       }
     }
   };

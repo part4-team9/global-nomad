@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import Image from 'next/image';
 
@@ -124,7 +126,7 @@ export default function TabletCalendar({
                   />
                 </div>
 
-                <div className="grid grid-cols-7 gap-[1px]">
+                <div className="grid grid-cols-7 gap-px">
                   {['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].map((day) => (
                     <div key={day} className="text-center text-md font-bold text-gray-700">
                       {day}

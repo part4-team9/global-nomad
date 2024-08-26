@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+'use client';
+
 import Image from 'next/image';
 
 import TimeSelection from './TimeSelection';

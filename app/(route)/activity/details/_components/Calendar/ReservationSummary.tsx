@@ -1,4 +1,4 @@
-// 예약 버튼을 표시합니다.
+'use client';
 
 import Button from '@/_components/button';
 
@@ -13,7 +13,7 @@ interface ReservationSummaryProps {
 export default function ReservationSummary({ handleReservation, selectedDate, selectedTime, peopleCount, totalPrice }: ReservationSummaryProps) {
   return (
     <>
-      <div className="px-[24px] tablet:px-[0]">
+      <div className="px-[24px] tablet:px-0">
         <Button
           variant="black"
           className="my-[24px] h-[56px] w-full rounded font-bold"
@@ -23,7 +23,7 @@ export default function ReservationSummary({ handleReservation, selectedDate, se
           예약하기
         </Button>
       </div>
-      <div className="flex items-center justify-between border-t border-gray-200 px-[24px] pb-[16px] pt-[16px] tablet:px-[0]">
+      <div className="flex items-center justify-between border-t border-gray-200 px-[24px] py-[16px] tablet:px-0">
         <h3 className="text-xl font-bold text-black">총 합계</h3>
         <p className="text-xl font-bold">₩{totalPrice.toLocaleString()}</p>
       </div>
