@@ -56,6 +56,14 @@
     background: #fafafa;
     border-radius: 10px;
   }
+
+  .group:hover .animate-infinite-slide-original {
+    animation-play-state: paused;
+  }
+
+  .group:hover .animate-infinite-slide-copy {
+    animation-play-state: paused;
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar {
