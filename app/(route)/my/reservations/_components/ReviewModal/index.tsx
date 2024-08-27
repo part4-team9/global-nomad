@@ -116,35 +116,42 @@ export default function ReviewModal({
             <span className="text-[28px] font-bold leading-6.5">후기 작성</span>
             <Image src={Xbtn} alt="닫기" className="cursor-pointer" onClick={handleCloseModal} />
           </div>
-          <div className="scrollbar-hide relative grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
-            <ReviewCardFrame
-              title={title}
-              bannerImageUrl={bannerImageUrl}
-              date={date}
-              startTime={startTime}
-              endTime={endTime}
-              headCount={headCount}
-              totalPrice={totalPrice}
-            />
-            <div className="flex items-center justify-center gap-2">
-              {[1, 2, 3, 4, 5].map((id) => (
-                <div key={id} onClick={() => handleStarClick(id)} className="cursor-pointer">
-                  <Image src={Star} alt={id <= rating ? '노란 별' : '빈 별'} width={56} height={56} className={id <= rating ? '' : 'grayscale'} />
-                </div>
-              ))}
-            </div>
-            <form onSubmit={onClickSubmitButton} className="flex flex-col gap-6">
-              <div className="flex flex-col gap-2">
-                <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
-                {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
+          <div className="relative">
+            <div className="scrollbar-hide relative grid max-h-[calc(100dvh-128px)] gap-8 overflow-y-auto mobile:max-h-[calc(100dvh-190px)] mobile:gap-12">
+              <ReviewCardFrame
+                activityId={activityId}
+                title={title}
+                bannerImageUrl={bannerImageUrl}
+                date={date}
+                startTime={startTime}
+                endTime={endTime}
+                headCount={headCount}
+                totalPrice={totalPrice}
+              />
+              <div className="flex items-center justify-center gap-2">
+                {[1, 2, 3, 4, 5].map((id) => (
+                  <div key={id} onClick={() => handleStarClick(id)} className="cursor-pointer">
+                    <Image src={Star} alt={id <= rating ? '노란 별' : '빈 별'} width={56} height={56} className={id <= rating ? '' : 'grayscale'} />
+                  </div>
+                ))}
               </div>
-              <Button type="submit" variant="black" disabled={buttonDisabled} className="h-14 w-full text-lg">
-                작성하기
-              </Button>
-            </form>
-            {isPending && <LoadingModal />}
-            {isSuccess && <SuccessModal activityId={activityId} />}
-            {isError && <FailModal />}
+              <form onSubmit={onClickSubmitButton} className="flex flex-col gap-6">
+                <div className="flex flex-col gap-2">
+                  <Textarea value={reviewText} onChange={handleReviewChange} size="small" placeholder="후기를 작성해 주세요" />
+                  {errMessage && <span className="mx-auto text-md text-red-500">{errMessage}</span>}
+                </div>
+                <Button type="submit" variant="black" disabled={buttonDisabled} className="h-14 w-full text-lg">
+                  작성하기
+                </Button>
+              </form>
+            </div>
+            {(isPending || isSuccess || isError) && (
+              <div className="absolute inset-0 size-full bg-white">
+                {isPending && <LoadingModal />}
+                {isSuccess && <SuccessModal activityId={activityId} />}
+                {isError && <FailModal />}
+              </div>
+            )}
           </div>
         </div>
       </div>
