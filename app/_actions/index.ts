@@ -10,7 +10,8 @@ import { removeCookie } from '@/_utils/cookie';
 export async function logout() {
   removeCookie('accessToken');
   removeCookie('refreshToken');
+  removeCookie('userId');
+  removeCookie('profileImageUrl');
+  removeCookie('authConfirm');
   redirect('/');
 }
-
-
