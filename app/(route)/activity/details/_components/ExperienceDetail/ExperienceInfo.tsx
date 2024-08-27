@@ -37,7 +37,7 @@ export default function ExperienceInfo({ experience, averageRating, totalReviews
         </div>
       </div>
 
-      <div className="mb-0 flex items-center gap-2 mobile:mb-[20px]">
+      <div className="mb-[20px] flex items-center gap-2">
         <span className="text-md text-nomad-black">
           <Rating rating={averageRating} reviewCount={totalReviews} ratingTarget="detail" />
         </span>

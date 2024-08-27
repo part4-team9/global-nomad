@@ -104,7 +104,7 @@ export default function Calendar({ activityId }: CalendarProps) {
     const selectedDateTime = new Date(`${selectedDate}T${selectedTime.split('-')[0]}:00`);
 
     if (selectedDateTime <= now) {
-      setFetchErrorState('이미 지난 시간은 예약할 수 없습니다.');
+      setFetchErrorState('시간이 지난 체험은 예약할 수 없습니다.');
       return;
     }
 

@@ -82,7 +82,7 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
               key={review.id}
               className={`flex gap-[16px] px-[24px] pb-[24px] tablet:px-0 ${index !== reviews.length - 1 ? 'border-b border-gray-200' : ''}`}
             >
-              <div>
+              <div style={{ flexBasis: '45px' }}>
                 <Image
                   src={review.user.profileImageUrl || DefaultProfileImage}
                   alt={`${review.user.nickname} 프로필 이미지`}
@@ -91,7 +91,7 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
                   className="rounded-full object-cover"
                 />
               </div>
-              <div className="flex flex-col justify-start">
+              <div className="flex flex-1 flex-col justify-start">
                 <div className="my-[4px] flex items-center">
                   <p className="text-lg font-bold text-nomad-black">{review.user.nickname}</p>
                   <span className="mx-2 text-black">|</span>

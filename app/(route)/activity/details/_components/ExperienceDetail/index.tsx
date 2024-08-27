@@ -191,7 +191,7 @@ export default function ExperienceDetail({ experience, totalReviews, averageRati
 
           <div className="relative">
             <div className="fixed inset-x-0 bottom-20 z-[999] flex justify-center mobile:hidden">
-              <div className="w-full rounded-lg bg-white shadow-md">
+              <div className="w-full bg-white shadow-md">
                 <Calendar activityId={experience.id} />
               </div>
             </div>
