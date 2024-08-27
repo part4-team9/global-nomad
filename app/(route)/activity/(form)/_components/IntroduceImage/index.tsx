@@ -86,7 +86,13 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
       }));
       setPendingImageUrls((prev) => [...prev, res]);
     } else {
-      setSubImages((prev) => [...prev, res]);
+      setSubImages((prev) => {
+        const index = prev.indexOf('loading');
+        if (index === -1) return prev;
+        const newImages = [...prev];
+        newImages.splice(index, 1, res);
+        return newImages;
+      });
     }
   };
 
@@ -107,6 +113,7 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
       filesArray.forEach((file, idx) => {
         if (fileList) {
+          setSubImages((prev) => [...prev, 'loading']);
           const json = new FormData();
           json.set('image', fileList[idx]);
           activityMutation.mutate(json);
@@ -164,7 +171,6 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
       </label>
       <FileInput
         id="sub"
-        isPending={activityMutation.isPending}
         count={imageCount}
         images={subImages}
         editImages={editImages}

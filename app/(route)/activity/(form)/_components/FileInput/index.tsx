@@ -28,22 +28,31 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param {boolean} isPending - 이미지 업로드 중인 상태를 나타내는 boolean 값.
  * @param {number} count - 로딩 상태를 나타내는 빈 슬롯의 개수.
  */
-function FileInput({ images, editImages, count, isPending, onClear, onDrop, ...rest }: FileInputProps) {
+function FileInput({ images, editImages, isPending, onClear, onDrop, ...rest }: FileInputProps) {
   return (
     <div className="grid">
       <div className="grid grid-cols-2 gap-2 tablet:gap-4 pc:grid-cols-4 pc:gap-6">
         <UploadBox {...rest} onDrop={onDrop} />
         {editImages?.map((image, idx) => <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />)}
-        {images?.map((image, idx) => <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} />)}
-
-        {isPending &&
-          Array.from({ length: count }).map((_, idx) => (
+        {images?.map((image, idx) =>
+          image !== 'loading' ? (
+            <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} />
+          ) : (
             <div key={idx} className="relative aspect-square rounded-xl">
               <div key={idx} className="absolute z-[1] flex size-full items-center justify-center rounded-xl bg-[rgba(255,255,255,0.4)]">
                 <Lottie className="size-20" animationData={Loading} loop play />
               </div>
             </div>
-          ))}
+          ),
+        )}
+
+        {isPending && (
+          <div className="relative aspect-square rounded-xl">
+            <div className="absolute z-[1] flex size-full items-center justify-center rounded-xl bg-[rgba(255,255,255,0.4)]">
+              <Lottie className="size-20" animationData={Loading} loop play />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
