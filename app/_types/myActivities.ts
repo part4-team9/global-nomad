@@ -1,3 +1,5 @@
+import type { QueryObserverResult } from '@tanstack/react-query';
+
 export interface BaseEntity {
   createdAt: string;
   id: number;
@@ -23,14 +25,14 @@ export interface ActivitiesResponse {
 }
 
 export enum ReservationStatus {
-  COMPLETE = 'complete', // 완료 싱태 (완료)
+  COMPLETED = 'completed', // 완료 상태 (완료)
   CONFIRMED = 'confirmed', // 확정 상태 (승인)
   DECLINED = 'declined', // 거절 상태 (거절)
   PENDING = 'pending', // 신청 상태 (예약)
 }
 
 export interface ReservationStatusCount {
-  [ReservationStatus.COMPLETE]?: number;
+  [ReservationStatus.COMPLETED]?: number;
   [ReservationStatus.CONFIRMED]: number;
   [ReservationStatus.DECLINED]?: number;
   [ReservationStatus.PENDING]: number;
@@ -69,7 +71,17 @@ interface Reservation extends BaseReservation {
 }
 
 export interface ReservationsResponse {
-  cursorId: number;
+  cursorId?: number;
   reservations: Reservation[];
   totalCount: number;
 }
+
+export type ReservationCardProps = {
+  activityId?: number;
+  headCount: number;
+  nickname: string;
+  onRefetch?: () => void;
+  refetch: () => Promise<QueryObserverResult<ReservationsResponse, unknown>>;
+  reservationId: number;
+  scheduleId: number | null ;
+};
