@@ -1,4 +1,4 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
 import type { ReservationsResponse } from '@/_types';
 
@@ -28,9 +28,9 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
   });
 
   return (
-    <div className="">
+    <div className="under-mobile:flex-col">
       <h3 className="mt-8">예약 내역</h3>
-      <div className="h-[300px] overflow-x-hidden overflow-y-scroll pr-2">
+      <div className="overflow-x-hidden overflow-y-scroll pr-2 mobile:h-[280px] under-mobile:h-[calc(100vh-420px)]">
         {reservationStatus?.reservations &&
           activeIndex === 0 &&
           reservationStatus.reservations.map((res) => (

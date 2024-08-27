@@ -9,9 +9,9 @@ export default function HeaderDropdown() {
   useEffect(() => {
     const updateLinkPath = () => {
       if (window.innerWidth > 768) {
-        setLinkPath('/my');
-      } else {
         setLinkPath('/my/account');
+      } else {
+        setLinkPath('/my');
       }
     };
     updateLinkPath();

@@ -33,7 +33,7 @@ export default function Header({ currentDate, goToNextMonth, goToPreviousMonth, 
           </button>
         </div>
       </div>
-      <button type="button" onClick={goToday} className="max-tablet:hidden absolute right-0 rounded hover:bg-gray-100">
+      <button type="button" onClick={goToday} className="absolute right-0 hidden rounded hover:bg-gray-100 tablet:block">
         Go Today
       </button>
     </div>

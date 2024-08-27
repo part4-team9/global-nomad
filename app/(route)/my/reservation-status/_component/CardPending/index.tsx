@@ -40,7 +40,7 @@ export default function CardPending({ activityId, nickname, headCount, reservati
   };
 
   return (
-    <div className="mb-4 w-full border p-4">
+    <div className="mt-4 w-full border p-4">
       <div className="flex gap-[10px]">
         <p className="text-lg text-gray-600">닉네임</p>
         <p className="text-lg">{nickname}</p>
