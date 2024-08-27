@@ -25,6 +25,7 @@ export default function CardSection({ activityId, selectedScheduleId, activeInde
       );
       return response.data;
     },
+    enabled: !!selectedScheduleId,
   });
 
   return (
