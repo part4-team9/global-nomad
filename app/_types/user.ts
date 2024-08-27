@@ -1,8 +1,8 @@
 export interface UserProfileData {
-  id: number;
+  createdAt: string;
   email: string;
+  id: number;
   nickname: string;
   profileImageUrl: string;
-  createdAt: string;
   updatedAt: string;
 }

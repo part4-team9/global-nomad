@@ -1,13 +1,14 @@
 'use client';
 
-import { useEffect, type PropsWithChildren } from 'react';
+import { type PropsWithChildren, useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
+import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import useDeviceType from '@/_hooks/useDeviceType';
 
-import SideUserProfileCard from '../side-user-profile-card';
 import { getUserProfile } from '@/_libs/userService';
-import { useUserProfileStore } from '@/_stores/useUserInfoState';
-import { useQuery } from '@tanstack/react-query';
+
+import SideUserProfileCard from '../side-user-profile-card';
 
 /**
  * 왼쪽 내정보 사이드 메뉴 고정된 레이아웃
@@ -16,6 +17,7 @@ function StickyLayout({ children }: PropsWithChildren) {
   const { isDevice: isPC, isLoading } = useDeviceType();
 
   const { userProfile, setUserProfile } = useUserProfileStore();
+  const DEFAULT_AVATAR = '/assets/images/default-profile.png';
 
   const { data: UserProfileData } = useQuery({
     queryKey: ['userProfile'],
@@ -41,7 +43,7 @@ function StickyLayout({ children }: PropsWithChildren) {
       ) : (
         isPC && (
           <section className="sticky top-20 h-fit max-w-[384px] flex-1">
-            <SideUserProfileCard avatarSrc={userProfile?.profileImageUrl} />
+            <SideUserProfileCard avatarSrc={userProfile?.profileImageUrl ?? DEFAULT_AVATAR} />
           </section>
         )
       )}

@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 
+import type { UserProfileData } from '@/_types/user';
+
 import createSelectors from '.';
-import { UserProfileData } from '@/_types/user';
 
 type State = {
   userProfile: UserProfileData | null;
