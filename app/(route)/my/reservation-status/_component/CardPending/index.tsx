@@ -15,7 +15,7 @@ export default function CardPending({ activityId, nickname, headCount, reservati
 
       if (status === 'confirmed') {
         const otherReservations = await axiosInstance.get<ReservationsResponse>(
-          `/my-activities/${activityId}/reservations?scheduleId=${scheduleId}status=pending`,
+          `/my-activities/${activityId}/reservations?scheduleId=${scheduleId}&status=pending`,
         );
         const otherReservationIds = otherReservations.data.reservations.filter((res) => res.id !== reservationId).map((res) => res.id);
 
@@ -40,7 +40,7 @@ export default function CardPending({ activityId, nickname, headCount, reservati
   };
 
   return (
-    <div className="w-max-[340px] mt-4 border p-4 md:w-[381px]">
+    <div className="mb-4 w-full border p-4">
       <div className="flex gap-[10px]">
         <p className="text-lg text-gray-600">닉네임</p>
         <p className="text-lg">{nickname}</p>

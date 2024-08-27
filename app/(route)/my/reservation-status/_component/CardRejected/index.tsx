@@ -2,7 +2,7 @@ import type { ReservationCardProps } from '@/_types';
 
 export default function CardRejected({ nickname, headCount }: ReservationCardProps) {
   return (
-    <div className="mt-4 w-[381px] border p-4">
+    <div className="mb-4 w-full border p-4">
       <div className="flex gap-[10px]">
         <p className="text-lg text-gray-600">닉네임</p>
         <p className="text-lg">{nickname}</p>

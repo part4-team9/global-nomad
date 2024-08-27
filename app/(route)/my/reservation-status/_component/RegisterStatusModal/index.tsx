@@ -32,25 +32,38 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
     }
   }, [isOpen]);
 
+  // 날짜 포맷 설정
   const formattedDate = new Date(date).toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
 
+  // api에 전달할 날짜
   const nextDay = new Date(date);
   nextDay.setDate(nextDay.getDate() + 1);
   const nextApiDate = nextDay.toISOString().split('T')[0];
 
+  // 예약된 스케줄 데이터 가져오기
   const { data: reservedSchedule, refetch } = useQuery<Schedule[]>({
     queryKey: ['scheduleId', activityId, formattedDate],
     queryFn: async () => {
       const response = await axiosInstance.get<Schedule[]>(`/my-Activities/${activityId}/reserved-schedule?date=${nextApiDate}`);
       return response.data;
     },
-    enabled: !!activityId,
+    enabled: isOpen && !!activityId,
   });
 
+  // 모달이 열릴 때 상태 초기화 및 첫 번째 타임 슬롯 선택
+  useEffect(() => {
+    if (isOpen && reservedSchedule?.length) {
+      const firstScheduleId = reservedSchedule[0].scheduleId;
+      setSelectedScheduleId(firstScheduleId);
+      setActiveIndex(0);
+    }
+  }, [isOpen, reservedSchedule]);
+
+  // 예약 상태 업데이트
   const updateModalCounts = useCallback(() => {
     const selectedSchedule = reservedSchedule?.find((schedule) => schedule.scheduleId === selectedScheduleId);
     setModalPending(selectedSchedule?.count.pending || 0);
@@ -61,6 +74,8 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   useEffect(() => {
     updateModalCounts();
   }, [updateModalCounts, reservedSchedule, selectedScheduleId]);
+
+  // SelectBox 값 설정
   const values = useMemo(
     () =>
       reservedSchedule?.map((schedule) => ({
@@ -70,11 +85,13 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
     [reservedSchedule],
   );
 
-  useEffect(() => {
-    if (values.length > 0 && selectedScheduleId === null) {
-      setSelectedScheduleId(values[0].id);
-    }
-  }, [values, selectedScheduleId]);
+    // 타임 슬롯 선택 시
+    const handleTimeSlotSelect = (selectedText: string) => {
+      const selectedItem = values.find((item) => item.text === selectedText);
+      if (selectedItem) {
+        setSelectedScheduleId(selectedItem.id);
+      }
+    };
 
   const handleRefetch = useCallback(() => {
     void refetch().then(() => {
@@ -95,7 +112,7 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
           {[`신청 ${modalPending}`, `승인 ${modalConfirmed}`, `거절 ${modalDeclined}`].map((label, index) => (
             <li
               key={index}
-              className={`cursor-pointer px-[10px] pb-[13px] text-xl font-semibold ${activeIndex === index ? 'border-b-4 border-green-200 text-green-200' : ''}`}
+              className={`cursor-pointer px-[10px] text-xl font-semibold ${activeIndex === index ? 'border-b-4 border-green-200 text-green-200' : ''}`}
               onClick={() => setActiveIndex(index)}
             >
               {label}
@@ -107,14 +124,8 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
         <SelectBox
           keyName="activity-title"
           values={values.map((item) => item.text)}
-          value={selectedScheduleId ? values.find((item) => item.id === selectedScheduleId)?.text : values.length > 0 ? values[0].text : ''}
-          onSelect={(keyname, selectedText) => {
-            const stringSelectedText = selectedText.toString();
-            const selectedItem = values.find((item) => item.text === stringSelectedText);
-            if (selectedItem) {
-              setSelectedScheduleId(selectedItem.id);
-            }
-          }}
+          value={selectedScheduleId ? values.find((item) => item.id === selectedScheduleId)?.text : ''}
+          onSelect={(_, selectedText) => handleTimeSlotSelect(selectedText)}
         />
         <CardSection activityId={activityId} selectedScheduleId={selectedScheduleId} activeIndex={activeIndex} onRefetch={handleRefetch} />
       </div>
