@@ -4,9 +4,10 @@ import { useState } from 'react';
 import type { FieldError, RegisterOptions } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import type { LoginFormValues } from '@/_apis/type';
-import useUserStore from '@/store/useUserStore';
 
+import type { LoginFormValues } from '@/_types/authentication';
+
+import useUserStore from '@/_stores/useUserStore';
 import { useModal } from '@/_hooks/useModal';
 
 import { postLogin } from '@/_libs/authService';

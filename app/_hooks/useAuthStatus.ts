@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import type { Response } from '@/_apis/type';
+
+import type { Response } from '@/_types/authentication';
 
 /**
  * useAuthStatus

@@ -1,11 +1,10 @@
 import { AxiosError, type AxiosResponse } from 'axios';
 
+import type { LoginFormValues, Response } from '@/_types/authentication';
 import type { GetUserType } from '@/_types/user';
 import type { UserFormData } from '@/_types/userAccount';
 
 import axiosInstance from '@/_libs/axios';
-
-import type { LoginFormValues, Response } from '../type';
 
 export const getUser = async () => {
   try {
