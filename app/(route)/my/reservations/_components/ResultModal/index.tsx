@@ -11,8 +11,8 @@ import success from 'public/assets/lottie/success.json';
 
 export function LoadingModal() {
   return (
-    <div className="absolute z-[1] flex size-full items-center justify-center bg-white">
-      <div className="-mt-10">
+    <div className="flex size-full items-start justify-center overflow-y-auto bg-white">
+      <div className="my-auto flex flex-col items-center justify-center">
         <Lottie animationData={loading} play className="size-20" />
       </div>
     </div>
@@ -23,8 +23,8 @@ export function SuccessModal({ activityId }: { activityId: number }) {
   const router = useRouter();
 
   return (
-    <div className="absolute z-[1] flex size-full items-center justify-center bg-white">
-      <div className="-mt-10 flex flex-col items-center justify-center gap-3">
+    <div className="flex size-full items-start justify-center overflow-y-auto bg-white">
+      <div className="my-auto flex flex-col items-center justify-center gap-3">
         <Lottie animationData={success} play className="size-40" />
         <h5 className="text-xl font-bold">후기 작성 완료</h5>
         <span>후기를 작성해 주셔서 감사합니다.</span>
@@ -38,8 +38,8 @@ export function SuccessModal({ activityId }: { activityId: number }) {
 
 export function FailModal() {
   return (
-    <div className="absolute z-[1] flex size-full items-center justify-center bg-white">
-      <div className="-mt-10 flex flex-col items-center justify-center gap-3">
+    <div className="flex size-full items-start justify-center overflow-y-auto bg-white">
+      <div className="my-auto flex flex-col items-center justify-center gap-3">
         <Lottie animationData={fail} play className="size-40" />
         <h5 className="text-xl font-bold">후기 작성 실패</h5>
         <span>죄송합니다. 후기 작성에 실패했습니다.</span>
