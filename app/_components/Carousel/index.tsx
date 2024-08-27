@@ -56,11 +56,11 @@ export default function Carousel() {
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useCarouselDotBtn(emblaApi, onNavButtonClick);
 
   if (isLoading) {
-    return <Image src={Spinner} fill alt="로딩중" />;
+    return <Image src={Spinner} fill alt="로딩중" className="size-20 mobile:size-32" />;
   }
 
   if (isError) {
-    return <div className="flex h-full items-center justify-center text-3xl font-bold">문제가 발생했습니다!</div>;
+    return <div className="flex h-full items-center justify-center text-base font-bold mobile:text-3xl">문제가 발생했습니다!</div>;
   }
 
   return (
@@ -93,7 +93,7 @@ export default function Carousel() {
             key={index}
             onClick={() => onDotButtonClick(index)}
             className={'dot inline-flex h-10 w-7 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-transparent'.concat(
-              index === selectedIndex ? ' dot--selected' : '',
+              index === selectedIndex ? 'dot--selected' : '',
             )}
           />
         ))}
