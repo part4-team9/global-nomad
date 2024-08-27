@@ -5,7 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import defaultProfileImg from 'public/assets/images/default-profile.png';
 
-import useUserStore from '@/_stores/useUserStore';
 import useBackgroundClick from '@/_hooks/useBackgroundClick';
 
 import HeaderDropdown from '../HeaderDropDown';
@@ -14,7 +13,6 @@ import alarm from 'public/assets/icons/alarm.svg';
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
 
 export default function UserHeader() {
-  const { user } = useUserStore((state) => state);
   const [showList, setShowList] = useState(false);
   const [userNickname, setUserNickname] = useState<string | null>(null);
   const [userProfileImgUrl, setUserProfileImgUrl] = useState<string | null>(null);

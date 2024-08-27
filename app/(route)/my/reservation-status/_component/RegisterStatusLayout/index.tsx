@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import getMyActivities from '@/_apis/reservation/getMyActivities';
 import { useQuery } from '@tanstack/react-query';
 
@@ -29,7 +29,7 @@ function RegisterStatusLayout() {
     queryFn: getMyActivities,
   });
 
-  const reservations = myActivity?.activities || [];
+  const reservations = useMemo(() => myActivity?.activities || [], [myActivity?.activities]);
   const selectBoxValue: string[] = reservations.map((reservation) => reservation.title);
 
   // 초기 title 및 id 세팅해 주는 useEffect

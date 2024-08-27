@@ -1,8 +1,8 @@
 import '../styles/globals.css';
 
-import { getLoginStatus } from '@/_utils/isLogin';
-
 import type { Metadata } from 'next';
+
+import { getLoginStatus } from '@/_utils/isLogin';
 
 import Footer from './_components/Footer';
 import Header from './_components/header';
