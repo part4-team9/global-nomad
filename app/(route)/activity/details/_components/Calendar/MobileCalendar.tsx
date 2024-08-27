@@ -103,9 +103,9 @@ export default function MobileCalendar({
       <div className="flex flex-col gap-[8px]">
         <div onClick={() => setIsPeopleCountOpen(true)} className="flex items-center gap-[6px]">
           <span className="text-xl font-bold text-black">₩{totalPrice.toLocaleString()} / </span>
-          <span className="text-2lg font-medium text-green-200">{peopleCount > 1 ? `총 ${peopleCount}인` : `${peopleCount}명`}</span>
+          <span className="cursor-pointer text-2lg font-medium text-green-200">{peopleCount > 1 ? `총 ${peopleCount}인` : `${peopleCount}명`}</span>
         </div>
-        <div onClick={() => setIsCalendarOpen(true)} className="flex items-center justify-between">
+        <div onClick={() => setIsCalendarOpen(true)} className="flex cursor-pointer items-center justify-between">
           <span className={`text-md font-semibold text-green-200 ${!selectedDate ? 'underline' : ''}`}>
             {selectedDate
               ? `${new Date(selectedDate)
@@ -193,13 +193,8 @@ export default function MobileCalendar({
               <MobilePeopleCounter peopleCount={peopleCount} setPeopleCount={setPeopleCount} />
             </div>
 
-            {/* 버튼을 하단에 고정 */}
             <div className="mt-auto w-full">
-              <Button
-                variant="black"
-                className="mt-4 h-[50px] w-full py-2 text-white"
-                onClick={() => setIsPeopleCountOpen(false)} // 클릭 시 모달을 닫음
-              >
+              <Button variant="black" className="mt-4 h-[50px] w-full py-2 text-white" onClick={() => setIsPeopleCountOpen(false)}>
                 확인
               </Button>
             </div>

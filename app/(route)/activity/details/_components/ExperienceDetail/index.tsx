@@ -84,14 +84,15 @@ export default function ExperienceDetail({ experience, totalReviews, averageRati
   };
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 424);
+    const mediaQuery = window.matchMedia('(max-width: 423px)');
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
     };
 
-    handleResize();
-    window.addEventListener('resize', handleResize);
+    mediaQuery.addEventListener('change', handleMediaChange);
+    setIsMobile(mediaQuery.matches);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => mediaQuery.removeEventListener('change', handleMediaChange);
   }, []);
 
   useEffect(() => {
@@ -145,31 +146,29 @@ export default function ExperienceDetail({ experience, totalReviews, averageRati
       </Modal>
 
       <div className="flex-grow">
-        <div>
-          <div className="px-0 mobile:px-[24px]">
-            <ExperienceInfo
-              experience={{
-                ...experience,
-                creatorId: experience.userId,
-              }}
-              averageRating={averageRating}
-              totalReviews={totalReviews}
-              currentUserId={currentUserId}
-              handleEdit={handleEdit}
-              handleDelete={handleDeleteConfirmation}
-            />
-            <ImageSlider
-              allImages={allImages}
-              currentImageIndex={currentImageIndex}
-              handlePrevImage={handlePrevImage}
-              handleNextImage={handleNextImage}
-              isMobile={isMobile}
-            />
-          </div>
+        <div className="px-0 mobile:px-[24px]">
+          <ExperienceInfo
+            experience={{
+              ...experience,
+              creatorId: experience.userId,
+            }}
+            averageRating={averageRating}
+            totalReviews={totalReviews}
+            currentUserId={currentUserId}
+            handleEdit={handleEdit}
+            handleDelete={handleDeleteConfirmation}
+          />
+          <ImageSlider
+            allImages={allImages}
+            currentImageIndex={currentImageIndex}
+            handlePrevImage={handlePrevImage}
+            handleNextImage={handleNextImage}
+            isMobile={isMobile}
+          />
         </div>
 
         <div className="flex tablet:gap-[26px] tablet:px-[24px]">
-          <div className="w-full px-0">
+          <div className="min-w-0 flex-1 px-0">
             <section
               className="border-t py-[16px] pl-[24px] pr-[14px] tablet:px-0"
               style={{ borderColor: 'rgba(17, 34, 17, 0.25)', borderTopWidth: '1px', left: '15px' }}

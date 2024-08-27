@@ -1,5 +1,3 @@
-'use client';
-
 import { useCallback, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
@@ -55,17 +53,30 @@ export default function Calendar({ activityId }: CalendarProps) {
   }, [isMobile, activityData]);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 424);
-      setIsTablet(window.innerWidth >= 424 && window.innerWidth <= 767);
+    const mediaQuery = window.matchMedia('(max-width: 423px)');
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      setIsMobile(e.matches);
     };
+
+    const handleResize = () => {
+      setIsTablet(window.innerWidth > 423 && window.innerWidth <= 767);
+    };
+
+    setIsMobile(mediaQuery.matches);
     handleResize();
+
+    mediaQuery.addEventListener('change', handleMediaChange);
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleMediaChange);
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   useEffect(() => {
-    void (async () => {
+    const fetchData = async () => {
       try {
         const response = await axiosInstance.get<ActivityData>(`/activities/${activityId}`);
         setActivityData(response.data);
@@ -83,7 +94,9 @@ export default function Calendar({ activityId }: CalendarProps) {
           setFetchErrorState('데이터를 불러오는 중 오류가 발생했습니다.');
         }
       }
-    })();
+    };
+
+    void fetchData();
   }, [activityId, peopleCount]);
 
   useEffect(() => {
@@ -182,6 +195,7 @@ export default function Calendar({ activityId }: CalendarProps) {
         <div className="tablet:px-[24px]">
           {isMobile ? (
             <MobileCalendar
+              key={`mobile-calendar-${isMobile}`}
               currentDate={currentDate}
               setCurrentDate={setCurrentDate}
               selectedDate={selectedDate}
@@ -199,6 +213,7 @@ export default function Calendar({ activityId }: CalendarProps) {
               <h3 className="border-t border-gray-200 px-[24px] pb-[8px] pt-[16px] text-xl font-bold text-nomad-black tablet:px-0">날짜</h3>
               {isTablet ? (
                 <TabletCalendar
+                  key={`tablet-calendar-${isTablet}`}
                   currentDate={currentDate}
                   setCurrentDate={setCurrentDate}
                   selectedDate={selectedDate}
@@ -209,6 +224,7 @@ export default function Calendar({ activityId }: CalendarProps) {
                 />
               ) : (
                 <PCCalendar
+                  key="pc-calendar"
                   currentDate={currentDate}
                   setCurrentDate={setCurrentDate}
                   selectedDate={selectedDate}

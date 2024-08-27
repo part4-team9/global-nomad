@@ -90,7 +90,7 @@ export default function TabletCalendar({
 
   return (
     <>
-      <div onClick={() => setIsCalendarOpen(true)} className="w-full cursor-pointer rounded-lg px-[24px] py-2 font-semibold text-nomad-black">
+      <div onClick={() => setIsCalendarOpen(true)} className="w-full cursor-pointer rounded-lg px-[24px] py-2 font-semibold text-nomad-black underline">
         {selectedDate && selectedTime ? `${selectedDate} ${selectedTime}` : '날짜 선택하기'}
       </div>
 

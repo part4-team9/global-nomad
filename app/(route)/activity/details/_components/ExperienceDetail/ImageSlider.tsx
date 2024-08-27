@@ -18,7 +18,6 @@ export default function ImageSlider({ allImages, currentImageIndex, handlePrevIm
     <div>
       {isMobile ? (
         <div className="relative h-[310px] w-full">
-          {/* 이미지 슬라이드 */}
           <Image src={allImages[currentImageIndex]} alt={`이미지 ${currentImageIndex + 1}`} layout="fill" objectFit="cover" priority />
           <div onClick={handlePrevImage} className="absolute left-[15px] top-1/2 -translate-y-1/2 transform cursor-pointer">
             <Image src={MoveLeftIcon} alt="왼쪽으로 이동" width={24} height={24} />
