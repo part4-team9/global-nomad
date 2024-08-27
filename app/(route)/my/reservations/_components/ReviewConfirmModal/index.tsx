@@ -43,7 +43,10 @@ function ReviewConfirmModal({ confirmModal, setConfirmModal, handleSubmit }: Rev
             className="absolute bottom-0 grid w-full gap-4 rounded-t-xl bg-white px-4 pb-[45px] pt-6 mobile:rounded-xl mobile:px-6 mobile:pt-7"
           >
             <Lottie animationData={checkAnimation} play loop={false} className="mx-auto size-10" />
-            <span className="text-center font-bold mobile:text-xl">작성하신 후기를 등록하시겠습니까?</span>
+            <p className="grid gap-2">
+              <span className="text-center font-bold mobile:text-xl">작성하신 후기를 등록하시겠습니까?</span>
+              <span className="text-center">후기를 등록한 후에는 수정하실 수 없습니다.</span>
+            </p>
             <div className="mx-auto mt-2 flex flex-wrap justify-center gap-3 px-4 mobile:px-6">
               <Button variant="white" onClick={closeModal} className="w-[120px] py-2">
                 이어서 작성

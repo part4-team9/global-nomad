@@ -1,8 +1,10 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { formatDate, formatNumberWithCommas } from '@/_utils/format';
 
 interface ReviewCardFrameProps {
+  activityId: number;
   bannerImageUrl: string;
   date: string;
   endTime: string;
@@ -23,24 +25,28 @@ interface ReviewCardFrameProps {
  * @param {number} totalPrice - 체험 가격 입니다.
  */
 
-export default function ReviewCardFrame({ title, bannerImageUrl, date, startTime, endTime, headCount, totalPrice }: ReviewCardFrameProps) {
+export default function ReviewCardFrame({ activityId, title, bannerImageUrl, date, startTime, endTime, headCount, totalPrice }: ReviewCardFrameProps) {
   return (
     <div className="flex gap-2 overflow-hidden mobile:gap-6">
       <div>
-        <div className="relative aspect-square min-w-[100px] overflow-hidden mobile:w-[126px]">
-          <Image
-            src={bannerImageUrl}
-            fill
-            alt={`${title} 사진`}
-            style={{ objectFit: 'cover' }}
-            sizes="max-width:100%"
-            priority
-            className="aspect-square rounded-xl transition-transform duration-300 ease-in-out hover:scale-110"
-          />
+        <div className="relative aspect-square min-w-[100px] overflow-hidden rounded-xl mobile:w-[126px]">
+          <Link href={`/activity/details/${activityId}`}>
+            <Image
+              src={bannerImageUrl}
+              fill
+              alt={`${title} 사진`}
+              style={{ objectFit: 'cover' }}
+              sizes="max-width:100%"
+              priority
+              className="aspect-square transition-transform duration-300 ease-in-out hover:scale-110"
+            />
+          </Link>
         </div>
       </div>
       <div className="flex flex-1 flex-col gap-1.5 overflow-hidden font-bold mobile:gap-4">
-        <span className="break-keep text-lg leading-[1.6] mobile:text-xl mobile:leading-[1.3]">{title}</span>
+        <Link href={`/activity/details/${activityId}`} className="break-keep text-lg leading-[1.6] mobile:text-xl mobile:leading-[1.3]">
+          {title}
+        </Link>
         <div className="flex flex-wrap gap-0.5 text-md font-regular leading-[1.7] mobile:gap-2 mobile:text-2lg mobile:leading-[1.3]">
           <span>{formatDate(date)}</span>
           <span>·</span>
