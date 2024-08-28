@@ -1,5 +1,7 @@
 'use client';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { usePathname } from 'next/navigation';
@@ -16,7 +18,7 @@ import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import { useModal } from '@/_hooks/useModal';
 
 import { generateProfileImageURl, getUserProfile, patchUserProfile } from '@/_libs/userService';
-import { convertURLtoFile } from '@/_utils/convertURLtoFile';
+import { convertSVGToPNGFile, convertURLtoFile } from '@/_utils/convertURLtoFile';
 
 import AvatarEditBtnWrapper from './_components/AvatarEditBtnWrapper';
 import ChangeProfileImageModal from './_components/ChangeProfileImageModal';
@@ -48,9 +50,7 @@ const profileActionButtons: ProfileButtonListProps[] = [
 ];
 
 export default function SideUserProfileCard() {
-  const DEFAULT_AVATAR = '/assets/icons/default-profile.svg';
-
-  const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(DEFAULT_AVATAR);
+  const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(DEFAULT_IMAGE);
   const pathname = usePathname();
 
   const { isOpen, openModal, closeModal } = useModal();
@@ -68,7 +68,7 @@ export default function SideUserProfileCard() {
   useEffect(() => {
     if (UserProfileData) {
       if (!UserProfileData.profileImageUrl) {
-        UserProfileData.profileImageUrl = DEFAULT_AVATAR;
+        UserProfileData.profileImageUrl = DEFAULT_IMAGE;
       }
       setCurrentAvatarSrc(UserProfileData.profileImageUrl);
       setUserProfile(() => UserProfileData);
@@ -102,7 +102,7 @@ export default function SideUserProfileCard() {
   };
 
   const handleImageDelete = async () => {
-    const file = await convertURLtoFile(DEFAULT_AVATAR);
+    const file = await convertSVGToPNGFile(DEFAULT_IMAGE);
     uploadImage(file);
   };
 

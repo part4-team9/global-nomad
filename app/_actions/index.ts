@@ -13,5 +13,6 @@ export async function logout() {
   removeCookie('userId');
   removeCookie('profileImageUrl');
   removeCookie('authConfirm');
+
   redirect('/');
 }
