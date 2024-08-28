@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { set } from 'react-hook-form';
 import { usePathname } from 'next/navigation';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
@@ -20,6 +21,7 @@ import AvatarEditBtnWrapper from './_components/AvatarEditBtnWrapper';
 import ChangeProfileImageModal from './_components/ChangeProfileImageModal';
 import type { ProfileButtonListProps } from './_components/ProfileButton';
 import ProfileBtn from './_components/ProfileButton';
+import FullScreenLoader from '../FullScreenLoader';
 
 const profileActionButtons: ProfileButtonListProps[] = [
   {
@@ -44,11 +46,7 @@ const profileActionButtons: ProfileButtonListProps[] = [
   },
 ];
 
-interface SideUserProfileCardProps {
-  isLoading: boolean;
-}
-
-export default function SideUserProfileCard({ isLoading }: SideUserProfileCardProps) {
+export default function SideUserProfileCard() {
   const DEFAULT_AVATAR = '/assets/icons/default-profile.svg';
 
   const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(DEFAULT_AVATAR);
@@ -58,6 +56,8 @@ export default function SideUserProfileCard({ isLoading }: SideUserProfileCardPr
   const queryClient = useQueryClient();
 
   const { userProfile, setUserProfile } = useUserProfileStore();
+
+  const [isLoading, setLoading] = useState(false);
 
   const { data: UserProfileData } = useQuery({
     queryKey: ['userProfile'],
@@ -73,6 +73,7 @@ export default function SideUserProfileCard({ isLoading }: SideUserProfileCardPr
 
   const { mutate: uploadImage } = useMutation<string, Error, File>({
     mutationFn: generateProfileImageURl,
+    onMutate: () => setLoading(true),
     onSuccess: async (profileImageUrl: string) => {
       setCurrentAvatarSrc(profileImageUrl);
       try {
@@ -81,10 +82,13 @@ export default function SideUserProfileCard({ isLoading }: SideUserProfileCardPr
         await queryClient.invalidateQueries({ queryKey: ['userProfile'] });
       } catch (err) {
         console.error('Error updating user profile:', err);
+      } finally {
+        setLoading(false);
       }
     },
     onError: (error: Error) => {
       console.error('Image upload failed:', error.message);
+      setLoading(false);
     },
   } satisfies UseMutationOptions<string, Error, File, unknown>);
 
@@ -99,6 +103,7 @@ export default function SideUserProfileCard({ isLoading }: SideUserProfileCardPr
 
   return (
     <>
+      <FullScreenLoader isVisible={isLoading} />
       <ChangeProfileImageModal
         isOpen={isOpen}
         onClose={closeModal}
@@ -108,11 +113,7 @@ export default function SideUserProfileCard({ isLoading }: SideUserProfileCardPr
       />
       <div className="flex h-[432px] w-full min-w-[215px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
         <div className="flex justify-center">
-          {isLoading ? (
-            <Skeleton className="size-[160px] overflow-hidden rounded-[50%]" />
-          ) : (
-            <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc} onClick={openModal} />
-          )}
+          <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc} onClick={openModal} />
         </div>
         <div className="flex flex-col gap-2">
           {profileActionButtons.map((item, idx) => (
