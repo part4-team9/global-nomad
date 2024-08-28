@@ -70,9 +70,9 @@ export default function Carousel() {
           {data?.activities.map((activity, i) => (
             <div key={i} className="relative size-full flex-shrink-0" data-id={activity.id}>
               <Image src={activity.bannerImageUrl} alt={activity.title} fill className="flex items-center justify-center object-cover" />
-              <div className="relative z-20 flex size-full max-w-[250px] flex-col items-center justify-center break-keep pl-7 text-xl font-bold text-white xl:left-[100px] 2xl:left-[200px] mobile:max-w-[450px] mobile:pl-16 mobile:text-[40px] mobile:leading-[60px] tablet:max-w-[600px] tablet:pl-20 tablet:text-5xl tablet:leading-[60px]">
+              <div className="relative z-20 mx-auto flex size-full max-w-[1100px] flex-col items-center justify-center break-keep px-6 text-xl font-bold text-white mobile:text-[40px] mobile:leading-[60px] tablet:text-5xl tablet:leading-[60px]">
                 <span className="mb-2 w-full text-left leading-7 mobile:mb-5 mobile:leading-[50px] tablet:leading-[60px]">{activity.title}</span>
-                <span className="w-full text-left text-sm mobile:text-xl tablet:text-2xl">{`${calendarNum}월의 인기 경험 BEST 🔥`}</span>
+                <span className="w-full text-left text-sm font-medium mobile:text-xl tablet:text-2xl">{`${calendarNum}월의 인기 경험 BEST 🔥`}</span>
               </div>
               <div className="absolute top-0 z-10 size-full bg-bannerGradient" />
             </div>
@@ -87,16 +87,18 @@ export default function Carousel() {
           </button>
         </div>
       </div>
-      <div className="dots absolute inset-x-0 top-0 z-50 flex flex-wrap items-center justify-center">
-        {scrollSnaps.map((_, index) => (
-          <DotButton
-            key={index}
-            onClick={() => onDotButtonClick(index)}
-            className={'dot inline-flex h-10 w-7 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-transparent'.concat(
-              index === selectedIndex ? 'dot--selected' : '',
-            )}
-          />
-        ))}
+      <div className="relative bottom-full mx-auto flex size-full max-w-[1100px] justify-center">
+        <div className="absolute left-4 top-[62%] flex flex-wrap items-center justify-center">
+          {scrollSnaps.map((_, index) => (
+            <DotButton
+              key={index}
+              onClick={() => onDotButtonClick(index)}
+              className={'dot inline-flex h-10 w-7 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-transparent'.concat(
+                index === selectedIndex ? ' dot--selected' : '',
+              )}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
