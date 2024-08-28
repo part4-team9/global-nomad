@@ -18,6 +18,16 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onDrop?: React.DragEventHandler<HTMLDivElement>;
 }
 
+function LoadingImage() {
+  return (
+    <div className="relative aspect-square rounded-xl">
+      <div className="absolute z-[1] flex size-full items-center justify-center rounded-xl bg-[rgba(255,255,255,0.4)]">
+        <Lottie className="size-20" animationData={Loading} loop play />
+      </div>
+    </div>
+  );
+}
+
 /**
  * FileInput 컴포넌트는 사용자가 이미지를 업로드하거나, 기존 이미지를 수정할 수 있는 기능을 제공합니다.
  * 이미지 미리보기, 삭제 기능, 로딩 애니메이션 등을 지원합니다.
@@ -28,22 +38,21 @@ interface FileInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
  * @param {boolean} isPending - 이미지 업로드 중인 상태를 나타내는 boolean 값.
  * @param {number} count - 로딩 상태를 나타내는 빈 슬롯의 개수.
  */
+
 function FileInput({ images, editImages, isPending, onClear, onDrop, ...rest }: FileInputProps) {
   return (
     <div className="grid">
       <div className="grid grid-cols-2 gap-2 tablet:gap-4 pc:grid-cols-4 pc:gap-6">
         <UploadBox {...rest} onDrop={onDrop} />
-        {editImages?.map((image, idx) => <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />)}
-        {images?.map((image, idx) =>
-          image !== 'loading' ? (
-            <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} />
+        {editImages?.map((image, idx) =>
+          image.imageUrl !== 'loading' ? (
+            <ImagePreview key={idx} imageSrc={image.imageUrl} onClick={() => onClear(image.imageUrl, image?.id)} />
           ) : (
-            <div key={idx} className="relative aspect-square rounded-xl">
-              <div key={idx} className="absolute z-[1] flex size-full items-center justify-center rounded-xl bg-[rgba(255,255,255,0.4)]">
-                <Lottie className="size-20" animationData={Loading} loop play />
-              </div>
-            </div>
+            <LoadingImage key={idx} />
           ),
+        )}
+        {images?.map((image, idx) =>
+          image !== 'loading' ? <ImagePreview key={idx} imageSrc={image} onClick={() => onClear(image)} /> : <LoadingImage key={idx} />,
         )}
 
         {isPending && (
