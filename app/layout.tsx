@@ -22,8 +22,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko">
       <body>
-        <Header isLogIn={isLogIn} />
         <Providers>
+          <Header isLogIn={isLogIn} />
           <main className="mt-[70px]">{children}</main>
         </Providers>
         <Footer />

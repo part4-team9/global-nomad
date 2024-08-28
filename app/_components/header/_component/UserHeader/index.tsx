@@ -6,9 +6,9 @@ import Image from 'next/image';
 
 import useBackgroundClick from '@/_hooks/useBackgroundClick';
 
+import AlarmList from '../AlarmList';
 import HeaderDropdown from '../HeaderDropDown';
 
-import alarm from 'public/assets/icons/alarm.svg';
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
 import defaultProfileImg from 'public/assets/icons/default-profile.svg';
 
@@ -39,7 +39,7 @@ export default function UserHeader() {
   return (
     <div className="flex items-center">
       <div className="cursor-pointer border-r border-gray-200 pr-3 md:pr-[25px]">
-        <Image src={alarm} alt="alarm" />
+        <AlarmList />
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]" onClick={toggleDropdown} ref={dropdownRef}>
         <div className="relative size-8 cursor-pointer overflow-hidden rounded-full">
