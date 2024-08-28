@@ -75,7 +75,14 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
   const getResponse = (res: string) => {
     if (editValue && setEditFormData && setEditDetailData) {
-      setEditImages((prev) => [...prev, { imageUrl: res }]);
+      setEditImages((prev) => {
+        const index = prev.findIndex((image) => image.imageUrl === 'loading');
+        if (index === -1) return prev;
+        const newImages = [...prev];
+        newImages.splice(index, 1, { imageUrl: res });
+        return newImages;
+      });
+
       setEditFormData((prev) => ({
         ...prev,
         subImageUrlsToAdd: [...prev.subImageUrlsToAdd, res],
@@ -113,7 +120,11 @@ function IntroduceImage({ edit, editValue, setRegisterFormData, setEditFormData,
 
       filesArray.forEach((file, idx) => {
         if (fileList) {
-          setSubImages((prev) => [...prev, 'loading']);
+          if (edit) {
+            setEditImages((prev) => [...prev, { imageUrl: 'loading' }]);
+          } else {
+            setSubImages((prev) => [...prev, 'loading']);
+          }
           const json = new FormData();
           json.set('image', fileList[idx]);
           activityMutation.mutate(json);
