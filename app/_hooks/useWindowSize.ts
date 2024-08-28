@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import debounce from 'lodash.debounce';
+import { debounce } from 'lodash';
 
 /**
  * 브라우저 창의 너비(width)를 추적하고 반환합니다.

@@ -5,7 +5,7 @@ import type { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 import { getActivity, patchActivity } from '@/_apis/activities/activityForm';
 import CommonModal from '@/(route)/activity/(form)/_components/CommonModal';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type { ActivityEdit, ErrorResponseMessage } from '@/_types/activities/form.types';
 
@@ -24,6 +24,7 @@ interface EditLayoutProps {
  * @param {string} id 수정할 체험의 ID 값
  */
 function EditLayout({ id }: EditLayoutProps) {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const { data } = useQuery({ queryKey: ['activity', id], queryFn: () => getActivity(id) });
   const { modalState, setModalState, activeCloseModal } = useModalState();
@@ -32,8 +33,9 @@ function EditLayout({ id }: EditLayoutProps) {
 
   const activityMutation = useMutation({
     mutationFn: patchActivity,
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       const { id: postId } = res.data;
+      await queryClient.invalidateQueries({ queryKey: ['activity', id] });
       setModalState((prev) => ({
         ...prev,
         isOpen: true,
