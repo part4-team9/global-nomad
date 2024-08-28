@@ -1,11 +1,11 @@
 import { create } from 'zustand';
 
-import type { UserProfileData } from '@/_types/user';
+import type { GetUserType } from '@/_types/user';
 
 import createSelectors from '.';
 
 type State = {
-  userProfile: UserProfileData | null;
+  userProfile: GetUserType | null;
 };
 
 type Actions = {
