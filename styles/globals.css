@@ -168,3 +168,24 @@
   width: 40%;
   height: 40%;
 }
+
+blockquote {
+  border-left: 4px solid #ccc;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  padding-left: 16px;
+}
+
+.text-base ol,
+.text-base ul {
+  padding-left: 24px;
+  line-height: 1.6;
+}
+
+.text-base ol li {
+  list-style: auto;
+}
+
+.text-base ul li {
+  list-style: disc;
+}
