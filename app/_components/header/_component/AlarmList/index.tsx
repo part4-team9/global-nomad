@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import type { Notification } from '@/_libs/notificationService';
@@ -108,17 +109,19 @@ function ListItem({ notification, onDelete }: ListItemProps) {
   const timeSinceUpdate = dayjs(notification.updatedAt).fromNow();
 
   return (
-    <div
-      className={`flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4 ${isRead ? 'opacity-50' : 'opacity-100'}`}
-      onClick={handleClick}
-    >
-      {extracted && (
-        <div>
-          <ListContent extractedContent={extracted} notificationId={notification.id} onDelete={onDelete} />
-          <div className="mt-2 text-sm text-gray-500">{timeSinceUpdate}</div>
-        </div>
-      )}
-    </div>
+    <Link href={`/activity/details/${notification.id - 57}`} target="_blank">
+      <div
+        className={`flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4 ${isRead ? 'opacity-50' : 'opacity-100'}`}
+        onClick={handleClick}
+      >
+        {extracted && (
+          <div>
+            <ListContent extractedContent={extracted} notificationId={notification.id} onDelete={onDelete} />
+            <div className="mt-2 text-sm text-gray-500">{timeSinceUpdate}</div>
+          </div>
+        )}
+      </div>
+    </Link>
   );
 }
 
