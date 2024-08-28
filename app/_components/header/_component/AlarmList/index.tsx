@@ -109,19 +109,17 @@ function ListItem({ notification, onDelete }: ListItemProps) {
   const timeSinceUpdate = dayjs(notification.updatedAt).fromNow();
 
   return (
-    <Link href={`/activity/details/${notification.id - 57}`} target="_blank">
-      <div
-        className={`flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4 ${isRead ? 'opacity-50' : 'opacity-100'}`}
-        onClick={handleClick}
-      >
-        {extracted && (
-          <div>
-            <ListContent extractedContent={extracted} notificationId={notification.id} onDelete={onDelete} />
-            <div className="mt-2 text-sm text-gray-500">{timeSinceUpdate}</div>
-          </div>
-        )}
-      </div>
-    </Link>
+    <div
+      className={`flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4 ${isRead ? 'opacity-50' : 'opacity-100'}`}
+      onClick={handleClick}
+    >
+      {extracted && (
+        <div>
+          <ListContent extractedContent={extracted} notificationId={notification.id} onDelete={onDelete} />
+          <div className="mt-2 text-sm text-gray-500">{timeSinceUpdate}</div>
+        </div>
+      )}
+    </div>
   );
 }
 
@@ -181,16 +179,23 @@ function ListContent({ extractedContent, notificationId, onDelete }: ListContent
   return (
     <div>
       <div className="flex h-6 justify-between">
-        {typeDot(type)}{' '}
-        <button type="button" className="text-gray-500 hover:text-gray-700" onClick={() => onDelete(notificationId)}>
+        {typeDot(type)}
+        <button
+          type="button"
+          className="text-gray-500 hover:text-gray-700"
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(notificationId);
+          }}
+        >
           X
         </button>
       </div>
-      <div>
+      <Link href={`/activity/details/${notificationId - 57}`} target="_blank">
         <div className="text-md/[22px] font-medium">{title}</div>
         <div className="text-sm/[22px]">({time})</div>
         <div className="text-sm/[22px]">{typeText(type)}</div>
-      </div>
+      </Link>
     </div>
   );
 }
