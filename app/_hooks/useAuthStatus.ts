@@ -20,7 +20,7 @@ function useAuthStatus() {
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');
-    const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+    const isLoggedIn = sessionStorage.getItem('isLogIn');
 
     if (user) {
       const userData: Response = JSON.parse(user);
