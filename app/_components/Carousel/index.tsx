@@ -78,7 +78,7 @@ export default function Carousel() {
             </div>
           ))}
         </div>
-        <div className="absolute inset-0 z-50 mx-auto flex max-w-[340px] justify-between mobile:max-w-[740px] mobile:px-4 tablet:max-w-[1240px] tablet:px-8">
+        <div className="absolute inset-0 z-20 mx-auto flex max-w-[340px] justify-between mobile:max-w-[740px] mobile:px-4 tablet:max-w-[1240px] tablet:px-8">
           <button type="button" onClick={scrollPrev} className="hidden group-hover:block">
             <Image src={Btn} alt="이전 버튼" width={40} height={40} className="size-8 mobile:size-10" />
           </button>
@@ -94,7 +94,7 @@ export default function Carousel() {
               key={index}
               onClick={() => onDotButtonClick(index)}
               className={'dot inline-flex h-10 w-7 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-transparent'.concat(
-                index === selectedIndex ? ' dot--selected' : '',
+                index === selectedIndex ? 'dot--selected' : '',
               )}
             />
           ))}

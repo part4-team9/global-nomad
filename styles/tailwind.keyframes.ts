@@ -17,6 +17,14 @@ const keyframes = {
     '0%': { transform: 'translateX(0)' },
     '100%': { transform: 'translateX(-200%)' },
   },
+  'accordion-down': {
+    from: { height: '0' },
+    to: { height: 'var(--radix-accordion-content-height)' },
+  },
+  'accordion-up': {
+    from: { height: 'var(--radix-accordion-content-height)' },
+    to: { height: '0' },
+  },
 };
 
 export default keyframes;
