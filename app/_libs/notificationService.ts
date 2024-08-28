@@ -16,6 +16,6 @@ export interface MyNotification {
 }
 
 export const getMyNotifications = async (): Promise<MyNotification> => {
-  const response = await axiosInstance.get<MyNotification>('/my-notifications');
+  const response = await axiosInstance.get<MyNotification>('/my-notifications?size=100');
   return response.data;
 };

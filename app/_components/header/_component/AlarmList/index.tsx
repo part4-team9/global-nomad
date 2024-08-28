@@ -1,11 +1,15 @@
 'use client';
 
 import { useState } from 'react';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
 
 import type { Notification } from '@/_libs/notificationService';
 import { getMyNotifications } from '@/_libs/notificationService';
+import type { ExtractSentence } from '@/_utils/notification';
+import { extractSentence, ListContentType } from '@/_utils/notification';
 
 import alarm from 'public/assets/icons/alarm.svg';
 
@@ -50,13 +54,98 @@ function List({ onClose, listItems }: ListProps) {
       </div>
       <div className="flex max-h-[400px] flex-col gap-2 overflow-y-scroll pr-1">
         {listItems.map((item, idx) => (
-          <ListItem key={idx} />
+          <ListItem key={idx} notification={item} />
         ))}
       </div>
     </div>
   );
 }
 
-function ListItem() {
-  return <div className="flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4">asdasd</div>;
+interface ListItemProps {
+  notification: Notification;
+}
+
+function ListItem({ notification }: ListItemProps) {
+  dayjs.extend(relativeTime);
+
+  const extracted: ExtractSentence | null = extractSentence(notification.content);
+  const timeSinceUpdate = dayjs(notification.updatedAt).fromNow();
+  return (
+    <div className="flex flex-col gap-1 rounded-[5px] border border-gray-100 bg-white px-3 py-4">
+      {extracted && (
+        <div>
+          <ListContent extractedContent={extracted} />
+          <div className="text-sm text-gray-500">{timeSinceUpdate}</div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+interface ListContentProps {
+  extractedContent: ExtractSentence;
+}
+
+function ListContent({ extractedContent }: ListContentProps) {
+  const { sentence, type } = extractedContent;
+
+  const typeText = (contentType: ListContentType) => {
+    switch (contentType) {
+      case ListContentType.CONFIRMED:
+        return (
+          <div className="whitespace-nowrap">
+            예약이 <span className="text-blue-500">승인</span>되었습니다.
+          </div>
+        );
+      case ListContentType.DECLINED:
+        return (
+          <p>
+            예약이 <p className="text-red-500">거절</p>되었습니다.
+          </p>
+        );
+      case ListContentType.NEW:
+        return <p className="text-green-300">새로 들어왔어요.</p>;
+      default:
+        return '';
+    }
+  };
+
+  const typeDot = (contentType: ListContentType) => {
+    switch (contentType) {
+      case ListContentType.CONFIRMED:
+        return <Image src="/assets/icons/alarmList/alarm-dot-confirmed.svg" alt="alarm-dot-confirmed" width={5} height={5} />;
+      case ListContentType.DECLINED:
+        return <Image src="/assets/icons/alarmList/alarm-dot-declined.svg" alt="alarm-dot-declined" width={5} height={5} />;
+      case ListContentType.NEW:
+        return <Image src="/assets/icons/alarmList/alarm-dot-new.svg" alt="alarm-dot-new" width={5} height={5} />;
+      default:
+        return '';
+    }
+  };
+
+  const splitSentence = (_sentence: string) => {
+    const match = _sentence.match(/(.+)\((\d{4}-\d{2}-\d{2}\s~?\s?\d{2}:\d{2}~?\d{2}:\d{2})\)/);
+    if (match) {
+      return { title: match[1], time: match[2] };
+    }
+    return { title: _sentence, time: '' };
+  };
+
+  const { title, time } = splitSentence(sentence);
+
+  return (
+    <div>
+      <div className="flex h-6 justify-between">
+        {typeDot(type)}{' '}
+        <button type="button" className="text-gray-500 hover:text-gray-700">
+          X
+        </button>
+      </div>
+      <div>
+        <div className="text-md/[22px] font-medium">{title}</div>
+        <div className="text-sm/[22px]">({time})</div>
+        <div className="text-sm/[22px]">{typeText(type)}</div>
+      </div>
+    </div>
+  );
 }
