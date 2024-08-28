@@ -3,7 +3,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import defaultProfileImg from 'public/assets/images/default-profile.png';
 
 import useBackgroundClick from '@/_hooks/useBackgroundClick';
 
@@ -11,6 +10,7 @@ import AlarmList from '../AlarmList';
 import HeaderDropdown from '../HeaderDropDown';
 
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
+import defaultProfileImg from 'public/assets/icons/default-profile.svg';
 
 export default function UserHeader() {
   const [showList, setShowList] = useState(false);
@@ -42,8 +42,8 @@ export default function UserHeader() {
         <AlarmList />
       </div>
       <div className="ml-3 flex items-center justify-between gap-[10px] md:ml-[25px]" onClick={toggleDropdown} ref={dropdownRef}>
-        <div className="size-8 cursor-pointer overflow-hidden rounded-full">
-          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" width={32} height={32} priority />
+        <div className="relative size-8 cursor-pointer overflow-hidden rounded-full">
+          <Image src={userProfileImgUrl || defaultProfileImg} alt="profile image" fill sizes="max-width:100%" priority style={{ objectFit: 'cover' }} />
         </div>
         <div className="relative flex items-center gap-1">
           <div className="cursor-pointer">{userNickname}</div>

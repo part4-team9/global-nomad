@@ -3,7 +3,10 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 
+import type { Activity } from '@/_types/activities/types';
+
 import useGetActivities from '@/_hooks/activities/useGetActivities';
+import usePagination from '@/_hooks/activities/usePagination';
 import useResFetchCount from '@/_hooks/activities/useResFetchCount';
 
 import ActivityGrid from './ActivityGrid/ActivityGrid';
@@ -38,11 +41,15 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
     category: categoryValue,
   });
 
+  const totalPages = Math.ceil((data?.totalCount as number) / fetchSize);
+
+  const { pageNumbers, goToPage, goToNextSet, goToPreviousSet } = usePagination(totalPages, currentPage, setCurrentPage);
+
   const isNoData = !isLoading && data?.activities.length === 0;
-  
+
   const searchMessage = searchValue ? '검색 결과가 없습니다.' : '등록된 체험이 없습니다.';
 
-  const activities = data?.activities?.map((activity) => ({
+  const activities = data?.activities?.map((activity: Activity) => ({
     ...activity,
     id: activity.id.toString(),
   }));
@@ -55,10 +62,6 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
   const handleFilterSelect = (sort: 'latest' | 'most_reviewed' | 'price_asc' | 'price_desc') => {
     setCurrentSort(sort);
     setCurrentPage(1);
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
   };
 
   useEffect(() => {
@@ -80,10 +83,17 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
       )}
       {isNoData && <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">{searchMessage}</div>}
-      <ActivityGrid isLoading={isLoading} isError={isError} activities={activities} onClick={(id: string) => router.push(`activities/${id}`)} />
+      <ActivityGrid isLoading={isLoading} isError={isError} activities={activities} onClick={(id: string) => router.push(`/activity/details/${id}`)} />
       {data && data.totalCount !== 0 && (
         <div className="flex justify-center">
-          <Pagination totalCount={data.totalCount} itemsInPage={fetchSize} visiblePages={5} onPageChange={handlePageChange} currentPage={currentPage} />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            pageNumbers={pageNumbers}
+            goToPage={goToPage}
+            goToNextSet={goToNextSet}
+            goToPreviousSet={goToPreviousSet}
+          />
         </div>
       )}
     </div>

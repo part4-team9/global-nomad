@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
+import { useMemo } from 'react';
 
 interface UsePaginationReturn {
   currentPage: number;
@@ -8,18 +9,15 @@ interface UsePaginationReturn {
   pageNumbers: number[];
 }
 
-const usePagination = (totalPages: number, visiblePages: number, onPageChange: (value: number) => void, initialPage: number = 1): UsePaginationReturn => {
-  const [currentPage, setCurrentPage] = useState(initialPage);
-
+const usePagination = (totalPages: number, currentPage: number, setCurrentPage: Dispatch<SetStateAction<number>>): UsePaginationReturn => {
   const goToPage = (page: number) => {
     if (page >= 1 && page <= totalPages) {
       setCurrentPage(page);
-      onPageChange(page);
     }
   };
 
   const goToNextSet = () => {
-    const nextPage = Math.ceil(currentPage / visiblePages) * visiblePages + 1;
+    const nextPage = Math.ceil(currentPage / 5) * 5 + 1;
     if (nextPage <= totalPages) {
       goToPage(nextPage);
     } else {
@@ -28,7 +26,7 @@ const usePagination = (totalPages: number, visiblePages: number, onPageChange: (
   };
 
   const goToPreviousSet = () => {
-    const previousPage = Math.floor((currentPage - 1) / visiblePages) * visiblePages;
+    const previousPage = Math.floor((currentPage - 1) / 5) * 5;
     if (previousPage >= 1) {
       goToPage(previousPage);
     } else {
@@ -37,10 +35,10 @@ const usePagination = (totalPages: number, visiblePages: number, onPageChange: (
   };
 
   // 현재 페이지 그룹 시작 번호 계산
-  const startPage = useMemo(() => Math.floor((currentPage - 1) / visiblePages) * visiblePages + 1, [currentPage, visiblePages]);
+  const startPage = useMemo(() => Math.floor((currentPage - 1) / 5) * 5 + 1, [currentPage]);
 
   // 현재 페이지 그룹 마지막 번호 계산
-  const endPage = useMemo(() => Math.min(startPage + visiblePages - 1, totalPages), [startPage, visiblePages, totalPages]);
+  const endPage = useMemo(() => Math.min(startPage + 4, totalPages), [startPage, totalPages]);
 
   // 페이지 번호 배열 계산
   const pageNumbers = useMemo(() => Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i), [startPage, endPage]);
