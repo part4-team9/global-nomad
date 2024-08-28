@@ -5,7 +5,7 @@ import { AxiosError } from 'axios';
 import { fetchExperienceData } from '@/_apis/activities/fetchExperienceData';
 import { fetchReviewsData } from '@/_apis/activities/fetchReviewsData';
 
-import type { Experience, Review } from '@/_types/details/types';
+import type { Experience } from '@/_types/details/types';
 
 import useUserStore from '@/_stores/useUserStore';
 
@@ -19,11 +19,10 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
   const [experience, setExperience] = useState<Experience | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [reviews, setReviews] = useState<Review[]>([]);
   const [totalReviews, setTotalReviews] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
 
-  const { user } = useUserStore();
+  const { user, setLoginStatus } = useUserStore();
   const currentUserId = user?.user?.id;
 
   useEffect(() => {
@@ -38,7 +37,6 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
         const [experienceData, reviewsData] = await Promise.all([fetchExperienceData(activityId), fetchReviewsData(activityId)]);
 
         setExperience(experienceData);
-        setReviews(reviewsData.reviews);
         setTotalReviews(reviewsData.totalCount);
         setAverageRating(reviewsData.averageRating);
       } catch (err) {
@@ -56,6 +54,17 @@ export default function ExperienceClientPage({ activityId }: ExperienceClientPag
 
     void fetchData();
   }, [activityId]);
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem('user');
+    const isLoggedIn = sessionStorage.getItem('isLogIn');
+
+    if (storedUser && isLoggedIn) {
+      const parsedUser = JSON.parse(storedUser);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      setLoginStatus(true, parsedUser);
+    }
+  }, [setLoginStatus]);
 
   if (loading) return <div>데이터를 불러오는 중입니다...</div>;
   if (error) return <div>오류: {error}</div>;
