@@ -53,34 +53,38 @@ export default function HotListsCarousel() {
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
       </div>
-      <div className="mb-4" ref={emblaRef}>
+      <div className="mb-6" ref={emblaRef}>
         <div className="embla__container flex touch-pan-y touch-pinch-zoom">
           {data?.activities.map((activity, i) => (
             <div
               onClick={() => router.push(`/activity/details/${activity.id}`)}
-              className="embla__slide relative min-w-0 shrink-0 grow-0 basis-[186px] cursor-pointer mobile:basis-[384px]"
+              className="embla__slide group relative min-w-0 shrink-0 grow-0 basis-[186px] cursor-pointer mobile:basis-[384px]"
               key={i}
             >
-              <div
-                className="absolute bottom-0 h-3/5 w-[186px] rounded-[24px] mobile:w-[368px]"
-                style={{ background: 'linear-gradient(to top, rgb(30,30,30), transparent)' }}
-              />
-              <div className="absolute bottom-7 left-10 flex flex-col gap-0 text-white mobile:gap-5">
-                <Rating rating={activity.rating} reviewCount={activity.reviewCount} ratingTarget="hot" />
-                <div className="mr-[20px] max-h-[80px] break-keep text-lg mobile:max-h-[130px] mobile:text-[28px] mobile:leading-[42px]">{activity.title}</div>
-                <div className="text-md mobile:text-2lg">
-                  ₩ {activity.price.toLocaleString()}
-                  <span className="text-md font-regular"> /인</span>
+              <div className="transform rounded-3xl transition-transform duration-300 hover:translate-y-[-10px] group-hover:shadow-lg group-hover:shadow-gray-400">
+                <div
+                  className="absolute bottom-0 h-3/5 w-[186px] rounded-[24px] mobile:w-[368px]"
+                  style={{ background: 'linear-gradient(to top, rgb(30,30,30), transparent)' }}
+                />
+                <div className="absolute bottom-7 left-10 flex flex-col gap-0 text-white mobile:gap-5">
+                  <Rating rating={activity.rating} reviewCount={activity.reviewCount} ratingTarget="hot" />
+                  <div className="mr-[20px] max-h-[80px] break-keep text-lg mobile:max-h-[130px] mobile:text-[28px] mobile:leading-[42px]">
+                    {activity.title}
+                  </div>
+                  <div className="text-md mobile:text-2lg">
+                    ₩ {activity.price.toLocaleString()}
+                    <span className="text-md font-regular"> /인</span>
+                  </div>
                 </div>
+                <Image
+                  src={activity.bannerImageUrl}
+                  alt={activity.title}
+                  priority
+                  width={384}
+                  height={384}
+                  className="aspect-square w-[186px] rounded-3xl object-cover mobile:size-[384px]"
+                />
               </div>
-              <Image
-                src={activity.bannerImageUrl}
-                alt={activity.title}
-                priority
-                width={384}
-                height={384}
-                className="aspect-square w-[186px] rounded-3xl object-cover mobile:size-[384px]"
-              />
             </div>
           ))}
         </div>
