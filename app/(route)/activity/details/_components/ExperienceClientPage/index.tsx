@@ -4,9 +4,10 @@ import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { fetchExperienceData } from '@/_apis/activities/fetchExperienceData';
 import { fetchReviewsData } from '@/_apis/activities/fetchReviewsData';
-import useUserStore from '@/store/useUserStore';
 
 import type { Experience, Review } from '@/_types/details/types';
+
+import useUserStore from '@/_stores/useUserStore';
 
 import ExperienceDetail from '../ExperienceDetail';
 
