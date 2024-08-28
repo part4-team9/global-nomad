@@ -100,13 +100,18 @@ function EmptyList({ onClose }: { onClose: () => void }) {
   return (
     <ListFrame>
       <div className="flex w-full justify-end">
-        <button type="button" onClick={onClose}>
+        <button
+          type="button"
+          onClick={() => {
+            onClose();
+          }}
+        >
           <Image src="/assets/icons/close.svg" alt="close-btn" width={24} height={24} />
         </button>
       </div>
       <div className="flex flex-col items-center justify-center gap-3">
         <Image src="/assets/icons/alarmList/message-dashed.svg" alt="alarm-empty" width={24} height={24} className="w-fit" />
-        <div className="mt-4 w-fit text-base">알림함이 비었습니다.</div>
+        <div className="mt-6 w-fit text-base">알림함이 비었습니다.</div>
       </div>
     </ListFrame>
   );
