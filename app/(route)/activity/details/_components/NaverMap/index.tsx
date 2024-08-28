@@ -64,6 +64,11 @@ export default function NaverMap({ latitude, longitude }: NaverMapProps) {
           };
           // eslint-disable-next-line no-new
           new maps.Marker(markerOptions);
+
+          const mapContainer = document.getElementById('map');
+          if (mapContainer) {
+            mapContainer.style.zIndex = '0';
+          }
         } else {
           setMapLoadError('Naver Maps API가 로드되지 않았습니다.');
         }

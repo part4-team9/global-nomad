@@ -130,7 +130,7 @@ export default function ExperienceDetail({ experience, totalReviews, averageRati
   };
 
   return (
-    <div className="mx-auto max-w-[1248px] pt-[24px] tablet:pt-[78px]">
+    <div className="mx-auto max-w-[1248px] pt-[24px] tablet:pt-[48px]">
       <Modal isOpen={isOpen} onClose={closeModal}>
         <div className="m-auto px-[90px] pb-[28px] pt-[26px] text-right text-[18px] md:w-[540px] md:px-[33px]">
           <p className="pb-[43px] pt-[53px] text-center">{modalMessage}</p>
