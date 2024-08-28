@@ -30,25 +30,21 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
   const totalPages = Math.ceil(totalCount / itemsInPage);
   const { pageNumbers, goToPage, goToNextSet, goToPreviousSet } = usePagination(totalPages, visiblePages, onPageChange);
 
-  const canGoToPreviousSet = currentPage > visiblePages;
+  const canGoToPreviousSet = currentPage > 1;
   const canGoToNextSet = Math.ceil(currentPage / visiblePages) !== Math.ceil(totalPages / visiblePages);
 
   return (
     <div className="mx-[24px] mb-[60px] flex w-full max-w-[1200px] items-center justify-center gap-[10px] mobile:mb-[100px]">
       <Button
+        name="prev"
         disabled={!canGoToPreviousSet}
         onClick={canGoToPreviousSet ? goToPreviousSet : undefined}
         border
         btnColor="white"
-        textColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
         borderColor={canGoToPreviousSet ? 'nomadBlack' : 'gray'}
         className="flex size-[40px] items-center justify-center rounded-[15px] text-2lg font-bold mobile:size-[55px]"
       >
-        {canGoToPreviousSet ? (
-          <Image src={ArrowRight} alt="페이지네이션 버튼" className="rotate-180" />
-        ) : (
-          <Image src={ArrowRightDisabled} alt="페이지네이션 버튼" />
-        )}
+        <Image src={canGoToPreviousSet ? ArrowRight : ArrowRightDisabled} alt="페이지네이션 버튼" className={canGoToPreviousSet ? 'rotate-180' : ''} />
       </Button>
       {pageNumbers.map((pageNumber) => {
         const isActivePage = currentPage === pageNumber;
@@ -67,19 +63,15 @@ export default function Pagination({ totalCount, itemsInPage, visiblePages = 5, 
         );
       })}
       <Button
+        name="next"
         disabled={!canGoToNextSet}
         onClick={canGoToNextSet ? goToNextSet : undefined}
         btnColor="white"
-        textColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
         border
         borderColor={canGoToNextSet ? 'nomadBlack' : 'gray'}
         className="flex size-[40px] items-center justify-center rounded-[15px] text-2lg font-bold mobile:size-[55px]"
       >
-        {canGoToPreviousSet ? (
-          <Image src={ArrowRight} alt="페이지네이션 버튼" />
-        ) : (
-          <Image src={ArrowRightDisabled} alt="페이지네이션 버튼" className="rotate-180" />
-        )}
+        <Image src={canGoToNextSet ? ArrowRight : ArrowRightDisabled} alt="페이지네이션 버튼" className={canGoToNextSet ? '' : 'rotate-180'} />
       </Button>
     </div>
   );
