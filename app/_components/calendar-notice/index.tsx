@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import { reservationsExample } from '@/_mocks/notice-calendar-example-reservations';
+import React, { useEffect } from 'react';
 
 import type { DateReservations } from '@/_types/myActivities';
 
@@ -22,17 +21,40 @@ const MemoizedWeekdays = React.memo(Weekdays);
  * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
-function NoticeCalender({ data }: { data?: DateReservations[] }) {
-  const reservations = data || reservationsExample;
+function NoticeCalendar({ data, onDateSelect, onMonthChange }: { data?: DateReservations[]; onDateSelect?: (date: Date) => void; onMonthChange: (year: number, month: string) => void; }) {
+  const reservations = data;
 
   const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();
 
   const today = getToday();
 
+  useEffect(() => {
+    if (onMonthChange) {
+      onMonthChange(currentDate.year(), ((currentDate.month() ?? 0) + 1).toString().padStart(2, '0'));
+    }
+  }, [currentDate, onMonthChange]);
+
+  let currentYear = 0;
+  let currentMonth = 0;
+
+  const handleDayClick = (day: number, monthType: string) => {
+    if (onDateSelect) {
+      currentYear = currentDate.year();
+      currentMonth = currentDate.month();
+
+      const monthAdjustment = monthType === 'prev' ? -1 : monthType === 'next' ? 1 : 0;
+      const adjustedMonth = currentMonth + monthAdjustment;
+
+      const selectedDate = new Date(currentYear, adjustedMonth, day);
+
+      onDateSelect(selectedDate);
+    }
+  };
+
   return (
     <div className="flex min-w-[345px] max-w-[800px] select-none flex-col">
       <Header currentDate={currentDate} goToNextMonth={goToNextMonth} goToPreviousMonth={goToPreviousMonth} goToday={goToday} />
-      <table className="border-grey-150 w-full table-fixed border-separate border-spacing-0 rounded-lg border bg-white font-Inter text-gray-450">
+      <table className="w-full table-fixed border-separate border-spacing-0 rounded-lg border border-gray-150 bg-white font-Inter text-gray-450">
         <thead>
           <MemoizedWeekdays />
         </thead>
@@ -48,6 +70,7 @@ function NoticeCalender({ data }: { data?: DateReservations[] }) {
                   reservations={reservations}
                   today={today}
                   className={calcLastColumCellStyles({ index: columnIndex, length: week.length })}
+                  onDateSelect={() => handleDayClick(day, monthType)}
                 >
                   {(chipData) => (
                     <div className="flex flex-wrap gap-0.5">
@@ -66,4 +89,4 @@ function NoticeCalender({ data }: { data?: DateReservations[] }) {
   );
 }
 
-export default React.memo(NoticeCalender);
+export default React.memo(NoticeCalendar);

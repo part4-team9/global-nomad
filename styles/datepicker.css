@@ -120,7 +120,7 @@
 }
 
 .react-datepicker-popper {
-  z-index: 99999;
+  z-index: 9;
 }
 
 .react-datepicker-popper[data-placement^='bottom'] {

@@ -22,12 +22,12 @@ const profileActionButtons: ProfileButtonListProps[] = [
   {
     icon: <IconMyInfo />,
     title: '내 정보',
-    href: '#',
+    href: '/my/account',
   },
   {
     icon: <IconReservationHistory />,
     title: '예약 내역',
-    href: '#',
+    href: '/my/reservations',
   },
   {
     icon: <IconManageMyActivity />,
@@ -37,7 +37,7 @@ const profileActionButtons: ProfileButtonListProps[] = [
   {
     icon: <IconReservationStatus />,
     title: '예약 현황',
-    href: '#',
+    href: '/my/reservation-status',
   },
 ];
 

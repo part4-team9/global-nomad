@@ -1,8 +1,8 @@
 import { isAxiosError } from 'axios';
 
-import axiosInstance from '@/_libs/axios';
+import type { Response, SignupFormValues } from '@/_types/authentication';
 
-import type { Response, SignupFormValues } from '../type';
+import axiosInstance from '@/_libs/axios';
 
 // 회원가입
 interface ErrorResponse {
