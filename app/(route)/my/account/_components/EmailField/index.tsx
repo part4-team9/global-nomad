@@ -10,7 +10,7 @@ function EmailField({ defaultValue }: EmailFieldProps) {
       <label htmlFor="email" className="text-2xl font-bold leading-none text-black">
         이메일
       </label>
-      <Input readOnly disabled id="email" defaultValue={defaultValue} placeholder="이메일을 입력해 주세요" />
+      <Input readOnly disabled id="email" value={defaultValue} placeholder="이메일을 입력해 주세요" />
     </div>
   );
 }
