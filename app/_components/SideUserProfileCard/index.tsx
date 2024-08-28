@@ -1,13 +1,14 @@
 'use client';
 
+import 'react-toastify/dist/ReactToastify.css';
+
 import { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
+import { toast, ToastContainer } from 'react-toastify';
 import { usePathname } from 'next/navigation';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
 import IconReservationHistory from 'public/assets/icons/profile-card/reservation-history';
 import IconReservationStatus from 'public/assets/icons/profile-card/reservation-status';
-import { Skeleton } from '@/components/ui/skeleton';
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -66,8 +67,8 @@ export default function SideUserProfileCard() {
 
   useEffect(() => {
     if (UserProfileData) {
-      setUserProfile(() => UserProfileData);
       setCurrentAvatarSrc(UserProfileData.profileImageUrl);
+      setUserProfile(() => UserProfileData);
     }
   }, [UserProfileData, setUserProfile]);
 
@@ -80,14 +81,15 @@ export default function SideUserProfileCard() {
         // 프로필 이미지 URL로 사용자 프로필 업데이트
         await patchUserProfile({ profileImageUrl });
         await queryClient.invalidateQueries({ queryKey: ['userProfile'] });
+        toast.success('Profile image를 성공적으로 업데이트 하였습니다!');
       } catch (err) {
-        console.error('Error updating user profile:', err);
+        toast.error('Profile image를 실패하였습니다!');
       } finally {
         setLoading(false);
       }
     },
     onError: (error: Error) => {
-      console.error('Image upload failed:', error.message);
+      toast.error(`Profile image를 실패하였습니다! ${error.message}`);
       setLoading(false);
     },
   } satisfies UseMutationOptions<string, Error, File, unknown>);
@@ -103,6 +105,18 @@ export default function SideUserProfileCard() {
 
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <FullScreenLoader isVisible={isLoading} />
       <ChangeProfileImageModal
         isOpen={isOpen}

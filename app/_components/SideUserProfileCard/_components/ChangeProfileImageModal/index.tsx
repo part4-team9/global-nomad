@@ -34,7 +34,7 @@ export default function ChangeProfileImageModal({ isOpen, onClose, currentProfil
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="m-auto flex flex-col items-center px-5 py-4 text-right text-[18px] md:w-[450px] md:px-[33px]">
+      <div className="m-auto flex flex-col items-center px-5 py-4 text-right text-[18px] md:w-[450px] md:px-[33px] under-tablet:min-w-[300px]">
         <div className="flex w-full justify-end">
           <button onClick={onClose} type="button">
             <Image src="/assets/icons/close.svg" alt="close-btn" width={24} height={24} />
@@ -45,7 +45,7 @@ export default function ChangeProfileImageModal({ isOpen, onClose, currentProfil
           <>
             <h3 className="pb-4 text-center">프로필 이미지 변경</h3>
             <div className="mb-5 size-[160px] overflow-hidden rounded-[50%]">
-              <Image src={currentProfileImage} alt="current avatar" width={160} height={160} priority />
+              <Image src={currentProfileImage} alt="current avatar" width={160} height={160} priority className="under-tablet:size-[100]" />
             </div>
             <div className="flex w-full content-around items-center justify-between">
               <button type="button" onClick={handleDeleteClick} className="text-base">
@@ -78,11 +78,11 @@ function DeleteProfileImage({ currentProfileImage, onConfirm, onCancel }: Delete
     <>
       <h3 className="text-center font-bold">프로필 이미지 초기화</h3>
       <p className="mb-4 text-center text-sm">정말 초기화 하시겠습니까?</p>
-      <div className="mb-5 flex w-full items-center justify-between">
+      <div className="mb-5 flex w-full items-center justify-between under-tablet:flex-col">
         <div className="size-[160px] overflow-hidden rounded-[50%]">
           <Image src={currentProfileImage} alt="current avatar" width={160} height={160} priority />
         </div>
-        <span className="text-2xl">
+        <span className="text-2xl under-tablet:rotate-90">
           <Image src="/assets/icons/arrow-right.svg" width={24} height={24} alt="arrow" />
         </span>
         <div className="size-[160px] overflow-hidden rounded-[50%]">
@@ -93,7 +93,7 @@ function DeleteProfileImage({ currentProfileImage, onConfirm, onCancel }: Delete
         <button onClick={onCancel} type="button" className="text-base text-gray-600 hover:text-gray-700">
           취소
         </button>
-        <button onClick={onConfirm} type="button" className="mr-2 rounded bg-red-400 px-4 py-2 text-base text-white hover:bg-red-500">
+        <button onClick={onConfirm} type="button" className="flex h-[35px] items-center rounded bg-red-400 px-4 py-2 text-base text-white hover:bg-red-500">
           삭제
         </button>
       </div>
