@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 import { Spinner } from '@/components/ui/Spinner';
 
 interface FullScreenLoaderProps {
@@ -7,10 +8,11 @@ interface FullScreenLoaderProps {
 function FullScreenLoader({ isVisible }: FullScreenLoaderProps) {
   if (!isVisible) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50">
       <Spinner />
-    </div>
+    </div>,
+    document.body,
   );
 }
 

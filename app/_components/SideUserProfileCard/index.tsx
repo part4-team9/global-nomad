@@ -1,9 +1,7 @@
 'use client';
 
-import 'react-toastify/dist/ReactToastify.css';
-
 import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { usePathname } from 'next/navigation';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
@@ -105,18 +103,6 @@ export default function SideUserProfileCard() {
 
   return (
     <>
-      <ToastContainer
-        position="top-center"
-        autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       <FullScreenLoader isVisible={isLoading} />
       <ChangeProfileImageModal
         isOpen={isOpen}
