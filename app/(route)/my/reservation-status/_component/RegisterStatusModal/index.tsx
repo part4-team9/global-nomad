@@ -57,11 +57,13 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   // 모달이 열릴 때 상태 초기화 및 첫 번째 타임 슬롯 선택
   useEffect(() => {
     if (isOpen && reservedSchedule?.length) {
-      const firstScheduleId = reservedSchedule[0].scheduleId;
-      setSelectedScheduleId(firstScheduleId);
-      setActiveIndex(0);
+      if (!selectedScheduleId) {
+        const firstScheduleId = reservedSchedule[0].scheduleId;
+        setSelectedScheduleId(firstScheduleId);
+        setActiveIndex(0);
+      }
     }
-  }, [isOpen, reservedSchedule]);
+  }, [isOpen, reservedSchedule, selectedScheduleId]);
 
   // 예약 상태 업데이트
   const updateModalCounts = useCallback(() => {
@@ -72,7 +74,9 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
   }, [reservedSchedule, selectedScheduleId]);
 
   useEffect(() => {
-    updateModalCounts();
+    if (selectedScheduleId) {
+      updateModalCounts();
+    }
   }, [updateModalCounts, reservedSchedule, selectedScheduleId]);
 
   const pendingCount = useMemo(() => reservedSchedule?.reduce((total, schedule) => total + schedule.count.pending, 0) || 0, [reservedSchedule]);
@@ -99,14 +103,19 @@ function RegisterStatusModal({ isOpen, onClose, date, activityId }: RegisterStat
     void refetch().then(() => {
       updateModalCounts();
     });
-  }, [refetch, updateModalCounts]);
+  }, [refetch, updateModalCounts, selectedScheduleId]);
+
+  const handleClose = () => {
+    setSelectedScheduleId(null);
+    onClose();
+  };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="full">
+    <Modal isOpen={isOpen} onClose={handleClose} size="full">
       <div className="h-dvh w-dvw overflow-hidden p-6 mobile:max-h-[700px] mobile:max-w-[430px]">
         <header className="flex justify-between">
           <h2>예약 정보</h2>
-          <p className="cursor-pointer text-3xl" onClick={onClose}>
+          <p className="cursor-pointer text-3xl" onClick={handleClose}>
             ×
           </p>
         </header>
