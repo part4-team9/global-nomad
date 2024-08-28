@@ -90,8 +90,16 @@ function AccountConfirm() {
         <form className="grid gap-5 py-5" onSubmit={handleSubmit(onSubmit)}>
           <h1 className="text-3xl font-bold text-black">{data.nickname}</h1>
           <div className="flex flex-wrap items-center gap-2 rounded bg-white px-5 py-2 shadow-md">
-            <div className="size-8 overflow-hidden rounded-full">
-              <Image src={imagePath} alt={`${data?.nickname} 프로필 이미지`} onError={() => setImagePath(DefaultProfile)} className="rounded-full" />
+            <div className="relative size-8 overflow-hidden rounded-full">
+              <Image
+                src={imagePath}
+                fill
+                sizes="max-width:100%"
+                alt={`${data?.nickname} 프로필 이미지`}
+                onError={() => setImagePath(DefaultProfile)}
+                style={{ objectFit: 'cover' }}
+                className="rounded-full"
+              />
             </div>
             <div className="flex-1">
               <input readOnly value={data.email} className="w-full truncate outline-none" {...register('email')} />
