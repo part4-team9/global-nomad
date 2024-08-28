@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/consistent-type-assertions */
+/* eslint-disable no-param-reassign */
+
 'use client';
 
 import { useState } from 'react';
@@ -13,15 +16,16 @@ interface CategoryListsProps {
 }
 
 const categories = ['전체', '문화 · 예술', '식음료', '스포츠', '투어', '관광', '웰빙'];
+const categoriesName = ['📋 전체', '🎨 문화 · 예술', '🍽️ 식음료', '⚽ 스포츠', '🗺️ 투어', '🏖️ 관광', '🌿 웰빙'];
 
 const emojis: { [key: string]: string } = {
-  '전체': '🛼',
+  '전체': '📋',
   '문화 · 예술': '🎨',
   '식음료': '🍽️',
-  '스포츠': '🏅',
+  '스포츠': '⚽',
   '투어': '🗺️',
   '관광': '🏖️',
-  '웰빙': '💆‍♂️',
+  '웰빙': '🌿',
 };
 
 /**
@@ -40,21 +44,29 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
     onCategoryClick(category);
   };
 
+  const categoryMap = categories.reduce(
+    (map, category, index) => {
+      map[category] = categoriesName[index];
+      return map;
+    },
+    {} as { [key: string]: string },
+  );
+
   return (
-    <div>
-      <div className="relative top-[10px] flex h-[41px] justify-between mobile:top-[20px] mobile:h-[58px]">
+    <div className='flex flex-col gap-0 mobile:gap-2'>
+      <div className="flex h-[41px] justify-between mobile:h-[58px]">
         <div
           ref={scrollRef}
-          className="scrollbar-hide flex gap-[10px] overflow-x-scroll text-lg font-medium tablet:gap-[20px] mobile:gap-[14px] mobile:text-2lg"
+          className="scrollbar-hide flex gap-[10px] overflow-x-scroll text-lg font-medium mobile:gap-[14px] mobile:text-2lg tablet:gap-[20px]"
         >
           {categories.map((category) => (
             <button
               key={category}
               type="button"
-              className={`category-button min-w-[80px] rounded-[15px] border border-nomad-black tablet:min-w-[127px] mobile:min-w-[120px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
+              className={`category-button min-w-[100px] rounded-[15px] border border-nomad-black mobile:min-w-[120px] tablet:min-w-[127px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
               onClick={() => onCategoryListClick(category)}
             >
-              {category}
+              {categoryMap[category]}
             </button>
           ))}
         </div>
@@ -63,7 +75,7 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
           <div className="pointer-events-none absolute h-[41px] w-full bg-btnGradientMobile mobile:h-[58px] mobile:bg-btnGradientTablet" />
         )}
       </div>
-      <div className="mt-[40px] flex gap-2 text-2xl font-bold mobile:mt-[60px] mobile:text-[36px] mobile:leading-[43px]">
+      <div className="mt-[25px] flex gap-2 text-2xl font-bold mobile:text-[36px] mobile:leading-[43px]">
         {emojis[selectedCategory]} <span>{selectedCategory}</span>
       </div>
     </div>

@@ -28,7 +28,7 @@ export default function SearchBox({ onSearch }: HotActivitySearchProps) {
   };
 
   return (
-    <div className="relative bottom-[50px] w-full max-w-[1200px] mobile:bottom-[60px]">
+    <div className="relative bottom-[50px] z-10 w-full max-w-[1200px] mobile:bottom-[60px]">
       <div className="mx-[24px] flex flex-col gap-[15px] rounded-[16px] bg-white px-[24px] py-[16px] text-lg font-bold drop-shadow-xl mobile:gap-[32px] mobile:py-[32px]">
         <span className="mobile:text-xl">무엇을 체험하고 싶으신가요?</span>
         <form className="flex h-[56px] items-center justify-between gap-[12px]" onSubmit={handleSubmit}>
