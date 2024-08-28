@@ -1,12 +1,8 @@
 'use client';
 
-import { type PropsWithChildren, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { type PropsWithChildren } from 'react';
 
-import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import useDeviceType from '@/_hooks/useDeviceType';
-
-import { getUserProfile } from '@/_libs/userService';
 
 import SideUserProfileCard from '../SideUserProfileCard';
 
@@ -16,36 +12,14 @@ import SideUserProfileCard from '../SideUserProfileCard';
 function StickyLayout({ children }: PropsWithChildren) {
   const { isDevice: isPC, isLoading } = useDeviceType();
 
-  const { userProfile, setUserProfile } = useUserProfileStore();
-  const DEFAULT_AVATAR = '/assets/images/default-profile.png';
-
-  const { data: UserProfileData } = useQuery({
-    queryKey: ['userProfile'],
-    queryFn: getUserProfile,
-  });
-
-  useEffect(() => {
-    if (UserProfileData) {
-      setUserProfile(() => UserProfileData);
-    }
-  }, [UserProfileData, setUserProfile]);
-
   return (
     <div className="flex gap-6">
-      {isLoading ? (
-        <section className="sticky top-20 hidden h-fit max-w-[384px] flex-1 rounded-xl bg-slate-300 p-6 tablet:block">
-          {/* TODO 스켈레톤 ui 적용 필요 */}
-          <div className="animate-pulse">
-            <div className="h-6 rounded bg-gray-300" />
-          </div>
+      {isPC && (
+        <section className="sticky top-20 h-fit max-w-[384px] flex-1">
+          <SideUserProfileCard isLoading={isLoading} />
         </section>
-      ) : (
-        isPC && (
-          <section className="sticky top-20 h-fit max-w-[384px] flex-1">
-            <SideUserProfileCard avatarSrc={userProfile ?? DEFAULT_AVATAR} />
-          </section>
-        )
       )}
+
       <section className="flex-1 tablet:min-w-[430px]">{children}</section>
     </div>
   );
