@@ -18,7 +18,7 @@ const ProfileButtonVariants = cva('flex h-11 w-full items-center rounded-xl pl-4
   variants: {
     selectedText: {
       false: 'text-gray-500',
-      true: 'bg-green-100 text-nomad-black',
+      true: 'text-nomad-black bg-green-100',
     },
   },
   defaultVariants: {

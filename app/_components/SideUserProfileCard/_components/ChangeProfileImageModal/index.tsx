@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
+import { DEFAULT_IMAGE } from '@/_constants/sideUserProfileCard';
+
 import Modal from '@/_components/modal';
 
 interface ChangeProfileImageModalProps {
@@ -72,8 +74,6 @@ interface DeleteProfileImageProps {
 }
 
 function DeleteProfileImage({ currentProfileImage, onConfirm, onCancel }: DeleteProfileImageProps) {
-  const DEFAULT_IMAGE = '/assets/icons/default-profile.svg';
-
   return (
     <>
       <h3 className="text-center font-bold">프로필 이미지 초기화</h3>

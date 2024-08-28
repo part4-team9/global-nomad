@@ -10,6 +10,8 @@ import IconReservationStatus from 'public/assets/icons/profile-card/reservation-
 import type { UseMutationOptions } from '@tanstack/react-query';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { DEFAULT_IMAGE } from '@/_constants/sideUserProfileCard';
+
 import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import { useModal } from '@/_hooks/useModal';
 
@@ -113,7 +115,7 @@ export default function SideUserProfileCard() {
       />
       <div className="flex h-[432px] w-full min-w-[215px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
         <div className="flex justify-center">
-          <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc} onClick={openModal} />
+          <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc || DEFAULT_IMAGE} onClick={openModal} />
         </div>
         <div className="flex flex-col gap-2">
           {profileActionButtons.map((item, idx) => (
