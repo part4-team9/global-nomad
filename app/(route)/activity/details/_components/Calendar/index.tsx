@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/navigation';
 
+import useUserStore from '@/_stores/useUserStore';
 import { useModal } from '@/_hooks/useModal';
 
 import axiosInstance from '@/_libs/axios';
@@ -108,6 +109,14 @@ export default function Calendar({ activityId }: CalendarProps) {
   }, [fetchError, openModal]);
 
   const handleReservation = async () => {
+    const { isLogIn } = useUserStore.getState();
+
+    if (!isLogIn) {
+      setFetchErrorState('로그인이 필요합니다.');
+      openModal();
+      return;
+    }
+
     if (!selectedDate || !selectedTime) {
       setFetchErrorState('날짜와 시간을 선택해주세요.');
       return;
