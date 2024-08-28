@@ -125,7 +125,7 @@ export default function MobileCalendar({
             <div className="w-full">
               <div className="mb-4 flex items-center justify-between">
                 <div className="text-[28px] font-bold">날짜</div>
-                <Image src={CalArrow} alt="닫기" width={40} height={40} onClick={() => setIsCalendarOpen(false)} />
+                <Image src={CalArrow} className="cursor-pointer" alt="닫기" width={40} height={40} onClick={() => setIsCalendarOpen(false)} />
               </div>
               <div className="rounded-[8px] border border-gray-100 px-[27px] py-[5px]">
                 <div className="mb-2 flex justify-between py-[5px]">
@@ -188,7 +188,7 @@ export default function MobileCalendar({
             <div className="w-full">
               <div className="mb-4 flex items-center justify-between">
                 <div className="text-[28px] font-bold">인원</div>
-                <Image src={CalArrow} alt="닫기" width={40} height={40} onClick={() => setIsPeopleCountOpen(false)} />
+                <Image src={CalArrow} className="cursor-pointer" alt="닫기" width={40} height={40} onClick={() => setIsPeopleCountOpen(false)} />
               </div>
               <MobilePeopleCounter peopleCount={peopleCount} setPeopleCount={setPeopleCount} />
             </div>

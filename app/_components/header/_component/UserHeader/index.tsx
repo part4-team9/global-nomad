@@ -3,7 +3,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import defaultProfileImg from 'public/assets/images/default-profile.png';
 
 import useBackgroundClick from '@/_hooks/useBackgroundClick';
 
@@ -11,6 +10,7 @@ import HeaderDropdown from '../HeaderDropDown';
 
 import alarm from 'public/assets/icons/alarm.svg';
 import ArrowDown from 'public/assets/icons/arrow-down.svg';
+import defaultProfileImg from 'public/assets/icons/default-profile.svg';
 
 export default function UserHeader() {
   const [showList, setShowList] = useState(false);

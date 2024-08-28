@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 import Image from 'next/image';
-import DefaultProfileImage from 'public/assets/images/default-profile.png';
 import Pagination from '@/(route)/main/_components/Pagination';
 
+import DefaultProfileImage from 'public/assets/icons/default-profile.svg';
 import Start from 'public/assets/icons/star.svg';
 
 interface Review {
@@ -88,7 +88,7 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
                   alt={`${review.user.nickname} 프로필 이미지`}
                   width={45}
                   height={45}
-                  className="rounded-full object-cover"
+                  className="size-[45px] rounded-full object-cover"
                 />
               </div>
               <div className="flex flex-1 flex-col justify-start">
