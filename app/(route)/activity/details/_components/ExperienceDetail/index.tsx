@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { useEffect, useState } from 'react';
 import { AxiosError } from 'axios';
 // eslint-disable-next-line import/no-extraneous-dependencies

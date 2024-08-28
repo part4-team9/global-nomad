@@ -34,6 +34,7 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
   const [currentPage, setCurrentPage] = useState(1);
   const reviewsPerPage = 3;
   const [reviews, setReviews] = useState<Review[]>([]);
+  const totalPages = Math.ceil(totalReviews / reviewsPerPage);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -57,6 +58,20 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+  const pageNumbers = Array.from({ length: totalPages }, (_, index) => index + 1);
+
+  const goToNextSet = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const goToPreviousSet = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
 
   return (
@@ -113,8 +128,14 @@ export default function Reviews({ averageRating, totalReviews, getSatisfactionLa
           <p className="text-center">리뷰가 없습니다.</p>
         )}
       </div>
-
-      <Pagination totalCount={totalReviews} itemsInPage={reviewsPerPage} currentPage={currentPage} onPageChange={handlePageChange} />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        pageNumbers={pageNumbers}
+        goToNextSet={goToNextSet}
+        goToPage={handlePageChange}
+        goToPreviousSet={goToPreviousSet}
+      />
     </section>
   );
 }
