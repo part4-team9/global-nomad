@@ -43,11 +43,22 @@ export default function AlarmList() {
     <div className="relative flex flex-row justify-center">
       <button type="button" aria-label="alarm-list-btn" className="flex cursor-pointer" onClick={toggleDropdown}>
         <Image src={alarm} alt="alarm" />
+        {myNotifications && myNotifications.totalCount > 0 && <Image src="/assets/icons/alarmList/alarm-dot.svg" alt="dot" width={5} height={5} />}
       </button>
-      {showList && myNotifications && myNotifications.notifications.length > 0 && (
-        <List onClose={toggleDropdown} listItems={myNotifications.notifications} onDelete={handleDelete} />
-      )}
+      {showList &&
+        myNotifications &&
+        (myNotifications.notifications.length > 0 ? (
+          <List onClose={toggleDropdown} listItems={myNotifications.notifications} onDelete={handleDelete} />
+        ) : (
+          <EmptyList onClose={toggleDropdown} />
+        ))}
     </div>
+  );
+}
+
+function ListFrame({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="absolute mt-10 flex w-[328px] flex-col justify-center gap-4 rounded-[10px] border border-gray-300 bg-green-100 px-5 py-6">{children}</div>
   );
 }
 
@@ -69,7 +80,7 @@ function List({ onClose, listItems, onDelete }: ListProps) {
     return -1;
   });
   return (
-    <div className="absolute mt-10 flex w-[328px] flex-col justify-center gap-4 rounded-[10px] border border-gray-300 bg-green-100 px-5 py-6">
+    <ListFrame>
       <div className="flex justify-between">
         <h3>{`알림 ${sortedListItems.length}개`}</h3>
         <button type="button" onClick={onClose}>
@@ -81,7 +92,23 @@ function List({ onClose, listItems, onDelete }: ListProps) {
           <ListItem key={idx} notification={item} onDelete={onDelete} />
         ))}
       </div>
-    </div>
+    </ListFrame>
+  );
+}
+
+function EmptyList({ onClose }: { onClose: () => void }) {
+  return (
+    <ListFrame>
+      <div className="flex w-full justify-end">
+        <button type="button" onClick={onClose}>
+          <Image src="/assets/icons/close.svg" alt="close-btn" width={24} height={24} />
+        </button>
+      </div>
+      <div className="flex flex-col items-center justify-center gap-3">
+        <Image src="/assets/icons/alarmList/message-dashed.svg" alt="alarm-empty" width={24} height={24} className="w-fit" />
+        <div className="mt-4 w-fit text-base">알림함이 비었습니다.</div>
+      </div>
+    </ListFrame>
   );
 }
 
