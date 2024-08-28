@@ -72,7 +72,7 @@ interface DeleteProfileImageProps {
 }
 
 function DeleteProfileImage({ currentProfileImage, onConfirm, onCancel }: DeleteProfileImageProps) {
-  const DEFAULT_IMAGE = '/assets/images/default-profile.png';
+  const DEFAULT_IMAGE = '/assets/icons/default-profile.svg';
 
   return (
     <>

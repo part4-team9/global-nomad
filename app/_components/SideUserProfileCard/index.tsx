@@ -1,17 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
 import IconReservationHistory from 'public/assets/icons/profile-card/reservation-history';
 import IconReservationStatus from 'public/assets/icons/profile-card/reservation-status';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { UseMutationOptions } from '@tanstack/react-query';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
+import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import { useModal } from '@/_hooks/useModal';
 
-import { generateProfileImageURl, patchUserProfile } from '@/_libs/userService';
+import { generateProfileImageURl, getUserProfile, patchUserProfile } from '@/_libs/userService';
 import { convertURLtoFile } from '@/_utils/convertURLtoFile';
 
 import AvatarEditBtnWrapper from './_components/AvatarEditBtnWrapper';
@@ -43,17 +45,31 @@ const profileActionButtons: ProfileButtonListProps[] = [
 ];
 
 interface SideUserProfileCardProps {
-  avatarSrc: string;
+  isLoading: boolean;
 }
 
-export default function SideUserProfileCard({ avatarSrc }: SideUserProfileCardProps) {
-  const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(avatarSrc);
+export default function SideUserProfileCard({ isLoading }: SideUserProfileCardProps) {
+  const DEFAULT_AVATAR = '/assets/icons/default-profile.svg';
+
+  const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(DEFAULT_AVATAR);
   const pathname = usePathname();
 
   const { isOpen, openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
 
-  const DEFAULT_AVATAR = '/assets/images/default-profile.png';
+  const { userProfile, setUserProfile } = useUserProfileStore();
+
+  const { data: UserProfileData } = useQuery({
+    queryKey: ['userProfile'],
+    queryFn: getUserProfile,
+  });
+
+  useEffect(() => {
+    if (UserProfileData) {
+      setUserProfile(() => UserProfileData);
+      setCurrentAvatarSrc(UserProfileData.profileImageUrl);
+    }
+  }, [UserProfileData, setUserProfile]);
 
   const { mutate: uploadImage } = useMutation<string, Error, File>({
     mutationFn: generateProfileImageURl,
@@ -92,7 +108,11 @@ export default function SideUserProfileCard({ avatarSrc }: SideUserProfileCardPr
       />
       <div className="flex h-[432px] w-full min-w-[215px] flex-col justify-between gap-6 rounded-xl border border-gray-200 bg-white p-6 shadow-[0_4px_16px_0_rgba(17,34,17,0.05)]">
         <div className="flex justify-center">
-          <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc} onClick={openModal} />
+          {isLoading ? (
+            <Skeleton className="size-[160px] overflow-hidden rounded-[50%]" />
+          ) : (
+            <AvatarEditBtnWrapper avatarSrc={currentAvatarSrc} onClick={openModal} />
+          )}
         </div>
         <div className="flex flex-col gap-2">
           {profileActionButtons.map((item, idx) => (
