@@ -15,8 +15,9 @@ interface ButtonProps {
   children: ReactNode;
   className?: string;
   disabled?: boolean;
+  name?: string;
   onClick?: () => void;
-  textColor: 'white' | 'nomadBlack' | 'gray';
+  textColor?: 'white' | 'nomadBlack' | 'gray';
 }
 
 export default function Button({
@@ -28,6 +29,7 @@ export default function Button({
   disabled = false,
   onClick,
   textColor,
+  name,
 }: ButtonProps) {
   return (
     <button
@@ -35,9 +37,10 @@ export default function Button({
       aria-label="button"
       onClick={onClick}
       disabled={disabled}
+      name={name}
       style={{
         backgroundColor: ColorValue[btnColor],
-        color: ColorValue[textColor],
+        color: ColorValue[textColor as string],
         border: border ? `solid 1px ${ColorValue[borderColor]}` : 'none',
       }}
       className={`${className}`}
