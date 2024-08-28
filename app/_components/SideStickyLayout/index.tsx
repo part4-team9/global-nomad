@@ -8,7 +8,7 @@ import useDeviceType from '@/_hooks/useDeviceType';
 
 import { getUserProfile } from '@/_libs/userService';
 
-import SideUserProfileCard from '../side-user-profile-card';
+import SideUserProfileCard from '../SideUserProfileCard';
 
 /**
  * 왼쪽 내정보 사이드 메뉴 고정된 레이아웃
@@ -22,7 +22,6 @@ function StickyLayout({ children }: PropsWithChildren) {
   const { data: UserProfileData } = useQuery({
     queryKey: ['userProfile'],
     queryFn: getUserProfile,
-    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -43,7 +42,7 @@ function StickyLayout({ children }: PropsWithChildren) {
       ) : (
         isPC && (
           <section className="sticky top-20 h-fit max-w-[384px] flex-1">
-            <SideUserProfileCard avatarSrc={userProfile?.profileImageUrl ?? DEFAULT_AVATAR} />
+            <SideUserProfileCard avatarSrc={userProfile ?? DEFAULT_AVATAR} />
           </section>
         )
       )}

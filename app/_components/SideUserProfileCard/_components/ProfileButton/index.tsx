@@ -1,5 +1,6 @@
 import React from 'react';
 import { cva } from 'class-variance-authority';
+import Link from 'next/link';
 
 import { cn } from '@/_utils/classNames';
 
@@ -11,7 +12,6 @@ export interface ProfileButtonListProps {
 
 interface ProfileActionButtonProps extends ProfileButtonListProps {
   isSelected: boolean;
-  onClick: () => void;
 }
 
 const ProfileButtonVariants = cva('flex h-11 w-full items-center rounded-xl pl-4 text-base/[26px] font-bold', {
@@ -38,13 +38,13 @@ const IconVariants = cva('size-6', {
   },
 });
 
-export default function ProfileButton({ icon, title, isSelected, href, onClick }: ProfileActionButtonProps) {
+export default function ProfileButton({ icon, title, isSelected, href }: ProfileActionButtonProps) {
   return (
-    <a href={href} aria-label={title} className={cn(ProfileButtonVariants({ selectedText: isSelected }))} onClick={onClick}>
+    <Link href={href} aria-label={title} className={cn(ProfileButtonVariants({ selectedText: isSelected }))}>
       <div className="flex gap-[14px]">
         <div className={cn(IconVariants({ selected: isSelected }))}>{icon}</div>
         <p>{title}</p>
       </div>
-    </a>
+    </Link>
   );
 }

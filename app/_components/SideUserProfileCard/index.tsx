@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 import IconManageMyActivity from 'public/assets/icons/profile-card/manage-my-activity';
 import IconMyInfo from 'public/assets/icons/profile-card/my-info';
 import IconReservationHistory from 'public/assets/icons/profile-card/reservation-history';
@@ -46,17 +47,13 @@ interface SideUserProfileCardProps {
 }
 
 export default function SideUserProfileCard({ avatarSrc }: SideUserProfileCardProps) {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [currentAvatarSrc, setCurrentAvatarSrc] = useState<string>(avatarSrc);
+  const pathname = usePathname();
 
   const { isOpen, openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
 
   const DEFAULT_AVATAR = '/assets/images/default-profile.png';
-
-  const handleButtonClick = (index: number) => {
-    setSelectedIndex(index);
-  };
 
   const { mutate: uploadImage } = useMutation<string, Error, File>({
     mutationFn: generateProfileImageURl,
@@ -99,14 +96,7 @@ export default function SideUserProfileCard({ avatarSrc }: SideUserProfileCardPr
         </div>
         <div className="flex flex-col gap-2">
           {profileActionButtons.map((item, idx) => (
-            <ProfileBtn
-              key={idx}
-              icon={item.icon}
-              title={item.title}
-              href={item.href}
-              isSelected={selectedIndex === idx}
-              onClick={() => handleButtonClick(idx)}
-            />
+            <ProfileBtn key={idx} icon={item.icon} title={item.title} href={item.href} isSelected={pathname === item.href} />
           ))}
         </div>
       </div>

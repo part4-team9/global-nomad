@@ -1,14 +1,14 @@
-import type { UserProfileData } from '@/_types/user';
+import type { GetUserType } from '@/_types/user';
 
 import axiosInstance from './axios';
 
-export const getUserProfile = async (): Promise<UserProfileData> => {
-  const response = await axiosInstance.get<UserProfileData>('/users/me');
+export const getUserProfile = async (): Promise<GetUserType> => {
+  const response = await axiosInstance.get<GetUserType>('/users/me');
   return response.data;
 };
 
-export const patchUserProfile = async (data: Partial<UserProfileData>): Promise<UserProfileData> => {
-  const response = await axiosInstance.patch<UserProfileData>('/users/me', data);
+export const patchUserProfile = async (data: Partial<GetUserType>): Promise<GetUserType> => {
+  const response = await axiosInstance.patch<GetUserType>('/users/me', data);
   return response.data;
 };
 
