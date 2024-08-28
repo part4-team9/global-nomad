@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import useWindowSize from '@/_hooks/useWindowSize';
 
 import CommonLayout from '@/_components/CommonLayout';
-import SideUserProfileCard from '@/_components/side-user-profile-card';
+import SideUserProfileCard from '@/_components/SideUserProfileCard';
 
 /**
  * MyPage
