@@ -39,7 +39,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
   });
 
   const isNoData = !isLoading && data?.activities.length === 0;
-  
+
   const searchMessage = searchValue ? '검색 결과가 없습니다.' : '등록된 체험이 없습니다.';
 
   const activities = data?.activities?.map((activity) => ({
@@ -80,7 +80,7 @@ export default function AllActivityLists({ searchValue }: AllActivityListsProps)
         <CategoryLists onCategoryClick={handleCategoryClick} onFilterSelect={handleFilterSelect} selectedCategories={selectedCategories} />
       )}
       {isNoData && <div className="flex h-[400px] w-full items-center justify-center text-xl font-bold mobile:h-[600px] mobile:text-3xl">{searchMessage}</div>}
-      <ActivityGrid isLoading={isLoading} isError={isError} activities={activities} onClick={(id: string) => router.push(`activities/${id}`)} />
+      <ActivityGrid isLoading={isLoading} isError={isError} activities={activities} onClick={(id: string) => router.push(`/activity/details/${id}`)} />
       {data && data.totalCount !== 0 && (
         <div className="flex justify-center">
           <Pagination totalCount={data.totalCount} itemsInPage={fetchSize} visiblePages={5} onPageChange={handlePageChange} currentPage={currentPage} />
