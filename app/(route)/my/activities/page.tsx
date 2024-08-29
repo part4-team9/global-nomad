@@ -1,6 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -13,6 +16,7 @@ import { deleteActivity, getMyActivities } from '@/_libs/myActivitiesService';
 
 import CardFrame from '@/_components/card-frame';
 import CommonLayout from '@/_components/CommonLayout';
+import FullScreenLoader from '@/_components/FullScreenLoader';
 import NoReservation from '@/_components/NoReservation';
 import StickyLayout from '@/_components/SideStickyLayout';
 
@@ -21,6 +25,7 @@ export default function Page() {
     queryKey: ['myActivities'],
     queryFn: async () => getMyActivities({}),
   });
+
   return (
     <CommonLayout>
       <StickyLayout>
@@ -60,17 +65,23 @@ function CardDataTransfer({ data }: { data: Activity }) {
 function Button({ id }: { id: number }) {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
-
+  const [isLoading, setIsLoading] = useState(false);
   const handleDelete = async (notificationId: number) => {
     try {
+      setIsLoading(true);
       await deleteActivity(notificationId);
       await queryClient.invalidateQueries({ queryKey: ['notifications'] });
+      toast.success(`체험 삭제를 성공하였습니다.`);
     } catch (error) {
       console.error('Failed to delete notification:', error);
+      toast.error(`체험 삭제를 실패하였습니다.`);
     }
+    setIsLoading(false);
   };
+
   return (
     <div className="flex flex-col justify-end">
+      <FullScreenLoader isVisible={isLoading} />
       <button type="button" onClick={() => setOpen(!open)}>
         <Image src="/assets/icons/option-menu.svg" width={40} height={40} alt="option-btn" />
       </button>
@@ -84,8 +95,8 @@ function Button({ id }: { id: number }) {
           </Link>
           <button
             type="button"
-            onClick={() => {
-              handleDelete(id);
+            onClick={async () => {
+              await handleDelete(id);
             }}
             className="flex h-[58px] w-[160px] items-center justify-center border bg-white"
           >
