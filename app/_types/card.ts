@@ -30,6 +30,7 @@ export interface ActivitiesContents {
   button?: React.ReactNode;
   price: number;
   rating: number;
+  reviewCount: number;
   title: string;
   type: ContentType.Activities;
 }

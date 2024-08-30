@@ -7,11 +7,13 @@ import { ContentType, ReservationStatus } from '@/_types/card';
 import { cn } from '@/_utils/classNames';
 import { formatDate, formatNumberWithCommas } from '@/_utils/format';
 
+import Rating from '@/_components/rating';
+
 const contentsWrapperVariants = cva('w-full px-6 under-tablet:pl-3 under-tablet:pr-[18px] under-mobile:pl-2 under-mobile:pr-[14px]', {
   variants: {
     type: {
       reservation: 'pb-[24.5px] pt-[25.5px] under-tablet:py-3 under-mobile:py-[9px]',
-      activities: 'flex flex-col justify-between pb-5 pt-[21px] under-tablet:py-3',
+      activities: 'relative flex flex-col justify-between pb-5 pt-[21px] under-tablet:py-3 ',
     },
   },
 });
@@ -91,8 +93,7 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
   return (
     <div className={cn(contentsWrapperVariants({ type: contents.type }))}>
       <div>
-        {/* TODO rating 컴포넌트 적용 */}
-        <p className="mb-[6px] under-mobile:mb-0">{contents.rating}</p>
+        <Rating rating={contents.rating} reviewCount={contents.reviewCount} ratingTarget="manage" />
         <p className={titleStyle}>{contents.title}</p>
       </div>
 
@@ -101,8 +102,7 @@ function ActivitiesContent({ contents }: { contents: ActivitiesContents }) {
           <p className={priceStyle}>￦{formatNumberWithCommas(contents.price)}</p>
           <p className="text-base/[19.09px] font-medium text-gray-700 under-tablet:hidden">/인</p>
         </div>
-        {/* TODO button 공용 컴포넌트 적용 */}
-        {contents.button}
+        <div className="absolute right-4 top-8 z-50"> {contents.button}</div>
       </div>
     </div>
   );

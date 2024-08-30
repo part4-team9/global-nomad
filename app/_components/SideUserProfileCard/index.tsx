@@ -18,7 +18,7 @@ import { useUserProfileStore } from '@/_stores/useUserInfoState';
 import { useModal } from '@/_hooks/useModal';
 
 import { generateProfileImageURl, getUserProfile, patchUserProfile } from '@/_libs/userService';
-import { convertSVGToPNGFile, convertURLtoFile } from '@/_utils/convertURLtoFile';
+import { convertSVGToPNGFile } from '@/_utils/convertURLtoFile';
 
 import AvatarEditBtnWrapper from './_components/AvatarEditBtnWrapper';
 import ChangeProfileImageModal from './_components/ChangeProfileImageModal';
@@ -40,7 +40,7 @@ const profileActionButtons: ProfileButtonListProps[] = [
   {
     icon: <IconManageMyActivity />,
     title: '내 체험 관리',
-    href: '#',
+    href: '/my/activities',
   },
   {
     icon: <IconReservationStatus />,
