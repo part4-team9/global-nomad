@@ -13,9 +13,9 @@ import { useModal } from '@/_hooks/useModal';
 import { postLogin } from '@/_libs/authService';
 import { getCookie } from '@/_utils/cookie';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 import Input from '@/_components/Input';
-import Modal from '@/_components/modal';
+import Modal from '@/_components/Modal';
 
 interface InputField {
   id: keyof LoginFormValues;

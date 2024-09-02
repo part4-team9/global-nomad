@@ -56,7 +56,7 @@ export default function SideUserProfileCard() {
   const { isOpen, openModal, closeModal } = useModal();
   const queryClient = useQueryClient();
 
-  const { userProfile, setUserProfile } = useUserProfileStore();
+  const { setUserProfile } = useUserProfileStore();
 
   const [isLoading, setLoading] = useState(false);
 

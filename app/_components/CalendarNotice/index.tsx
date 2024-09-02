@@ -8,10 +8,10 @@ import useCalendar from '@/_hooks/useCalendar';
 
 import { calcLastColumCellStyles } from '@/_utils/calender';
 
-import CalendarCell from './_components/calendar-cell';
-import Header from './_components/calendar-header';
-import Weekdays from './_components/calendar-weekdays';
-import StatusChip from './_components/status-chips';
+import CalendarCell from './_components/CalendarCell';
+import Header from './_components/CalendarHeader';
+import Weekdays from './_components/CalendarWeekdays';
+import StatusChip from './_components/StatusChips';
 
 const MemoizedCalendarCell = React.memo(CalendarCell);
 const MemoizedWeekdays = React.memo(Weekdays);
@@ -21,7 +21,15 @@ const MemoizedWeekdays = React.memo(Weekdays);
  * @param data 예약 현황 데이터 (ReservationDataProps[])
  */
 // TODO 추후 API 연동 후 선택적 속성 제거
-function NoticeCalendar({ data, onDateSelect, onMonthChange }: { data?: DateReservations[]; onDateSelect?: (date: Date) => void; onMonthChange: (year: number, month: string) => void; }) {
+function NoticeCalendar({
+  data,
+  onDateSelect,
+  onMonthChange,
+}: {
+  data?: DateReservations[];
+  onDateSelect?: (date: Date) => void;
+  onMonthChange: (year: number, month: string) => void;
+}) {
   const reservations = data;
 
   const { currentDate, days, goToNextMonth, goToPreviousMonth, getToday, goToday } = useCalendar();

@@ -8,7 +8,7 @@ import MobilePreview2 from 'public/assets/images/mockup.png';
 
 import useWindowSize from '@/_hooks/useWindowSize';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 function IntroduceService() {
   const router = useRouter();

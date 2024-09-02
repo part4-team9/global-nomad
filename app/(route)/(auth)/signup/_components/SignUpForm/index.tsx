@@ -10,9 +10,9 @@ import type { SignupFormValues } from '@/_types/authentication';
 
 import { useModal } from '@/_hooks/useModal';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 import Input from '@/_components/Input';
-import Modal from '@/_components/modal';
+import Modal from '@/_components/Modal';
 
 interface InputField {
   id: keyof SignupFormValues;

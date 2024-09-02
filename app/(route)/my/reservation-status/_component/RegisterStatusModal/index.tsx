@@ -7,7 +7,7 @@ import type { Schedule } from '@/_types';
 
 import axiosInstance from '@/_libs/axios';
 
-import Modal from '@/_components/modal';
+import Modal from '@/_components/Modal';
 import SelectBox from '@/_components/SelectBox';
 
 import CardSection from '../CardSection';

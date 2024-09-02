@@ -10,7 +10,7 @@ import { useModal } from '@/_hooks/useModal';
 
 import axiosInstance from '@/_libs/axios';
 
-import CalendarNotice from '@/_components/calendar-notice';
+import CalendarNotice from '@/_components/CalendarNotice';
 import NoReservation from '@/_components/NoReservation';
 import SelectBox from '@/_components/SelectBox';
 

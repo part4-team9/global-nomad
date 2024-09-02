@@ -7,7 +7,7 @@ import { ContentType, ReservationStatus } from '@/_types/card';
 import { cn } from '@/_utils/classNames';
 import { formatDate, formatNumberWithCommas } from '@/_utils/format';
 
-import Rating from '@/_components/rating';
+import Rating from '@/_components/Rating';
 
 const contentsWrapperVariants = cva('w-full px-6 under-tablet:pl-3 under-tablet:pr-[18px] under-mobile:pl-2 under-mobile:pr-[14px]', {
   variants: {

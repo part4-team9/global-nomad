@@ -4,7 +4,7 @@ import type { Reservations } from '@/_types/myReservations';
 
 import { useModal } from '@/_hooks/useModal';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 interface ReviewButtonProps {
   data: Reservations;
