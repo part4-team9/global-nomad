@@ -2,7 +2,7 @@
 ![1](https://github.com/user-attachments/assets/682546c1-d6b3-4e85-940d-bfa2f8c1431c)
 - 배포 URL : https://sp-globalnomad-6-9.vercel.app/
 - Test ID : eunbin@eunbin.com
-- Test PW : 123456789
+- Test PW : 12345678
 <br />
 
 ## 🖍️ 프로젝트 소개
