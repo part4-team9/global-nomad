@@ -5,7 +5,7 @@ import { TypeAnimation } from 'react-type-animation';
 import { useInView } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 
-import Button from '@/_components/Button';
+import Button from '@/_components/ton';
 
 function CallToActionSection() {
   const router = useRouter();

@@ -4,8 +4,8 @@ import type { Metadata } from 'next';
 
 import { getLoginStatus } from '@/_utils/isLogin';
 
+import Header from './_components/der';
 import Footer from './_components/Footer';
-import Header from './_components/Header';
 import Providers from './providers';
 
 export const metadata: Metadata = {

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Error from 'public/assets/images/404-error.gif';
 
-import Button from './_components/Button';
+import Button from './_components/ton';
 
 export default function NotFound() {
   return (

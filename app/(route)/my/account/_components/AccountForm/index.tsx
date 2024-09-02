@@ -12,7 +12,7 @@ import type { ErrorResponse, UserFormData } from '@/_types/userAccount';
 
 import useModalState from '@/_hooks/useModalState';
 
-import Button from '@/_components/Button';
+import Button from '@/_components/ton';
 
 import CommonModal from '../CommonModal';
 import EmailField from '../EmailField';

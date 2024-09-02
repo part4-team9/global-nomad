@@ -15,8 +15,8 @@ import type { ErrorResponse } from '@/_types/userAccount';
 
 import { setCookie } from '@/_utils/cookie';
 
-import Button from '@/_components/Button';
 import Input from '@/_components/Input';
+import Button from '@/_components/ton';
 
 import DefaultProfile from 'public/assets/icons/default-profile.svg';
 

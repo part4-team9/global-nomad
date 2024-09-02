@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 import { DEFAULT_IMAGE } from '@/_constants/sideUserProfileCard';
 
-import Modal from '@/_components/Modal';
+import Modal from '@/_components/dal';
 
 interface ChangeProfileImageModalProps {
   currentProfileImage: string;

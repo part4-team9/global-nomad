@@ -1,4 +1,4 @@
-import Button from '@/_components/Button';
+import Button from '@/_components/ton';
 
 interface ActivityCommonFormProps {
   buttonDisable: boolean;
