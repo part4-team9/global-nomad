@@ -1,5 +1,5 @@
-import Modal from '@/_components/dal';
-import Button from '@/_components/ton';
+import Button from '@/_components/Button';
+import Modal from '@/_components/Modal';
 
 interface CommonModalProps {
   activeCloseModal: () => void;

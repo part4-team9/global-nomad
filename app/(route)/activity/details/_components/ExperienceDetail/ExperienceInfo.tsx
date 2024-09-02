@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 
-import Rating from '@/_components/ting';
+import Rating from '@/_components/Rating';
 
 import Dropdown from '../Dropdown';
 

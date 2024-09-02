@@ -7,8 +7,8 @@ import { useModal } from '@/_hooks/useModal';
 
 import axiosInstance from '@/_libs/axios';
 
-import Modal from '@/_components/dal';
-import Button from '@/_components/ton';
+import Button from '@/_components/Button';
+import Modal from '@/_components/Modal';
 
 import MobileCalendar from './MobileCalendar';
 import PCCalendar from './PCCalendar';

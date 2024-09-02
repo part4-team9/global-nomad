@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 
 import useGetActivities from '@/_hooks/activities/useGetActivities';
 
-import Rating from '@/_components/ting';
+import Rating from '@/_components/Rating';
 
 import usePrevNextButtons, { NextButton, PrevButton } from './HotListsCarouselBtn';
 

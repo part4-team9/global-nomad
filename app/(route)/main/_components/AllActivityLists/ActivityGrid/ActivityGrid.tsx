@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import Rating from '@/_components/ting';
+import Rating from '@/_components/Rating';
 
 import Spinner from 'public/assets/icons/spinner.svg';
 

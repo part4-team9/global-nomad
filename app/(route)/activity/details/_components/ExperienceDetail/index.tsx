@@ -11,8 +11,8 @@ import { useModal } from '@/_hooks/useModal';
 import axiosInstance from '@/_libs/axios';
 import { fetchCoordinates } from '@/_libs/fetchCoordinates';
 
-import Modal from '@/_components/dal';
-import Button from '@/_components/ton';
+import Button from '@/_components/Button';
+import Modal from '@/_components/Modal';
 
 import ExperienceInfo from './ExperienceInfo';
 import ImageSlider from './ImageSlider';

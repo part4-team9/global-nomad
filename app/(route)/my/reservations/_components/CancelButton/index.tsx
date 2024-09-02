@@ -8,7 +8,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import useModalState from '@/_hooks/useModalState';
 
-import Button from '@/_components/ton';
+import Button from '@/_components/Button';
 
 import CancelModal from '../CancelModal';
 

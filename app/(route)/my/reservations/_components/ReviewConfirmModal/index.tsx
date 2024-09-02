@@ -4,7 +4,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import Lottie from 'react-lottie-player';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import Button from '@/_components/ton';
+import Button from '@/_components/Button';
 
 import checkAnimation from 'public/assets/lottie/check-black.json';
 
