@@ -5,8 +5,8 @@ import Lottie from 'react-lottie-player';
 
 import { cn } from '@/_utils/classNames';
 
-import Button from '@/_components/button';
-import Modal from '@/_components/modal';
+import Button from '@/_components/Button';
+import Modal from '@/_components/Modal';
 
 import CheckBlack from 'public/assets/lottie/check-black.json';
 import Loading from 'public/assets/lottie/loading.json';

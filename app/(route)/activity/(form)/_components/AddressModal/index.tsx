@@ -2,7 +2,7 @@ import type { Address } from 'react-daum-postcode';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import Image from 'next/image';
 
-import Modal from '@/_components/modal';
+import Modal from '@/_components/Modal';
 
 import CloseBtn from 'public/assets/icons/close.svg';
 

@@ -2,8 +2,8 @@ import type { ReservationContents } from '@/_types/card';
 import { ContentType } from '@/_types/card';
 import type { Reservations, ReservationStatus } from '@/_types/myReservations';
 
-import CardFrame from '@/_components/card-frame';
-import { toReservationStatus } from '@/_components/card-frame/_components/card-contents-wrapper';
+import CardFrame from '@/_components/CardFrame';
+import { toReservationStatus } from '@/_components/CardFrame/_components/CardContentsWrapper';
 
 import CancelButton from '../CancelButton';
 import ReviewButton from '../ReviewButton';

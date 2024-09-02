@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from 'react';
 
 import type { Activity, ActivityEdit } from '@/_types/activities/form.types';
-import ACTIVITY_CATEGORY from '@/_constants/activity-category';
+import ACTIVITY_CATEGORY from '@/_constants/activityCategory';
 
 import Input from '@/_components/Input';
 import SelectBox from '@/_components/SelectBox';

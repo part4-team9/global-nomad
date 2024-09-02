@@ -5,7 +5,7 @@ import { type DateReservations } from '@/_types';
 import { cn } from '@/_utils/classNames';
 import { extractReservationData } from '@/_utils/reservation';
 
-import type { StatusChipProps } from '../status-chips';
+import type { StatusChipProps } from '../StatusChips';
 
 interface CalendarCellProps {
   children: (chipData: StatusChipProps[]) => JSX.Element;

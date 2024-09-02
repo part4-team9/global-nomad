@@ -3,7 +3,7 @@
 import Lottie from 'react-lottie-player';
 import { useRouter } from 'next/navigation';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 import fail from 'public/assets/lottie/fail.json';
 import loading from 'public/assets/lottie/loading.json';

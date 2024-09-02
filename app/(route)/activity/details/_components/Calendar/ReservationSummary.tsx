@@ -1,6 +1,6 @@
 'use client';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 interface ReservationSummaryProps {
   handleReservation: () => Promise<void>;

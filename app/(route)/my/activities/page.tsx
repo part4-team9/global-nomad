@@ -2,8 +2,8 @@
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useEffect, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,7 +14,7 @@ import { ContentType } from '@/_types/card';
 
 import { deleteActivity, getMyActivities } from '@/_libs/myActivitiesService';
 
-import CardFrame from '@/_components/card-frame';
+import CardFrame from '@/_components/CardFrame';
 import CommonLayout from '@/_components/CommonLayout';
 import FullScreenLoader from '@/_components/FullScreenLoader';
 import NoReservation from '@/_components/NoReservation';

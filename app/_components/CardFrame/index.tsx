@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import type { ContentsType } from '@/_types/card';
 
-import ContentWrapper from './_components/card-contents-wrapper';
+import ContentWrapper from './_components/CardContentsWrapper';
 
 interface CardFrameProps<T extends ContentsType> {
   activityId: number;
