@@ -4,7 +4,7 @@ import type { ReservationCardProps, ReservationsResponse } from '@/_types';
 
 import axiosInstance from '@/_libs/axios';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 export default function CardPending({ activityId, nickname, headCount, reservationId, scheduleId, refetch, onRefetch }: ReservationCardProps) {
   const handleAction = async (status: 'confirmed' | 'declined') => {

@@ -1,7 +1,7 @@
 import type { DateReservations } from '@/_types';
 import { ReservationStatus } from '@/_types';
 
-import type { StatusChipProps } from '@/_components/calendar-notice/_components/status-chips';
+import type { StatusChipProps } from '@/_components/CalendarNotice/_components/StatusChips';
 
 export const statusStyles = {
   [ReservationStatus.COMPLETED]: {

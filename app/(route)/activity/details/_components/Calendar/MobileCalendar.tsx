@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-import Button from '@/_components/button';
+import Button from '@/_components/Button';
 
 import MobilePeopleCounter from './MobilePeopleCounter';
 import TimeSelection from './TimeSelection';

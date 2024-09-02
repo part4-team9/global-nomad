@@ -7,8 +7,8 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import usePostReview from '@/_hooks/my-reservations/usePostReview';
 
-import Button from '@/_components/button';
-import Modal from '@/_components/modal';
+import Button from '@/_components/Button';
+import Modal from '@/_components/Modal';
 import Textarea from '@/_components/Textarea';
 
 import { FailModal, LoadingModal, SuccessModal } from '../ResultModal';
