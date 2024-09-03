@@ -99,7 +99,7 @@ export default function Carousel() {
               key={index}
               onClick={() => onDotButtonClick(index)}
               className={'dot z-30 inline-flex h-10 w-7 cursor-pointer touch-manipulation appearance-none items-center justify-center rounded-full bg-transparent'.concat(
-                index === selectedIndex ? ' dot--selected' : '',
+                index === selectedIndex ? 'dot--selected' : '',
               )}
             />
           ))}
