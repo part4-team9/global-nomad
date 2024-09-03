@@ -13,8 +13,6 @@ import Rating from '@/_components/Rating';
 
 import usePrevNextButtons, { NextButton, PrevButton } from './HotListsCarouselBtn';
 
-import Spinner from 'public/assets/icons/spinner.svg';
-
 export default function HotListsCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ dragFree: true });
   const router = useRouter();
@@ -30,8 +28,10 @@ export default function HotListsCarousel() {
 
   if (isLoading) {
     return (
-      <div className="flex h-64 items-center justify-center">
-        <Image src={Spinner} alt="로딩중" className="size-20 mobile:size-32" />
+      <div className="mb-2 mt-3 flex gap-4 overflow-hidden">
+        <div className="skeleton-list-item mb-6 flex min-h-[186px] w-full min-w-[186px] items-center justify-center rounded-3xl bg-gray-100 mobile:min-h-[384px] mobile:min-w-[368px]" />
+        <div className="skeleton-list-item mb-6 flex min-h-[186px] w-full min-w-[186px] items-center justify-center rounded-3xl bg-gray-100 mobile:min-h-[384px] mobile:min-w-[368px]" />
+        <div className="skeleton-list-item mb-6 flex min-h-[186px] w-full min-w-[186px] items-center justify-center rounded-3xl bg-gray-100 mobile:min-h-[384px] mobile:min-w-[368px]" />
       </div>
     );
   }
@@ -45,15 +45,14 @@ export default function HotListsCarousel() {
   }
 
   return (
-    <div className="embla relative w-full overflow-hidden">
-      <div className="mb-1 flex items-center justify-between mobile:mb-5">
-        <div className="text-2xl mobile:text-[36px] mobile:leading-[43px]">🔥 인기 체험</div>
+    <>
+      <div className="absolute right-0 top-[-14px] flex items-center justify-end mobile:top-0">
         <div className="flex items-center">
           <PrevButton onClick={onPrevButtonClick} disabled={prevBtnDisabled} />
           <NextButton onClick={onNextButtonClick} disabled={nextBtnDisabled} />
         </div>
       </div>
-      <div className="mb-6" ref={emblaRef}>
+      <div className="embla relative mb-6 w-full overflow-hidden pb-2 pt-3" ref={emblaRef}>
         <div className="embla__container flex touch-pan-y touch-pinch-zoom">
           {data?.activities.map((activity, i) => (
             <div
@@ -63,7 +62,7 @@ export default function HotListsCarousel() {
             >
               <div className="transform rounded-3xl transition-transform duration-300 hover:translate-y-[-10px] group-hover:shadow-lg group-hover:shadow-gray-400">
                 <div
-                  className="absolute bottom-0 h-3/5 w-[186px] rounded-[24px] mobile:w-[368px]"
+                  className="absolute bottom-0 h-3/5 w-[186px] rounded-3xl mobile:w-[368px]"
                   style={{ background: 'linear-gradient(to top, rgb(30,30,30), transparent)' }}
                 />
                 <div className="absolute bottom-7 left-10 flex flex-col gap-0 text-white mobile:gap-5">
@@ -89,6 +88,6 @@ export default function HotListsCarousel() {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 }

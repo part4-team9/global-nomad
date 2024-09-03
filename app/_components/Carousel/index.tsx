@@ -14,7 +14,6 @@ import useGetActivities from '@/_hooks/activities/useGetActivities';
 import useCarouselDotBtn, { DotButton } from './CarouselDotBtn';
 
 import Btn from 'public/assets/icons/carousel-btn.svg';
-import Spinner from 'public/assets/icons/spinner.svg';
 
 const calendarNum = new Date().getMonth() + 1;
 
@@ -56,7 +55,11 @@ export default function Carousel() {
   const { selectedIndex, scrollSnaps, onDotButtonClick } = useCarouselDotBtn(emblaApi, onNavButtonClick);
 
   if (isLoading) {
-    return <Image src={Spinner} fill alt="로딩중" className="size-20 mobile:size-32" />;
+    return (
+      <div className="size-full p-4 mobile:p-8">
+        <div className="skeleton-list-item flex h-full items-center justify-center rounded-lg bg-gray-100" />
+      </div>
+    );
   }
 
   if (isError) {
