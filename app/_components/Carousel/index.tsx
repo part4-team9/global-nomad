@@ -70,7 +70,7 @@ export default function Carousel() {
     return <div className="flex h-full items-center justify-center text-base font-bold mobile:text-3xl">문제가 발생했습니다!</div>;
   }
 
-  const currentActivityId = data?.activities[selectedIndex]?.id;
+  const currentActivity = data?.activities[selectedIndex];
 
   return (
     <>
@@ -79,10 +79,6 @@ export default function Carousel() {
           {data?.activities.map((activity, i) => (
             <div key={i} className="relative size-full flex-shrink-0" data-id={activity.id}>
               <Image src={activity.bannerImageUrl} alt={activity.title} fill className="flex items-center justify-center object-cover" />
-              <div className="relative bottom-8 z-20 mx-auto flex size-full max-w-[1100px] flex-col items-center justify-center break-keep px-6 text-xl font-bold text-white mobile:bottom-12 mobile:text-[40px] mobile:leading-[60px] tablet:text-5xl tablet:leading-[60px]">
-                <span className="mb-1 w-full text-left leading-7 mobile:mb-3 mobile:leading-[50px] tablet:mb-5 tablet:leading-[60px]">{activity.title}</span>
-                <span className="w-full text-left text-sm font-medium mobile:text-xl tablet:text-2xl">{`${calendarNum}월의 인기 경험 BEST 🔥`}</span>
-              </div>
               <div className="absolute top-0 z-10 size-full bg-bannerGradient" />
             </div>
           ))}
@@ -108,15 +104,21 @@ export default function Carousel() {
             />
           ))}
         </div>
-        <div className="absolute left-6 top-[55%] z-30 h-fit rounded-2xl bg-gray-150 px-2 py-[2px] hover:bg-gray-200 mobile:top-[55%] mobile:px-5 mobile:py-1 tablet:top-[54%]">
-          <button
-            type="button"
-            onClick={() => currentActivityId && router.push(`/activity/details/${currentActivityId}`)}
-            className="flex items-center justify-center gap-[2px] text-xs font-medium mobile:text-base"
-          >
-            자세히 보기 <Image src={Right} alt="자세히 보기" width={13} height={13} />
-          </button>
-        </div>
+        {currentActivity && (
+          <div className="absolute bottom-0 mx-auto flex size-full max-w-[1100px] flex-col items-center justify-center break-keep px-6 text-xl font-bold text-white mobile:bottom-4 mobile:text-[40px] mobile:leading-[60px] tablet:bottom-8 tablet:text-5xl tablet:leading-[60px]">
+            <span className="mb-1 w-full text-left leading-7 mobile:mb-3 mobile:leading-[50px] tablet:mb-5 tablet:leading-[60px]">{currentActivity.title}</span>
+            <span className="w-full text-left text-sm font-medium mobile:text-xl tablet:text-2xl">{`${calendarNum}월의 인기 경험 BEST 🔥`}</span>
+            <div className="relative z-30 w-full">
+              <button
+                type="button"
+                onClick={() => currentActivity.id && router.push(`/activity/details/${currentActivity.id}`)}
+                className="mt-3 flex w-fit items-center justify-center gap-[2px] rounded-2xl bg-gray-150 px-2 py-[2px] text-xs font-medium text-black hover:bg-gray-200 mobile:px-5 mobile:py-1 mobile:text-base"
+              >
+                자세히 보기 <Image src={Right} alt="자세히 보기" width={13} height={13} />
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
