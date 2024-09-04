@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import type { Activity } from '@/_types/activities/types';
 
+import useSearchStore from '@/_stores/useSearchStore';
 import useGetActivities from '@/_hooks/activities/useGetActivities';
 import usePagination from '@/_hooks/activities/usePagination';
 import useResFetchCount from '@/_hooks/activities/useResFetchCount';
@@ -13,19 +14,16 @@ import ActivityGrid from './ActivityGrid/ActivityGrid';
 import CategoryLists from '../CategoryLists';
 import Pagination from '../Pagination';
 
-interface AllActivityListsProps {
-  searchValue: string;
-}
-
 /**
  * 전체 체험 리스트 컴포넌트 입니다.
  * @param {string} searchValue - 부모 컴포넌트로 전달되는 검색 값 입니다.
  */
 
-export default function AllActivityLists({ searchValue }: AllActivityListsProps) {
+export default function AllActivityLists() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [currentSort, setCurrentSort] = useState<'latest' | 'most_reviewed' | 'price_asc' | 'price_desc'>('latest');
   const [selectedCategories, setSelectedCategories] = useState<string>('전체');
+  const searchValue = useSearchStore((state) => state.searchValue);
   const router = useRouter();
 
   const fetchSize = useResFetchCount({ mobileSize: 4, tabletSize: 9, desktopSize: 8 });
