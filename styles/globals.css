@@ -48,8 +48,12 @@
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #eee;
+    background: #ced8d5;
     border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    cursor: pointer;
   }
 
   ::-webkit-scrollbar-track {
@@ -83,10 +87,6 @@
 .category-button:focus {
   background-color: #112211;
   color: white;
-}
-
-.dots {
-  margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
 }
 
 .dot {
@@ -192,29 +192,29 @@ blockquote {
 
 @-webkit-keyframes skeleton-gradient {
   0% {
-      background-color: rgba(165, 165, 165, 0.1);
+    background-color: rgba(165, 165, 165, 0.1);
   }
 
   50% {
-      background-color: rgba(165, 165, 165, 0.3);
+    background-color: rgba(165, 165, 165, 0.3);
   }
 
   100% {
-      background-color: rgba(165, 165, 165, 0.1);
+    background-color: rgba(165, 165, 165, 0.1);
   }
 }
 
 @keyframes skeleton-gradient {
   0% {
-      background-color: rgba(165, 165, 165, 0.1);
+    background-color: rgba(165, 165, 165, 0.1);
   }
 
   50% {
-      background-color: rgba(165, 165, 165, 0.3);
+    background-color: rgba(165, 165, 165, 0.3);
   }
 
   100% {
-      background-color: rgba(165, 165, 165, 0.1);
+    background-color: rgba(165, 165, 165, 0.1);
   }
 }
 

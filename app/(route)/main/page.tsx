@@ -1,12 +1,12 @@
 import BannerContainer from './_components/BannerContainer';
 import BodyContainer from './_components/BodyContainer';
-import ActivitiyLayout from './_components/Layout/ActivitiyLayout/indext';
+import MainPageLayout from './_components/Layout/\bMainPageLayout/indext';
 
 export default function Home() {
   return (
-    <ActivitiyLayout>
+    <MainPageLayout>
       <BannerContainer />
       <BodyContainer />
-    </ActivitiyLayout>
+    </MainPageLayout>
   );
 }
