@@ -53,7 +53,7 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
   );
 
   return (
-    <div className='flex flex-col gap-0 mobile:gap-2'>
+    <div className="flex flex-col gap-0 mobile:gap-2">
       <div className="flex h-[41px] justify-between mobile:h-[58px]">
         <div
           ref={scrollRef}
@@ -63,7 +63,7 @@ export default function CategoryLists({ onCategoryClick, onFilterSelect, selecte
             <button
               key={category}
               type="button"
-              className={`category-button min-w-[100px] rounded-[15px] border border-nomad-black mobile:min-w-[120px] tablet:min-w-[127px] ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
+              className={`category-button whitespace-nowrap rounded-[15px] border border-nomad-black px-4 transition-all duration-500 hover:bg-[#16342b] mobile:px-6 ${selectedCategories === category ? 'bg-nomad-black text-white' : 'bg-white text-green-200'}`}
               onClick={() => onCategoryListClick(category)}
             >
               {categoryMap[category]}

@@ -1,8 +1,10 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Rating from '@/_components/Rating';
-
-import Spinner from 'public/assets/icons/spinner.svg';
 
 type Activity = {
   bannerImageUrl: string;
@@ -17,14 +19,56 @@ interface ActivityGridProps {
   activities?: Activity[];
   isError: boolean;
   isLoading: boolean;
-  onClick: (id: string) => void;
 }
 
-export default function ActivityGrid({ activities, isLoading, isError, onClick }: ActivityGridProps) {
+export default function ActivityGrid({ activities, isLoading, isError }: ActivityGridProps) {
+  const [skeletonCount, setSkeletonCount] = useState<number>(8);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.matchMedia('(min-width: 1200px)').matches) {
+        setSkeletonCount(8); // 데스크탑
+      } else if (window.matchMedia('(min-width: 768px)').matches) {
+        setSkeletonCount(9); // 태블릿
+      } else {
+        setSkeletonCount(4); // 모바일
+      }
+    };
+
+    handleResize(); // 초기화
+    window.addEventListener('resize', handleResize); // 사이즈 변경 시 호출
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (isLoading) {
+    const skeletonItems = Array.from({ length: skeletonCount }, (_, index) => (
+      <div key={index} className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+    ));
+
+    return (
+      <>
+        <div className="mx-auto mb-[20px] mt-4 grid min-h-[700px] grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[40px] mobile:mt-7 mobile:min-h-[1280px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:min-h-[920px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
+          {skeletonItems}
+        </div>
+        <div className="skeleton-list-item mb-6 flex min-h-[155px] items-center justify-center rounded-3xl bg-gray-100" />
+      </>
+    );
+  }
+
   if (isLoading) {
     return (
-      <div className="flex h-[400px] w-full items-center justify-center mobile:h-[600px]">
-        <Image src={Spinner} width={150} height={150} alt="loading icon" />
+      <div className="mx-auto mb-[20px] mt-4 grid min-h-[700px] grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[40px] mobile:mt-7 mobile:min-h-[1280px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:min-h-[920px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
+        <div className="skeleton-list-item mb-6 flex items-center justify-center rounded-3xl bg-gray-100" />
       </div>
     );
   }
@@ -42,7 +86,7 @@ export default function ActivityGrid({ activities, isLoading, isError, onClick }
   return (
     <div className="mx-auto mb-[20px] mt-4 grid min-h-[700px] grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[40px] mobile:mt-7 mobile:min-h-[1280px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:min-h-[920px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
       {activities?.map((activity) => (
-        <div key={activity.id} className="flex cursor-pointer flex-col gap-[16px]" onClick={() => onClick(activity.id)}>
+        <div key={activity.id} className="flex cursor-pointer flex-col gap-[16px]" onClick={() => router.push(`/activity/details/${activity.id}`)}>
           <div className="relative aspect-square overflow-hidden rounded-[24px]">
             <Image
               src={activity.bannerImageUrl}
