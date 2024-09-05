@@ -1,11 +1,12 @@
-import Banner from './_components/Banner';
-import Body from './_components/Body';
+import BannerContainer from './_components/BannerContainer';
+import BodyContainer from './_components/BodyContainer';
+import ActivitiyLayout from './_components/Layout/ActivitiyLayout/indext';
 
 export default function Home() {
   return (
-    <div className="box-border flex w-full min-w-full flex-col content-center items-center">
-      <Banner />
-      <Body />
-    </div>
+    <ActivitiyLayout>
+      <BannerContainer />
+      <BodyContainer />
+    </ActivitiyLayout>
   );
 }

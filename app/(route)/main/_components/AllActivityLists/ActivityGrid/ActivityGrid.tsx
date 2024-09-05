@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 import Rating from '@/_components/Rating';
 
@@ -18,11 +19,12 @@ interface ActivityGridProps {
   activities?: Activity[];
   isError: boolean;
   isLoading: boolean;
-  onClick: (id: string) => void;
 }
 
-export default function ActivityGrid({ activities, isLoading, isError, onClick }: ActivityGridProps) {
+export default function ActivityGrid({ activities, isLoading, isError }: ActivityGridProps) {
   const [skeletonCount, setSkeletonCount] = useState<number>(8);
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => {
@@ -84,7 +86,7 @@ export default function ActivityGrid({ activities, isLoading, isError, onClick }
   return (
     <div className="mx-auto mb-[20px] mt-4 grid min-h-[700px] grid-cols-2 grid-rows-2 gap-x-[8px] gap-y-[20px] mobile:mb-[40px] mobile:mt-7 mobile:min-h-[1280px] mobile:grid-cols-3 mobile:grid-rows-3 mobile:gap-x-[16px] mobile:gap-y-[32px] tablet:min-h-[920px] tablet:grid-cols-4 tablet:grid-rows-2 tablet:gap-x-[24px]">
       {activities?.map((activity) => (
-        <div key={activity.id} className="flex cursor-pointer flex-col gap-[16px]" onClick={() => onClick(activity.id)}>
+        <div key={activity.id} className="flex cursor-pointer flex-col gap-[16px]" onClick={() => router.push(`/activity/details/${activity.id}`)}>
           <div className="relative aspect-square overflow-hidden rounded-[24px]">
             <Image
               src={activity.bannerImageUrl}

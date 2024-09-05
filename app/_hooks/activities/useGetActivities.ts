@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 
 import type { GetActivitiesRequest } from '@/_types/activities/types';
 
@@ -16,6 +16,7 @@ const useGetActivities = (request: GetActivitiesRequest) =>
       request.sort,
     ],
     queryFn: () => getActivities(request),
+    placeholderData: keepPreviousData,
   });
 
 export default useGetActivities;

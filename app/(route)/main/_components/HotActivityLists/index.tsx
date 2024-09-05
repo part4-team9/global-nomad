@@ -3,6 +3,7 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import getActivities from '@/_libs/activities/activitiesApi';
 
 import HotListsCarousel from './HotListsCarousel';
+import HotActivityListsLayout from '../Layout/HotActivityListsLayout';
 
 /**
  * 인기 체험 리스트 컴포넌트 입니다.
@@ -24,10 +25,10 @@ export default async function HotActivityLists() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <div className="relative flex flex-col py-0 font-bold mobile:py-2">
+      <HotActivityListsLayout>
         <div className="mb-2 max-w-fit text-2xl mobile:mb-4 mobile:text-[36px] mobile:leading-[43px]">🔥 인기 체험</div>
         <HotListsCarousel />
-      </div>
+      </HotActivityListsLayout>
     </HydrationBoundary>
   );
 }

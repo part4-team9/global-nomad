@@ -73,7 +73,7 @@ export default function Carousel() {
   const currentActivity = data?.activities[selectedIndex];
 
   return (
-    <>
+    <div className="relative h-[240px] w-full mobile:h-[540px]">
       <div className="group h-full overflow-hidden" ref={emblaRef}>
         <div className="flex h-full">
           {data?.activities.map((activity, i) => (
@@ -120,6 +120,6 @@ export default function Carousel() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
